@@ -36,7 +36,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Vikendica.cs" />
+    <Compile Include="Client.cs" />
+    <Compile Include="CottageOwner.cs" />
+    <Compile Include="FishingInstructor.cs" />
+    <Compile Include="RegistrationTypeEnum.cs" />
+    <Compile Include="RegUser.cs" />
+    <Compile Include="RoleTypeEnum.cs" />
+    <Compile Include="ShipOwner.cs" />
+    <Compile Include="SystemAdministrator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

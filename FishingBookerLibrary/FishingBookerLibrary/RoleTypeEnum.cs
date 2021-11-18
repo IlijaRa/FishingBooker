@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace FishingBookerLibrary
 {
-    public class Vikendica
+    public class RoleTypeEnum
     {
-        public int counter;
+        public enum Role
+        {
+            Captain,
+            Officer
+        }
     }
 }
