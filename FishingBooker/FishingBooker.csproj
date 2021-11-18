@@ -204,7 +204,7 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\FishingBookerLibrary\FishingBookerLibrary\FishingBookerLibrary.csproj">
+    <ProjectReference Include="..\FishingBookerLibrary\FishingBookerLibrary\FishingBookerLibrary.csproj">
       <Project>{5f9a3656-2b1b-4ad5-978e-129877ec851a}</Project>
       <Name>FishingBookerLibrary</Name>
     </ProjectReference>
