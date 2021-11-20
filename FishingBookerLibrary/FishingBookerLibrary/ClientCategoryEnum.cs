@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace FishingBookerLibrary
 {
-    public class Client : RegUser
+    public enum ClientCategoryType
     {
-        public ClientCategoryType ClientCategory { get; set; }
-        public int NumberOfPenalties { get; set; } = 0;
+
     }
 }
