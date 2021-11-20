@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace FishingBookerLibrary
 {
-    public class RegistrationTypeEnum
-    {
-        public enum RegType
+        public enum RegistrationType
         {
             ForCottageOwner,
             ForShipOwner,
             ForFishingInstructor
         }
-    }
 }

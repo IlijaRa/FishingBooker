@@ -8,7 +8,7 @@ namespace FishingBookerLibrary
 {
     public class CottageOwner : RegUser
     {
-        public RegistrationTypeEnum RegistrationType { get; set; }
+        public RegistrationType RegistrationType { get; set; }
         public string RegistrationDescription { get; set; }
 
     }

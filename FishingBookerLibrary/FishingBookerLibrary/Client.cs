@@ -8,5 +8,6 @@ namespace FishingBookerLibrary
 {
     public class Client : RegUser
     {
+
     }
 }

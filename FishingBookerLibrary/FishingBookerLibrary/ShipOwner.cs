@@ -8,8 +8,8 @@ namespace FishingBookerLibrary
 {
     public class ShipOwner
     {
-        public RegistrationTypeEnum RegType { get; set; }
+        public RegistrationType RegType { get; set; }
         public string RegDescription { get; set; }
-        public  RoleTypeEnum RoleType { get; set; }
+        public  RoleType RoleType { get; set; }
     }
 }

@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace FishingBookerLibrary
 {
-    public class RoleTypeEnum
-    {
-        public enum Role
+        public enum RoleType
         {
             Captain,
             Officer
         }
-    }
 }
