@@ -36,13 +36,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdventureFastReservation.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ClientCategoryEnum.cs" />
+    <Compile Include="CottageFastReservation.cs" />
     <Compile Include="CottageOwner.cs" />
+    <Compile Include="FastReservation.cs" />
     <Compile Include="FishingInstructor.cs" />
     <Compile Include="RegistrationTypeEnum.cs" />
     <Compile Include="RegUser.cs" />
     <Compile Include="RoleTypeEnum.cs" />
+    <Compile Include="ShipFastReservation.cs" />
     <Compile Include="ShipOwner.cs" />
     <Compile Include="SystemAdministrator.cs" />
   </ItemGroup>
