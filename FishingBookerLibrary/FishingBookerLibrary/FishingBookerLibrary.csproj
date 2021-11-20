@@ -36,18 +36,24 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adventure.cs" />
     <Compile Include="AdventureFastReservation.cs" />
+    <Compile Include="CancellationPolicyType.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="ClientCategoryEnum.cs" />
+    <Compile Include="Cottage.cs" />
     <Compile Include="CottageFastReservation.cs" />
     <Compile Include="CottageOwner.cs" />
     <Compile Include="FastReservation.cs" />
     <Compile Include="FishingInstructor.cs" />
+    <Compile Include="Login.cs" />
     <Compile Include="RegistrationTypeEnum.cs" />
     <Compile Include="RegUser.cs" />
     <Compile Include="RoleTypeEnum.cs" />
+    <Compile Include="Ship.cs" />
     <Compile Include="ShipFastReservation.cs" />
     <Compile Include="ShipOwner.cs" />
+    <Compile Include="ShipSpecification.cs" />
     <Compile Include="SystemAdministrator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

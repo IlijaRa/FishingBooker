@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace FishingBookerLibrary
 {
-        public enum RoleType
-        {
-            None,
-            Captain,
-            Officer
-        }
+    public enum CancellationPolicyType
+    {
+        ForFree,
+        EntityKeepsThePercentage
+    }
 }
