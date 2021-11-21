@@ -10,7 +10,6 @@ namespace FishingBookerLibrary
     {
         public ClientCategoryType ClientCategory { get; set; }
         public int NumberOfPenalties { get; set; } = 0;
-
         public List<FastReservation> FastReservations { get; set; }
         public List<RegularReservation> RegularReservations { get; set; }
     }

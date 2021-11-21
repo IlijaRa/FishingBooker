@@ -45,6 +45,7 @@
     <Compile Include="CottageFastReservation.cs" />
     <Compile Include="CottageOwner.cs" />
     <Compile Include="DeletionRequest.cs" />
+    <Compile Include="Entity.cs" />
     <Compile Include="FastReservation.cs" />
     <Compile Include="FishingInstructor.cs" />
     <Compile Include="Login.cs" />
