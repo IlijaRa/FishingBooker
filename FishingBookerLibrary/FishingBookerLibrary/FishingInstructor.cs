@@ -10,7 +10,7 @@ namespace FishingBookerLibrary
     {
         public RegistrationType RegType { get; set; }
         public string RegDescription { get; set; }
-        //UNDONE: public Adventure adventure { get; set; }
+        public Adventure adventure { get; set; }
         public double Rating { get; set; }
         public string Biography { get; set; }
     }

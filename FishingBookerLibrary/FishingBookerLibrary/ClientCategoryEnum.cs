@@ -8,6 +8,8 @@ namespace FishingBookerLibrary
 {
     public enum ClientCategoryType
     {
-
+        Regular,
+        Silver,
+        Gold
     }
 }

@@ -16,6 +16,9 @@ namespace FishingBookerLibrary
         public string BehaviourRules { get; set; }
         public string AdditionalServices { get; set; }
         public string Pricelist { get; set; }
+        public double Price { get; set; }
+        public List<FastReservation> FastReservations { get; set; }
+        public List<RegularReservation> RegularReservations { get; set; }
         public ShipSpecification ShipSpecification { get; set; }
         public string NavigationEquipment { get; set; }
         public List<string> FishingEquipment { get; set; }

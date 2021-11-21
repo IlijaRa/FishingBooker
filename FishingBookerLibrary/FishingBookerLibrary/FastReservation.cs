@@ -14,5 +14,6 @@ namespace FishingBookerLibrary
         public int MaxNumberOfPeople { get; set; }
         public string AdditionalServices { get; set; }
         public double Price { get; set; }
+        public double Discount { get; set; }
     }
 }

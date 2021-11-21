@@ -44,11 +44,14 @@
     <Compile Include="Cottage.cs" />
     <Compile Include="CottageFastReservation.cs" />
     <Compile Include="CottageOwner.cs" />
+    <Compile Include="DeletionRequest.cs" />
     <Compile Include="FastReservation.cs" />
     <Compile Include="FishingInstructor.cs" />
     <Compile Include="Login.cs" />
     <Compile Include="RegistrationTypeEnum.cs" />
+    <Compile Include="RegularReservation.cs" />
     <Compile Include="RegUser.cs" />
+    <Compile Include="Revision.cs" />
     <Compile Include="RoleTypeEnum.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="ShipFastReservation.cs" />
