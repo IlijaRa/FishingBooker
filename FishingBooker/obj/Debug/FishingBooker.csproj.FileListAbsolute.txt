@@ -77,7 +77,6 @@ D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.WebPages.Razor.
 D:\GitHubRepositories\FishingBooker\FishingBooker\bin\WebActivatorEx.dll
 D:\GitHubRepositories\FishingBooker\FishingBooker\bin\WebGrease.dll
 D:\GitHubRepositories\FishingBooker\FishingBooker\bin\FishingBookerLibrary.pdb
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\FishingBookerLibrary.dll.config
 D:\GitHubRepositories\FishingBooker\FishingBooker\bin\AdvancedStringBuilder.xml
 D:\GitHubRepositories\FishingBooker\FishingBooker\bin\ClearScript.Core.xml
 D:\GitHubRepositories\FishingBooker\FishingBooker\bin\ClearScript.V8.xml

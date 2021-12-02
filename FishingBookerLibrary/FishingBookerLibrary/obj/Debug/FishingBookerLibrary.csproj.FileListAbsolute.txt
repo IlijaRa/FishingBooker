@@ -1,7 +1,6 @@
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.csproj.AssemblyReference.cache
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.csproj.CoreCompileInputs.cache
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\ClearScriptV8.win-x86.dll
-D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\FishingBookerLibrary.dll.config
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\FishingBookerLibrary.dll
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\FishingBookerLibrary.pdb
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\AdvancedStringBuilder.dll
@@ -12,9 +11,6 @@ D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bi
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\JSPool.dll
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Microsoft.Web.Infrastructure.dll
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Newtonsoft.Json.dll
-D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\React.Core.dll
-D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\React.Web.dll
-D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\React.Web.Mvc4.dll
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.Helpers.dll
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.Mvc.dll
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.Razor.dll
@@ -29,12 +25,6 @@ D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bi
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\JavaScriptEngineSwitcher.V8.xml
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\JSPool.xml
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Newtonsoft.Json.xml
-D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\React.Core.pdb
-D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\React.Core.xml
-D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\React.Web.pdb
-D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\React.Web.xml
-D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\React.Web.Mvc4.pdb
-D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\React.Web.Mvc4.xml
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.Helpers.xml
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.Mvc.xml
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.Razor.xml
