@@ -1,9 +1,10 @@
-﻿using FishingBookerLibrary;
+﻿using FishingBooker.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using FishingBookerLibrary.BusinessLogic;
 
 namespace FishingBooker.Controllers
 {
@@ -34,10 +35,21 @@ namespace FishingBooker.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult SignUp(RegUser user)
         {
-            ViewBag.Message = "Your register page.";
-
+            if (ModelState.IsValid)
+            {
+                RegUserCRUD.CreateEmployee( user.Name, 
+                                            user.Surname, 
+                                            user.PhoneNumber, 
+                                            user.EmailAddress, 
+                                            user.Address, 
+                                            user.City, 
+                                            user.Country);
+                return RedirectToAction("Index");
+            }
             return View();
         }
     }

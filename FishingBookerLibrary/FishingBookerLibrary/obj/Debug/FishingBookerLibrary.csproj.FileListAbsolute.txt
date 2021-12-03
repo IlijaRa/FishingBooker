@@ -4,3 +4,6 @@ D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\ob
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.csproj.CoreCompileInputs.cache
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.dll
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.pdb
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Dapper.dll
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Dapper.xml
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.csproj.CopyComplete
