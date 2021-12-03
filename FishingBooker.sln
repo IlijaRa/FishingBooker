@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishingBooker", "FishingBooker\FishingBooker.csproj", "{3785C1B7-8656-40EE-B7B7-C21BF40A94A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishingBookerLibrary", "FishingBookerLibrary\FishingBookerLibrary\FishingBookerLibrary.csproj", "{5F9A3656-2B1B-4AD5-978E-129877EC851A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FishingBookerLibrary", "FishingBookerLibrary\FishingBookerLibrary\FishingBookerLibrary.csproj", "{E1FCBDB4-037E-455E-B47C-C19D172C4256}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{3785C1B7-8656-40EE-B7B7-C21BF40A94A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3785C1B7-8656-40EE-B7B7-C21BF40A94A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3785C1B7-8656-40EE-B7B7-C21BF40A94A6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5F9A3656-2B1B-4AD5-978E-129877EC851A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F9A3656-2B1B-4AD5-978E-129877EC851A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F9A3656-2B1B-4AD5-978E-129877EC851A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F9A3656-2B1B-4AD5-978E-129877EC851A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1FCBDB4-037E-455E-B47C-C19D172C4256}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1FCBDB4-037E-455E-B47C-C19D172C4256}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1FCBDB4-037E-455E-B47C-C19D172C4256}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1FCBDB4-037E-455E-B47C-C19D172C4256}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
