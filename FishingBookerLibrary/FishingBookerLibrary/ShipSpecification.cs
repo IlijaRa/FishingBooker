@@ -8,6 +8,7 @@ namespace FishingBookerLibrary
 {
     public class ShipSpecification
     {
+        public int Id { get; set; }
         public string Type { get; set; }
         public double Length { get; set; }
         public string EngineNumber { get; set; }

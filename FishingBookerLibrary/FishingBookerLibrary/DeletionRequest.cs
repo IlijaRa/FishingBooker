@@ -11,6 +11,7 @@ namespace FishingBookerLibrary
         /// <summary>
         /// Request for account deletion
         /// </summary>
+        public int Id { get; set; }
         public string EmailAddress { get; set; }
         public string Description { get; set; }
     }

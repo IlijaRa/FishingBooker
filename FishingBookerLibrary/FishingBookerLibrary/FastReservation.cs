@@ -8,6 +8,7 @@ namespace FishingBookerLibrary
 {
     public class FastReservation
     {
+        public int Id { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime StartTime { get; set; }
         public int Duration { get; set; }

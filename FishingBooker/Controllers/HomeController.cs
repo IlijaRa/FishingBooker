@@ -26,5 +26,11 @@ namespace FishingBooker.Controllers
 
             return View();
         }
+        public ActionResult SignUp()
+        {
+            ViewBag.Message = "Your register page.";
+
+            return View();
+        }
     }
 }

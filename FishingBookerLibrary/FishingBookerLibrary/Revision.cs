@@ -11,6 +11,7 @@ namespace FishingBookerLibrary
         /// <summary>
         /// Atributes OwnersName and OwnersSurname will be generated automatically when EntityTitle is entered, so Client doesn't need to fill those fields
         /// </summary>
+        public int Id { get; set; }
         public string ClientsName { get; set; }
         public string ClientsSurname { get; set; }
         public string EntityTitle { get; set; }

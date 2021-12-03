@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FishingBookerLibrary
 {
-    public class ShipOwner
+    public class ShipOwner : RegUser
     {
         public RegistrationType RegType { get; set; }
         public string RegDescription { get; set; }

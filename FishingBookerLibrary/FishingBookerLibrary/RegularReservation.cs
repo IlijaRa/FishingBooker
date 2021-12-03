@@ -8,6 +8,7 @@ namespace FishingBookerLibrary
 {
     public class RegularReservation
     {
+        public int Id { get; set; }
         public string ClientsEmailAddress { get; set; }
         public string EntityTitle { get; set; }
         public DateTime StartDate { get; set; }

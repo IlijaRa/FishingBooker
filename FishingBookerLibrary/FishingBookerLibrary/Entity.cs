@@ -11,6 +11,7 @@ namespace FishingBookerLibrary
         /// <summary>
         /// Entity can be anything in between Cottage, Ship and Adventure
         /// </summary>
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Address { get; set; }
         public string PromotionDescription { get; set; }
