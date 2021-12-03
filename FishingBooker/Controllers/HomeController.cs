@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FishingBookerLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -27,6 +28,13 @@ namespace FishingBooker.Controllers
             return View();
         }
         public ActionResult SignUp()
+        {
+            ViewBag.Message = "Your register page.";
+
+            return View();
+        }
+
+        public ActionResult SignUp(RegUser user)
         {
             ViewBag.Message = "Your register page.";
 

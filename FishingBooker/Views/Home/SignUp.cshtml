@@ -10,9 +10,11 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
+
+    @*@Html.EditorForModel() // this will build a basic form for a model, just one line*@
     
 <div class="form-horizontal">
-    <h4>RegUser</h4>
+    <h4>Sign up here</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
