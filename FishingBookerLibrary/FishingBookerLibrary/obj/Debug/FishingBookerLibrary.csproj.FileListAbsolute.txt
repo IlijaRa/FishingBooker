@@ -1,0 +1,6 @@
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\FishingBookerLibrary.dll
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\FishingBookerLibrary.pdb
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.csproj.AssemblyReference.cache
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.csproj.CoreCompileInputs.cache
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.dll
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.pdb
