@@ -7,3 +7,5 @@ D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\ob
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Dapper.dll
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Dapper.xml
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.csproj.CopyComplete
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Microsoft.AspNet.Identity.Core.xml

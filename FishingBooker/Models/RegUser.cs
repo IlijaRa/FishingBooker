@@ -8,6 +8,8 @@ namespace FishingBooker.Models
 {
     public class RegUser
     {
+        public int UserId { get; set; }
+
 
         [Display(Name = "First name")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "You need to provide a name between 2-50 characters.")]

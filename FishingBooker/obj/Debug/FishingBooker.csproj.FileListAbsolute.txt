@@ -81,3 +81,5 @@ D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.dll
 D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.pdb
 D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Dapper.dll
 D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Dapper.xml
+D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Microsoft.AspNet.Identity.Core.dll
+D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Microsoft.AspNet.Identity.Core.xml
