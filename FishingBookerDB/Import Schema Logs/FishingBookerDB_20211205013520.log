@@ -1,0 +1,87 @@
+12/5/2021 2:35:20 AM	This log contains information about the import schema operation into project 'FishingBookerDB' on computer 'DESKTOP-2JTNAL1' by user 'rakoc'.
+12/5/2021 2:35:22 AM	Import of database schema has started.
+12/5/2021 2:35:28 AM	Gathering database credentials
+12/5/2021 2:35:28 AM	Gathering database options
+12/5/2021 2:35:28 AM	Gathering generic database scoped configuration option
+12/5/2021 2:35:28 AM	Gathering users
+12/5/2021 2:35:28 AM	Gathering roles
+12/5/2021 2:35:28 AM	Gathering application roles
+12/5/2021 2:35:28 AM	Gathering role memberships
+12/5/2021 2:35:28 AM	Gathering filegroups
+12/5/2021 2:35:28 AM	Gathering full-text catalogs
+12/5/2021 2:35:28 AM	Gathering assemblies
+12/5/2021 2:35:28 AM	Gathering certificates
+12/5/2021 2:35:28 AM	Gathering asymmetric keys
+12/5/2021 2:35:28 AM	Gathering symmetric keys
+12/5/2021 2:35:28 AM	Gathering encrypted symmetric keys
+12/5/2021 2:35:28 AM	Gathering schemas
+12/5/2021 2:35:28 AM	Gathering XML schema collections
+12/5/2021 2:35:28 AM	Gathering user-defined data types
+12/5/2021 2:35:28 AM	Gathering user-defined types
+12/5/2021 2:35:28 AM	Gathering table types
+12/5/2021 2:35:28 AM	Gathering unique keys for table types
+12/5/2021 2:35:28 AM	Gathering primary keys for table types
+12/5/2021 2:35:28 AM	Gathering indexes for table types
+12/5/2021 2:35:28 AM	Gathering check constraints for table types
+12/5/2021 2:35:28 AM	Gathering default constraints for table types
+12/5/2021 2:35:28 AM	Gathering partition functions
+12/5/2021 2:35:28 AM	Gathering partition schemes
+12/5/2021 2:35:28 AM	Gathering functions
+12/5/2021 2:35:28 AM	Gathering encrypted functions
+12/5/2021 2:35:28 AM	Gathering aggregates
+12/5/2021 2:35:28 AM	Gathering procedures
+12/5/2021 2:35:28 AM	Gathering encrypted procedures
+12/5/2021 2:35:28 AM	Gathering tables
+12/5/2021 2:35:28 AM	Gathering primary keys
+12/5/2021 2:35:28 AM	Gathering unique constraints
+12/5/2021 2:35:28 AM	Gathering foreign keys
+12/5/2021 2:35:28 AM	Gathering default constraints
+12/5/2021 2:35:28 AM	Gathering check constraints
+12/5/2021 2:35:28 AM	Gathering views
+12/5/2021 2:35:28 AM	Gathering encrypted views
+12/5/2021 2:35:28 AM	Gathering indexes
+12/5/2021 2:35:28 AM	Gathering statistics
+12/5/2021 2:35:28 AM	Gathering full-text index stoplists
+12/5/2021 2:35:28 AM	Gathering search property lists
+12/5/2021 2:35:28 AM	Gathering search properties
+12/5/2021 2:35:28 AM	Gathering full-text indexes
+12/5/2021 2:35:28 AM	Gathering column store indexes
+12/5/2021 2:35:28 AM	Gathering spatial indexes
+12/5/2021 2:35:28 AM	Gathering XML indexes
+12/5/2021 2:35:28 AM	Gathering Selective XML indexes
+12/5/2021 2:35:28 AM	Gathering encrypted triggers
+12/5/2021 2:35:28 AM	Gathering triggers
+12/5/2021 2:35:28 AM	Gathering encrypted and clr ddl triggers
+12/5/2021 2:35:28 AM	Gathering ddl triggers
+12/5/2021 2:35:28 AM	Creating edge constraints
+12/5/2021 2:35:28 AM	Gathering synonyms
+12/5/2021 2:35:28 AM	Gathering defaults
+12/5/2021 2:35:28 AM	Gathering data constraint uddt bindings
+12/5/2021 2:35:28 AM	Gathering rules
+12/5/2021 2:35:28 AM	Gathering data constraint uddt bindings
+12/5/2021 2:35:28 AM	Gathering message types
+12/5/2021 2:35:28 AM	Gathering queues
+12/5/2021 2:35:28 AM	Gathering contracts
+12/5/2021 2:35:28 AM	Gathering services
+12/5/2021 2:35:28 AM	Gathering event notifications
+12/5/2021 2:35:28 AM	Gathering remote service bindings
+12/5/2021 2:35:28 AM	Gathering broker priorities
+12/5/2021 2:35:28 AM	Gathering signatures
+12/5/2021 2:35:28 AM	Gathering data compression options
+12/5/2021 2:35:28 AM	Gathering sequence types
+12/5/2021 2:35:28 AM	Gathering security policies
+12/5/2021 2:35:28 AM	Gather column encryption keys
+12/5/2021 2:35:28 AM	Gathering column master keys
+12/5/2021 2:35:28 AM	Gathering external data sources
+12/5/2021 2:35:28 AM	Gathering external file formats
+12/5/2021 2:35:28 AM	Gathering external tables
+12/5/2021 2:35:28 AM	Gathering extended properties
+12/5/2021 2:35:28 AM	Gathering assemblies
+12/5/2021 2:35:28 AM	Gathering credentials
+12/5/2021 2:35:28 AM	Gathering logins
+12/5/2021 2:35:28 AM	Gathering server audits
+12/5/2021 2:35:30 AM	Scanning project for duplicate elements
+12/5/2021 2:35:30 AM	Finished duplicate element processing
+12/5/2021 2:35:30 AM	Finished importing database.
+12/5/2021 2:35:30 AM	A summary of the import was saved to the following location: D:\poslednji put\FishingBooker\FishingBookerDB\Import Schema Logs\FishingBookerDB_20211205013520.log
+12/5/2021 2:35:30 AM	Click Finish to continue...

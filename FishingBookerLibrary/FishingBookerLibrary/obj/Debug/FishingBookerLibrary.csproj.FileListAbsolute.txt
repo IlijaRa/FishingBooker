@@ -9,3 +9,14 @@ D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bi
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.csproj.CopyComplete
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Microsoft.AspNet.Identity.Core.dll
 D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.csproj.AssemblyReference.cache
+C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.csproj.CoreCompileInputs.cache
+C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.dll
+C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.pdb
+C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\FishingBookerLibrary.dll
+C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\FishingBookerLibrary.pdb
+C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Dapper.dll
+C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Microsoft.AspNet.Identity.Core.dll
+C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Dapper.xml
+C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Microsoft.AspNet.Identity.Core.xml
+C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.csproj.CopyComplete

@@ -10,14 +10,16 @@ namespace FishingBookerLibrary.BusinessLogic
 {
     public static class RegUserCRUD
     {
-        public static int CreateEmployee(string name, 
-                                         string surname,
-                                         string phone, 
-                                         string email,
-                                         string password,
-                                         string address,
-                                         string city, 
-                                         string country){
+        public static int CreateUser(string name, 
+                                     string surname,
+                                     string phone, 
+                                     string email,
+                                     string password,
+                                     string type,
+                                     string address,
+                                     string city, 
+                                     string country,
+                                     string description){
             RegUser data = new RegUser
             {
                 Name = name,
@@ -25,18 +27,20 @@ namespace FishingBookerLibrary.BusinessLogic
                 PhoneNumber = phone,
                 EmailAddress = email,
                 Password = password,
+                Type = type,
                 Address = address,
                 City = city,
-                Country = country
+                Country = country,
+                Description = description
             };
 
-            string sql = @"INSERT INTO dbo.RegUser (Name, Surname, PhoneNumber, EmailAddress, Password, Address, City, Country)
-                           VALUES (@Name, @Surname, @PhoneNumber, @EmailAddress, @Password, @Address, @City, @Country);";
+            string sql = @"INSERT INTO dbo.RegUser (Name, Surname, PhoneNumber, EmailAddress, Password, Type, Address, City, Country, Description, Status)
+                           VALUES (@Name, @Surname, @PhoneNumber, @EmailAddress, @Password, @Type, @Address, @City, @Country, @Description, @Status);";
 
             return SSMSDataAccess.SaveData(sql, data);
         }
 
-        public static List<RegUser> LoadEmployees()
+        public static List<RegUser> LoadUsers()
         {
             string sql = @"SELECT *
                            FROM dbo.RegUser;";

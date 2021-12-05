@@ -1,85 +1,119 @@
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\FishingBooker.dll.config
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\FishingBooker.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\FishingBooker.pdb
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\csc.exe
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\csc.exe.config
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\csc.rsp
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\csi.exe
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\csi.exe.config
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\csi.rsp
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\Microsoft.CodeAnalysis.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\Microsoft.CSharp.Core.targets
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\Microsoft.Managed.Core.targets
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\Microsoft.VisualBasic.Core.targets
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\Microsoft.Win32.Primitives.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.AppContext.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Collections.Immutable.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Console.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Diagnostics.StackTrace.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Globalization.Calendars.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.IO.Compression.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.IO.Compression.ZipFile.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.IO.FileSystem.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.IO.FileSystem.Primitives.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Net.Http.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Net.Sockets.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Reflection.Metadata.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Security.Cryptography.Encoding.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Security.Cryptography.Primitives.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Text.Encoding.CodePages.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Threading.Tasks.Extensions.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.ValueTuple.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Xml.ReaderWriter.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Xml.XmlDocument.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Xml.XPath.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\System.Xml.XPath.XDocument.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\vbc.exe
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\vbc.exe.config
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\vbc.rsp
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\VBCSCompiler.exe
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\roslyn\VBCSCompiler.exe.config
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Antlr3.Runtime.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\FishingBookerLibrary.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Microsoft.Web.Infrastructure.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Newtonsoft.Json.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.Helpers.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.Mvc.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.Optimization.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.Razor.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.WebPages.Deployment.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.WebPages.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.WebPages.Razor.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\WebGrease.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\FishingBookerLibrary.pdb
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.Helpers.xml
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.Mvc.xml
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.Optimization.xml
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.Razor.xml
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.WebPages.xml
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.WebPages.Deployment.xml
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\System.Web.WebPages.Razor.xml
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Newtonsoft.Json.xml
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Antlr3.Runtime.pdb
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.csproj.AssemblyReference.cache
-D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.csproj.CoreCompileInputs.cache
-D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.csproj.CopyComplete
-D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.pdb
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Dapper.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Dapper.xml
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Microsoft.AspNet.Identity.Core.dll
-D:\GitHubRepositories\FishingBooker\FishingBooker\bin\Microsoft.AspNet.Identity.Core.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\FishingBooker.dll.config
+D:\poslednji put\FishingBooker\FishingBooker\bin\FishingBooker.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\FishingBooker.pdb
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\csc.exe
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\csc.exe.config
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\csc.rsp
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\csi.exe
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\csi.exe.config
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\csi.rsp
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\Microsoft.Managed.Core.targets
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\Microsoft.Win32.Primitives.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.AppContext.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Collections.Immutable.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Console.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Globalization.Calendars.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.IO.Compression.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.IO.Compression.ZipFile.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.IO.FileSystem.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Net.Http.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Net.Sockets.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Reflection.Metadata.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Threading.Tasks.Extensions.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.ValueTuple.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Xml.XmlDocument.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Xml.XPath.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\vbc.exe
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\vbc.exe.config
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\vbc.rsp
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\VBCSCompiler.exe
+D:\poslednji put\FishingBooker\FishingBooker\bin\roslyn\VBCSCompiler.exe.config
+D:\poslednji put\FishingBooker\FishingBooker\bin\Antlr3.Runtime.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\EntityFramework.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\EntityFramework.SqlServer.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\FishingBookerLibrary.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.AspNet.Identity.Core.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.Cookies.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.Facebook.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.Google.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.OAuth.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.Twitter.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Web.Infrastructure.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Newtonsoft.Json.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Owin.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.Helpers.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.Mvc.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.Optimization.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.Razor.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.WebPages.Deployment.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.WebPages.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.WebPages.Razor.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\WebGrease.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\Dapper.dll
+D:\poslednji put\FishingBooker\FishingBooker\bin\FishingBookerLibrary.pdb
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.Helpers.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.Mvc.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.Optimization.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.Razor.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.WebPages.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.WebPages.Deployment.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\System.Web.WebPages.Razor.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Newtonsoft.Json.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Antlr3.Runtime.pdb
+D:\poslednji put\FishingBooker\FishingBooker\bin\EntityFramework.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\EntityFramework.SqlServer.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.AspNet.Identity.Core.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.Facebook.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.Cookies.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.Google.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.Twitter.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.Owin.Security.OAuth.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\poslednji put\FishingBooker\FishingBooker\bin\Dapper.xml
+D:\poslednji put\FishingBooker\FishingBooker\obj\Debug\FishingBooker.csproj.AssemblyReference.cache
+D:\poslednji put\FishingBooker\FishingBooker\obj\Debug\FishingBooker.csproj.CoreCompileInputs.cache
+D:\poslednji put\FishingBooker\FishingBooker\obj\Debug\FishingBooker.csproj.CopyComplete
+D:\poslednji put\FishingBooker\FishingBooker\obj\Debug\FishingBooker.dll
+D:\poslednji put\FishingBooker\FishingBooker\obj\Debug\FishingBooker.pdb
+D:\poslednji put\FishingBooker\FishingBooker\obj\Debug\FishingBooker.Migrations.InitialCreate.resources
+D:\poslednji put\FishingBooker\FishingBooker\obj\Debug\FishingBooker.csproj.GenerateResource.cache
+D:\poslednji put\FishingBooker\FishingBooker\obj\Debug\FishingBooker.Migrations.AddedNewFields.resources
+D:\poslednji put\FishingBooker\FishingBooker\obj\Debug\FishingBooker.Migrations.ChangedColumnEmail.resources
+D:\poslednji put\FishingBooker\FishingBooker\obj\Debug\FishingBooker.Migrations.ChangedColumnPassword.resources
+D:\poslednji put\FishingBooker\FishingBooker\obj\Debug\FishingBooker.Migrations.ChangedNameUsers.resources
+D:\poslednji put\FishingBooker\FishingBooker\obj\Debug\FishingBooker.Migrations.ChangedNameOfOtherTables.resources

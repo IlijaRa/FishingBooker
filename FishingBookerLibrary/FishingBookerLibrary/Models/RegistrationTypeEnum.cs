@@ -8,8 +8,9 @@ namespace FishingBookerLibrary.Models
 {
         public enum RegistrationType
         {
-            ForCottageOwner,
-            ForShipOwner,
-            ForFishingInstructor
+            CottageOwner,
+            ShipOwner,
+            FishingInstructor
         }
+
 }

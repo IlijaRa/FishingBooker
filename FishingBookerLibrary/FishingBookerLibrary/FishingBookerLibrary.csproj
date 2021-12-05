@@ -66,6 +66,7 @@
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Security\CustomPasswordHasher.cs" />
     <Compile Include="Models\Security\Encrypt.cs" />
+    <Compile Include="Models\UserStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RegistrationTypeEnum.cs" />
     <Compile Include="Models\RegularReservation.cs" />
