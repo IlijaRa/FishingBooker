@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using FishingBooker.Models;
+using FishingBookerLibrary.BusinessLogic;
+using FishingBookerLibrary.Models;
 
 namespace FishingBooker.Controllers
 {
@@ -26,5 +29,6 @@ namespace FishingBooker.Controllers
 
             return View();
         }
+        
     }
 }

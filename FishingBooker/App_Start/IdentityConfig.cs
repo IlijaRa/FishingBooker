@@ -96,6 +96,24 @@ namespace FishingBooker
         {
         }
 
+        //ovaj override omogucava da se uloguju samo oni user-i koji imaju status "validated"
+        public override Task<SignInStatus> PasswordSignInAsync(string userName, string password, bool rememberMe, bool shouldLockout)
+        {
+            var user = UserManager.FindByEmailAsync(userName).Result;
+
+            if (user.Status != "Validated")
+            {
+                return Task.FromResult<SignInStatus>(SignInStatus.LockedOut);
+            }
+            else
+            {
+                //return Task.FromResult<SignInStatus>(SignInStatus.Success);
+                return base.PasswordSignInAsync(userName, password, rememberMe, shouldLockout);
+            }
+
+            //return base.PasswordSignInAsync(userName, password, rememberMe, shouldLockout);
+        }
+
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
         {
             return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);

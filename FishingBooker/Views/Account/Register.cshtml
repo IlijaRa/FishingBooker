@@ -3,6 +3,17 @@
     ViewBag.Title = "Register";
 }
 
+@{
+    var selectList = new SelectList(
+        new List<SelectListItem>
+        {
+            new SelectListItem {Text = "Cottage owner", Value = "CottageOwner"},
+            new SelectListItem {Text = "Ship owner", Value = "ShipOwner"},
+            new SelectListItem {Text = "Fishing instructor", Value = "Fishing instructor"},
+                                }, "Value", "Text");
+}
+
+
 <h2>@ViewBag.Title.</h2>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -11,7 +22,7 @@
     <h4>Create a new account.</h4>
     <hr />
 
-    @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+    @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -63,8 +74,8 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Type, "CottageOwner, ShipOwner or FishingInstructor", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(model => model.Type, selectList, "", new { @class = "control-label col-md-4" })
         </div>
     </div>
 

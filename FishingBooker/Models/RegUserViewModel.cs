@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace FishingBooker.Models
 {
@@ -44,13 +45,14 @@ namespace FishingBooker.Models
 
         [Display(Name = "Confirm password*")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Your confirmation does not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Your confirmation does not match.")]
         public string ConfirmPassword { get; set; }
 
 
         [Display(Name = "Type of user*")]
-        [Required(ErrorMessage = "You need to enter your registration type.")]
-        public string Type { get; set; }
+        [Required(ErrorMessage = "You need to choose your registration type.")]
+        //public string SelectedOwnerType { get; set; }
+        public string Type { get; set; }/*IEnumerable<SelectListItem>*/
 
 
         [Display(Name = "Address*")]

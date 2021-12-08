@@ -10,7 +10,6 @@ namespace FishingBookerLibrary.Models
     {
         public RegistrationType RegistrationType { get; set; }
         public string RegistrationDescription { get; set; }
-
     }
     
 }

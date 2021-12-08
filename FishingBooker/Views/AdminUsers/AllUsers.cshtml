@@ -1,0 +1,107 @@
+﻿@model IEnumerable<FishingBooker.Models.RegUserViewModel>
+
+@{
+    ViewBag.Title = "AllUsers";
+}
+
+<h2>AllUsers</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConfirmPassword)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailAddress)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConfirmPassword)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink(
+                "Block",
+                "BlockUser",
+                "AdminUsers",
+                new
+                     {
+                    email = item.EmailAddress,
+                    status = "Blocked"
+                    },
+                null
+            )
+        </td>
+    </tr>
+}
+
+</table>
