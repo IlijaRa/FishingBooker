@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using FishingBooker.Models;
+using FishingBookerLibrary.Models;
+using FishingBookerLibrary.BusinessLogic;
 
 namespace FishingBooker
 {
@@ -99,6 +101,7 @@ namespace FishingBooker
         //ovaj override omogucava da se uloguju samo oni user-i koji imaju status "validated"
         public override Task<SignInStatus> PasswordSignInAsync(string userName, string password, bool rememberMe, bool shouldLockout)
         {
+
             var user = UserManager.FindByEmailAsync(userName).Result;
 
             if (user.Status != "Validated")

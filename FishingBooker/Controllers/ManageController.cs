@@ -7,6 +7,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FishingBooker.Models;
+using FishingBookerLibrary.BusinessLogic;
+using FishingBookerLibrary.Models;
 
 namespace FishingBooker.Controllers
 {
@@ -274,6 +276,54 @@ namespace FishingBooker.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+
+        //
+        // GET: /Manage/ChangeBasicInfo
+        public ActionResult ChangeBasicInfo(string email)
+        {
+            var data = RegUserCRUD.LoadUsers();
+            ChangeBasicInfoViewModel changeInfo = new ChangeBasicInfoViewModel();
+            foreach(var row in data)
+            {
+                if (row.EmailAddress == email)
+                {
+                    changeInfo.Name = row.Name;
+                    changeInfo.Surname = row.Surname;
+                    changeInfo.PhoneNumber = row.PhoneNumber;
+                    changeInfo.EmailAddress = row.EmailAddress;
+                    changeInfo.Address = row.Address;
+                    changeInfo.City = row.City;
+                    changeInfo.Country = row.Country;
+                }
+                    
+            }
+            return View(changeInfo);
+        }
+
+        //
+        // POST: /Manage/ChangeBasicInfo
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeBasicInfo(ChangeBasicInfoViewModel model)
+        {
+            int i = RegUserCRUD.UpdateUserBasicInfo(model.Name, 
+                                            model.Surname,
+                                            model.PhoneNumber,
+                                            User.Identity.Name,
+                                            model.Address,
+                                            model.City,
+                                            model.Country);
+
+            if (i == 1)
+                return RedirectToAction("Index", "Manage");
+            else
+            {
+                // If we got this far, something failed, redisplay form
+                return View(model);
+            }
+
         }
 
         //

@@ -58,6 +58,46 @@ namespace FishingBooker.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class ChangeBasicInfoViewModel
+    {
+        [Display(Name = "First name*")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "You need to provide a name between 2-50 characters.")]
+        [Required(ErrorMessage = "You need to give us your first name.")]
+        public string Name { get; set; }
+
+
+        [Display(Name = "Last name*")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "You need to provide a surname between 2-50 characters.")]
+        [Required(ErrorMessage = "You need to give us your last name.")]
+        public string Surname { get; set; }
+
+
+        [Display(Name = "Phone number*")]
+        public string PhoneNumber { get; set; }
+
+
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email address*")]
+        [Required(ErrorMessage = "You need to give us your email address.")]
+        public string EmailAddress { get; set; }
+
+
+        [Display(Name = "Address*")]
+        [Required(ErrorMessage = "You need to enter your address.")]
+        public string Address { get; set; }
+
+
+        [Display(Name = "City*")]
+        [Required(ErrorMessage = "You need to enter city.")]
+        public string City { get; set; }
+
+
+        [Display(Name = "Country*")]
+        [Required(ErrorMessage = "You need to enter country.")]
+        public string Country { get; set; }
+
+    }
+
     public class AddPhoneNumberViewModel
     {
         [Required]

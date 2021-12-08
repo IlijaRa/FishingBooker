@@ -1,9 +1,11 @@
 ﻿using FishingBooker.Models;
 using FishingBooker.Models.EmailSender;
 using FishingBookerLibrary.BusinessLogic;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -47,12 +49,13 @@ namespace FishingBooker.Controllers
 
         public ActionResult AllUsers()
         {
+            // ova akcija ipak prikazuje samo one validirane korisnike
             var data = RegUserCRUD.LoadUsers();
             List<RegUserViewModel> users = new List<RegUserViewModel>();
             foreach (var row in data)
             {
-                //if (!User.IsInRole("Admin"))
-                //{
+                if (row.Status == "Validated")
+                {
                     users.Add(new RegUserViewModel
                     {
                         Name = row.Name,
@@ -65,7 +68,7 @@ namespace FishingBooker.Controllers
                         Country = row.Country,
                         Description = row.Description
                     });
-                //}
+                }
             }
             return View(users);
         }
@@ -108,6 +111,11 @@ namespace FishingBooker.Controllers
         {
             RegUserCRUD.UpdateUserStatus(email, status);
             return RedirectToAction("AllUsers", "AdminUsers");
+        }
+
+        public ActionResult RegisterAdmin()
+        {
+            return View();
         }
     }
 }

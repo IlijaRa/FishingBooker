@@ -41,6 +41,32 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
+        public static int UpdateUserBasicInfo(string name,
+                                              string surname,
+                                              string phone,
+                                              string email,
+                                              string address,
+                                              string city,
+                                              string country)
+        {
+
+            RegUser data = new RegUser
+            {
+                Name = name,
+                Surname = surname,
+                PhoneNumber = phone,
+                EmailAddress = email,
+                Address = address,
+                City = city,
+                Country = country
+            };
+            string sql = @" UPDATE dbo.RegUsers
+                            SET Name = @Name, Surname = @Surname, PhoneNumber = @PhoneNumber, Address = @Address, City = @City, Country = @Country  
+                            WHERE EmailAddress = @EmailAddress;";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
         public static int UpdateUserStatus(string email, string status)
         {
 
@@ -65,6 +91,21 @@ namespace FishingBookerLibrary.BusinessLogic
 
             return SSMSDataAccess.LoadData<RegUser>(sql);
         }
+
+        // ne radi
+        //public static List<RegUser> LoadUserByEmail(string email)
+        //{
+        //    RegUser data = new RegUser
+        //    {
+        //        EmailAddress = email
+        //    };
+
+        //    string sql = @"SELECT Name, Surname, PhoneNumber, EmailAddress, Password, Type, Address, City, Country, Description, Status
+        //                   FROM dbo.RegUsers
+        //                   WHERE EmailAddress = @EmailAddress;";
+
+        //    return SSMSDataAccess.LoadData<RegUser>(sql);
+        //}
 
         public static int DeleteUserByEmail(string email)
         {

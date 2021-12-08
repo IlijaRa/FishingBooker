@@ -27,7 +27,7 @@
                     
                     @if (User.IsInRole("Admin")) { 
                     <li>@Html.ActionLink("Non-validated users", "InvalidUsers", "AdminUsers")</li>
-                    <li>@Html.ActionLink("All users", "AllUsers", "AdminUsers")</li>
+                    <li>@Html.ActionLink("Validated users", "AllUsers", "AdminUsers")</li>
                     }
 
                 </ul>
