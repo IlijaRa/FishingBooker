@@ -15,12 +15,12 @@ namespace FishingBookerLibrary.Models
         public string Title { get; set; }
         public string Address { get; set; }
         public string PromotionDescription { get; set; }
-        public double Rating { get; set; }
+        public decimal Rating { get; set; }
         public string BehaviourRules { get; set; }
         public string AdditionalServices { get; set; }
         public string Pricelist { get; set; }
-        public double Price { get; set; }
-        public List<FastReservation> FastReservations { get; set; }
+        public decimal Price { get; set; }
+        //public List<FastReservation> FastReservations { get; set; }
         public List<RegularReservation> RegularReservations { get; set; }
     }
 }

@@ -13,8 +13,8 @@ namespace FishingBookerLibrary.Models
         public string EntityTitle { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime StartTime { get; set; }
-        //UNDONE: public int NumberOfDays { get; set; } ne znam da li je potrebno za rezervisanje instruktora pecanja, tako da treba da razmotrimo
+        public int NumberOfDays { get; set; }
         public int NumberOfGuests { get; set; }
-        public List<string> AddedAdditionalServices { get; set; }
+        public string AddedAdditionalServices { get; set; }
     }
 }

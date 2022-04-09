@@ -106,7 +106,7 @@ namespace FishingBooker
 
             if (user.Status != "Validated")
             {
-                return Task.FromResult<SignInStatus>(SignInStatus.LockedOut);
+                return Task.FromResult<SignInStatus>(SignInStatus.RequiresVerification);
             }
             else
             {

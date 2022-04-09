@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\AdventureCRUD.cs" />
     <Compile Include="BusinessLogic\RegUserCRUD.cs" />
     <Compile Include="DataAccess\SSMSDataAccess.cs" />
     <Compile Include="Models\Adventure.cs" />

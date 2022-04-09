@@ -1,0 +1,93 @@
+﻿@model IEnumerable<FishingBooker.Models.AdventureViewModel>
+
+@{
+    ViewBag.Title = "ViewAdventures";
+}
+
+<h2>ViewAdventures</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateAdventure", "InstructorUsers")
+</p>
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.AdventureId)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PromotionDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BehaviourRules)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdditionalServices)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pricelist)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaxNumberOfPeople)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FishingEquipment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CancellationPolicy)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdventureId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PromotionDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BehaviourRules)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdditionalServices)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pricelist)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaxNumberOfPeople)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FishingEquipment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CancellationPolicy)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
