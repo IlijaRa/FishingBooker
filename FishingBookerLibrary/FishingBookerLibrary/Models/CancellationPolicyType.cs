@@ -9,6 +9,8 @@ namespace FishingBookerLibrary.Models
     public enum CancellationPolicyType
     {
         ForFree,
-        EntityKeepsThePercentage
+        Suspension10,
+        Suspension20,
+        Suspension30
     }
 }

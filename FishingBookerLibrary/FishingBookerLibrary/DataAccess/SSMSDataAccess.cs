@@ -25,6 +25,14 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
+        public static T LoadSingleData<T>(string sql)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return (T)cnn.Query(sql);
+            }
+        }
+
         public static int SaveData<T>(string sql, T data)
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))

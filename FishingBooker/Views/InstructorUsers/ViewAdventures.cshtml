@@ -4,11 +4,16 @@
     ViewBag.Title = "ViewAdventures";
 }
 
-<h2>ViewAdventures</h2>
+<h2>View adventures</h2>
 
 <p>
-    @Html.ActionLink("Create New", "CreateAdventure", "InstructorUsers")
+    @Html.ActionLink("Create adventure", "CreateAdventure", "InstructorUsers")
 </p>
+
+@using (Html.BeginForm("SearchAdventures", "InstructorUsers", FormMethod.Get))
+{
+    @Html.TextBox("searching")<input type="submit", value="Search"/>
+}
 <table class="table">
     <tr>
         @*<th>
@@ -18,12 +23,18 @@
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Address)
+            @Html.DisplayNameFor(model => model.Street)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AddressNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PromotionDescription)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.BehaviourRules)
         </th>
         <th>
@@ -31,63 +42,71 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Pricelist)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Price)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.MaxNumberOfPeople)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.FishingEquipment)
-        </th>
-        <th>
+        </th>*@
+        @*<th>
             @Html.DisplayNameFor(model => model.CancellationPolicy)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AdventureId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PromotionDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BehaviourRules)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AdditionalServices)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pricelist)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaxNumberOfPeople)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FishingEquipment)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CancellationPolicy)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+<tr>
+    @*<td>
+        @Html.DisplayFor(modelItem => item.AdventureId)
+    </td>*@
+    <td>
+        @Html.DisplayFor(modelItem => item.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Street)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.AddressNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.City)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PromotionDescription)
+    </td>
+    @*<td>
+        @Html.DisplayFor(modelItem => item.BehaviourRules)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.AdditionalServices)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Pricelist)
+    </td>*@
+    <td>
+        @Html.DisplayFor(modelItem => item.Price)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.MaxNumberOfPeople)
+    </td>
+    @*<td>
+        @Html.DisplayFor(modelItem => item.FishingEquipment)
+    </td>*@
+    @*<th>
+        @Html.DisplayFor(model => model.CancellationPolicy)
+    </th>*@
+    <td>
+        @Html.ActionLink("Edit", "EditAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null) |
+
+        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+
+        @Html.ActionLink("Delete", "DeleteAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null)
+    </td>
+</tr>
 }
 
 </table>

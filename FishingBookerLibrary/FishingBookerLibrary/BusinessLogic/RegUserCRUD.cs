@@ -19,7 +19,8 @@ namespace FishingBookerLibrary.BusinessLogic
                                      string address,
                                      string city,
                                      string country,
-                                     string description)
+                                     string description,
+                                     string biography)
         {
             RegUser data = new RegUser
             {
@@ -32,11 +33,12 @@ namespace FishingBookerLibrary.BusinessLogic
                 Address = address,
                 City = city,
                 Country = country,
-                Description = description
+                Description = description,
+                Biography = biography
             };
 
-            string sql = @"INSERT INTO dbo.RegUsers (Name, Surname, PhoneNumber, EmailAddress, Password, Type, Address, City, Country, Description, Status)
-                           VALUES (@Name, @Surname, @PhoneNumber, @EmailAddress, @Password, @Type, @Address, @City, @Country, @Description, @Status);";
+            string sql = @"INSERT INTO dbo.RegUsers (Name, Surname, PhoneNumber, EmailAddress, Password, Type, Address, City, Country, Description, Biography, Status)
+                           VALUES (@Name, @Surname, @PhoneNumber, @EmailAddress, @Password, @Type, @Address, @City, @Country, @Description, @Biography, @Status);";
 
             return SSMSDataAccess.SaveData(sql, data);
         }
@@ -83,14 +85,39 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
+        public static int UpdateBiography(string userId, string biography)
+        {
+            RegUser data = new RegUser
+            {
+                Id = userId,
+                Biography = biography
+            };
+
+            string sql = @" UPDATE dbo.RegUsers
+                            SET Biography = @Biography
+                            WHERE Id = @Id";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
 
         public static List<RegUser> LoadUsers()
         {
-            string sql = @"SELECT Name, Surname, PhoneNumber, EmailAddress, Password, Type, Address, City, Country, Description, Status
+            string sql = @"SELECT *
                            FROM dbo.RegUsers;";
 
             return SSMSDataAccess.LoadData<RegUser>(sql);
         }
+
+        // ne radi where Id = @Id
+        //public static RegUser LoadUser(string userId)
+        //{
+
+        //    string sql = @"SELECT *
+        //                   FROM dbo.RegUsers
+        //                   WHERE Id = @Id;";
+
+        //    return SSMSDataAccess.LoadSingleData<RegUser>(sql);
+        //}
 
         // ne radi
         //public static List<RegUser> LoadUserByEmail(string email)
@@ -100,7 +127,7 @@ namespace FishingBookerLibrary.BusinessLogic
         //        EmailAddress = email
         //    };
 
-        //    string sql = @"SELECT Name, Surname, PhoneNumber, EmailAddress, Password, Type, Address, City, Country, Description, Status
+        //    string sql = @"SELECT *
         //                   FROM dbo.RegUsers
         //                   WHERE EmailAddress = @EmailAddress;";
 

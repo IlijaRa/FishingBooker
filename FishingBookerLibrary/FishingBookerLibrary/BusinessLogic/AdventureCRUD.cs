@@ -19,7 +19,7 @@ namespace FishingBookerLibrary.BusinessLogic
                                           decimal price,
                                           int maxNumberOfPeople,
                                           string fishingEquipment,
-                                          string cancellationPolicy,
+                                          CancellationPolicyType cancellationPolicy,
                                           string instructorId)
         {
             Adventure data = new Adventure
@@ -39,6 +39,55 @@ namespace FishingBookerLibrary.BusinessLogic
 
             string sql = @"INSERT INTO dbo.Adventures (Title, Address, PromotionDescription, BehaviourRules, AdditionalServices, Pricelist, Price, MaxNumberOfPeople, FishingEquipment, CancellationPolicy, InstructorId)
                            VALUES (@Title, @Address, @PromotionDescription, @BehaviourRules, @AdditionalServices, @Pricelist, @Price, @MaxNumberOfPeople, @FishingEquipment, @CancellationPolicy, @InstructorId);";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
+        public static int UpdateAdventure(int advId,
+                                          string title,
+                                          string address,
+                                          string promotion,
+                                          string behaviour,
+                                          string additionalServices,
+                                          string pricelist,
+                                          decimal price,
+                                          int maxNumberOfPeople,
+                                          string fishingEquipment,
+                                          CancellationPolicyType cancellationPolicy)
+        {
+
+            Adventure data = new Adventure
+            {
+                Id = advId,
+                Title = title,
+                Address = address,
+                PromotionDescription = promotion,
+                BehaviourRules = behaviour,
+                AdditionalServices = additionalServices,
+                Pricelist = pricelist,
+                Price = price,
+                MaxNumberOfPeople = maxNumberOfPeople,
+                FishingEquipment = fishingEquipment,
+                CancellationPolicy = cancellationPolicy,
+            };
+
+            string sql = @"UPDATE dbo.Adventures 
+                           SET Title = @Title, Address = @Address, PromotionDescription = @PromotionDescription, BehaviourRules = @BehaviourRules, AdditionalServices = @AdditionalServices, Pricelist = @Pricelist, Price = @Price, MaxNumberOfPeople = @MaxNumberOfPeople, FishingEquipment = @FishingEquipment, CancellationPolicy = @CancellationPolicy
+                           WHERE Id = @Id;";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
+        public static int DeleteAdventure(int adventureId)
+        {
+            Adventure data = new Adventure
+            {
+                Id = adventureId
+            };
+
+            string sql = @" DELETE 
+                            FROM dbo.Adventures
+                            WHERE Id = @Id;";
 
             return SSMSDataAccess.SaveData(sql, data);
         }

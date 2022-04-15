@@ -201,6 +201,9 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdventureFastReservationViewModel.cs" />
+    <Compile Include="Models\AdventureInstructorViewModel.cs" />
+    <Compile Include="Models\EditAdventureViewModel.cs" />
     <Compile Include="Models\EmailSender\Gmail.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\AdventureViewModel.cs" />
@@ -269,8 +272,12 @@
     <Content Include="Views\Manage\ChangeBasicInfo.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\AdminUsers\RegisterAdmin.cshtml" />
+    <Content Include="Views\InstructorUsers\EditAdventure.cshtml" />
+    <Content Include="Views\InstructorUsers\CreateReservation.cshtml" />
+    <Content Include="Views\InstructorUsers\Map.cshtml" />
     <Content Include="Views\InstructorUsers\ViewAdventures.cshtml" />
     <Content Include="Views\InstructorUsers\CreateAdventure.cshtml" />
+    <Content Include="Views\InstructorUsers\SearchAdventures.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

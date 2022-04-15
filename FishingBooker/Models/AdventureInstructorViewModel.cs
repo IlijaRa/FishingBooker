@@ -7,13 +7,13 @@ using System.Web;
 
 namespace FishingBooker.Models
 {
-    public class AdventureViewModel
+    public class AdventureInstructorViewModel
     {
         public int AdventureId { get; set; }
 
 
         [Display(Name = "Title*")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "You need to provide a name between 2-100 characters.")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "You need to provide a title between 2-100 characters.")]
         [Required(ErrorMessage = "You need to give us your title.")]
         public string Title { get; set; }
 
@@ -70,5 +70,9 @@ namespace FishingBooker.Models
 
         [Display(Name = "Cancellation policy")]
         public CancellationPolicyType CancellationPolicy { get; set; }
+
+
+        [Display(Name = "Instructors biography")]
+        public string Biography { get; set; }
     }
 }

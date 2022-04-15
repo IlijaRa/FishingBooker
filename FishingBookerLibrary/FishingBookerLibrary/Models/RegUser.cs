@@ -9,7 +9,7 @@ namespace FishingBookerLibrary.Models
 {
     public class RegUser
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
@@ -22,5 +22,6 @@ namespace FishingBookerLibrary.Models
         public string Description { get; set; }
         public string Status { get; set; } = "Waiting";
 
+        public string Biography { get; set; }
     }
 }

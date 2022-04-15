@@ -44,6 +44,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Biography)
+        </th>
         <th></th>
     </tr>
 
@@ -85,6 +88,9 @@
     <td>
         @Html.DisplayFor(modelItem => item.Description)
     </td>
+    <th>
+        @Html.DisplayNameFor(model => model.Biography)
+    </th>
     <td>
         @Html.ActionLink(
             "Accept",

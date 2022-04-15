@@ -12,6 +12,6 @@ namespace FishingBookerLibrary.Models
         public string RegDescription { get; set; }
         public Adventure adventure { get; set; }
         public double Rating { get; set; }
-        public string Biography { get; set; }
+        //public string Biography { get; set; }
     }
 }
