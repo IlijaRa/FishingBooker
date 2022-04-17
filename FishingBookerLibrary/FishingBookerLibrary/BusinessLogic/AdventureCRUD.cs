@@ -19,7 +19,7 @@ namespace FishingBookerLibrary.BusinessLogic
                                           decimal price,
                                           int maxNumberOfPeople,
                                           string fishingEquipment,
-                                          CancellationPolicyType cancellationPolicy,
+                                          Enums.CancellationPolicyType cancellationPolicy,
                                           string instructorId)
         {
             Adventure data = new Adventure
@@ -53,7 +53,7 @@ namespace FishingBookerLibrary.BusinessLogic
                                           decimal price,
                                           int maxNumberOfPeople,
                                           string fishingEquipment,
-                                          CancellationPolicyType cancellationPolicy)
+                                          Enums.CancellationPolicyType cancellationPolicy)
         {
 
             Adventure data = new Adventure

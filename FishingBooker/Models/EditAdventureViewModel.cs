@@ -8,6 +8,6 @@ namespace FishingBooker.Models
     public class EditAdventureViewModel
     {
         public AdventureInstructorViewModel adventure { get; set; } = new AdventureInstructorViewModel();
-        public IEnumerable<AdventureFastReservationViewModel> fast_reservations { get; set; } //= new List<AdventureFastReservationViewModel>();
+        public IEnumerable<AdventureReservationViewModel> fast_reservations { get; set; } //= new List<AdventureFastReservationViewModel>();
     }
 }

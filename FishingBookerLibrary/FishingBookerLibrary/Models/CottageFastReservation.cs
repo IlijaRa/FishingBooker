@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FishingBookerLibrary.Models
 {
-    public class CottageFastReservation : FastReservation
+    public class CottageFastReservation : Reservation
     {
 
     }

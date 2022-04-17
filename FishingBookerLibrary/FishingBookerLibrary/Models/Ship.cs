@@ -12,6 +12,6 @@ namespace FishingBookerLibrary.Models
         public ShipSpecification ShipSpecification { get; set; }
         public string NavigationEquipment { get; set; }
         public List<string> FishingEquipment { get; set; }
-        public CancellationPolicyType CancelationPolicy { get; set; }
+        public Enums.CancellationPolicyType CancelationPolicy { get; set; }
     }
 }

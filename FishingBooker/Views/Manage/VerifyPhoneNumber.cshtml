@@ -1,6 +1,10 @@
 ﻿@model FishingBooker.Models.VerifyPhoneNumberViewModel
 @{
     ViewBag.Title = "Verify Phone Number";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
 }
 
 <h2>@ViewBag.Title.</h2>

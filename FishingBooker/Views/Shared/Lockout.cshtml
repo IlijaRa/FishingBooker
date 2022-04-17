@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "Locked Out";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
 }
 
 <hgroup>

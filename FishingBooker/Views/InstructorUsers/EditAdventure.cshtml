@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "EditAdventure";
+    Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
     int adventureId = (int)ViewData["AdventureId"];
     string MapSource = (string)ViewData["MapSource"];
     MapSource = "\"" + MapSource + "\"";
@@ -162,52 +163,56 @@
         <th>Max number of people</th>
         <th>Additional services</th>
         <th>Price</th>
+        <th>Is reserved?</th>
     </tr>
 
     @foreach (var item in Model.fast_reservations)
     {
-        <tr>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>*@
-            @Html.HiddenFor(modelItem => item.Id)
-            <td>
-                @Html.DisplayFor(modelItem => item.Place)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxNumberOfPeople)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdditionalServices)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-            <td>
-                @Html.ActionLink(
-                    "Delete",
-                    "DeleteFastReservation",
-                    "InstructorUsers",
-                    new
-                         {
-                        advId = adventureId,
-                        reservationId = item.Id
-                        },
-                    null
-                )
-            </td>
-            </td>
-        </tr>
+<tr>
+    @*<td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>*@
+    @Html.HiddenFor(modelItem => item.Id)
+    <td>
+        @Html.DisplayFor(modelItem => item.Place)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.StartDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.StartTime)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Duration)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.MaxNumberOfPeople)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.AdditionalServices)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Price)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.IsReserved)
+    </td>
+    <td>
+    <td>
+        @Html.ActionLink(
+            "Delete",
+            "DeleteFastReservation",
+            "InstructorUsers",
+            new
+                 {
+                advId = adventureId,
+                reservationId = item.Id
+                },
+            null
+        )
+    </td>
+    </td>
+</tr>
     }
 
 </table>

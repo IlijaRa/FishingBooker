@@ -11,7 +11,7 @@ namespace FishingBooker.Models
 {
     public class RegUserViewModel
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
 
         [Display(Name = "First name*")]

@@ -148,5 +148,53 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
+        public static int SendDeactivationRequest(  string name, 
+                                                    string surname, 
+                                                    string email, 
+                                                    string reason)
+        {
+            DeactivationRequest data = new DeactivationRequest
+            {
+                Name = name,
+                Surname = surname,
+                EmailAddress = email,
+                Reason = reason
+            };
+
+            string sql = @"INSERT INTO dbo.DeactivationRequests (UserName, UserSurname, EmailAddress, Reason)
+                           VALUES (@Name, @Surname, @EmailAddress, @Reason);";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
+        public static InstructorAvailability LoadInstructorsAvailability(string instructorsId)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.InstructorsAvailabilities
+                            WHERE InstructorId = @InstructorId;";
+            return SSMSDataAccess.LoadInstructorsAvailability<InstructorAvailability>(sql, instructorsId);
+        }
+
+        public static List<InstructorAvailability> LoadAvailabilities()
+        {
+            string sql = @"SELECT *
+                           FROM dbo.InstructorsAvailabilities;";
+
+            return SSMSDataAccess.LoadData<InstructorAvailability>(sql);
+        }
+
+        
+        public static int SetRoleInDB(string userId, Enums.RegistrationTypeInDB roleId)
+        {
+            UserRole data = new UserRole
+            {
+                UserId = userId,
+                RoleId = roleId
+            };
+
+            string sql = @"INSERT INTO dbo.UserRole (UserId, RoleId)
+                           VALUES (@UserId, @RoleId);";
+            return SSMSDataAccess.SaveData(sql, data);
+        }
     }
 }

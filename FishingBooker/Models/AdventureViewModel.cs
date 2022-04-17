@@ -69,6 +69,6 @@ namespace FishingBooker.Models
 
 
         [Display(Name = "Cancellation policy")]
-        public CancellationPolicyType CancellationPolicy { get; set; }
+        public Enums.CancellationPolicyType CancellationPolicy { get; set; }
     }
 }

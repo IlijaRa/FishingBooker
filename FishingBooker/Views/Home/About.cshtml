@@ -1,5 +1,9 @@
 ﻿@{
     ViewBag.Title = "About";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>

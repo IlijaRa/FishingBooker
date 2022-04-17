@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "Error";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
 }
 
 <h1 class="text-danger">Error.</h1>

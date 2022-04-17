@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace FishingBooker.Controllers
 {
+    [Authorize(Roles = "ValidFishingInstructor")]
     public class InstructorUsersController : Controller
     {
         // GET: InstructorUsers
@@ -88,6 +89,7 @@ namespace FishingBooker.Controllers
         {
             var data = AdventureCRUD.LoadAdventures();
             List<AdventureViewModel> found_adventures = new List<AdventureViewModel>();
+            searching = searching.ToLower();
 
             foreach (var adventure in data)
             {
@@ -96,16 +98,17 @@ namespace FishingBooker.Controllers
                     decimal result = -1;
                     decimal.TryParse(searching, out result);
                     string[] address = adventure.Address.Split(',');
-                    if (adventure.Title.Contains(searching) ||
-                        address[0].Contains(searching) ||
-                        address[1].Contains(searching) ||
-                        address[2].Contains(searching) ||
-                        adventure.PromotionDescription.Contains(searching) ||
+                    if (adventure.Title.ToLower().Contains(searching) ||
+                        address[0].ToLower().Contains(searching) ||
+                        address[1].ToLower().Contains(searching) ||
+                        address[2].ToLower().Contains(searching) ||
+                        adventure.PromotionDescription.ToLower().Contains(searching) ||
                         adventure.Price == result ||
                         adventure.MaxNumberOfPeople == result)
                     {
                         found_adventures.Add(new AdventureViewModel
                         {
+                            AdventureId = adventure.Id,
                             Title = adventure.Title,
                             Street = address[0],
                             AddressNumber = address[1],
@@ -132,8 +135,8 @@ namespace FishingBooker.Controllers
             
             EditAdventureViewModel edit_adventure = new EditAdventureViewModel();
             var data_adventures = AdventureCRUD.LoadAdventures();
-            var data_fast_reservations = FastReservationCRUD.LoadAdventureFastReservations();
-            List<AdventureFastReservationViewModel> fast_reservations_list = new List<AdventureFastReservationViewModel>();
+            var data_fast_reservations = ReservationCRUD.LoadAdventureReservations();
+            List<AdventureReservationViewModel> fast_reservations_list = new List<AdventureReservationViewModel>();
             RegUser user = RegUserCRUD.LoadUsers().Find(x => x.Id == User.Identity.GetUserId());
 
             foreach (var rowa in data_adventures)
@@ -165,23 +168,27 @@ namespace FishingBooker.Controllers
             {
                 if (row.AdventureId == advId)
                 {
-                    fast_reservations_list.Add(new AdventureFastReservationViewModel
+                    string[] duration_split = row.Duration.Split(',');
+                    int result = -1;
+                    int.TryParse(duration_split[0], out result);
+                    
+                    fast_reservations_list.Add(new AdventureReservationViewModel
                     {
                         Id = row.Id,
                         Place = row.Place,
                         StartDate = row.StartDate,
                         StartTime = row.StartTime.ToString(),
-                        Duration = row.Duration,
+                        Duration = result,
+                        DaysHours = duration_split[1],
                         MaxNumberOfPeople = row.MaxNumberOfPeople,
                         AdditionalServices = row.AdditionalServices,
-                        Price = row.Price
+                        Price = row.Price,
+                        IsReserved = row.IsReserved
                     });
                 }
             }
 
             edit_adventure.fast_reservations = fast_reservations_list;
-
-
 
             return View(edit_adventure);
         }
@@ -247,35 +254,41 @@ namespace FishingBooker.Controllers
 
         public ActionResult CreateReservation(int AdventureId)
         {
-            AdventureFastReservationViewModel model = new AdventureFastReservationViewModel();
+            AdventureReservationViewModel model = new AdventureReservationViewModel();
             model.Place = "";
             model.StartDate = DateTime.Now;
             model.StartTime = null;
             model.Duration = 0;
+            model.DaysHours = null;
             model.MaxNumberOfPeople = 0;
             model.AdditionalServices = "";
             model.Price = 0;
             model.AdventureId = AdventureId;
-
+            model.IsReserved = false;
+            model.ClientsEmailAddress = null;
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateReservation(AdventureFastReservationViewModel model)
+        public ActionResult CreateReservation(AdventureReservationViewModel model)
         {
 
             if (ModelState.IsValid)
             {
                 TimeSpan time = TimeSpan.Parse(model.StartTime.ToString());
+                string duration = model.Duration.ToString() + "," +model.DaysHours;
 
-                FastReservationCRUD.CreateAdventureFastReservations(model.Place,
+                ReservationCRUD.CreateAdventureReservations(model.Place,
                                                model.StartDate,
                                                time,
-                                               model.Duration,
+                                               duration,
                                                model.MaxNumberOfPeople,
                                                model.AdditionalServices,
                                                model.Price,
+                                               false,   // IsReserved
+                                               null,    // ClientsEmailAddress
+                                               Enums.ReservationType.Fast,
                                                model.AdventureId);
 
                 return RedirectToAction("EditAdventure", "InstructorUsers", new { advId = model.AdventureId });
@@ -286,15 +299,13 @@ namespace FishingBooker.Controllers
         public ActionResult DeleteFastReservation(int advId, int reservationId)
         {
             //System.Diagnostics.Debug.WriteLine(fastReservationId.ToString());
-            FastReservationCRUD.DeleteFastReservation(reservationId);
-            
-            return RedirectToAction("EditAdventure", "InstructorUsers", new { advId = advId});
+            if (ReservationCRUD.LoadAdventureReservationById(reservationId).IsReserved == false)
+            {
+                ReservationCRUD.DeleteAdventureReservation(reservationId);
+                return RedirectToAction("EditAdventure", "InstructorUsers", new { advId = advId });
+            }
+            else
+                return View("ReservationReservedError");
         }
-
-        //public ActionResult Map()
-        //{
-
-        //    return View();
-        //}
     }
 }

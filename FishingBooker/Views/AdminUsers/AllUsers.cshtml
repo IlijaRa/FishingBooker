@@ -5,12 +5,16 @@
 }
 
 <h2>All users</h2>
-@Html.ActionLink("Create admin", "RegisterAdmin", "AdminUsers")
+@if (User.IsInRole("HeadAdmin"))
+{
+    @Html.ActionLink("Create admin", "RegisterAdmin", "AdminUsers")
+}
+
 <table class="table">
     <tr>
         @*<th>
-            @Html.DisplayNameFor(model => model.UserId)
-        </th>*@
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -24,11 +28,11 @@
             @Html.DisplayNameFor(model => model.EmailAddress)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ConfirmPassword)
-        </th>*@
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConfirmPassword)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.Type)
         </th>
@@ -52,60 +56,60 @@
 
     @foreach (var item in Model)
     {
-<tr>
-    @*<td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>*@
-    <td>
-        @Html.DisplayFor(modelItem => item.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Surname)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.PhoneNumber)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.EmailAddress)
-    </td>
-    @*<td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ConfirmPassword)
-        </td>*@
-    <td>
-        @Html.DisplayFor(modelItem => item.Type)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Address)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.City)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Country)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Description)
-    </td>
-    <th>
-        @Html.DisplayNameFor(model => model.Biography)
-    </th>
-    <td>
-        @Html.ActionLink(
-            "Block",
-            "BlockUser",
-            "AdminUsers",
-            new
-                 {
-                email = item.EmailAddress,
-                status = "Blocked"
-                },
-            null
-        )
-    </td>
-</tr>
+        <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailAddress)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConfirmPassword)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Biography)
+            </th>
+            <td>
+                @Html.ActionLink(
+                    "Block",
+                    "BlockUser",
+                    "AdminUsers",
+                    new
+                         {
+                        email = item.EmailAddress,
+                        status = "Blocked"
+                        },
+                    null
+                )
+            </td>
+        </tr>
     }
 
 </table>

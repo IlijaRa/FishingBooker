@@ -8,7 +8,7 @@ namespace FishingBookerLibrary.Models
 {
     public class FishingInstructor: RegUser
     {
-        public RegistrationType RegType { get; set; }
+        public Enums.RegistrationType RegType { get; set; }
         public string RegDescription { get; set; }
         public Adventure adventure { get; set; }
         public double Rating { get; set; }

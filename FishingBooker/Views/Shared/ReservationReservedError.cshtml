@@ -1,0 +1,15 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "ReservationReservedError";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
+}
+
+<hgroup>
+    <h1 class="text-warning">Everything is ok, but</h1>
+    <h2 class="text-warning">This reservation is already reserved so it cannot be canceled.</h2>
+</hgroup>
+

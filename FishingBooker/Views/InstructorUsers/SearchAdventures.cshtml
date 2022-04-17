@@ -2,12 +2,13 @@
 
 @{
     ViewBag.Title = "SearchAdventures";
+    Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
 }
 
-<h2>SearchAdventures</h2>
+<h2>View adventures</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create adventure", "CreateAdventure", "InstructorUsers")
 </p>
 <table class="table">
     <tr>
@@ -89,9 +90,11 @@
             @Html.DisplayFor(modelItem => item.FishingEquipment)
         </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Edit", "EditAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null) |
+
             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+
+            @Html.ActionLink("Delete", "DeleteAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null)
         </td>
     </tr>
 }

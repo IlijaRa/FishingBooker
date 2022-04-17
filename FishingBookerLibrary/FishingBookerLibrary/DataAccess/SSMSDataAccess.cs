@@ -40,5 +40,30 @@ namespace FishingBookerLibrary.DataAccess
                 return cnn.Execute(sql, data);
             }
         }
+
+        public static T LoadReservationById<T>(string sql, int reservationId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { Id = reservationId }).FirstOrDefault();
+            }
+        }
+
+        public static List<T> LoadReservationsByAdventureId<T>(string sql, int adventureId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { AdventureId = adventureId }).ToList();
+            }
+        }
+
+        public static T LoadInstructorsAvailability<T>(string sql, string instructorId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { InstructorId = instructorId }).FirstOrDefault();
+            }
+        }
+        
     }
 }

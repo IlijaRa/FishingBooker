@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace FishingBookerLibrary.Models
 {
-    public enum UserStatus
+    public class AdventureReservation : Reservation 
     {
-        Waiting,
-        Validated,
-        Blocked
+        public int AdventureId { get; set; }
+        public string Place { get; set; }
     }
 }

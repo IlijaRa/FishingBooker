@@ -2,6 +2,10 @@
 @using Microsoft.Owin.Security
 @{
     ViewBag.Title = "Manage your external logins";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
 }
 
 <h2>@ViewBag.Title.</h2>

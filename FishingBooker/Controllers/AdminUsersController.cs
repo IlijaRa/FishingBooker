@@ -1,6 +1,7 @@
 ﻿using FishingBooker.Models;
 using FishingBooker.Models.EmailSender;
 using FishingBookerLibrary.BusinessLogic;
+using FishingBookerLibrary.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,8 @@ using System.Web.Mvc;
 
 namespace FishingBooker.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "HeadAdmin")]
     public class AdminUsersController : Controller
     {
         // GET: AdminUsers
@@ -19,7 +21,7 @@ namespace FishingBooker.Controllers
         {
             return View();
         }
-        [HttpGet]
+        //[HttpGet]
         public ActionResult InvalidUsers()
         {
             var data = RegUserCRUD.LoadUsers();
@@ -30,6 +32,7 @@ namespace FishingBooker.Controllers
                 {
                     users.Add(new RegUserViewModel
                     {
+                        UserId = row.Id,
                         Name = row.Name,
                         Surname = row.Surname,
                         PhoneNumber = row.PhoneNumber,
@@ -58,6 +61,7 @@ namespace FishingBooker.Controllers
                 {
                     users.Add(new RegUserViewModel
                     {
+                        UserId = row.Id,
                         Name = row.Name,
                         Surname = row.Surname,
                         PhoneNumber = row.PhoneNumber,
@@ -73,7 +77,7 @@ namespace FishingBooker.Controllers
             return View(users);
         }
 
-        public ActionResult ValidateUser(string email, string status)
+        public ActionResult ValidateUser(string id, string email, string status, string type)
         {
             var gmail = new Gmail {
                 To = email,
@@ -87,6 +91,13 @@ namespace FishingBooker.Controllers
             };
             gmail.SendEmail();
             RegUserCRUD.UpdateUserStatus(email, status);
+            if(type.Equals("FishingInstructor"))
+                RegUserCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidFishingInstructor);
+            else if(type.Equals("CottageOwner"))
+                RegUserCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidCottageOwner);
+            else if(type.Equals("ShipOwner"))
+                RegUserCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidShipOwner);
+
             return RedirectToAction("InvalidUsers", "AdminUsers");
         }
 
@@ -107,6 +118,7 @@ namespace FishingBooker.Controllers
             int i = RegUserCRUD.DeleteUserByEmail(email);
             return RedirectToAction("InvalidUsers","AdminUsers");
         }
+
         public ActionResult BlockUser(string email, string status)
         {
             RegUserCRUD.UpdateUserStatus(email, status);

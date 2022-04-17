@@ -201,14 +201,21 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AdventureFastReservationViewModel.cs" />
+    <Compile Include="Models\AdventureReservationViewModel.cs" />
     <Compile Include="Models\AdventureInstructorViewModel.cs" />
+    <Compile Include="Models\ClientProfileInfoViewModel.cs" />
+    <Compile Include="Models\CurrentReservationViewModel.cs" />
+    <Compile Include="Models\DeactivationRequestViewModel.cs" />
     <Compile Include="Models\EditAdventureViewModel.cs" />
     <Compile Include="Models\EmailSender\Gmail.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\AdventureViewModel.cs" />
+    <Compile Include="Models\InstructorAvailabilityViewModel.cs" />
+    <Compile Include="Models\InstructorScheduleViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RegUserViewModel.cs" />
+    <Compile Include="Models\ReservationFromHistoryViewModel.cs" />
+    <Compile Include="Models\ReservationToShowViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -278,6 +285,12 @@
     <Content Include="Views\InstructorUsers\ViewAdventures.cshtml" />
     <Content Include="Views\InstructorUsers\CreateAdventure.cshtml" />
     <Content Include="Views\InstructorUsers\SearchAdventures.cshtml" />
+    <Content Include="Views\Shared\ReservationReservedError.cshtml" />
+    <Content Include="Views\Manage\DeactivateAccount.cshtml" />
+    <Content Include="Views\Shared\DeactivationRequestSuccessful.cshtml" />
+    <Content Include="Views\Shared\_LayoutInstructor.cshtml" />
+    <Content Include="Views\Manage\InstructorSchedule.cshtml" />
+    <Content Include="Views\Manage\ClientProfileInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

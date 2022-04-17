@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace FishingBookerLibrary.Models
 {
-    public enum CancellationPolicyType
+    public class UserRole
     {
-        ForFree,
-        Suspension10,
-        Suspension20,
-        Suspension30
+        public string UserId { get; set; }
+        public Enums.RegistrationTypeInDB RoleId { get; set; }
     }
 }

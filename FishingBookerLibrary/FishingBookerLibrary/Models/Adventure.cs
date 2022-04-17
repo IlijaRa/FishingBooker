@@ -8,10 +8,10 @@ namespace FishingBookerLibrary.Models
 {
     public class Adventure : Entity
     {
-        public AdventureFastReservation AdventureFastReservation { get; set; }
+        public AdventureReservation AdventureFastReservation { get; set; }
         public int MaxNumberOfPeople { get; set; }
         public string FishingEquipment { get; set; }
-        public CancellationPolicyType /*string*/ CancellationPolicy { get; set; }
+        public Enums.CancellationPolicyType /*string*/ CancellationPolicy { get; set; }
         public string InstructorId { get; set; }
     }
 }

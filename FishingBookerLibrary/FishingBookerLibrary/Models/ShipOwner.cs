@@ -8,8 +8,8 @@ namespace FishingBookerLibrary.Models
 {
     public class ShipOwner : RegUser
     {
-        public RegistrationType RegType { get; set; }
+        public Enums.RegistrationType RegType { get; set; }
         public string RegDescription { get; set; }
-        public  RoleType RoleType { get; set; }
+        public Enums.RoleType RoleType { get; set; }
     }
 }

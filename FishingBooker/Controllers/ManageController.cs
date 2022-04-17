@@ -9,6 +9,8 @@ using Microsoft.Owin.Security;
 using FishingBooker.Models;
 using FishingBookerLibrary.BusinessLogic;
 using FishingBookerLibrary.Models;
+using System.Globalization;
+using System.Collections.Generic;
 
 namespace FishingBooker.Controllers
 {
@@ -34,9 +36,9 @@ namespace FishingBooker.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -285,7 +287,7 @@ namespace FishingBooker.Controllers
         {
             var data = RegUserCRUD.LoadUsers();
             ChangeBasicInfoViewModel changeInfo = new ChangeBasicInfoViewModel();
-            foreach(var row in data)
+            foreach (var row in data)
             {
                 if (row.EmailAddress == email)
                 {
@@ -297,7 +299,7 @@ namespace FishingBooker.Controllers
                     changeInfo.City = row.City;
                     changeInfo.Country = row.Country;
                 }
-                    
+
             }
             return View(changeInfo);
         }
@@ -308,7 +310,7 @@ namespace FishingBooker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangeBasicInfo(ChangeBasicInfoViewModel model)
         {
-            int i = RegUserCRUD.UpdateUserBasicInfo(model.Name, 
+            int i = RegUserCRUD.UpdateUserBasicInfo(model.Name,
                                             model.Surname,
                                             model.PhoneNumber,
                                             User.Identity.Name,
@@ -324,6 +326,130 @@ namespace FishingBooker.Controllers
                 return View(model);
             }
 
+        }
+
+        public ActionResult DeactivateAccount()
+        {
+            var user = RegUserCRUD.LoadUsers().Find(x => x.Id == User.Identity.GetUserId());
+
+            DeactivationRequestViewModel deactivate = new DeactivationRequestViewModel();
+            deactivate.Name = user.Name;
+            deactivate.Surname = user.Surname;
+            deactivate.EmailAddress = user.EmailAddress;
+            deactivate.Reason = "";
+
+            return View(deactivate);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeactivateAccount(DeactivationRequestViewModel model)
+        {
+            var user = RegUserCRUD.LoadUsers().Find(x => x.Id == User.Identity.GetUserId());
+
+            if (ModelState.IsValid)
+            {
+                RegUserCRUD.SendDeactivationRequest(user.Name,
+                                                user.Surname,
+                                                user.EmailAddress,
+                                                model.Reason);
+            }
+            return View("DeactivationRequestSuccessful");
+        }
+
+        public ActionResult InstructorSchedule()
+        {
+            InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
+            var data_availability = RegUserCRUD.LoadInstructorsAvailability(User.Identity.GetUserId());
+            //var availability = RegUserCRUD.LoadAvailabilities().Find(x => x.InstructorId == User.Identity.GetUserId());
+            var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
+            var data_adventures = AdventureCRUD.LoadAdventures();
+
+            schedule.availability.Id = data_availability.Id;
+            schedule.availability.FromDate = data_availability.FromDate;
+            schedule.availability.FromTime = data_availability.FromTime.ToString();
+            schedule.availability.ToDate = data_availability.ToDate;
+            schedule.availability.ToTime = data_availability.ToTime.ToString();
+            schedule.availability.InstructorId = data_availability.InstructorId;
+
+
+            foreach (var adventure in data_adventures)
+            {
+                if(adventure.InstructorId == User.Identity.GetUserId())
+                {
+                    List<Reservation> reservations = ReservationCRUD.LoadReservationsByAdventureId(adventure.Id);
+                    foreach (var reservation in reservations)
+                    {
+                        if(reservation.IsReserved == true)
+                        {
+                            schedule.current_reservations.Add(new CurrentReservationViewModel
+                            {
+                                Id = reservation.Id,
+                                ClientsEmailAddress = reservation.ClientsEmailAddress,
+                                ActionTitle = adventure.Title,
+                                StartDate = reservation.StartDate,
+                                StartTime = reservation.StartTime.ToString(),
+                                Duration = reservation.Duration,
+                                Price = reservation.Price,
+                                InstructorId = User.Identity.GetUserId()
+                            });
+                        }
+                    }
+                }
+            }
+
+            foreach (var reservation in data_history_reservations)
+            {
+                if (reservation.InstructorId == User.Identity.GetUserId())
+                {
+                    schedule.reservation_history.Add(new ReservationFromHistoryViewModel
+                    {
+                        Id = reservation.Id,
+                        ClientsEmailAddress = reservation.ClientsEmailAddress,
+                        ActionTitle = reservation.ActionTitle,
+                        StartDate = reservation.StartDate,
+                        StartTime = reservation.StartTime.ToString(),
+                        Duration = reservation.Duration.ToString(),
+                        Price = reservation.Price,
+                        InstructorId = reservation.InstructorId,
+                    });
+                }
+            }
+
+            return View(schedule);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult InstructorSchedule(InstructorScheduleViewModel model)
+        {
+            TimeSpan fromTime = TimeSpan.Parse(model.availability.FromTime.ToString());
+            TimeSpan toTime = TimeSpan.Parse(model.availability.ToTime.ToString());
+
+            ScheduleCRUD.UpdateAvailability(model.availability.Id,
+                                            model.availability.FromDate,
+                                            fromTime,
+                                            model.availability.ToDate,
+                                            toTime,
+                                            model.availability.InstructorId);
+
+            return RedirectToAction("InstructorSchedule", "Manage");
+        }
+
+        public ActionResult ClientProfileInfo(string email)
+        {
+            var data_user = RegUserCRUD.LoadUsers().Find(x => x.EmailAddress == email);
+            ClientProfileInfoViewModel data = new ClientProfileInfoViewModel()
+            {
+                Name = data_user.Name,
+                Surname = data_user.Surname,
+                PhoneNumber = data_user.PhoneNumber,
+                EmailAddress = data_user.EmailAddress,
+                Address = data_user.Address,
+                City = data_user.City,
+                Country = data_user.Country
+            };
+            return View(data);
         }
 
         //

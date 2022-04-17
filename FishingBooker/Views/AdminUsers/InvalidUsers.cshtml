@@ -98,8 +98,10 @@
             "AdminUsers",
             new
                  {
+                id = item.UserId,
                 email = item.EmailAddress,
-                status = "Validated"
+                status = "Validated",
+                type = item.Type
                 },
             null
         )

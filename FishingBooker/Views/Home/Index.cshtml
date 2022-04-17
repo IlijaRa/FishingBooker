@@ -1,5 +1,9 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
 }
 
 <div class="jumbotron">

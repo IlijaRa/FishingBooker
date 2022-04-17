@@ -10,9 +10,9 @@ namespace FishingBookerLibrary.Models
     {
         public int Id { get; set; }
         public string ClientsEmailAddress { get; set; }
-        public string EntityTitle { get; set; }
+        public string ActionTitle { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime StartTime { get; set; }
+        public TimeSpan StartTime { get; set; }
         public int NumberOfDays { get; set; }
         public int NumberOfGuests { get; set; }
         public string AddedAdditionalServices { get; set; }

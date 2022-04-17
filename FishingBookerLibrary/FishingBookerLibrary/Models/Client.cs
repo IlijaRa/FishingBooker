@@ -8,9 +8,9 @@ namespace FishingBookerLibrary.Models
 {
     public class Client : RegUser
     {
-        public ClientCategoryType ClientCategory { get; set; }
+        public Enums.ClientCategoryType ClientCategory { get; set; }
         public int NumberOfPenalties { get; set; } = 0;
-        public List<FastReservation> FastReservations { get; set; }
+        public List<Reservation> FastReservations { get; set; }
         public List<RegularReservation> RegularReservations { get; set; }
     }
 }

@@ -1,0 +1,15 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "DeactivationRequestSuccessful";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
+}
+
+<hgroup>
+    <h1 class="text-success">Your request:</h1>
+    <h2 class="text-success">Is sent successfully to our admins.</h2>
+</hgroup>
+

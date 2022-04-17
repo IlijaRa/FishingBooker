@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using FishingBooker.Models;
 using FishingBookerLibrary.BusinessLogic;
 using FishingBookerLibrary.Models;
+using Microsoft.AspNet.Identity;
 
 namespace FishingBooker.Controllers
 {
@@ -13,6 +14,7 @@ namespace FishingBooker.Controllers
     {
         public ActionResult Index()
         {
+
             return View();
         }
 
