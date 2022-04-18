@@ -479,7 +479,7 @@ namespace FishingBooker.Controllers
                 }
                 else if (model.ImpressionType == Enums.RecordImpressionType.BadExperience)
                 {
-                    ScheduleCRUD.CreateRecord(model.ClientsEmailAddress,
+                    RecordCRUD.CreateRecord(model.ClientsEmailAddress,
                                             model.InstructorsEmailAddress,
                                             model.Comment,
                                             model.ImpressionType,

@@ -132,7 +132,7 @@ namespace FishingBooker.Controllers
 
         public ActionResult ViewRecords()
         {
-            List<Record> data_records = ScheduleCRUD.LoadRecords();
+            List<Record> data_records = RecordCRUD.LoadRecords();
             List<RecordViewModel> records = new List<RecordViewModel>();
             foreach (var record in data_records)
             {
@@ -153,37 +153,88 @@ namespace FishingBooker.Controllers
             return View(records);
         }
 
-        public ActionResult InformAboutAcceptedPenalty(string clientId, string instructorId)
+        public ActionResult InformAboutAcceptedPenalty(int recordId, string clientEmail, string instructorEmail)
         {
 
-            var data_user = RegUserCRUD.LoadUsers().Find(x => x.Id == clientId);
+            var data_user = RegUserCRUD.LoadUsers().Find(x => x.EmailAddress == clientEmail);
             RegUserCRUD.AddPenalty(data_user.EmailAddress, data_user.Penalties + 1);
-
-            var gmailToClient = new Gmail
+            try
             {
-                To = data_user.EmailAddress,
-                Subject = "Penalty",
-                Body = @"We received a report of your indecent behavior from the instructor who was in charge. 
-                         For that reason, we punish you with one penalty.
+                var gmailToClient = new Gmail
+                {
+                    To = clientEmail,
+                    Subject = "Penalty accepted",
+                    Body = @"We received a report of your indecent behavior from the instructor who was in charge. 
+                For that reason, we punish you with one penalty.
 
                 Best regards,
                 Admin team."
 
-            };
-            gmailToClient.SendEmail();
+                };
+                gmailToClient.SendEmail();
 
-            var gmailToInstructor = new Gmail
-            {
-                To = User.Identity.GetUserName(),
-                Subject = "Penalty",
-                Body = @"An incident you reported with one of your clients was accepted and he was punished with penalty.
+                var gmailToInstructor = new Gmail
+                {
+                    To = instructorEmail,
+                    Subject = "Penalty accepted",
+                    Body = @"An incident you reported with one of your clients was accepted and he is punished by penalty.
 
                 Best regards,
                 Admin team."
-            };
-            gmailToInstructor.SendEmail();
+                };
+                gmailToInstructor.SendEmail();
 
-            return RedirectToAction("ViewRecords", "AdminUsers");
+                RecordCRUD.DeleteRecord(recordId);
+
+                return RedirectToAction("ViewRecords", "AdminUsers");
+
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+            
+        }
+
+        public ActionResult InformAboutDeclinedPenalty(int recordId, string clientEmail, string instructorEmail)
+        {
+
+            try
+            {
+                var gmailToClient = new Gmail
+                {
+                    To = clientEmail,
+                    Subject = "Penalty declined",
+                    Body = @"We received a report of your indecent behavior from the instructor who was in charge. 
+                But we will not punish you with a penalty because the reason is not too serious
+
+                Best regards,
+                Admin team."
+
+                };
+                gmailToClient.SendEmail();
+
+                var gmailToInstructor = new Gmail
+                {
+                    To = instructorEmail,
+                    Subject = "Penalty declined",
+                    Body = @"An incident you reported with one of your clients was not accepted because the reason is not too serious.
+
+                Best regards,
+                Admin team."
+                };
+                gmailToInstructor.SendEmail();
+
+                RecordCRUD.DeleteRecord(recordId);
+
+                return RedirectToAction("ViewRecords", "AdminUsers");
+
+            }
+            catch (Exception)
+            {
+                return View("Error");
+            }
+
         }
     }
 }

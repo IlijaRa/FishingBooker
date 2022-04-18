@@ -305,7 +305,7 @@ namespace FishingBooker.Controllers
                 return RedirectToAction("EditAdventure", "InstructorUsers", new { advId = advId });
             }
             else
-                return View("ReservationReservedError");
+                return View("ReservationReservedWarning");
         }
     }
 }

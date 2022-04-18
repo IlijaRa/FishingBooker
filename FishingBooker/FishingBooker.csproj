@@ -286,7 +286,7 @@
     <Content Include="Views\InstructorUsers\ViewAdventures.cshtml" />
     <Content Include="Views\InstructorUsers\CreateAdventure.cshtml" />
     <Content Include="Views\InstructorUsers\SearchAdventures.cshtml" />
-    <Content Include="Views\Shared\ReservationReservedError.cshtml" />
+    <Content Include="Views\Shared\ReservationReservedWarning.cshtml" />
     <Content Include="Views\Manage\DeactivateAccount.cshtml" />
     <Content Include="Views\Shared\DeactivationRequestSuccessful.cshtml" />
     <Content Include="Views\Shared\_LayoutInstructor.cshtml" />

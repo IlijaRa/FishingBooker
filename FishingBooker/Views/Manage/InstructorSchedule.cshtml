@@ -163,17 +163,15 @@
     </td>
     <td>
         @Html.ActionLink(
-                "Clients information",
-                "ClientProfileInfo",
-                "Manage",
-                new
-                     {
-                    email = item.ClientsEmailAddress
-                    },
-                null
-        )
-    </td>
-    <td>
+                    "Clients information",
+                    "ClientProfileInfo",
+                    "Manage",
+                    new
+                         {
+                        email = item.ClientsEmailAddress
+                        },
+                    null
+            ) |
         @Html.ActionLink(
                 "Fill in a record",
                 "FillARecord",

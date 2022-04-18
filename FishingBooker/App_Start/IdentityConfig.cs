@@ -104,6 +104,11 @@ namespace FishingBooker
 
             var user = UserManager.FindByEmailAsync(userName).Result;
 
+            if (user == null)
+            {
+                return Task.FromResult<SignInStatus>(SignInStatus.Failure);
+            }
+
             if (user.Status != "Validated")
             {
                 return Task.FromResult<SignInStatus>(SignInStatus.RequiresVerification);

@@ -35,36 +35,6 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
-        public static int CreateRecord( string clientsEmailAddress,
-                                        string instructorsEmailAddress,
-                                        string comment,
-                                        Enums.RecordImpressionType impressionType,
-                                        string clientId,
-                                        string instructorId)
-        {
-            Record data = new Record
-            {
-                ClientsEmailAddress = clientsEmailAddress,
-                InstructorsEmailAddress = instructorsEmailAddress,
-                Comment = comment,
-                ImpressionType = impressionType,
-                ClientId = clientId,
-                InstructorId = instructorId
-            };
-
-            string sql = @"INSERT INTO dbo.Records (ClientsEmailAddress, InstructorsEmailAddress, Comment, ImpressionType, ClientId, InstructorId)
-                           VALUES (@ClientsEmailAddress, @InstructorsEmailAddress, @Comment, @ImpressionType, @ClientId, @InstructorId);";
-
-            return SSMSDataAccess.SaveData(sql, data);
-        }
-
-        public static List<Record> LoadRecords()
-        {
-            string sql = @"SELECT *
-                           FROM dbo.Records";
-
-            return SSMSDataAccess.LoadData<Record>(sql);
-        }
-
+        
     }
 }
