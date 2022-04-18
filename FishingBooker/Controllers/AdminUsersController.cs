@@ -97,6 +97,8 @@ namespace FishingBooker.Controllers
                 RegUserCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidCottageOwner);
             else if(type.Equals("ShipOwner"))
                 RegUserCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidShipOwner);
+            else if(type.Equals("Administrator"))
+                RegUserCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.Admin);
 
             return RedirectToAction("InvalidUsers", "AdminUsers");
         }
@@ -123,11 +125,6 @@ namespace FishingBooker.Controllers
         {
             RegUserCRUD.UpdateUserStatus(email, status);
             return RedirectToAction("AllUsers", "AdminUsers");
-        }
-
-        public ActionResult RegisterAdmin()
-        {
-            return View();
         }
 
         public ActionResult ViewRecords()

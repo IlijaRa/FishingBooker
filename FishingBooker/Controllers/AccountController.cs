@@ -143,6 +143,7 @@ namespace FishingBooker.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            
             return View();
         }
 
@@ -166,7 +167,8 @@ namespace FishingBooker.Controllers
                                                         City = model.City,
                                                         Country = model.Country,
                                                         Description = model.Description,
-                                                        Status = "Waiting"
+                                                        Status = "Waiting",
+                                                        Penalties = 0
                     };
 
                 var result = await UserManager.CreateAsync(user, model.Password);

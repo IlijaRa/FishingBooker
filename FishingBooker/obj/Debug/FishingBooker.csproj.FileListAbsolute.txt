@@ -236,3 +236,4 @@ D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.csproj
 D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.csproj.CopyComplete
 D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.dll
 D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.pdb
+D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.Migrations.AddedPenaltiesField.resources

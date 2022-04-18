@@ -37,8 +37,8 @@ namespace FishingBookerLibrary.BusinessLogic
                 Biography = biography
             };
 
-            string sql = @"INSERT INTO dbo.RegUsers (Name, Surname, PhoneNumber, EmailAddress, Password, Type, Address, City, Country, Description, Biography, Status)
-                           VALUES (@Name, @Surname, @PhoneNumber, @EmailAddress, @Password, @Type, @Address, @City, @Country, @Description, @Biography, @Status);";
+            string sql = @"INSERT INTO dbo.RegUsers (Name, Surname, PhoneNumber, EmailAddress, Password, Type, Address, City, Country, Description, Biography, Status, Penalties)
+                           VALUES (@Name, @Surname, @PhoneNumber, @EmailAddress, @Password, @Type, @Address, @City, @Country, @Description, @Biography, @Status, @Penalties);";
 
             return SSMSDataAccess.SaveData(sql, data);
         }

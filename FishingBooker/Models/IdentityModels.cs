@@ -17,6 +17,7 @@ namespace FishingBooker.Models
         public string Country { get; set; }
         public string Description { get; set; }
         public string Status { get; set; }
+        public int Penalties { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

@@ -1,17 +1,29 @@
 ﻿@model FishingBooker.Models.RegUserViewModel
 @{
     ViewBag.Title = "Register";
-}
-
-@{
-    var selectList = new SelectList(
+    SelectList selectList = null;
+    if (User.IsInRole("HeadAdmin"))
+    {
+        selectList = new SelectList(
+        new List<SelectListItem>
+        {
+            new SelectListItem {Text = "Administrator", Value = "Administrator"}
+        },
+        "Value",
+        "Text");
+    }
+    else
+    {
+        selectList = new SelectList(
         new List<SelectListItem>
         {
             new SelectListItem {Text = "Cottage owner", Value = "CottageOwner"},
             new SelectListItem {Text = "Ship owner", Value = "ShipOwner"},
-            new SelectListItem {Text = "Fishing instructor", Value = "FishingInstructor"},
-                                                }, "Value", "Text");
-
+            new SelectListItem {Text = "Fishing instructor", Value = "FishingInstructor"}
+        },
+        "Value",
+        "Text");
+    }
 }
 
 

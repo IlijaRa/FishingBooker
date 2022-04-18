@@ -28,7 +28,8 @@ namespace FishingBookerLibrary.Models
             CottageOwner,
             FishingInstructor,
             ShipOwner,
-            Client
+            Client,
+            Administrator
         }
 
         public enum RegistrationTypeInDB
