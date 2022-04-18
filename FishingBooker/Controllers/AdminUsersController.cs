@@ -129,5 +129,61 @@ namespace FishingBooker.Controllers
         {
             return View();
         }
+
+        public ActionResult ViewRecords()
+        {
+            List<Record> data_records = ScheduleCRUD.LoadRecords();
+            List<RecordViewModel> records = new List<RecordViewModel>();
+            foreach (var record in data_records)
+            {
+                if(record.ImpressionType == Enums.RecordImpressionType.BadExperience)
+                {
+                    records.Add(new RecordViewModel
+                    {
+                        Id = record.Id,
+                        ClientsEmailAddress = record.ClientsEmailAddress,
+                        InstructorsEmailAddress = record.InstructorsEmailAddress,
+                        Comment = record.Comment,
+                        ImpressionType = record.ImpressionType,
+                        ClientId = record.ClientId,
+                        InstructorId = record.InstructorId
+                    });
+                }
+            }
+            return View(records);
+        }
+
+        public ActionResult InformAboutAcceptedPenalty(string clientId, string instructorId)
+        {
+
+            var data_user = RegUserCRUD.LoadUsers().Find(x => x.Id == clientId);
+            RegUserCRUD.AddPenalty(data_user.EmailAddress, data_user.Penalties + 1);
+
+            var gmailToClient = new Gmail
+            {
+                To = data_user.EmailAddress,
+                Subject = "Penalty",
+                Body = @"We received a report of your indecent behavior from the instructor who was in charge. 
+                         For that reason, we punish you with one penalty.
+
+                Best regards,
+                Admin team."
+
+            };
+            gmailToClient.SendEmail();
+
+            var gmailToInstructor = new Gmail
+            {
+                To = User.Identity.GetUserName(),
+                Subject = "Penalty",
+                Body = @"An incident you reported with one of your clients was accepted and he was punished with penalty.
+
+                Best regards,
+                Admin team."
+            };
+            gmailToInstructor.SendEmail();
+
+            return RedirectToAction("ViewRecords", "AdminUsers");
+        }
     }
 }

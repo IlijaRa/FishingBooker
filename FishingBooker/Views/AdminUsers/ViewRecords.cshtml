@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FishingBooker.Models.RecordViewModel>
+
+@{
+    ViewBag.Title = "ViewRecords";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
+}
+
+<h2>View records</h2>
+
+<table class="table">
+    <tr>
+        <th>Clients email</th>
+        <th>Instructors email</th>
+        <th>Comment</th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.ClientsEmailAddress)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.InstructorsEmailAddress)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Comment)
+    </td>
+    @*<td>
+        @Html.DisplayFor(modelItem => item.ClientId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.InstructorId)
+    </td>*@
+    <td>c
+        @Html.ActionLink(
+            "Accept",
+            "InformAboutAcceptedPenalty",
+            "AdminUsers",
+            new {
+                clientId = item.ClientId,
+                instructorId = item.InstructorId
+            }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Id })
+    </td>
+</tr>
+}
+
+</table>

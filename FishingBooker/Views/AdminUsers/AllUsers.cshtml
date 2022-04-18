@@ -2,6 +2,14 @@
 
 @{
     ViewBag.Title = "AllUsers";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
 }
 
 <h2>All users</h2>

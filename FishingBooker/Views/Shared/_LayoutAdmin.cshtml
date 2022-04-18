@@ -8,8 +8,8 @@
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+<body style="background-color: #E3E3E3">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color: #136b55">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -24,17 +24,9 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-
-                    @*@if (User.IsInRole("Admin") || User.IsInRole("HeadAdmin"))
-                    {
-                        <li>@Html.ActionLink("Non-validated users", "InvalidUsers", "AdminUsers")</li>
-                        <li>@Html.ActionLink("Validated users", "AllUsers", "AdminUsers")</li>
-                    }
-
-                    @if (User.IsInRole("ValidFishingInstructor"))
-                    {
-                        <li>@Html.ActionLink("Your adventures", "ViewAdventures", "InstructorUsers")</li>
-                    }*@
+                    <li>@Html.ActionLink("Non-validated users", "InvalidUsers", "AdminUsers")</li>
+                    <li>@Html.ActionLink("Validated users", "AllUsers", "AdminUsers")</li>
+                    <li>@Html.ActionLink("View records", "ViewRecords", "AdminUsers")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

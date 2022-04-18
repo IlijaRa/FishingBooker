@@ -20,8 +20,9 @@ namespace FishingBookerLibrary.Models
         public string City { get; set; }
         public string Country { get; set; }
         public string Description { get; set; }
+        public string Biography { get; set; }
         public string Status { get; set; } = "Waiting";
 
-        public string Biography { get; set; }
+        public int Penalties { get; set; } = 0;
     }
 }

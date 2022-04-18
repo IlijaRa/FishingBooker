@@ -1,0 +1,82 @@
+﻿@model FishingBooker.Models.RecordViewModel
+
+@{
+    ViewBag.Title = "FillARecord";
+    Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+}
+
+<h2>Fill a record</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.ClientsEmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ClientsEmailAddress, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.ClientsEmailAddress, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.InstructorsEmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.InstructorsEmailAddress, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.InstructorsEmailAddress, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Comment, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Comment, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImpressionType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.RadioButtonFor(model => model.ImpressionType, value: "GoodExperience") It was a good experience
+            @Html.ValidationMessageFor(model => model.ImpressionType, "", new { @class = "text-danger" })
+            <br />
+            @Html.RadioButtonFor(model => model.ImpressionType, value: "BadExperience") I suggest that the client should be penalized with one point
+            @Html.ValidationMessageFor(model => model.ImpressionType, "", new { @class = "text-danger" })
+            <br />
+            @Html.RadioButtonFor(model => model.ImpressionType, value: "DidNotShowUp") The client did not show up at all
+            @Html.ValidationMessageFor(model => model.ImpressionType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @Html.HiddenFor(model => model.ClientId, htmlAttributes: new { @class = "id" })
+    @Html.HiddenFor(model => model.InstructorId, htmlAttributes: new { @class = "id" })
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.ClientId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ClientId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.InstructorId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.InstructorId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.InstructorId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

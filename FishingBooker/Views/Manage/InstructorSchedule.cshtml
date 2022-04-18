@@ -138,42 +138,54 @@
 
     @foreach (var item in Model.reservation_history)
     {
-        <tr>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>*@
-            @Html.HiddenFor(modelItem => item.Id)
-            <td>
-                @Html.DisplayFor(modelItem => item.ClientsEmailAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActionTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.ActionLink(
-                        "Clients information",
-                        "ClientProfileInfo",
-                        "Manage",
-                        new
-                             {
-                            email = item.ClientsEmailAddress
-                            },
-                        null
-                )
-            </td>
-        </tr>
+<tr>
+    @*<td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>*@
+    @Html.HiddenFor(modelItem => item.Id)
+    <td>
+        @Html.DisplayFor(modelItem => item.ClientsEmailAddress)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ActionTitle)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.StartDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.StartTime)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Duration)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Price)
+    </td>
+    <td>
+        @Html.ActionLink(
+                "Clients information",
+                "ClientProfileInfo",
+                "Manage",
+                new
+                     {
+                    email = item.ClientsEmailAddress
+                    },
+                null
+        )
+    </td>
+    <td>
+        @Html.ActionLink(
+                "Fill in a record",
+                "FillARecord",
+                "Manage",
+                new
+                     {
+                    clientsEmail = item.ClientsEmailAddress
+                    },
+                null
+        );
+    </td>
+</tr>
     }
 
 </table>

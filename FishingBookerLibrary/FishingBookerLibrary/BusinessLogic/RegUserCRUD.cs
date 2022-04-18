@@ -196,5 +196,21 @@ namespace FishingBookerLibrary.BusinessLogic
                            VALUES (@UserId, @RoleId);";
             return SSMSDataAccess.SaveData(sql, data);
         }
+
+        public static int AddPenalty(string clientEmail, int numberOfPenalties)
+        {
+
+            RegUser data = new RegUser
+            {
+                EmailAddress = clientEmail,
+                Penalties = numberOfPenalties
+            };
+
+            string sql = @" UPDATE dbo.RegUsers
+                            SET Penalties = @Penalties  
+                            WHERE EmailAddress = @EmailAddress;";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
     }
 }

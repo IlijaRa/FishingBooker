@@ -27,7 +27,8 @@ namespace FishingBookerLibrary.Models
         {
             CottageOwner,
             FishingInstructor,
-            ShipOwner
+            ShipOwner,
+            Client
         }
 
         public enum RegistrationTypeInDB
@@ -62,5 +63,11 @@ namespace FishingBookerLibrary.Models
             Regular
         }
 
+        public enum RecordImpressionType
+        {
+            GoodExperience,
+            BadExperience,
+            DidNotShowUp
+        }
     }
 }

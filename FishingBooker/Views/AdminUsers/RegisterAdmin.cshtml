@@ -1,14 +1,15 @@
 ﻿@model FishingBooker.Models.RegUserViewModel
 @{
     ViewBag.Title = "RegisterAdmin";
+    Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
 }
 
 @{
     var selectList = new SelectList(
-        new List<SelectListItem>
-        {
+new List<SelectListItem>
+{
             new SelectListItem {Text = "Administrator", Value = "Administrator"},
-                                                        }, "Value", "Text");
+                                                }, "Value", "Text");
 }
 
 

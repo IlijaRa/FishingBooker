@@ -452,6 +452,46 @@ namespace FishingBooker.Controllers
             return View(data);
         }
 
+        public ActionResult FillARecord(string clientsEmail)
+        {
+            RecordViewModel record = new RecordViewModel();
+
+            record.ClientsEmailAddress = clientsEmail;
+            record.InstructorsEmailAddress = RegUserCRUD.LoadUsers().Find(x => x.Id == User.Identity.GetUserId()).EmailAddress;
+            record.Comment = "";
+            record.ClientId = RegUserCRUD.LoadUsers().Find(x => x.EmailAddress == clientsEmail).Id;
+            record.InstructorId = User.Identity.GetUserId();
+
+            return View(record);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FillARecord(RecordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if(model.ImpressionType == Enums.RecordImpressionType.DidNotShowUp)
+                {
+                    var data_user = RegUserCRUD.LoadUsers().Find(x => x.EmailAddress == model.ClientsEmailAddress);
+                    RegUserCRUD.AddPenalty(model.ClientsEmailAddress, data_user.Penalties + 1);
+                    return RedirectToAction("InstructorSchedule", "Manage");
+                }
+                else if (model.ImpressionType == Enums.RecordImpressionType.BadExperience)
+                {
+                    ScheduleCRUD.CreateRecord(model.ClientsEmailAddress,
+                                            model.InstructorsEmailAddress,
+                                            model.Comment,
+                                            model.ImpressionType,
+                                            model.ClientId,
+                                            model.InstructorId);
+
+                    return RedirectToAction("InstructorSchedule", "Manage");
+                }
+            }
+            return View(model.ClientsEmailAddress);
+        }
+
         //
         // GET: /Manage/ManageLogins
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)

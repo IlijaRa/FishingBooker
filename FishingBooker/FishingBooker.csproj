@@ -213,6 +213,7 @@
     <Compile Include="Models\InstructorAvailabilityViewModel.cs" />
     <Compile Include="Models\InstructorScheduleViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RecordViewModel.cs" />
     <Compile Include="Models\RegUserViewModel.cs" />
     <Compile Include="Models\ReservationFromHistoryViewModel.cs" />
     <Compile Include="Models\ReservationToShowViewModel.cs" />
@@ -291,6 +292,10 @@
     <Content Include="Views\Shared\_LayoutInstructor.cshtml" />
     <Content Include="Views\Manage\InstructorSchedule.cshtml" />
     <Content Include="Views\Manage\ClientProfileInfo.cshtml" />
+    <Content Include="Views\Manage\FillARecord.cshtml" />
+    <Content Include="Views\AdminUsers\ViewRecords.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Shared\_LayoutHeadAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
