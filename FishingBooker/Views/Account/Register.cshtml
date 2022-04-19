@@ -1,6 +1,23 @@
 ﻿@model FishingBooker.Models.RegUserViewModel
 @{
     ViewBag.Title = "Register";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
+    else if (User.IsInRole("InvalidAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+
     SelectList selectList = null;
     if (User.IsInRole("HeadAdmin"))
     {

@@ -234,15 +234,20 @@ namespace FishingBooker.Controllers
             {
                 return View(model);
             }
+            if(model.NewPassword == "Admin123*")
+            {
+                return View(model);
+            }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                RegUserCRUD.UpdateRoleInDB(user.Id, Enums.RegistrationTypeInDB.Admin);
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Index", "Home", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
             return View(model);

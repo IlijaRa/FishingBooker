@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FishingBooker.Models.RegUserViewModel>
 
 @{
-    ViewBag.Title = "InvalidUsers";
+    ViewBag.Title = "SearchUsers";
     if (User.IsInRole("Admin"))
     {
         Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -12,7 +12,7 @@
     }
 }
 
-<h2>Non validated users</h2>
+<h2>Search users</h2>
 
 <table class="table">
     <tr>
@@ -49,82 +49,70 @@
         <th>
             @Html.DisplayNameFor(model => model.Country)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Biography)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-<tr>
-    @*<td>
+    <tr>
+        @*<td>
             @Html.DisplayFor(modelItem => item.UserId)
         </td>*@
-    <td>
-        @Html.DisplayFor(modelItem => item.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Surname)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.PhoneNumber)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.EmailAddress)
-    </td>
-    @*<td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailAddress)
+        </td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Password)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ConfirmPassword)
         </td>*@
-    <td>
-        @Html.DisplayFor(modelItem => item.Type)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Address)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.City)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Country)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Description)
-    </td>
-    <th>
-        @Html.DisplayNameFor(model => model.Biography)
-    </th>
-    <td>
-        @Html.ActionLink(
-            "Accept",
-            "ValidateUser",
-            "AdminUsers",
-            new
-                 {
-                id = item.UserId,
-                email = item.EmailAddress,
-                status = "Validated",
-                type = item.Type
-                },
-            null
-        ) |
-        @Html.ActionLink(
-            "Reject",
-            "RejectUser",
-            "AdminUsers",
-            new
-                 {
-                email = item.EmailAddress,
-                },
-            null
-        )
-    </td>
-</tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Biography)
+        </td>*@
+        <td>
+            @Html.ActionLink(
+                "Block",
+                "BlockUser",
+                "AdminUsers",
+                new
+                     {
+                    email = item.EmailAddress,
+                    status = "Blocked"
+                    },
+                null
+            )
+        </td>
+    </tr>
 }
 
 </table>

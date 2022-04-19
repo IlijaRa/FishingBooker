@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FishingBooker.Controllers
 {
-    [Authorize(Roles = "ValidFishingInstructor")]
+    //[Authorize(Roles = "ValidFishingInstructor")]
     public class InstructorUsersController : Controller
     {
         // GET: InstructorUsers

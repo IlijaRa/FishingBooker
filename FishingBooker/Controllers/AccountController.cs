@@ -156,20 +156,29 @@ namespace FishingBooker.Controllers
         {
             if (ModelState.IsValid)
             {
-                    var user = new ApplicationUser {    UserName = model.EmailAddress,
-                                                        Name = model.Name,
-                                                        Surname = model.Surname,
-                                                        PhoneNumber = model.PhoneNumber,
-                                                        Email = model.EmailAddress,
-                                                        PasswordHash = model.Password,
-                                                        Type = model.Type,
-                                                        Address = model.Address,
-                                                        City = model.City,
-                                                        Country = model.Country,
-                                                        Description = model.Description,
-                                                        Status = "Waiting",
-                                                        Penalties = 0
-                    };
+
+                if (model.Type == "Administrator")
+                {
+                    model.Password = "Admin123*";
+                }
+
+                var user = new ApplicationUser
+                {
+                    UserName = model.EmailAddress,
+                    Name = model.Name,
+                    Surname = model.Surname,
+                    PhoneNumber = model.PhoneNumber,
+                    Email = model.EmailAddress,
+                    PasswordHash = model.Password,
+                    Type = model.Type,
+                    Address = model.Address,
+                    City = model.City,
+                    Country = model.Country,
+                    Description = model.Description,
+                    Status = "Waiting",
+                    Penalties = 0
+                };
+
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 //if (result.Succeeded)

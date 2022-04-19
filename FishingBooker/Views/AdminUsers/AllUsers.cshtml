@@ -18,6 +18,14 @@
     @Html.ActionLink("Create admin", "Register", "Account")
 }
 
+
+@using (Html.BeginForm("SearchUsers", "AdminUsers", FormMethod.Get))
+{
+    @Html.TextBox("searching")
+    <input type="submit" , value="Search" />
+}
+
+
 <table class="table">
     <tr>
         @*<th>
@@ -53,12 +61,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Country)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Biography)
-        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Biography)
+            </th>*@
         <th></th>
     </tr>
 
@@ -98,25 +106,45 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Country)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <th>
-                @Html.DisplayNameFor(model => model.Biography)
-            </th>
-            <td>
-                @Html.ActionLink(
-                    "Block",
-                    "BlockUser",
-                    "AdminUsers",
-                    new
-                         {
-                        email = item.EmailAddress,
-                        status = "Blocked"
-                        },
-                    null
-                )
-            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Biography)
+                </th>*@
+        <td>
+            @Html.ActionLink(
+                "Details",
+                "DetailsAboutUser",
+                "AdminUsers",
+                new
+                     {
+                    userId = item.UserId,
+                    },
+                null
+            ) |
+            @Html.ActionLink(
+                "Block",
+                "BlockUser",
+                "AdminUsers",
+                new
+                     {
+                    email = item.EmailAddress,
+                    status = "Blocked"
+                    },
+                null
+            ) |
+            @Html.ActionLink(
+                "Delete",
+                "DeleteUser",
+                "AdminUsers",
+                new
+                     {
+                    email = item.EmailAddress,
+                    },
+                null
+            )
+        </td>
         </tr>
     }
 

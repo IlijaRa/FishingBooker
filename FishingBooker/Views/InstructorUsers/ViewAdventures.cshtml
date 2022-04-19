@@ -2,7 +2,18 @@
 
 @{
     ViewBag.Title = "ViewAdventures";
-    Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
 }
 
 <h2>View adventures</h2>

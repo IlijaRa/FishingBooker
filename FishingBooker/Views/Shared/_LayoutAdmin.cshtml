@@ -20,16 +20,25 @@
                 @Html.ActionLink("Fishing booker", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Non-validated users", "InvalidUsers", "AdminUsers")</li>
-                    <li>@Html.ActionLink("All users", "AllUsers", "AdminUsers")</li>
-                    <li>@Html.ActionLink("View records", "ViewRecords", "AdminUsers")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+                @if (User.IsInRole("Admin"))
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("Non-validated users", "InvalidUsers", "AdminUsers")</li>
+                        <li>@Html.ActionLink("All users", "AllUsers", "AdminUsers")</li>
+                        <li>@Html.ActionLink("View records", "ViewRecords", "AdminUsers")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                }
+                @if (User.IsInRole("InvalidAdmin"))
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Change password", "ChangePassword", "Manage")</li>
+                    </ul>
+                }
+                </div>
         </div>
     </div>
     <div class="container body-content">

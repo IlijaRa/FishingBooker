@@ -41,7 +41,8 @@ namespace FishingBookerLibrary.Models
             ValidFishingInstructor,
             ValidShipOwner,
             Admin,
-            HeadAdmin
+            HeadAdmin,
+            InvalidAdmin
         }
 
         public enum RoleType

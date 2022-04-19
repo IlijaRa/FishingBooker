@@ -2,7 +2,18 @@
 
 @{
     ViewBag.Title = "EditAdventure";
-    Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
     int adventureId = (int)ViewData["AdventureId"];
     string MapSource = (string)ViewData["MapSource"];
     MapSource = "\"" + MapSource + "\"";

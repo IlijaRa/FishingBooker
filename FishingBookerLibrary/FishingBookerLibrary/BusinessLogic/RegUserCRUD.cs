@@ -197,6 +197,21 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
+        public static int UpdateRoleInDB(string userId, Enums.RegistrationTypeInDB roleId)
+        {
+            UserRole data = new UserRole
+            {
+                UserId = userId,
+                RoleId = roleId
+            };
+
+            string sql = @"UPDATE dbo.UserRole 
+                           SET RoleId = @RoleId
+                           WHERE UserId = @UserId;";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
         public static int AddPenalty(string clientEmail, int numberOfPenalties)
         {
 

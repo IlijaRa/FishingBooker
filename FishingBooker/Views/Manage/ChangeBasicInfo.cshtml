@@ -6,6 +6,18 @@
     {
         Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
     }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
+    else if (User.IsInRole("InvalidAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
 }
 
 <h2>Change info about you</h2>

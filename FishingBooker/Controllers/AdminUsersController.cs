@@ -57,7 +57,7 @@ namespace FishingBooker.Controllers
             List<RegUserViewModel> users = new List<RegUserViewModel>();
             foreach (var row in data)
             {
-                if (row.Status == "Validated")
+                if (row.Status == "Validated" && row.Id != User.Identity.GetUserId())
                 {
                     users.Add(new RegUserViewModel
                     {
@@ -75,6 +75,44 @@ namespace FishingBooker.Controllers
                 }
             }
             return View(users);
+        }
+
+        public ActionResult SearchUsers(string searching)
+        {
+            var data = RegUserCRUD.LoadUsers();
+            List<RegUserViewModel> found_users = new List<RegUserViewModel>();
+            searching = searching.ToLower();
+
+            foreach (var user in data)
+            {
+                if(user.Status == "Validated")
+                {
+                    if (user.Name.ToLower().Contains(searching) ||
+                    user.Surname.ToLower().Contains(searching) ||
+                    user.PhoneNumber.ToLower().Contains(searching) ||
+                    user.Type.Contains(searching) ||
+                    user.Address.Contains(searching) ||
+                    user.City.Contains(searching) ||
+                    user.Country.Contains(searching))
+                    {
+                        found_users.Add(new RegUserViewModel
+                        {
+                            UserId = user.Id,
+                            Name = user.Name,
+                            Surname = user.Surname,
+                            PhoneNumber = user.PhoneNumber,
+                            EmailAddress = user.EmailAddress,
+                            Type = user.Type,
+                            Address = user.Address,
+                            City = user.City,
+                            Country = user.Country
+                        });
+                    }
+                }
+                
+            }
+
+            return View(found_users);
         }
 
         public ActionResult ValidateUser(string id, string email, string status, string type)
@@ -98,7 +136,7 @@ namespace FishingBooker.Controllers
             else if(type.Equals("ShipOwner"))
                 RegUserCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidShipOwner);
             else if(type.Equals("Administrator"))
-                RegUserCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.Admin);
+                RegUserCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.InvalidAdmin);
 
             return RedirectToAction("InvalidUsers", "AdminUsers");
         }
@@ -119,6 +157,12 @@ namespace FishingBooker.Controllers
             gmail.SendEmail();
             int i = RegUserCRUD.DeleteUserByEmail(email);
             return RedirectToAction("InvalidUsers","AdminUsers");
+        }
+
+        public ActionResult DeleteUser(string email)
+        {
+            RegUserCRUD.DeleteUserByEmail(email);
+            return RedirectToAction("AllUsers", "AdminUsers");
         }
 
         public ActionResult BlockUser(string email, string status)
@@ -232,6 +276,54 @@ namespace FishingBooker.Controllers
                 return View("Error");
             }
 
+        }
+
+        public ActionResult DetailsAboutUser(string userId)
+        {
+            DetailsAboutUserViewModel user_details = new DetailsAboutUserViewModel();
+            var data_user = RegUserCRUD.LoadUsers().Find(x => x.Id == userId);
+            var data_adventures = AdventureCRUD.LoadAdventures();
+
+            user_details.user.UserId = data_user.Id;
+            user_details.user.Name = data_user.Name;
+            user_details.user.Surname = data_user.Surname;
+            user_details.user.PhoneNumber = data_user.PhoneNumber;
+            user_details.user.EmailAddress = data_user.EmailAddress;
+            user_details.user.Type = data_user.Type;
+            user_details.user.Address = data_user.Address;
+            user_details.user.City = data_user.City;
+            user_details.user.Country = data_user.Country;
+            user_details.user.Description = data_user.Description;
+            user_details.user.Biography = data_user.Biography;
+
+            
+
+            foreach (var row in data_adventures)
+            {
+                if (row.InstructorId == userId)
+                {
+                    string[] address_split = row.Address.Split(',');
+                    //string address = address_split[0] + " " + address_split[1] + "," + address_split[2];
+                    user_details.adventures.Add(new AdventureViewModel
+                    {
+                        AdventureId = row.Id,
+                        Title = row.Title,
+                        Street = address_split[0],
+                        AddressNumber = address_split[1],
+                        City = address_split[2],
+                        PromotionDescription = row.PromotionDescription,
+                        BehaviourRules = row.BehaviourRules,
+                        AdditionalServices = row.AdditionalServices,
+                        Pricelist = row.Pricelist,
+                        Price = row.Price,
+                        MaxNumberOfPeople = row.MaxNumberOfPeople,
+                        FishingEquipment = row.FishingEquipment,
+                        CancellationPolicy = row.CancellationPolicy
+                    });
+                }
+            }
+
+            return View(user_details);
         }
     }
 }
