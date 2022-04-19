@@ -12,7 +12,7 @@
     }
 }
 
-<h2>Non validated users</h2>
+<h2>Registration requests</h2>
 
 <table class="table">
     <tr>
@@ -115,11 +115,11 @@
         ) |
         @Html.ActionLink(
             "Reject",
-            "RejectUser",
+            "RejectUserRegistration",
             "AdminUsers",
             new
                  {
-                email = item.EmailAddress,
+                emailToSend = item.EmailAddress,
                 },
             null
         )

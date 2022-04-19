@@ -8,8 +8,8 @@ namespace FishingBookerLibrary.Models
 {
     public class DeactivationRequest
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public string UserName { get; set; }
+        public string UserSurname { get; set; }
         public string EmailAddress { get; set; }
         public string Reason { get; set; }
     }

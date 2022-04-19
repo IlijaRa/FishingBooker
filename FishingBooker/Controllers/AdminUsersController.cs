@@ -130,33 +130,46 @@ namespace FishingBooker.Controllers
             gmail.SendEmail();
             RegUserCRUD.UpdateUserStatus(email, status);
             if(type.Equals("FishingInstructor"))
-                RegUserCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidFishingInstructor);
+                UserRoleCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidFishingInstructor);
             else if(type.Equals("CottageOwner"))
-                RegUserCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidCottageOwner);
+                UserRoleCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidCottageOwner);
             else if(type.Equals("ShipOwner"))
-                RegUserCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidShipOwner);
+                UserRoleCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidShipOwner);
             else if(type.Equals("Administrator"))
-                RegUserCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.InvalidAdmin);
+                UserRoleCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.InvalidAdmin);
 
             return RedirectToAction("InvalidUsers", "AdminUsers");
         }
 
-        public ActionResult RejectUser(string email)
+        public ActionResult RejectUserRegistration(string emailToSend)
         {
-            var gmail = new Gmail
+            Gmail gmail = new Gmail();
+            gmail.To = emailToSend;
+
+            return View(gmail);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RejectUserRegistration(Gmail model)
+        {
+            try
             {
-                To = email,
-                Subject = "Account is rejected",
-                Body = @"Unfortunately, Your account is rejected.Try again with a different information.
-                We hope you have an understanding.
+                var gmail = new Gmail
+                {
+                    To = model.To,
+                    Subject = model.Subject,
+                    Body = model.Body
+                };
+                gmail.SendEmail();
+                int i = RegUserCRUD.DeleteUserByEmail(model.To);
+                return RedirectToAction("InvalidUsers", "AdminUsers");
+            }
+            catch (Exception)
+            {
+                return View();
+            }
 
-                Best regards,
-                Admin team."
-
-            };
-            gmail.SendEmail();
-            int i = RegUserCRUD.DeleteUserByEmail(email);
-            return RedirectToAction("InvalidUsers","AdminUsers");
         }
 
         public ActionResult DeleteUser(string email)
@@ -325,5 +338,90 @@ namespace FishingBooker.Controllers
 
             return View(user_details);
         }
+
+        public ActionResult ViewDeactivationRequests()
+        {
+            
+            var data_requests = DeactivationRequestCRUD.LoadDeactivationRequests();
+            List<DeactivationRequestViewModel> deactivation_requests = new List<DeactivationRequestViewModel>();
+
+            foreach (var request in data_requests)
+            {
+                deactivation_requests.Add(new DeactivationRequestViewModel
+                {
+                    UserName = request.UserName,
+                    UserSurname = request.UserSurname,
+                    EmailAddress = request.EmailAddress,
+                    Reason = request.Reason
+                });
+            }
+
+            return View(deactivation_requests);
+        }
+
+        public ActionResult AcceptedDeactivationEmailForm(string emailToSend)
+        {
+            Gmail gmail = new Gmail();
+            gmail.To = emailToSend;
+            return View(gmail);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AcceptedDeactivationEmailForm(Gmail model)
+        {
+            try
+            {
+                var gmail = new Gmail
+                {
+                    To = model.To,
+                    Subject = model.Subject,
+                    Body = model.Body
+                };
+
+                gmail.SendEmail();
+                UserRoleCRUD.DeleteUserInUserRole(RegUserCRUD.LoadUsers().Find(x => x.EmailAddress.Equals(model.To)).Id);
+                int i = RegUserCRUD.DeleteUserByEmail(model.To);
+                DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
+                return RedirectToAction("ViewDeactivationRequests", "AdminUsers");
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+            
+        }
+
+        public ActionResult RejectedDeactivationEmailForm(string emailToSend)
+        {
+            Gmail gmail = new Gmail();
+            gmail.To = emailToSend;
+            return View(gmail);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RejectedDeactivationEmailForm(Gmail model)
+        {
+            try
+            {
+                var gmail = new Gmail
+                {
+                    To = model.To,
+                    Subject = model.Subject,
+                    Body = model.Body
+                };
+
+                gmail.SendEmail();
+                DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
+                return RedirectToAction("ViewDeactivationRequests", "AdminUsers");
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+
+        }
+
     }
 }

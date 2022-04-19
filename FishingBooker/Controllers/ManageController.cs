@@ -242,7 +242,7 @@ namespace FishingBooker.Controllers
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                RegUserCRUD.UpdateRoleInDB(user.Id, Enums.RegistrationTypeInDB.Admin);
+                UserRoleCRUD.UpdateRoleInDB(user.Id, Enums.RegistrationTypeInDB.Admin);
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -338,8 +338,8 @@ namespace FishingBooker.Controllers
             var user = RegUserCRUD.LoadUsers().Find(x => x.Id == User.Identity.GetUserId());
 
             DeactivationRequestViewModel deactivate = new DeactivationRequestViewModel();
-            deactivate.Name = user.Name;
-            deactivate.Surname = user.Surname;
+            deactivate.UserName = user.Name;
+            deactivate.UserSurname = user.Surname;
             deactivate.EmailAddress = user.EmailAddress;
             deactivate.Reason = "";
 
@@ -354,7 +354,7 @@ namespace FishingBooker.Controllers
 
             if (ModelState.IsValid)
             {
-                RegUserCRUD.SendDeactivationRequest(user.Name,
+                DeactivationRequestCRUD.SendDeactivationRequest(user.Name,
                                                 user.Surname,
                                                 user.EmailAddress,
                                                 model.Reason);

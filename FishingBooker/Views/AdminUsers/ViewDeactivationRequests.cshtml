@@ -1,0 +1,57 @@
+﻿@model IEnumerable<FishingBooker.Models.DeactivationRequestViewModel>
+
+@{
+    ViewBag.Title = "ViewDeactivationRequests";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
+}
+
+<h2>Deactivation requests</h2>
+
+<h2></h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserSurname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reason)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserSurname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reason)
+        </td>
+        <td>
+            @Html.ActionLink("Accept", "AcceptedDeactivationEmailForm", "AdminUsers", new { emailToSend = item.EmailAddress }, null ) |
+            @Html.ActionLink("Reject", "RejectedDeactivationEmailForm", "AdminUsers", new { emailToSend = item.EmailAddress }, null )
+        </td>
+    </tr>
+}
+
+</table>

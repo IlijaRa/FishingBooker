@@ -50,10 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic\AdventureCRUD.cs" />
+    <Compile Include="BusinessLogic\DeactivationRequestCRUD.cs" />
     <Compile Include="BusinessLogic\RecordCRUD.cs" />
     <Compile Include="BusinessLogic\ReservationCRUD.cs" />
     <Compile Include="BusinessLogic\RegUserCRUD.cs" />
     <Compile Include="BusinessLogic\ScheduleCRUD.cs" />
+    <Compile Include="BusinessLogic\UserRoleCRUD.cs" />
     <Compile Include="DataAccess\SSMSDataAccess.cs" />
     <Compile Include="Models\Adventure.cs" />
     <Compile Include="Models\AdventureReservation.cs" />
