@@ -57,6 +57,14 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
+        public static List<T> LoadHistoryReservationByClientsEmailAddress<T>(string sql, string emailAddress)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { ClientsEmailAddress = emailAddress }).ToList();
+            }
+        }
+
         public static T LoadInstructorsAvailability<T>(string sql, string instructorId)
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
@@ -64,6 +72,30 @@ namespace FishingBookerLibrary.DataAccess
                 return cnn.Query<T>(sql, new { InstructorId = instructorId }).FirstOrDefault();
             }
         }
-        
+
+        public static List<T> LoadAdventureTitlesByInstructor<T>(string sql, string instructorId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { InstructorId = instructorId }).ToList();
+            }
+        }
+
+        public static List<T> LoadCottageTitlesByOwner<T>(string sql, string ownerId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { OwnerId = ownerId }).ToList();
+            }
+        }
+
+        public static List<T> LoadShipTitlesByOwner<T>(string sql, string ownerId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { OwnerId = ownerId }).ToList();
+            }
+        }
+
     }
 }

@@ -15,6 +15,6 @@ namespace FishingBookerLibrary.Models
         public TimeSpan StartTime { get; set; }
         public string Duration { get; set; }
         public decimal Price { get; set; }
-        public string InstructorId { get; set; }
+        public string OwnerId { get; set; }
     }
 }

@@ -296,6 +296,8 @@ namespace FishingBooker.Controllers
             DetailsAboutUserViewModel user_details = new DetailsAboutUserViewModel();
             var data_user = RegUserCRUD.LoadUsers().Find(x => x.Id == userId);
             var data_adventures = AdventureCRUD.LoadAdventures();
+            var data_cottages = CottageCRUD.LoadCottages();
+            var data_ships = ShipCRUD.LoadShips();
 
             user_details.user.UserId = data_user.Id;
             user_details.user.Name = data_user.Name;
@@ -309,34 +311,112 @@ namespace FishingBooker.Controllers
             user_details.user.Description = data_user.Description;
             user_details.user.Biography = data_user.Biography;
 
-            
 
-            foreach (var row in data_adventures)
+            if (data_user.Type == "FishingInstructor")
             {
-                if (row.InstructorId == userId)
+                foreach (var row in data_adventures)
                 {
-                    string[] address_split = row.Address.Split(',');
-                    //string address = address_split[0] + " " + address_split[1] + "," + address_split[2];
-                    user_details.adventures.Add(new AdventureViewModel
+                    if (row.InstructorId == userId)
                     {
-                        AdventureId = row.Id,
-                        Title = row.Title,
-                        Street = address_split[0],
-                        AddressNumber = address_split[1],
-                        City = address_split[2],
-                        PromotionDescription = row.PromotionDescription,
-                        BehaviourRules = row.BehaviourRules,
-                        AdditionalServices = row.AdditionalServices,
-                        Pricelist = row.Pricelist,
-                        Price = row.Price,
-                        MaxNumberOfPeople = row.MaxNumberOfPeople,
-                        FishingEquipment = row.FishingEquipment,
-                        CancellationPolicy = row.CancellationPolicy
-                    });
+                        string[] address_split = row.Address.Split(',');
+                        //string address = address_split[0] + " " + address_split[1] + "," + address_split[2];
+                        user_details.adventures.Add(new AdventureViewModel
+                        {
+                            AdventureId = row.Id,
+                            Title = row.Title,
+                            Street = address_split[0],
+                            AddressNumber = address_split[1],
+                            City = address_split[2],
+                            PromotionDescription = row.PromotionDescription,
+                            BehaviourRules = row.BehaviourRules,
+                            AdditionalServices = row.AdditionalServices,
+                            Pricelist = row.Pricelist,
+                            Price = row.Price,
+                            MaxNumberOfPeople = row.MaxNumberOfPeople,
+                            FishingEquipment = row.FishingEquipment,
+                            CancellationPolicy = row.CancellationPolicy
+                        });
+                    }
                 }
+
+                return View("DetailsAboutInstructor", user_details);
             }
 
+            else if (data_user.Type == "CottageOwner")
+            {
+                foreach (var row in data_cottages)
+                {
+                    if (row.OwnerId == userId)
+                    {
+                        string[] address_split = row.Address.Split(',');
+                        //string address = address_split[0] + " " + address_split[1] + "," + address_split[2];
+                        user_details.cottages.Add(new CottageViewModel
+                        {
+                            CottageId = row.Id,
+                            Title = row.Title,
+                            Street = address_split[0],
+                            AddressNumber = address_split[1],
+                            City = address_split[2],
+                            PromotionDescription = row.PromotionDescription,
+                            BehaviourRules = row.BehaviourRules,
+                            AdditionalServices = row.AdditionalServices,
+                            Pricelist = row.Pricelist,
+                            NumberOfRooms = row.NumberOfRooms,
+                            BedsPerRoom = row.BedsPerRoom
+                        });
+                    }
+                }
+                return View("DetailsAboutCottageOwner", user_details);
+            }
+
+            else if (data_user.Type == "ShipOwner")
+            {
+                foreach (var row in data_ships)
+                {
+                    if (row.OwnerId == userId)
+                    {
+                        string[] address_split = row.Address.Split(',');
+                        //string address = address_split[0] + " " + address_split[1] + "," + address_split[2];
+                        user_details.ships.Add(new ShipViewModel
+                        {
+                            ShipId = row.Id,
+                            Title = row.Title,
+                            Street = address_split[0],
+                            AddressNumber = address_split[1],
+                            City = address_split[2],
+                            PromotionDescription = row.PromotionDescription,
+                            BehaviourRules = row.BehaviourRules,
+                            AdditionalServices = row.AdditionalServices,
+                            Pricelist = row.Pricelist,
+                            FishingEquipment = row.FishingEquipment,
+                            NavigationEquipment = row.NavigationEquipment,
+                            CancellationPolicy = row.CancelationPolicy,
+                            SpecificationId = row.SpecificationId,
+                            OwnerId = row.OwnerId
+                        });
+                    }
+                }
+                return View("DetailsAboutShipOwner", user_details);
+            }
             return View(user_details);
+        }
+
+        [HttpGet]
+        public ActionResult DetailsAboutInstructor(DetailsAboutUserViewModel model)
+        {
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult DetailsAboutCottageOwner(DetailsAboutUserViewModel model)
+        {
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult DetailsAboutShipOwner(DetailsAboutUserViewModel model)
+        {
+            return View(model);
         }
 
         public ActionResult ViewDeactivationRequests()

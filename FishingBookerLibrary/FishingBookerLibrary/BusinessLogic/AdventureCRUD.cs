@@ -99,5 +99,13 @@ namespace FishingBookerLibrary.BusinessLogic
 
             return SSMSDataAccess.LoadData<Adventure>(sql);
         }
+
+        public static List<string> LoadAdventureTitlesByInstructor(string instructorId)
+        {
+            string sql = @"SELECT Title
+                            FROM dbo.Adventures
+                            WHERE InstructorId = @InstructorId;";
+            return SSMSDataAccess.LoadAdventureTitlesByInstructor<string>(sql, instructorId);
+        }
     }
 }

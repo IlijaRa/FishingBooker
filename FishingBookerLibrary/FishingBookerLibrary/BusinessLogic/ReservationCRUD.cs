@@ -82,6 +82,14 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.LoadData<ReservationFromHistory>(sql);
         }
 
+        public static List<ReservationFromHistory> LoadReservationsFromHistoryByClientsEmailAddress(string emailAddress)
+        {
+            string sql = @"SELECT *
+                           FROM dbo.ReservationHistory
+                           WHERE ClientsEmailAddress = @ClientsEmailAddress;";
+            return SSMSDataAccess.LoadHistoryReservationByClientsEmailAddress<ReservationFromHistory>(sql, emailAddress);
+        }
+
         public static List<Reservation> LoadReservationsByAdventureId(int adventureId)
         {
             string sql = @"SELECT *

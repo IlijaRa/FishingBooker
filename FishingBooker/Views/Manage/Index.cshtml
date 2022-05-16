@@ -13,6 +13,10 @@
     {
         Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
     }
+    else if (User.IsInRole("ValidClient"))
+    {
+        Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    }
 }
 
 <h2>@ViewBag.Title.</h2>

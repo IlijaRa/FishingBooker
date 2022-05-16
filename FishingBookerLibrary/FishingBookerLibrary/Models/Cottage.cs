@@ -11,6 +11,6 @@ namespace FishingBookerLibrary.Models
         public CottageFastReservation FastReservation { get; set; }
         public int NumberOfRooms { get; set; }
         public int BedsPerRoom { get; set; }
-
+        public string OwnerId { get; set; }
     }
 }

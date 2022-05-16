@@ -1,0 +1,184 @@
+﻿@model FishingBooker.Models.DetailsAboutUserViewModel
+
+@{
+    ViewBag.Title = "DetailsAboutUser";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
+}
+
+<h2>Details about cottage owner user</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        @*<dt>
+                @Html.DisplayNameFor(model => model.user.UserId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.user.UserId)
+            </dd>*@
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.EmailAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.EmailAddress)
+        </dd>
+
+        @*<dt>
+                @Html.DisplayNameFor(model => model.user.Password)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.user.Password)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.user.ConfirmPassword)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.user.ConfirmPassword)
+            </dd>*@
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.Biography)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.Biography)
+        </dd>
+
+    </dl>
+</div>
+
+<table class="table">
+    <tr>
+        <th>Title</th>
+        <th>Street</th>
+        <th>Address number</th>
+        <th>City</th>
+        <th>Promotion</th>
+        <th>Number of rooms</th>
+        <th>Beds per room</th>
+    </tr>
+
+    @foreach (var item in Model.cottages)
+    {
+        <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.CottageId)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Street)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PromotionDescription)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.BehaviourRules)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdditionalServices)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pricelist)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfRooms)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BedsPerRoom)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "EditAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null) |
+
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+
+                @Html.ActionLink("Delete", "DeleteAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null)*@
+            </td>
+        </tr>
+    }
+
+</table>

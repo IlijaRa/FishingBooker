@@ -9,5 +9,7 @@ namespace FishingBooker.Models
     {
         public RegUserViewModel user { get; set; } = new RegUserViewModel();
         public List<AdventureViewModel> adventures { get; set; } = new List<AdventureViewModel>();
+        public List<CottageViewModel> cottages { get; set; } = new List<CottageViewModel>();
+        public List<ShipViewModel> ships { get; set; } = new List<ShipViewModel>();
     }
 }

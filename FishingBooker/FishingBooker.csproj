@@ -169,6 +169,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminUsersController.cs" />
+    <Compile Include="Controllers\ClientUsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InstructorUsersController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -207,7 +208,9 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdventureReservationViewModel.cs" />
     <Compile Include="Models\AdventureInstructorViewModel.cs" />
+    <Compile Include="Models\ClientComplaintViewModel.cs" />
     <Compile Include="Models\ClientProfileInfoViewModel.cs" />
+    <Compile Include="Models\CottageViewModel.cs" />
     <Compile Include="Models\CurrentReservationViewModel.cs" />
     <Compile Include="Models\DeactivationRequestViewModel.cs" />
     <Compile Include="Models\DetailsAboutUserViewModel.cs" />
@@ -222,6 +225,7 @@
     <Compile Include="Models\RegUserViewModel.cs" />
     <Compile Include="Models\ReservationFromHistoryViewModel.cs" />
     <Compile Include="Models\ReservationToShowViewModel.cs" />
+    <Compile Include="Models\ShipViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -301,11 +305,19 @@
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Shared\_LayoutHeadAdmin.cshtml" />
     <Content Include="Views\AdminUsers\SearchUsers.cshtml" />
-    <Content Include="Views\AdminUsers\DetailsAboutUser.cshtml" />
     <Content Include="Views\AdminUsers\ViewDeactivationRequests.cshtml" />
     <Content Include="Views\AdminUsers\AcceptedDeactivationEmailForm.cshtml" />
     <Content Include="Views\AdminUsers\RejectedDeactivationEmailForm.cshtml" />
     <Content Include="Views\AdminUsers\RejectUserRegistration.cshtml" />
+    <Content Include="Views\AdminUsers\DetailsAboutUser.cshtml" />
+    <Content Include="Views\AdminUsers\DetailsAboutInstructor.cshtml" />
+    <Content Include="Views\AdminUsers\DetailsAboutCottageOwner.cshtml" />
+    <Content Include="Views\AdminUsers\DetailsAboutShipOwner.cshtml" />
+    <Content Include="Views\Shared\_LayoutClient.cshtml" />
+    <Content Include="Views\ClientUsers\Complaint.cshtml" />
+    <Content Include="Views\ClientUsers\SearchUsers.cshtml" />
+    <Content Include="Views\ClientUsers\MakeAComplaint.cshtml" />
+    <Content Include="Views\Shared\ClientDidNotHaveReservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

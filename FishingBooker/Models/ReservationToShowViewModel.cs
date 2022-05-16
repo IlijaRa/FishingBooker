@@ -47,6 +47,6 @@ namespace FishingBooker.Models
         public decimal Price { get; set; }
 
 
-        public string InstructorId { get; set; }
+        public string OwnerId { get; set; }
     }
 }

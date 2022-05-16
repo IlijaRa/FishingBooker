@@ -20,3 +20,16 @@ C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBoo
 C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Dapper.xml
 C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\Users\rakoc\OneDrive\Desktop\buraz\ISAproject\FishingBookerLibrary\FishingBookerLibrary\obj\Debug\FishingBookerLibrary.csproj.CopyComplete
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.Helpers.dll
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.Mvc.dll
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.Razor.dll
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.WebPages.dll
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.WebPages.Razor.dll
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.Helpers.xml
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.Mvc.xml
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.Razor.xml
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.WebPages.xml
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.WebPages.Deployment.xml
+D:\GitHubRepositories\FishingBooker\FishingBookerLibrary\FishingBookerLibrary\bin\Debug\System.Web.WebPages.Razor.xml

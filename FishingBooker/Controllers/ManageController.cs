@@ -396,7 +396,7 @@ namespace FishingBooker.Controllers
                                 StartTime = reservation.StartTime.ToString(),
                                 Duration = reservation.Duration,
                                 Price = reservation.Price,
-                                InstructorId = User.Identity.GetUserId()
+                                OwnerId = User.Identity.GetUserId()
                             });
                         }
                     }
@@ -405,7 +405,7 @@ namespace FishingBooker.Controllers
 
             foreach (var reservation in data_history_reservations)
             {
-                if (reservation.InstructorId == User.Identity.GetUserId())
+                if (reservation.OwnerId == User.Identity.GetUserId())
                 {
                     schedule.reservation_history.Add(new ReservationFromHistoryViewModel
                     {
@@ -416,7 +416,7 @@ namespace FishingBooker.Controllers
                         StartTime = reservation.StartTime.ToString(),
                         Duration = reservation.Duration.ToString(),
                         Price = reservation.Price,
-                        InstructorId = reservation.InstructorId,
+                        OwnerId = reservation.OwnerId,
                     });
                 }
             }

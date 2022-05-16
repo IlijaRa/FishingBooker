@@ -11,7 +11,9 @@ namespace FishingBookerLibrary.Models
         public ShipFastReservation FastReservation { get; set; }
         public ShipSpecification ShipSpecification { get; set; }
         public string NavigationEquipment { get; set; }
-        public List<string> FishingEquipment { get; set; }
+        public string FishingEquipment { get; set; }
         public Enums.CancellationPolicyType CancelationPolicy { get; set; }
+        public int SpecificationId { get; set; }
+        public string OwnerId { get; set; }
     }
 }
