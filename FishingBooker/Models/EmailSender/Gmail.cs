@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -9,8 +10,13 @@ namespace FishingBooker.Models.EmailSender
 {
     public class Gmail
     {
+        [Display(Name = "To")]
         public string To { get; set; }
+
+        [Display(Name = "Subject")]
         public string Subject { get; set; }
+
+        [Display(Name = "Body")]
         public string Body { get; set; }
 
         public void SendEmail()

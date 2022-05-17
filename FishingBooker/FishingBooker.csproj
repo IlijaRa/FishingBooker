@@ -208,6 +208,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdventureReservationViewModel.cs" />
     <Compile Include="Models\AdventureInstructorViewModel.cs" />
+    <Compile Include="Models\AnswerToComplaintViewModel.cs" />
     <Compile Include="Models\ClientComplaintViewModel.cs" />
     <Compile Include="Models\ClientProfileInfoViewModel.cs" />
     <Compile Include="Models\CottageViewModel.cs" />
@@ -218,6 +219,7 @@
     <Compile Include="Models\EmailSender\Gmail.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\AdventureViewModel.cs" />
+    <Compile Include="Models\IndexViewModels\ClientIndexViewModel.cs" />
     <Compile Include="Models\InstructorAvailabilityViewModel.cs" />
     <Compile Include="Models\InstructorScheduleViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -317,7 +319,9 @@
     <Content Include="Views\ClientUsers\Complaint.cshtml" />
     <Content Include="Views\ClientUsers\SearchUsers.cshtml" />
     <Content Include="Views\ClientUsers\MakeAComplaint.cshtml" />
-    <Content Include="Views\Shared\ClientDidNotHaveReservation.cshtml" />
+    <Content Include="Views\Shared\ClientDidNotSelectActionTitle.cshtml" />
+    <Content Include="Views\AdminUsers\ReadClientComplaints.cshtml" />
+    <Content Include="Views\AdminUsers\AnswerToComplaint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

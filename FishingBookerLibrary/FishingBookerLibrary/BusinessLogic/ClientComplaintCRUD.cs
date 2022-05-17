@@ -34,5 +34,28 @@ namespace FishingBookerLibrary.BusinessLogic
 
             return SSMSDataAccess.SaveData(sql, data);
         }
+
+        public static List<ClientComplaint> LoadClientComplaints()
+        {
+            string sql = @"SELECT *
+                           FROM dbo.ClientComplaints;";
+
+            return SSMSDataAccess.LoadData<ClientComplaint>(sql);
+        }
+
+        public static int DeleteClientComplaintById(int complaintId)
+        {
+
+            ClientComplaint data = new ClientComplaint
+            {
+                Id = complaintId,
+            };
+
+            string sql = @" DELETE 
+                            FROM dbo.ClientComplaints 
+                            WHERE Id = @Id;";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
     }
 }

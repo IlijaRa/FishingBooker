@@ -14,10 +14,14 @@
     {
         Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
     }
+    else if (User.IsInRole("ValidClient"))
+    {
+        Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    }
 }
 
 <hgroup>
     <h1 class="text-warning">You cannot send a complaint because</h1>
-    <h2 class="text-warning">You did not have a reservation with this owner or this action.</h2>
+    <h2 class="text-warning">You did not select an action title.</h2>
 </hgroup>
 

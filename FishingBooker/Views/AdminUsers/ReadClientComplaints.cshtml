@@ -1,0 +1,83 @@
+﻿@model IEnumerable<FishingBooker.Models.ClientComplaintViewModel>
+
+@{
+    ViewBag.Title = "ReadClientComplaints";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
+}
+
+<h2>Client complaints about owners and their services</h2>
+
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.OwnerId)
+        </th>*@
+        @*<th>
+            @Html.DisplayNameFor(model => model.OwnerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OwnerSurname)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.OwnerEmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ClientsEmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectedActionTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reason)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.OwnerId)
+        </td>*@
+        @*<td>
+            @Html.DisplayFor(modelItem => item.OwnerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OwnerSurname)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.OwnerEmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClientsEmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SelectedActionTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reason)
+        </td>
+        <td>
+            @Html.ActionLink(
+                "Answer",
+                "AnswerToComplaint",
+                "AdminUsers",
+                new
+                {
+                    complaintId = item.Id,
+                    clientsEmail = item.ClientsEmailAddress,
+                    ownersEmail = item.OwnerEmailAddress
+                },
+                null
+            )
+        </td>
+    </tr>
+}
+
+</table>

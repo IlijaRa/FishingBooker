@@ -19,7 +19,7 @@ namespace FishingBooker.Models
         public string OwnerName { get; set; }
 
 
-        [Display(Name = "Owner name*")]
+        [Display(Name = "Owner surname*")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "You need to provide a surname between 2-50 characters.")]
         [Required(ErrorMessage = "You need to give us last name.")]
         public string OwnerSurname { get; set; }
@@ -37,10 +37,13 @@ namespace FishingBooker.Models
         public string ClientsEmailAddress { get; set; }
 
 
+        //[Display(Name = "Action title*")]
+        //[StringLength(100, MinimumLength = 2, ErrorMessage = "You need to provide a name between 2-100 characters.")]
+        //[Required(ErrorMessage = "You need to give us a title.")]
+        //public IEnumerable<SelectListItem> ActionTitles { get; set; }
+
         [Display(Name = "Action title*")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "You need to provide a name between 2-100 characters.")]
         [Required(ErrorMessage = "You need to give us a title.")]
-        public IEnumerable<SelectListItem> ActionTitles { get; set; }
         public string SelectedActionTitle { get; set; }
 
         [Display(Name = "Reason*")]

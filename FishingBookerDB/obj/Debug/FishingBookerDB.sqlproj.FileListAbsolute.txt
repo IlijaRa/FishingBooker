@@ -2,9 +2,5 @@ D:\GitHubRepositories\FishingBooker\FishingBookerDB\bin\Debug\FishingBookerDB.da
 D:\GitHubRepositories\FishingBooker\FishingBookerDB\bin\Debug\FishingBookerDB.dll
 D:\GitHubRepositories\FishingBooker\FishingBookerDB\bin\Debug\FishingBookerDB.pdb
 D:\GitHubRepositories\FishingBooker\FishingBookerDB\obj\Debug\FishingBookerDB.sqlproj.AssemblyReference.cache
-D:\GitHubRepositories\FishingBooker\FishingBookerDB\obj\Debug\Model.xml
-D:\GitHubRepositories\FishingBooker\FishingBookerDB\obj\Debug\refactor.xml
-D:\GitHubRepositories\FishingBooker\FishingBookerDB\obj\Debug\postdeploy.sql
-D:\GitHubRepositories\FishingBooker\FishingBookerDB\obj\Debug\predeploy.sql
 D:\GitHubRepositories\FishingBooker\FishingBookerDB\obj\Debug\FishingBookerDB.dll
 D:\GitHubRepositories\FishingBooker\FishingBookerDB\obj\Debug\FishingBookerDB.pdb

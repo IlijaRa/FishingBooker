@@ -24,25 +24,36 @@ namespace FishingBooker.Controllers
             var data_users = RegUserCRUD.LoadUsers();
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistoryByClientsEmailAddress(User.Identity.GetUserName());
             List<RegUserViewModel> users = new List<RegUserViewModel>();
+            List<string> user_ids = new List<string>();
+            foreach (var h_reservations in data_history_reservations)
+            {
+                user_ids.Add(h_reservations.OwnerId);
+            }
+            List<string> unique_user_ids = user_ids.Distinct().ToList();
+
             foreach (var history_reservation in data_history_reservations)
             {
                 foreach (var row in data_users)
                 {
                     if ((row.Type == "FishingInstructor" || row.Type == "CottageOwner" || row.Type == "ShipOwner") & history_reservation.OwnerId.Equals(row.Id))
                     {
-                        users.Add(new RegUserViewModel
+                        if (unique_user_ids.Contains(row.Id))
                         {
-                            UserId = row.Id,
-                            Name = row.Name,
-                            Surname = row.Surname,
-                            PhoneNumber = row.PhoneNumber,
-                            EmailAddress = row.EmailAddress,
-                            Type = row.Type,
-                            Address = row.Address,
-                            City = row.City,
-                            Country = row.Country,
-                            Description = row.Description
-                        });
+                            users.Add(new RegUserViewModel
+                            {
+                                UserId = row.Id,
+                                Name = row.Name,
+                                Surname = row.Surname,
+                                PhoneNumber = row.PhoneNumber,
+                                EmailAddress = row.EmailAddress,
+                                Type = row.Type,
+                                Address = row.Address,
+                                City = row.City,
+                                Country = row.Country,
+                                Description = row.Description
+                            });
+                            unique_user_ids.Remove(row.Id);
+                        }
                     }
                 }
             }
@@ -91,6 +102,7 @@ namespace FishingBooker.Controllers
         {
             List<string> action_titles_from_clients_history = new List<string>();
             List<string> action_titles_to_show_on_page = new List<string>();
+            List<SelectListItem> action_titles = new List<SelectListItem>();
             var user = RegUserCRUD.LoadUsers().Find(x => x.Id == ownerId);
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistoryByClientsEmailAddress(User.Identity.GetUserName());
 
@@ -99,8 +111,12 @@ namespace FishingBooker.Controllers
             complaint.OwnerName = user.Name;
             complaint.OwnerSurname = user.Surname;
             complaint.OwnerEmailAddress = user.EmailAddress;
+            ViewData["OwnerId"] = ownerId;
+            ViewData["OwnerName"] = user.Name;
+            ViewData["OwnerSurname"] = user.Surname;
+            ViewData["OwnerEmailAddress"] = user.EmailAddress;
 
-            foreach (var history_reservation in data_history_reservations)
+            foreach (var history_reservation in data_history_reservations.Distinct())
             {
                 action_titles_from_clients_history.Add(history_reservation.ActionTitle);
             }
@@ -112,19 +128,11 @@ namespace FishingBooker.Controllers
                 {
                     if (action_titles_from_clients_history.Contains(adventure))
                     {
-                        action_titles_to_show_on_page.Add(adventure);
+                        action_titles.Add(new SelectListItem { Text = adventure, Value = adventure });
                     }  
                 }
-                complaint.ActionTitles = action_titles_to_show_on_page.Select(x => new SelectListItem { Text = x, Value = x }).ToList();
-
-                //foreach (var item in adventure_titles)
-                //{
-                //    complaint.ActionTitles.Add(new SelectListItem
-                //    {
-                //        Text = item,
-                //        Value = item
-                //    });
-                //}
+                //complaint.ActionTitles = action_titles_to_show_on_page.Select(x => new SelectListItem { Text = x, Value = x }).ToList();
+                ViewBag.ActionTitles = action_titles;
             }
             else if (user.Type == "CottageOwner")
             {
@@ -133,20 +141,11 @@ namespace FishingBooker.Controllers
                 {
                     if (action_titles_from_clients_history.Contains(cottage))
                     {
-                        action_titles_to_show_on_page.Add(cottage);
+                        action_titles.Add(new SelectListItem { Text = cottage, Value = cottage });
                     }
                 }
-                complaint.ActionTitles = action_titles_to_show_on_page.Select(x => new SelectListItem { Text = x, Value = x }).ToList();
-
-                //ViewBag.data = cottage_titles;
-                //foreach (var item in cottage_titles)
-                //{
-                //    complaint.ActionTitles.Add(new SelectListItem
-                //    {
-                //        Text = item,
-                //        Value = item
-                //    });
-                //}
+                //complaint.ActionTitles = action_titles_to_show_on_page.Select(x => new SelectListItem { Text = x, Value = x }).ToList();
+                ViewBag.ActionTitles = action_titles;
             }
             else if (user.Type == "ShipOwner")
             {
@@ -155,20 +154,11 @@ namespace FishingBooker.Controllers
                 {
                     if (action_titles_from_clients_history.Contains(ship))
                     {
-                        action_titles_to_show_on_page.Add(ship);
+                        action_titles.Add(new SelectListItem { Text = ship, Value = ship });
                     }
                 }
-                complaint.ActionTitles = action_titles_to_show_on_page.Select(x => new SelectListItem { Text = x, Value = x }).ToList();
-
-                //ViewBag.data = ship_titles;
-                //foreach (var item in ship_titles)
-                //{
-                //    complaint.ActionTitles.Add(new SelectListItem
-                //    {
-                //        Text = item,
-                //        Value = item
-                //    });
-                //}
+                //complaint.ActionTitles = action_titles_to_show_on_page.Select(x => new SelectListItem { Text = x, Value = x }).ToList();
+                ViewBag.ActionTitles = action_titles;
             }
             return View(complaint);
         }
@@ -177,21 +167,24 @@ namespace FishingBooker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult MakeAComplaint(ClientComplaintViewModel model)
         {
-            if (ModelState.IsValid)
+            //model.ClientsEmailAddress = User.Identity.GetUserName();
+            //ViewBag.ActionTitles = model.SelectedActionTitle;
+            //if (ModelState.IsValid)
+            //{
+            if (model.SelectedActionTitle != null)
             {
-                var selectedActionTitle = model.ActionTitles; // Value property Gets or sets the value associated with the ListItem.
-                //ClientComplaintCRUD.CreateClientComplaint(model.OwnerId,
-                //                                              model.OwnerName,
-                //                                              model.OwnerSurname,
-                //                                              model.OwnerEmailAddress,
-                //                                              User.Identity.GetUserName(),
-                //                                              selectedActionTitle,
-                //                                              model.Reason);
-
-                return RedirectToAction("Index", "ClientUsers");
-
+                var selectedActionTitle = model.SelectedActionTitle;
+                ClientComplaintCRUD.CreateClientComplaint(model.OwnerId,
+                                                              model.OwnerName,
+                                                              model.OwnerSurname,
+                                                              model.OwnerEmailAddress,
+                                                              User.Identity.GetUserName(),
+                                                              selectedActionTitle,
+                                                              model.Reason);
+                return RedirectToAction("Complaint", "ClientUsers");
             }
-            return View();
+            else
+                return View("ClientDidNotSelectActionTitle");
         }
     }
 }

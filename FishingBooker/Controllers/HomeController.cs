@@ -14,7 +14,22 @@ namespace FishingBooker.Controllers
     {
         public ActionResult Index()
         {
-
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("AdminIndex");
+            }
+            else if (User.IsInRole("HeadAdmin"))
+            {
+                return RedirectToAction("HeadAdminIndex");
+            }
+            else if (User.IsInRole("ValidClient"))
+            {
+                return RedirectToAction("ClientIndex");
+            }
+            else if (User.IsInRole("ValidFishingInstructor"))
+            {
+                return RedirectToAction("FishingInstructorIndex");
+            }
             return View();
         }
 
@@ -31,6 +46,22 @@ namespace FishingBooker.Controllers
 
             return View();
         }
-        
+        public ActionResult AdminIndex()
+        {
+            return View();
+        }
+        public ActionResult HeadAdminIndex()
+        {
+            return View();
+        }
+        public ActionResult FishingInstructorIndex()
+        {
+            return View();
+        }
+        public ActionResult ClientIndex()
+        {
+            ClientIndexViewModel model;
+            return View(model);
+        }
     }
 }

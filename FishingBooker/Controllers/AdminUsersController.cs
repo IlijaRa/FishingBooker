@@ -503,5 +503,69 @@ namespace FishingBooker.Controllers
 
         }
 
+        public ActionResult ReadClientComplaints()
+        {
+            var data_complaints = ClientComplaintCRUD.LoadClientComplaints();
+            List<ClientComplaintViewModel> client_complaints = new List<ClientComplaintViewModel>();
+
+            foreach (var complaint in data_complaints)
+            {
+                client_complaints.Add(new ClientComplaintViewModel
+                {
+                    Id = complaint.Id,
+                    OwnerId = complaint.OwnerId,
+                    OwnerName = complaint.OwnerName,
+                    OwnerSurname = complaint.OwnerSurname,
+                    OwnerEmailAddress = complaint.OwnerEmailAddress,
+                    ClientsEmailAddress = complaint.ClientsEmailAddress,
+                    SelectedActionTitle = complaint.ActionTitle,
+                    Reason = complaint.Reason
+                });
+            }
+
+            return View(client_complaints);
+        }
+
+        public ActionResult AnswerToComplaint(int complaintId, string clientsEmail, string ownersEmail)
+        {
+            AnswerToComplaintViewModel answer = new AnswerToComplaintViewModel();
+
+            answer.complaintId = complaintId;
+            answer.client_gmail.To = clientsEmail;
+            answer.owner_gmail.To = ownersEmail;
+            return View(answer);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AnswerToComplaint(AnswerToComplaintViewModel model)
+        {
+            try
+            {
+                var client_gmail = new Gmail
+                {
+                    To = model.client_gmail.To,
+                    Subject = model.client_gmail.Subject,
+                    Body = model.client_gmail.Body
+                };
+                client_gmail.SendEmail();
+                
+                var owner_gmail = new Gmail
+                {
+                    To = model.owner_gmail.To,
+                    Subject = model.owner_gmail.Subject,
+                    Body = model.owner_gmail.Body
+                };
+                owner_gmail.SendEmail();
+
+                ClientComplaintCRUD.DeleteClientComplaintById(model.complaintId);
+                return RedirectToAction("ReadClientComplaints", "AdminUsers");
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+        }
+
     }
 }
