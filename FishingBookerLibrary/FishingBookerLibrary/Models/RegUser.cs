@@ -22,6 +22,9 @@ namespace FishingBookerLibrary.Models
         public string Description { get; set; }
         public string Biography { get; set; }
         public string Status { get; set; } = "Waiting";
+        public float Rating { get; set; }
+        public int RatingSum { get; set; }
+        public int RatingCount { get; set; }
         public int Penalties { get; set; } = 0;
     }
 }

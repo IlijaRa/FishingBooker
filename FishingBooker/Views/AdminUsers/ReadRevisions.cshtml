@@ -1,0 +1,83 @@
+﻿@model IEnumerable<FishingBooker.Models.RevisionViewModel>
+
+@{
+    ViewBag.Title = "ReadRevisions";
+    if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
+}
+
+<h2>Read revisions</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ClientsEmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EntityTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OwnersEmailAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActionRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OwnerInstructorRating)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClientsEmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EntityTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OwnersEmailAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActionRating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OwnerInstructorRating)
+        </td>
+        <td>
+            @Html.ActionLink(  "Confirm",
+                               "ConfirmRevision",
+                               "AdminUsers",
+                               new {
+                                   id = item.Id,
+                                   ownersEmail = item.OwnersEmailAddress,
+                                   entityTitle = item.EntityTitle,
+                                   actionRating = item.ActionRating,
+                                   ownerRating = item.OwnerInstructorRating
+                               },
+                               null) |
+            @Html.ActionLink("Deny", 
+                             "DenyRevision", 
+                             "AdminUsers", 
+                             new { 
+                                 id=item.Id 
+                             }, 
+                             null)
+        </td>
+    </tr>
+}
+
+</table>

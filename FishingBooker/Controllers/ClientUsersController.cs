@@ -186,5 +186,43 @@ namespace FishingBooker.Controllers
             else
                 return View("ClientDidNotSelectActionTitle");
         }
+
+        public ActionResult AddRevision(string ownerId, string actionTitle)
+        {
+
+            RevisionViewModel model = new RevisionViewModel();
+            model.ClientsEmailAddress = User.Identity.GetUserName();
+            model.EntityTitle = actionTitle;
+            model.OwnersEmailAddress = RegUserCRUD.LoadUsers().Find(x => x.Id == ownerId).EmailAddress;
+            model.Description = null;
+            model.ActionRating = 0;
+            model.OwnerInstructorRating = 0;
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddRevision(RevisionViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = RevisionCRUD.CheckIfRevisionAlreadyxists(model.ClientsEmailAddress, model.EntityTitle, model.OwnersEmailAddress);
+                if(result == null)
+                {
+                    RevisionCRUD.CreateRevision(model.ClientsEmailAddress,
+                                                                model.EntityTitle,
+                                                                model.OwnersEmailAddress,
+                                                                model.Description,
+                                                                model.ActionRating,
+                                                                model.OwnerInstructorRating);
+                    return RedirectToAction("ClientIndex", "Home");
+                }
+                else
+                {
+                    return View("ClientAlreadyRated");
+                }   
+            }
+            return View(model);
+        }
     }
 }

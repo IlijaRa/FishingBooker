@@ -227,6 +227,7 @@
     <Compile Include="Models\RegUserViewModel.cs" />
     <Compile Include="Models\ReservationFromHistoryViewModel.cs" />
     <Compile Include="Models\ReservationToShowViewModel.cs" />
+    <Compile Include="Models\RevisionViewModel.cs" />
     <Compile Include="Models\ShipViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -322,6 +323,13 @@
     <Content Include="Views\Shared\ClientDidNotSelectActionTitle.cshtml" />
     <Content Include="Views\AdminUsers\ReadClientComplaints.cshtml" />
     <Content Include="Views\AdminUsers\AnswerToComplaint.cshtml" />
+    <Content Include="Views\Home\ClientIndex.cshtml" />
+    <Content Include="Views\ClientUsers\AddRevision.cshtml" />
+    <Content Include="Views\Shared\ClientAlreadyRated.cshtml" />
+    <Content Include="Views\AdminUsers\ReadRevisions.cshtml" />
+    <Content Include="Views\Home\AdminIndex.cshtml" />
+    <Content Include="Views\Home\HeadAdminIndex.cshtml" />
+    <Content Include="Views\Home\FishingInstructorIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

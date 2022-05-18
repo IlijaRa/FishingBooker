@@ -1,0 +1,26 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "ReservationReservedError";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
+    else if (User.IsInRole("ValidClient"))
+    {
+        Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    }
+}
+
+<hgroup>
+    <h1 class="text-warning">You cannot rate again this action</h1>
+</hgroup>
+

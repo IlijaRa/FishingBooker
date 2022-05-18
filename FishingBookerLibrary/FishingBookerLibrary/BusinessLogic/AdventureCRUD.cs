@@ -27,6 +27,9 @@ namespace FishingBookerLibrary.BusinessLogic
                 Title = title,
                 Address = address,
                 PromotionDescription = promotion,
+                Rating = 0,
+                RatingSum = 0,
+                RatingCount = 0,
                 BehaviourRules = behaviour,
                 AdditionalServices = additionalServices,
                 Pricelist = pricelist,
@@ -37,8 +40,8 @@ namespace FishingBookerLibrary.BusinessLogic
                 InstructorId = instructorId
             };
 
-            string sql = @"INSERT INTO dbo.Adventures (Title, Address, PromotionDescription, BehaviourRules, AdditionalServices, Pricelist, Price, MaxNumberOfPeople, FishingEquipment, CancellationPolicy, InstructorId)
-                           VALUES (@Title, @Address, @PromotionDescription, @BehaviourRules, @AdditionalServices, @Pricelist, @Price, @MaxNumberOfPeople, @FishingEquipment, @CancellationPolicy, @InstructorId);";
+            string sql = @"INSERT INTO dbo.Adventures (Title, Address, PromotionDescription, Rating, RatingSum, RatingCount, BehaviourRules, AdditionalServices, Pricelist, Price, MaxNumberOfPeople, FishingEquipment, CancellationPolicy, InstructorId)
+                           VALUES (@Title, @Address, @PromotionDescription, @Rating, @RatingSum, @RatingCount, @BehaviourRules, @AdditionalServices, @Pricelist, @Price, @MaxNumberOfPeople, @FishingEquipment, @CancellationPolicy, @InstructorId);";
 
             return SSMSDataAccess.SaveData(sql, data);
         }
@@ -77,6 +80,25 @@ namespace FishingBookerLibrary.BusinessLogic
 
             return SSMSDataAccess.SaveData(sql, data);
         }
+
+        public static int UpdateRating(int adventureId, float rating, int ratingSum, int ratingCount)
+        {
+
+            Adventure data = new Adventure
+            {
+                Id = adventureId,
+                Rating = rating,
+                RatingSum = ratingSum,
+                RatingCount = ratingCount
+            };
+            string sql = @" UPDATE dbo.Adventures
+                            SET Rating = @Rating, RatingSum = @RatingSum, RatingCount = @RatingCount
+                            WHERE Id = @Id;";
+
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
 
         public static int DeleteAdventure(int adventureId)
         {

@@ -100,6 +100,24 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
+        public static int UpdateRating(string userId, float rating, int ratingSum, int ratingCount)
+        {
+
+            RegUser data = new RegUser
+            {
+                Id = userId,
+                Rating = rating,
+                RatingSum = ratingSum,
+                RatingCount = ratingCount
+            };
+            string sql = @" UPDATE dbo.RegUsers
+                            SET Rating = @Rating, RatingSum = @RatingSum, RatingCount = @RatingCount
+                            WHERE Id = @Id;";
+
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
         public static List<RegUser> LoadUsers()
         {
             string sql = @"SELECT *
@@ -163,9 +181,6 @@ namespace FishingBookerLibrary.BusinessLogic
 
             return SSMSDataAccess.LoadData<InstructorAvailability>(sql);
         }
-
-        
-        
 
         public static int AddPenalty(string clientEmail, int numberOfPenalties)
         {

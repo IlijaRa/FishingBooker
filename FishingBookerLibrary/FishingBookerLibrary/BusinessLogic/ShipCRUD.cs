@@ -26,5 +26,25 @@ namespace FishingBookerLibrary.BusinessLogic
 
             return SSMSDataAccess.LoadShipTitlesByOwner<string>(sql, ownerId);
         }
+
+        public static int UpdateRating(int shipId, float rating, int ratingSum, int ratingCount)
+        {
+
+            Ship data = new Ship
+            {
+                Id = shipId,
+                Rating = rating,
+                RatingSum = ratingSum,
+                RatingCount = ratingCount
+            };
+
+            string sql = @" UPDATE dbo.Ships
+                            SET Rating = @Rating, RatingSum = @RatingSum, RatingCount = @RatingCount
+                            WHERE Id = @Id;";
+
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
     }
 }

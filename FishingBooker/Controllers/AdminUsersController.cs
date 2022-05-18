@@ -567,5 +567,92 @@ namespace FishingBooker.Controllers
             }
         }
 
+        public ActionResult ReadRevisions()
+        {
+            var data_revisions = RevisionCRUD.LoadUnconfirmedRevisions();
+
+            List<RevisionViewModel> revisions = new List<RevisionViewModel>();
+            foreach (var revision in data_revisions)
+            {
+                revisions.Add(new RevisionViewModel { 
+                    Id = revision.Id,
+                    ClientsEmailAddress = revision.ClientsEmailAddress,
+                    EntityTitle = revision.EntityTitle,
+                    OwnersEmailAddress = revision.OwnersEmailAddress,
+                    Description = revision.Description,
+                    ActionRating = revision.ActionRating,
+                    OwnerInstructorRating = revision.OwnerInstructorRating
+                });
+            }
+            return View(revisions);
+        }
+
+        public ActionResult ConfirmRevision(int id, string ownersEmail, string entityTitle, int actionRating , int ownerRating)
+        {
+            try
+            {
+                var user = RegUserCRUD.LoadUsers().Find(x => x.EmailAddress == ownersEmail);
+                user.RatingSum = user.RatingSum + ownerRating;
+                user.RatingCount = user.RatingCount + 1;
+                user.Rating = user.RatingSum / user.RatingCount;
+                RegUserCRUD.UpdateRating(user.Id, user.Rating, user.RatingSum, user.RatingCount);
+
+                if (user.Type.Equals("FishingInstructor"))
+                {
+                    var adventure = AdventureCRUD.LoadAdventures().Find(x => x.Title == entityTitle);
+                    adventure.RatingSum = adventure.RatingSum + actionRating;
+                    adventure.RatingCount = adventure.RatingCount + 1;
+                    adventure.Rating = adventure.RatingSum / adventure.RatingCount;
+                    AdventureCRUD.UpdateRating(adventure.Id, adventure.Rating, adventure.RatingSum, adventure.RatingCount);
+                }
+                else if (user.Type.Equals("CottageOwner"))
+                {
+                    var cottage = CottageCRUD.LoadCottages().Find(x => x.Title == entityTitle);
+                    cottage.RatingSum = cottage.RatingSum + actionRating;
+                    cottage.RatingCount = cottage.RatingCount + 1;
+                    cottage.Rating = cottage.RatingSum / cottage.RatingCount;
+                    CottageCRUD.UpdateRating(cottage.Id, cottage.Rating, cottage.RatingSum, cottage.RatingCount);
+                }
+                else if (user.Type.Equals("ShipOwner"))
+                {
+                    var ship = ShipCRUD.LoadShips().Find(x => x.Title == entityTitle);
+                    ship.RatingSum = ship.RatingSum + actionRating;
+                    ship.RatingCount = ship.RatingCount + 1;
+                    ship.Rating = ship.RatingSum / ship.RatingCount;
+                    ShipCRUD.UpdateRating(ship.Id, ship.Rating, ship.RatingSum, ship.RatingCount);
+                }
+
+                var gmail = new Gmail
+                {
+                    To = ownersEmail,
+                    Subject = "New rating from a client",
+                    Body = @"Dear, 
+                         you have a new rating from your client.
+                         Best wishes,
+                         Admin team."
+                };
+                gmail.SendEmail();
+                RevisionCRUD.UpdateStatus(id);
+                return RedirectToAction("ReadRevisions", "AdminUsers");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public ActionResult DenyRevision(int id)
+        {
+            try
+            {
+                RevisionCRUD.DeleteRevisionById(id);
+            }
+            catch
+            {
+                Console.WriteLine("Greska");
+            }
+            return RedirectToAction("ReadRevisions", "AdminUsers");
+        }
+
     }
 }

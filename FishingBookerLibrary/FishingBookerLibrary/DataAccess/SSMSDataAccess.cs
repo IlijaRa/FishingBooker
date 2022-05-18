@@ -73,6 +73,14 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
+        public static T LoadRevisionByEmailsAndTitle<T>(string sql, T clientsEmail, T entityTitle, T ownersEmail)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { ClientsEmailAddress = clientsEmail, EntityTitle = entityTitle, OwnersEmailAddress = ownersEmail }).FirstOrDefault();
+            }
+        }
+
         public static List<T> LoadAdventureTitlesByInstructor<T>(string sql, string instructorId)
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
@@ -94,6 +102,14 @@ namespace FishingBookerLibrary.DataAccess
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
             {
                 return cnn.Query<T>(sql, new { OwnerId = ownerId }).ToList();
+            }
+        }
+
+        public static List<T> LoadUnconfirmedRevisions<T>(string sql, bool state)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { State = state }).ToList();
             }
         }
 

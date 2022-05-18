@@ -1,0 +1,57 @@
+﻿@model FishingBooker.Models.IndexViewModels.ClientIndexViewModel
+
+@{
+    ViewBag.Title = "ClientIndex";
+    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+}
+
+<h2>Your reservation history</h2>
+<table class="table">
+    <tr>
+        @*<th>Id</th>*@
+        @*<th>ClientsEmail</th>*@
+        <th>ActionTitle</th>
+        <th>StartDate</th>
+        <th>Duration</th>
+        <th>Price</th>
+        @*<th>OwnerId</th>*@
+    </tr>
+
+@foreach (var item in Model.history_reservations)
+{
+    <tr>
+        @*<th>
+                @Html.DisplayFor(model => item.Id)
+            </th>*@
+        @*<th>
+            @Html.DisplayFor(model => item.ClientsEmailAddress)
+        </th>*@
+        <th>
+            @Html.DisplayFor(model => item.ActionTitle)
+        </th>
+        <th>
+            @Html.DisplayFor(model => item.StartDate)
+        </th>
+        <th>
+            @Html.DisplayFor(model => item.Duration)
+        </th>
+        <th>
+            @Html.DisplayFor(model => item.Price)
+        </th>
+        @*<th>
+            @Html.DisplayFor(model => item.OwnerId)
+        </th>*@
+        <td>
+            @Html.ActionLink("Add revision",
+            "AddRevision",
+            "ClientUsers",
+            new {
+                ownerId = item.OwnerId,
+                actionTitle = item.ActionTitle
+            },
+            null)
+        </td>
+    </tr>
+}
+
+</table>
