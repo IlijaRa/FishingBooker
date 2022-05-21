@@ -554,7 +554,16 @@ namespace FishingBooker.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        //public JsonResult GetEvents()
+        //{
+        //    using (ApplicationDbContext dc = new ApplicationDbContext())
+        //    {
+        //        var events = dc.E.ToList();
+        //        return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        //    }
+        //}
+
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 

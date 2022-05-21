@@ -199,7 +199,7 @@ namespace FishingBooker.Controllers
             List<string> street = address[0].Split(' ').ToList();
             List<string> city = address[2].Split(' ').ToList();
 
-            string MapSource ="https://maps.google.com/maps?q=";// Narodnog%20Fronta,%2010%20Novi%20Sad&t=k&z=13&ie=UTF8&iwloc=&output=embed
+            string MapSource ="https://maps.google.com/maps?q=";
             foreach (var part in street)
             {
                 if (part == street.Last())
