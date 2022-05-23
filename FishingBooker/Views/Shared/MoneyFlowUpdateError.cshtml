@@ -1,0 +1,23 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "DeactivationRequestSuccessful";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
+}
+
+<hgroup>
+    <h1 class="text-danger">Your request:</h1>
+    <h2 class="text-danger">Is not accepted.</h2>
+</hgroup>
+

@@ -74,6 +74,7 @@
     <Compile Include="BusinessLogic\ClientComplaintCRUD.cs" />
     <Compile Include="BusinessLogic\CottageCRUD.cs" />
     <Compile Include="BusinessLogic\DeactivationRequestCRUD.cs" />
+    <Compile Include="BusinessLogic\MoneyFlowCRUD.cs" />
     <Compile Include="BusinessLogic\RecordCRUD.cs" />
     <Compile Include="BusinessLogic\ReservationCRUD.cs" />
     <Compile Include="BusinessLogic\RegUserCRUD.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Models\DeletionRequest.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\MoneyFlow.cs" />
     <Compile Include="Models\Record.cs" />
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\FishingInstructor.cs" />

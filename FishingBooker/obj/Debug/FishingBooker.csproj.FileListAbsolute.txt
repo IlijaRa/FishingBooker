@@ -237,3 +237,6 @@ D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.csproj
 D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.dll
 D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.pdb
 D:\GitHubRepositories\FishingBooker\FishingBooker\obj\Debug\FishingBooker.Migrations.AddedPenaltiesField.resources
+D:\GitHubRepositories\FishingBooker\FishingBooker\bin\DHTMLX.dll
+D:\GitHubRepositories\FishingBooker\FishingBooker\bin\DHTMLX.pdb
+D:\GitHubRepositories\FishingBooker\FishingBooker\bin\DHTMLX.xml

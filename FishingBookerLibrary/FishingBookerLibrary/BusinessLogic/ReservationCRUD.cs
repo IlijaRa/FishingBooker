@@ -20,7 +20,8 @@ namespace FishingBookerLibrary.BusinessLogic
                                                             bool isReserved,
                                                             string clientsemailAddress,
                                                             Enums.ReservationType type,
-                                                            int adventureId)
+                                                            int adventureId,
+                                                            string instructorId)
         {
             AdventureReservation data = new AdventureReservation
             {
@@ -36,10 +37,11 @@ namespace FishingBookerLibrary.BusinessLogic
                 ClientsEmailAddress = clientsemailAddress,
                 ReservationType = type,
                 AdventureId = adventureId,
+                InstructorId = instructorId
             };
 
-            string sql = @"INSERT INTO dbo.AdventureReservations (Place, StartDate, StartTime, Duration, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId)
-                           VALUES (@Place, @StartDate, @StartTime, @Duration, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId);";
+            string sql = @"INSERT INTO dbo.AdventureReservations (Place, StartDate, StartTime, Duration, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
+                           VALUES (@Place, @StartDate, @StartTime, @Duration, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);";
 
             return SSMSDataAccess.SaveData(sql, data);
         }
@@ -72,6 +74,14 @@ namespace FishingBookerLibrary.BusinessLogic
                             FROM dbo.AdventureReservations
                             WHERE Id = @Id;";
             return SSMSDataAccess.LoadReservationById<AdventureReservation>(sql, reservationId);
+        }
+
+        public static List<AdventureReservation> LoadReservedAdventureReservationByInstructorId(string instructorId, bool isReserved)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.AdventureReservations
+                            WHERE InstructorId = @InstructorId AND IsReserved = @IsReserved;";
+            return SSMSDataAccess.LoadReservationsByInstructorId<AdventureReservation>(sql, instructorId, isReserved);
         }
 
         public static List<ReservationFromHistory> LoadReservationsFromHistory()

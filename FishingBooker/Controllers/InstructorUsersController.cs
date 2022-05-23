@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using FishingBookerLibrary.Models;
 using System.Threading.Tasks;
+using FishingBooker.Models.EmailSender;
 
 namespace FishingBooker.Controllers
 {
@@ -179,6 +180,8 @@ namespace FishingBooker.Controllers
                         StartDate = row.StartDate,
                         StartTime = row.StartTime.ToString(),
                         Duration = result,
+                        ValidityPeriodDate = row.ValidityPeriodDate,
+                        ValidityPeriodTime = row.ValidityPeriodTime.ToString(),
                         DaysHours = duration_split[1],
                         MaxNumberOfPeople = row.MaxNumberOfPeople,
                         AdditionalServices = row.AdditionalServices,
@@ -259,6 +262,8 @@ namespace FishingBooker.Controllers
             model.StartDate = DateTime.Now;
             model.StartTime = null;
             model.Duration = 0;
+            model.ValidityPeriodDate = DateTime.Now;
+            model.ValidityPeriodTime = null;
             model.DaysHours = null;
             model.MaxNumberOfPeople = 0;
             model.AdditionalServices = "";
@@ -277,7 +282,8 @@ namespace FishingBooker.Controllers
             if (ModelState.IsValid)
             {
                 TimeSpan time = TimeSpan.Parse(model.StartTime.ToString());
-                string duration = model.Duration.ToString() + "," +model.DaysHours;
+                string duration = model.Duration.ToString() + "," + model.DaysHours;
+                List<string> clientEmails = new List<string>();
 
                 ReservationCRUD.CreateAdventureReservations(model.Place,
                                                model.StartDate,
@@ -289,8 +295,22 @@ namespace FishingBooker.Controllers
                                                false,   // IsReserved
                                                null,    // ClientsEmailAddress
                                                Enums.ReservationType.Fast,
-                                               model.AdventureId);
+                                               model.AdventureId,
+                                               User.Identity.GetUserId());
 
+                var subscribedClients = AdventureCRUD.LoadSubscribersByAdventure(model.AdventureId);
+                foreach (var subscriber in subscribedClients)
+                {
+                    Gmail gmail = new Gmail
+                    {
+                        To = subscriber,
+                        Subject = "New action is available",
+                        Body = @"Adventure that you are subscribed to has new action available
+                                 Best wishes,
+                                 Admin team."
+                    };
+                    gmail.SendEmail();
+                }
                 return RedirectToAction("EditAdventure", "InstructorUsers", new { advId = model.AdventureId });
             }
             return View();

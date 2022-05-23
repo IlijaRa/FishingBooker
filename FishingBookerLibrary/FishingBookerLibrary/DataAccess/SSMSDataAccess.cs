@@ -49,6 +49,14 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
+        public static List<T> LoadReservationsByInstructorId<T>(string sql, string instructorId, bool isReserved)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { InstructorId = instructorId, IsReserved = isReserved}).ToList();
+            }
+        }
+
         public static List<T> LoadReservationsByAdventureId<T>(string sql, int adventureId)
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
@@ -110,6 +118,14 @@ namespace FishingBookerLibrary.DataAccess
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
             {
                 return cnn.Query<T>(sql, new { State = state }).ToList();
+            }
+        }
+
+        public static List<T> LoadSubscribersByAdventure<T>(string sql, int adventureId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { AdventureId = adventureId }).ToList();
             }
         }
 

@@ -42,6 +42,20 @@ namespace FishingBooker.Models
         public string Duration { get; set; }
 
 
+        [Display(Name = "Valid until date")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [Required(ErrorMessage = "You need to enter a date.")]
+        [DataType(DataType.Date)]
+        public DateTime ValidityPeriodDate { get; set; }
+
+
+        [Display(Name = "Valid untiil time")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm:ss}")]
+        [Required(ErrorMessage = "You need to enter time.")]
+        [DataType(DataType.Time)]
+        public string ValidityPeriodTime { get; set; }
+
+
         [Display(Name = "Price*")]
         [Required(ErrorMessage = "You need to enter a price.")]
         public decimal Price { get; set; }

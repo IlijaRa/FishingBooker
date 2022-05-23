@@ -12,6 +12,13 @@ namespace FishingBooker.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+
+        [Display(Name = "Percentage for a system(%)")]
+        [Range(1, 100, ErrorMessage = "Percentage must be between 1 and 100!")]
+        public decimal Percentage { get; set; }// koristi samo admin
+                                                // 
+        [Display(Name = "Total income")]
+        public decimal TotalIncome { get; set; }// koristi samo admin  
     }
 
     public class ManageLoginsViewModel

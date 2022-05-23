@@ -11,6 +11,7 @@ using FishingBookerLibrary.BusinessLogic;
 using FishingBookerLibrary.Models;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace FishingBooker.Controllers
 {
@@ -67,6 +68,25 @@ namespace FishingBooker.Controllers
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
 
+            decimal totalIncome = 0;
+            decimal percentage = MoneyFlowCRUD.LoadMoneyFlow().Percentage/100;
+            var cottages = CottageCRUD.LoadCottages();
+            var adventures = AdventureCRUD.LoadAdventures();
+            var ships = ShipCRUD.LoadShips();
+
+            foreach (var cottage in cottages)
+            {
+                totalIncome = totalIncome + (cottage.Price * percentage);
+            }
+            foreach (var adventure in adventures)
+            {
+                totalIncome = totalIncome + (adventure.Price * percentage);
+            }
+            foreach (var ship in ships)
+            {
+                totalIncome = totalIncome + (ship.Price * percentage);
+            }
+
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
             {
@@ -74,9 +94,23 @@ namespace FishingBooker.Controllers
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                Percentage = percentage*100,
+                TotalIncome = totalIncome
             };
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveMoneyFlow(IndexViewModel model) {
+            if (ModelState.IsValid)
+            {
+                MoneyFlowCRUD.UpdatePercentage(model.Percentage);
+                return RedirectToAction("Index");
+            }
+
+            return View("MoneyFlowUpdateError");
         }
 
         //
@@ -553,15 +587,6 @@ namespace FishingBooker.Controllers
 
             base.Dispose(disposing);
         }
-
-        //public JsonResult GetEvents()
-        //{
-        //    using (ApplicationDbContext dc = new ApplicationDbContext())
-        //    {
-        //        var events = dc.E.ToList();
-        //        return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        //    }
-        //}
 
         #region Helpers
         // Used for XSRF protection when adding external logins
