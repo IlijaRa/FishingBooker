@@ -8,7 +8,7 @@ namespace FishingBookerLibrary.Models
 {
     public class Cottage : Entity
     {
-        public CottageFastReservation FastReservation { get; set; }
+        public CottageReservation FastReservation { get; set; }
         public int NumberOfRooms { get; set; }
         public int BedsPerRoom { get; set; }
         public string OwnerId { get; set; }

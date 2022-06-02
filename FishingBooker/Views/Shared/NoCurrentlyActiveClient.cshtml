@@ -1,0 +1,35 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "ReservationReservedError";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
+    else if (User.IsInRole("ValidCottageOwner"))
+    {
+        Layout = "~/Views/Shared/_LayoutCottageOwner.cshtml";
+    }
+    else if (User.IsInRole("ValidShipOwner"))
+    {
+        Layout = "~/Views/Shared/_LayoutShipOwner.cshtml";
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
+    else if (User.IsInRole("ValidClient"))
+    {
+        Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    }
+}
+
+<hgroup>
+    <h1 class="text-warning">You cannot open reservation creation</h1>
+    <h2 class="text-warning">There is no active client right now.</h2>
+</hgroup>
+

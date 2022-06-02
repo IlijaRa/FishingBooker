@@ -1,0 +1,106 @@
+﻿@model IEnumerable<FishingBooker.Models.ShipViewModel>
+
+@{
+    ViewBag.Title = "ViewShips";
+    Layout = "~/Views/Shared/_LayoutShipOwner.cshtml";
+}
+
+<h2>ViewShips</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.ShipId)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Street)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AddressNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PromotionDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BehaviourRules)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AdditionalServices)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pricelist)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FishingEquipment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NavigationEquipment)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.SpecificationId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OwnerId)
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.ShipId)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Street)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AddressNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PromotionDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BehaviourRules)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AdditionalServices)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pricelist)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FishingEquipment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NavigationEquipment)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.SpecificationId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OwnerId)
+        </td>*@
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

@@ -137,5 +137,14 @@ namespace FishingBookerLibrary.BusinessLogic
                             WHERE AdventureId = @AdventureId;";
             return SSMSDataAccess.LoadSubscribersByAdventure<string>(sql, adventureId);
         }
+
+        public static Adventure LoadAdventuresByName(string adventureTitle)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.Adventures
+                            WHERE Title = @Title;";
+            return SSMSDataAccess.LoadAdventuresByName<Adventure>(sql, adventureTitle);
+        }
+
     }
 }

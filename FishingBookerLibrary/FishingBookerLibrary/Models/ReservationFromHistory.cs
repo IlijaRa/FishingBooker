@@ -13,6 +13,8 @@ namespace FishingBookerLibrary.Models
         public string ActionTitle { get; set; }
         public DateTime StartDate { get; set; }
         public TimeSpan StartTime { get; set; }
+        public DateTime EndDate { get; set; }
+        public TimeSpan EndTime { get; set; }
         public string Duration { get; set; }
         public decimal Price { get; set; }
         public string OwnerId { get; set; }

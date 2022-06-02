@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace FishingBooker.Models
 {
@@ -15,7 +16,7 @@ namespace FishingBooker.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Required(ErrorMessage = "You need to enter a date.")]
         [DataType(DataType.Date)]
-        public DateTime FromDate { get; set; }
+        public string FromDate { get; set; }
 
 
         [Display(Name = "From time*")]
@@ -29,7 +30,7 @@ namespace FishingBooker.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         [Required(ErrorMessage = "You need to enter a date.")]
         [DataType(DataType.Date)]
-        public DateTime ToDate { get; set; }
+        public string ToDate { get; set; }
 
 
         [Display(Name = "To time*")]

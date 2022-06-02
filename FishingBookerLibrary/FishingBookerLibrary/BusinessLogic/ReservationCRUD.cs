@@ -13,7 +13,10 @@ namespace FishingBookerLibrary.BusinessLogic
         public static int CreateAdventureReservations(  string place,
                                                             DateTime startdate,
                                                             TimeSpan starttime,
-                                                            string duration,
+                                                            DateTime enddate,
+                                                            TimeSpan endtime,
+                                                            DateTime validitydate,
+                                                            TimeSpan validitytime,
                                                             int maxNum,
                                                             string additionalServices,
                                                             decimal price,
@@ -28,7 +31,10 @@ namespace FishingBookerLibrary.BusinessLogic
                 Place = place,
                 StartDate = startdate,
                 StartTime = starttime,
-                Duration = duration,
+                EndDate = enddate,
+                EndTime = endtime,
+                ValidityPeriodDate = validitydate,
+                ValidityPeriodTime = validitytime,
                 MaxNumberOfPeople = maxNum,
                 AdditionalServices = additionalServices,
                 Price = price,
@@ -40,8 +46,92 @@ namespace FishingBookerLibrary.BusinessLogic
                 InstructorId = instructorId
             };
 
-            string sql = @"INSERT INTO dbo.AdventureReservations (Place, StartDate, StartTime, Duration, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
-                           VALUES (@Place, @StartDate, @StartTime, @Duration, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);";
+            string sql = @"INSERT INTO dbo.AdventureReservations (Place, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
+                           VALUES (@Place, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
+        public static int CreateCottageReservations(string cottageName,
+                                                            DateTime startdate,
+                                                            TimeSpan starttime,
+                                                            DateTime enddate,
+                                                            TimeSpan endtime,
+                                                            DateTime validitydate,
+                                                            TimeSpan validitytime,
+                                                            int maxNum,
+                                                            string additionalServices,
+                                                            decimal price,
+                                                            bool isReserved,
+                                                            string clientsemailAddress,
+                                                            Enums.ReservationType type,
+                                                            int cottageId,
+                                                            string ownerId)
+        {
+            CottageReservation data = new CottageReservation
+            {
+                CottageName = cottageName,
+                StartDate = startdate,
+                StartTime = starttime,
+                EndDate = enddate,
+                EndTime = endtime,
+                ValidityPeriodDate = validitydate,
+                ValidityPeriodTime = validitytime,
+                MaxNumberOfPeople = maxNum,
+                AdditionalServices = additionalServices,
+                Price = price,
+                Discount = 0,
+                IsReserved = isReserved,
+                ClientsEmailAddress = clientsemailAddress,
+                ReservationType = type,
+                CottageId = cottageId,
+                OwnerId = ownerId
+            };
+
+            string sql = @"INSERT INTO dbo.CottageReservations (CottageName, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, CottageId, OwnerId)
+                           VALUES (@CottageName, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @CottageId, @OwnerId);";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
+        public static int CreateShipReservations(string shipName,
+                                                            DateTime startdate,
+                                                            TimeSpan starttime,
+                                                            DateTime enddate,
+                                                            TimeSpan endtime,
+                                                            DateTime validitydate,
+                                                            TimeSpan validitytime,
+                                                            int maxNum,
+                                                            string additionalServices,
+                                                            decimal price,
+                                                            bool isReserved,
+                                                            string clientsemailAddress,
+                                                            Enums.ReservationType type,
+                                                            int shipId,
+                                                            string ownerId)
+        {
+            ShipReservation data = new ShipReservation
+            {
+                ShipName = shipName,
+                StartDate = startdate,
+                StartTime = starttime,
+                EndDate = enddate,
+                EndTime = endtime,
+                ValidityPeriodDate = validitydate,
+                ValidityPeriodTime = validitytime,
+                MaxNumberOfPeople = maxNum,
+                AdditionalServices = additionalServices,
+                Price = price,
+                Discount = 0,
+                IsReserved = isReserved,
+                ClientsEmailAddress = clientsemailAddress,
+                ReservationType = type,
+                ShipId = shipId,
+                OwnerId = ownerId
+            };
+
+            string sql = @"INSERT INTO dbo.ShipReservations (ShipName, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, ShipId, OwnerId)
+                           VALUES (@ShipName, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @ShipId, @OwnerId);";
 
             return SSMSDataAccess.SaveData(sql, data);
         }
@@ -76,7 +166,39 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.LoadReservationById<AdventureReservation>(sql, reservationId);
         }
 
+        public static List<AdventureReservation> LoadAdventureReservationByInstructorId(string instructorId)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.AdventureReservations
+                            WHERE InstructorId = @InstructorId;";
+            return SSMSDataAccess.LoadAdventureReservationsByInstructorId<AdventureReservation>(sql, instructorId);
+        }
+
+        public static List<CottageReservation> LoadCottageReservationByOwnerId(string ownerId)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.CottageReservations
+                            WHERE OwnerId = @OwnerId;";
+            return SSMSDataAccess.LoadCottageReservationsByOwnerId<CottageReservation>(sql, ownerId);
+        }
+
+        public static List<ShipReservation> LoadShipReservationByOwnerId(string ownerId)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.ShipReservations
+                            WHERE OwnerId = @OwnerId;";
+            return SSMSDataAccess.LoadShipReservationsByOwnerId<ShipReservation>(sql, ownerId);
+        }
+
         public static List<AdventureReservation> LoadReservedAdventureReservationByInstructorId(string instructorId, bool isReserved)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.AdventureReservations
+                            WHERE InstructorId = @InstructorId AND IsReserved = @IsReserved;";
+            return SSMSDataAccess.LoadReservationsByInstructorId<AdventureReservation>(sql, instructorId, isReserved);
+        }
+
+        public static List<AdventureReservation> LoadNonReservedAdventureReservationByInstructorId(string instructorId, bool isReserved)
         {
             string sql = @"SELECT *
                             FROM dbo.AdventureReservations
@@ -90,6 +212,14 @@ namespace FishingBookerLibrary.BusinessLogic
                            FROM dbo.ReservationHistory;";
 
             return SSMSDataAccess.LoadData<ReservationFromHistory>(sql);
+        }
+
+        public static List<ReservationFromHistory> LoadReservationsFromHistoryByOwnerId(string ownerId)
+        {
+            string sql = @"SELECT *
+                           FROM dbo.ReservationHistory
+                           WHERE OwnerId = @OwnerId;";
+            return SSMSDataAccess.LoadHistoryReservationByOwnerId<ReservationFromHistory>(sql, ownerId);
         }
 
         public static List<ReservationFromHistory> LoadReservationsFromHistoryByClientsEmailAddress(string emailAddress)
@@ -107,6 +237,67 @@ namespace FishingBookerLibrary.BusinessLogic
                            WHERE AdventureId = @AdventureId;";
 
             return SSMSDataAccess.LoadReservationsByAdventureId<Reservation>(sql, adventureId);
+        }
+
+        public static List<Reservation> LoadReservationsByShipId(int shipId)
+        {
+            string sql = @"SELECT *
+                           FROM dbo.ShipReservations
+                           WHERE ShipId = @ShipId;";
+
+            return SSMSDataAccess.LoadReservationsByShipId<Reservation>(sql, shipId);
+        }
+
+        public static List<Reservation> LoadReservationsByCottageId(int cottageId)
+        {
+            string sql = @"SELECT *
+                           FROM dbo.CottageReservations
+                           WHERE CottageId = @CottageId;";
+
+            return SSMSDataAccess.LoadReservationsByCottageId<Reservation>(sql, cottageId);
+        }
+
+        public static List<AdventureReservation> LoadAdventureReservationsByClient(string clientEmail)
+        {
+            string sql = @"SELECT *
+                           FROM dbo.AdventureReservations
+                           WHERE ClientsEmailAddress = @ClientsEmailAddress;";
+
+            return SSMSDataAccess.LoadCurrentReservationByClientsEmailAddress<AdventureReservation>(sql, clientEmail);
+        }
+
+        public static List<CottageReservation> LoadCottageReservationsByClient(string clientEmail)
+        {
+            string sql = @"SELECT *
+                           FROM dbo.CottageReservations
+                           WHERE ClientsEmailAddress = @ClientsEmailAddress;";
+
+            return SSMSDataAccess.LoadCurrentReservationByClientsEmailAddress<CottageReservation>(sql, clientEmail);
+        }
+
+        public static List<ShipReservation> LoadShipReservationsByClient(string clientEmail)
+        {
+            string sql = @"SELECT *
+                           FROM dbo.ShipReservations
+                           WHERE ClientsEmailAddress = @ClientsEmailAddress;";
+
+            return SSMSDataAccess.LoadCurrentReservationByClientsEmailAddress<ShipReservation>(sql, clientEmail);
+        }
+
+        public static List<CottageReservation> LoadCottageReservations()
+        {
+            string sql = @"SELECT *
+                           FROM dbo.CottageReservations;";
+
+            return SSMSDataAccess.LoadData<CottageReservation>(sql);
+        }
+
+        public static List<ShipReservation> LoadShipReservations()
+        {
+            string sql = @"SELECT *
+                           FROM dbo.ShipReservations;";
+
+            return SSMSDataAccess.LoadData<ShipReservation>(sql);
         }
 
     }

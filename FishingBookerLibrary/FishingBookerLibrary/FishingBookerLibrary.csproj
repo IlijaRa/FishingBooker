@@ -88,7 +88,7 @@
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\ClientComplaint.cs" />
     <Compile Include="Models\Cottage.cs" />
-    <Compile Include="Models\CottageFastReservation.cs" />
+    <Compile Include="Models\CottageReservation.cs" />
     <Compile Include="Models\CottageOwner.cs" />
     <Compile Include="Models\DeactivationRequest.cs" />
     <Compile Include="Models\DeletionRequest.cs" />
@@ -109,7 +109,7 @@
     <Compile Include="Models\RegUser.cs" />
     <Compile Include="Models\Revision.cs" />
     <Compile Include="Models\Ship.cs" />
-    <Compile Include="Models\ShipFastReservation.cs" />
+    <Compile Include="Models\ShipReservation.cs" />
     <Compile Include="Models\ShipOwner.cs" />
     <Compile Include="Models\ShipSpecification.cs" />
     <Compile Include="Models\SystemAdministrator.cs" />

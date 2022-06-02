@@ -6,6 +6,14 @@
     {
         Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
     }
+    else if (User.IsInRole("ValidCottageOwner"))
+    {
+        Layout = "~/Views/Shared/_LayoutCottageOwner.cshtml";
+    }
+    else if (User.IsInRole("ValidShipOwner"))
+    {
+        Layout = "~/Views/Shared/_LayoutShipOwner.cshtml";
+    }
     else if (User.IsInRole("Admin"))
     {
         Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -56,23 +64,40 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.DaysHours, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.RadioButtonFor(model => model.DaysHours, value: "hours") Hours
-            @Html.ValidationMessageFor(model => model.DaysHours, "", new { @class = "text-danger" })
-            <br />
-            @Html.RadioButtonFor(model => model.DaysHours, value: "days") Days
-            @Html.ValidationMessageFor(model => model.DaysHours, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
         </div>
     </div>
+
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.DaysHours, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.DaysHours, value: "hours") Hours
+                @Html.ValidationMessageFor(model => model.DaysHours, "", new { @class = "text-danger" })
+                <br />
+                @Html.RadioButtonFor(model => model.DaysHours, value: "days") Days
+                @Html.ValidationMessageFor(model => model.DaysHours, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
     <div class="form-group">
         @Html.LabelFor(model => model.ValidityPeriodDate, htmlAttributes: new { @class = "control-label col-md-2" })

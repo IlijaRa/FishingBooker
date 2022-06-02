@@ -37,9 +37,23 @@ namespace FishingBooker.Models
         public string StartTime { get; set; }
 
 
-        [RegularExpression("([0-9]+)")]
-        [Required(ErrorMessage = "You need to give us a duration.")]
-        public string Duration { get; set; }
+        [Display(Name = "End date*")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        [Required(ErrorMessage = "You need to enter a date.")]
+        [DataType(DataType.Date)]
+        public DateTime EndDate { get; set; }
+
+
+        [Display(Name = "End time*")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm:ss}")]
+        [Required(ErrorMessage = "You need to enter time.")]
+        [DataType(DataType.Time)]
+        public string EndTime { get; set; }
+
+
+        //[RegularExpression("([0-9]+)")]
+        //[Required(ErrorMessage = "You need to give us a duration.")]
+        //public string Duration { get; set; }
 
 
         [Display(Name = "Valid until date")]

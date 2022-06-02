@@ -1,0 +1,200 @@
+﻿@model FishingBooker.Models.InstructorScheduleViewModel
+
+@{
+    ViewBag.Title = "CottageOwnerSchedule";
+    Layout = "~/Views/Shared/_LayoutCottageOwner.cshtml";
+}
+
+<h2>Cottage owner schedule</h2>
+
+@using (Html.BeginForm("CottageOwnerSchedule", "Manage", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Your availability</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.availability.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.availability.FromDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.availability.FromDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.availability.FromDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.availability.FromTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.availability.FromTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.availability.FromTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.availability.ToDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.availability.ToDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.availability.ToDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.availability.ToTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.availability.ToTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.availability.ToTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.availability.InstructorId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.availability.InstructorId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.availability.InstructorId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+<h2>Current reservations</h2>
+
+<table class="table">
+    <tr>
+        <th>Clients email</th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Duration</th>
+        <th>Price</th>
+    </tr>
+
+    @foreach (var item in Model.current_reservations)
+    {
+        <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>*@
+            @Html.HiddenFor(modelItem => item.Id)
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientsEmailAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActionTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+            <td>
+                @Html.ActionLink(
+                        "Clients information",
+                        "ClientProfileInfo",
+                        "Manage",
+                        new
+                             {
+                            email = item.ClientsEmailAddress
+                            },
+                        null
+                )
+            </td>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+<h2>Booking history</h2>
+
+@using (Html.BeginForm("SearchHistoryReservationCottageOwner", "Manage", FormMethod.Get))
+{
+    @Html.TextBox("searching")
+    <input type="submit" , value="Search" />
+}
+
+<table class="table">
+    <tr>
+        <th>Clients email</th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Duration</th>
+        <th>Price</th>
+    </tr>
+
+    @foreach (var item in Model.reservation_history)
+    {
+        <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>*@
+            @Html.HiddenFor(modelItem => item.Id)
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientsEmailAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActionTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink(
+                            "Clients information",
+                            "ClientProfileInfo",
+                            "Manage",
+                            new
+                                 {
+                                email = item.ClientsEmailAddress
+                                },
+                            null
+                    ) |
+                @Html.ActionLink(
+                        "Fill in a record",
+                        "FillARecord",
+                        "Manage",
+                        new
+                             {
+                            clientsEmail = item.ClientsEmailAddress
+                            },
+                        null
+                );
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<div>
+    @Html.ActionLink("Back to List", "CottageOwnerSchedule", "Manage")
+</div>

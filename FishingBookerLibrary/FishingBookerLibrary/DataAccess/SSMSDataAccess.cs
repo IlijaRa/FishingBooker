@@ -49,6 +49,30 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
+        public static List<T> LoadAdventureReservationsByInstructorId<T>(string sql, string instructorId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { InstructorId = instructorId }).ToList();
+            }
+        }
+
+        public static List<T> LoadCottageReservationsByOwnerId<T>(string sql, string ownerId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { OwnerId = ownerId }).ToList();
+            }
+        }
+
+        public static List<T> LoadShipReservationsByOwnerId<T>(string sql, string ownerId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { OwnerId = ownerId }).ToList();
+            }
+        }
+
         public static List<T> LoadReservationsByInstructorId<T>(string sql, string instructorId, bool isReserved)
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
@@ -65,7 +89,31 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
+        public static List<T> LoadReservationsByShipId<T>(string sql, int shipId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { ShipId = shipId }).ToList();
+            }
+        }
+
+        public static List<T> LoadReservationsByCottageId<T>(string sql, int cottageId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { CottageId = cottageId }).ToList();
+            }
+        }
+
         public static List<T> LoadHistoryReservationByClientsEmailAddress<T>(string sql, string emailAddress)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { ClientsEmailAddress = emailAddress }).ToList();
+            }
+        }
+
+        public static List<T> LoadCurrentReservationByClientsEmailAddress<T>(string sql, string emailAddress)
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
             {
@@ -129,5 +177,36 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
+        public static List<T> LoadHistoryReservationByOwnerId<T>(string sql, string ownerId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { OwnerId = ownerId }).ToList();
+            }
+        }
+
+        public static T LoadAdventuresByName<T>(string sql, string adventureTitle)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { Title = adventureTitle }).FirstOrDefault();
+            }
+        }
+
+        public static T LoadCottagesByName<T>(string sql, string cottageTitle)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { Title = cottageTitle }).FirstOrDefault();
+            }
+        }
+
+        public static T LoadShipsByName<T>(string sql, string shipTitle)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { Title = shipTitle }).FirstOrDefault();
+            }
+        }
     }
 }

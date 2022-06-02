@@ -35,6 +35,13 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
-        
+        public static InstructorAvailability LoadInstructorAvailability(string instructorId)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.InstructorsAvailabilities
+                            WHERE InstructorId = @InstructorId;";
+            return SSMSDataAccess.LoadInstructorsAvailability<InstructorAvailability>(sql, instructorId);
+        }
+
     }
 }

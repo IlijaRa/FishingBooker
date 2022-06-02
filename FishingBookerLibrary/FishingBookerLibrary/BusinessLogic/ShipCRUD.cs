@@ -46,5 +46,13 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
+        public static Ship LoadShipsByName(string shipTitle)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.Ships
+                            WHERE Title = @Title;";
+            return SSMSDataAccess.LoadShipsByName<Ship>(sql, shipTitle);
+        }
+
     }
 }

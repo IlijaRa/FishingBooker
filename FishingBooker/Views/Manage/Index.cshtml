@@ -5,6 +5,14 @@
     {
         Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
     }
+    else if (User.IsInRole("ValidCottageOwner"))
+    {
+        Layout = "~/Views/Shared/_LayoutCottageOwner.cshtml";
+    }
+    else if (User.IsInRole("ValidShipOwner"))
+    {
+        Layout = "~/Views/Shared/_LayoutShipOwner.cshtml";
+    }
     else if (User.IsInRole("Admin"))
     {
         Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -55,14 +63,14 @@
             </div>
         }
     }
-
+    
     <h4>Change your account settings</h4>
     <dl class="dl-horizontal">
         <dt>Your info:</dt>
         <dd>
             [
             @Html.ActionLink("Change basic info about you", "ChangeBasicInfo", "Manage",
-           new { email = User.Identity.Name }, null)
+            new { email = User.Identity.Name }, null)
             ]
         </dd>
         <dt>Password:</dt>
@@ -82,48 +90,71 @@
         <dd>
             [
             @Html.ActionLink("Deactivate", "DeactivateAccount", "Manage",
-           new { email = User.Identity.Name }, null)
+            new { email = User.Identity.Name }, null)
             ]
         </dd>
-        <dt>Schedule:</dt>
-        <dd>
-            [
-            @Html.ActionLink("Schedule", "InstructorSchedule", "Manage")
-            @*new { email = User.Identity.Name }, null)*@
-            ]
-        </dd>
+        @if (User.IsInRole("ValidFishingInstructor"))
+        {
+            <dt>Schedule:</dt>
+            <dd>
+                [
+                @Html.ActionLink("Schedule", "InstructorSchedule", "Manage")
+                @*new { email = User.Identity.Name }, null)*@
+                ]
+            </dd>
+        }
+        @if (User.IsInRole("ValidCottageOwner"))
+        {
+            <dt>Schedule:</dt>
+            <dd>
+                [
+                @Html.ActionLink("Schedule", "CottageOwnerSchedule", "Manage")
+                @*new { email = User.Identity.Name }, null)*@
+                ]
+            </dd>
+        }
+        @if (User.IsInRole("ValidShipOwner"))
+        {
+            <dt>Schedule:</dt>
+            <dd>
+                [
+                @Html.ActionLink("Schedule", "ShipOwnerSchedule", "Manage")
+                @*new { email = User.Identity.Name }, null)*@
+                ]
+            </dd>
+        }
         <dt>External Logins:</dt>
         <dd>
             @Model.Logins.Count [
             @Html.ActionLink("Manage", "ManageLogins") ]
         </dd>
         @*
-            Phone Numbers can used as a second factor of verification in a two-factor authentication system.
+        Phone Numbers can used as a second factor of verification in a two-factor authentication system.
 
-             See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication using SMS.
+         See <a href="https://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+            for details on setting up this ASP.NET application to support two-factor authentication using SMS.
 
-             Uncomment the following block after you have set up two-factor authentication
+         Uncomment the following block after you have set up two-factor authentication
         *@
         @*
-            <dt>Phone Number:</dt>
-            <dd>
-                @(Model.PhoneNumber ?? "None")
-                @if (Model.PhoneNumber != null)
+        <dt>Phone Number:</dt>
+        <dd>
+            @(Model.PhoneNumber ?? "None")
+            @if (Model.PhoneNumber != null)
+            {
+                <br />
+                <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
+                using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
-                    <br />
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-                    using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
-                    }
+                    @Html.AntiForgeryToken()
+                    <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
                 }
-                else
-                {
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
-                }
-            </dd>
+            }
+            else
+            {
+                <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
+            }
+        </dd>
         *@
         <dt>Two-Factor Authentication:</dt>
         <dd>
@@ -132,25 +163,70 @@
                 for details on setting up this ASP.NET application to support two-factor authentication.
             </p>
             @*@if (Model.TwoFactor)
+            {
+                using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Enabled
-                        <input type="submit" value="Disable" class="btn btn-link" />
-                        </text>
-                    }
+                    @Html.AntiForgeryToken()
+                    <text>Enabled
+                    <input type="submit" value="Disable" class="btn btn-link" />
+                    </text>
                 }
-                else
+            }
+            else
+            {
+                using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Disabled
-                        <input type="submit" value="Enable" class="btn btn-link" />
-                        </text>
-                    }
-                }*@
+                    @Html.AntiForgeryToken()
+                    <text>Disabled
+                    <input type="submit" value="Enable" class="btn btn-link" />
+                    </text>
+                }
+            }*@
         </dd>
+
+        @if (User.IsInRole("ValidFishingInstructor"))
+        {
+            <h2> CREATE NEW RESERVATION FOR CURRENTLY ACTIVE CLIENT</h2>
+            using (Html.BeginForm("CreateAdventureReservationForCurrentlyActiveUser", "InstructorUsers", FormMethod.Get))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create new reservation" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        }
+
+        @if (User.IsInRole("ValidShipOwner"))
+        {
+            <h2> CREATE NEW RESERVATION FOR CURRENTLY ACTIVE CLIENT</h2>
+            using (Html.BeginForm("CreateShipReservationForCurrentlyActiveUser", "ShipUsers", FormMethod.Get))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create new reservation" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        }
+
+        @if (User.IsInRole("ValidCottageOwner"))
+        {
+            <h2> CREATE NEW RESERVATION FOR CURRENTLY ACTIVE CLIENT</h2>
+            using (Html.BeginForm("CreateCottageReservationForCurrentlyActiveUser", "CottageUsers", FormMethod.Get))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create new reservation" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+        }
     </dl>
 </div>

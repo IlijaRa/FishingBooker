@@ -8,7 +8,7 @@ namespace FishingBookerLibrary.Models
 {
     public class Ship : Entity
     {
-        public ShipFastReservation FastReservation { get; set; }
+        public ShipReservation FastReservation { get; set; }
         public ShipSpecification ShipSpecification { get; set; }
         public string NavigationEquipment { get; set; }
         public string FishingEquipment { get; set; }

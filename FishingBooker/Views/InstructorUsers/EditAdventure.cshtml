@@ -6,6 +6,14 @@
     {
         Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
     }
+    else if (User.IsInRole("ValidCottageOwner"))
+    {
+        Layout = "~/Views/Shared/_LayoutCottageOwner.cshtml";
+    }
+    else if (User.IsInRole("ValidShipOwner"))
+    {
+        Layout = "~/Views/Shared/_LayoutShipOwner.cshtml";
+    }
     else if (User.IsInRole("Admin"))
     {
         Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -177,7 +185,8 @@
         <th>Place</th>
         <th>Start date</th>
         <th>Start time</th>
-        <th>Duration</th>
+        <th>End date</th>
+        <th>End time</th>
         <th>Valid until date</th>
         <th>Valid until time</th>
         <th>Max number of people</th>
@@ -203,7 +212,10 @@
         @Html.DisplayFor(modelItem => item.StartTime)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.Duration)
+        @Html.DisplayFor(modelItem => item.EndDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EndTime)
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.ValidityPeriodDate)

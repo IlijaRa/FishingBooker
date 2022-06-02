@@ -2,12 +2,12 @@
 
 @{
     ViewBag.Title = "InstructorSchedule";
+    var from_date = (DateTime)ViewData["FromDate"];
     Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
 }
 
 <h2>Instructor schedule</h2>
-
-@using (Html.BeginForm("UpdateSchedule", "InstructorSchedule", FormMethod.Post))
+@using (Html.BeginForm("InstructorSchedule", "Manage", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -20,7 +20,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.availability.FromDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.availability.FromDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.Editor("txtpickupdate", DateTime.Now.ToShortDateString(), new { htmlAttributes = new { @class = "form-control", @placeholder = "mm/dd/yyyy" } })
+                @*@Html.Editor(model => model.availability.FromDate, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.availability.FromDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -65,7 +66,6 @@
     </div>
 }
 
-
 <h2>Current reservations</h2>
 
 <table class="table">
@@ -98,7 +98,10 @@
                 @Html.DisplayFor(modelItem => item.StartTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Duration)
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
@@ -126,64 +129,74 @@
 
 <h2>Booking history</h2>
 
+@using (Html.BeginForm("SearchHistoryReservation", "Manage", FormMethod.Get))
+{
+    @Html.TextBox("searching")
+    <input type="submit" , value="Search" />
+}
+
 <table class="table">
     <tr>
         <th>Clients email</th>
         <th>Title</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Duration</th>
+        <th>Start Date</th>
+        <th>Start Time</th>
+        <th>End Date</th>
+        <th>End Time</th>
         <th>Price</th>
     </tr>
 
     @foreach (var item in Model.reservation_history)
     {
-<tr>
-    @*<td>
-            @Html.DisplayFor(modelItem => item.UserId)
-        </td>*@
-    @Html.HiddenFor(modelItem => item.Id)
-    <td>
-        @Html.DisplayFor(modelItem => item.ClientsEmailAddress)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.ActionTitle)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.StartDate)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.StartTime)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Duration)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Price)
-    </td>
-    <td>
-        @Html.ActionLink(
-                    "Clients information",
-                    "ClientProfileInfo",
-                    "Manage",
-                    new
-                         {
-                        email = item.ClientsEmailAddress
-                        },
-                    null
-            ) |
-        @Html.ActionLink(
-                "Fill in a record",
-                "FillARecord",
-                "Manage",
-                new
-                     {
-                    clientsEmail = item.ClientsEmailAddress
-                    },
-                null
-        );
-    </td>
-</tr>
+        <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>*@
+            @Html.HiddenFor(modelItem => item.Id)
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientsEmailAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActionTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink(
+                            "Clients information",
+                            "ClientProfileInfo",
+                            "Manage",
+                            new
+                                 {
+                                email = item.ClientsEmailAddress
+                                },
+                            null
+                    ) |
+                @Html.ActionLink(
+                        "Fill in a record",
+                        "FillARecord",
+                        "Manage",
+                        new
+                             {
+                            clientsEmail = item.ClientsEmailAddress
+                            },
+                        null
+                );
+            </td>
+        </tr>
     }
 
 </table>

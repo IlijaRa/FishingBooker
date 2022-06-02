@@ -5,53 +5,109 @@
     Layout = "~/Views/Shared/_LayoutClient.cshtml";
 }
 
-<h2>Your reservation history</h2>
+<h2>Your future reservations</h2>
 <table class="table">
     <tr>
         @*<th>Id</th>*@
         @*<th>ClientsEmail</th>*@
-        <th>ActionTitle</th>
-        <th>StartDate</th>
-        <th>Duration</th>
+        <th>Action title</th>
+        <th>Start date</th>
+        <th>Start time</th>
+        <th>End date</th>
+        <th>End date</th>
         <th>Price</th>
         @*<th>OwnerId</th>*@
     </tr>
 
-@foreach (var item in Model.history_reservations)
-{
-    <tr>
-        @*<th>
-                @Html.DisplayFor(model => item.Id)
-            </th>*@
-        @*<th>
-            @Html.DisplayFor(model => item.ClientsEmailAddress)
-        </th>*@
-        <th>
-            @Html.DisplayFor(model => item.ActionTitle)
-        </th>
-        <th>
-            @Html.DisplayFor(model => item.StartDate)
-        </th>
-        <th>
-            @Html.DisplayFor(model => item.Duration)
-        </th>
-        <th>
-            @Html.DisplayFor(model => item.Price)
-        </th>
-        @*<th>
-            @Html.DisplayFor(model => item.OwnerId)
-        </th>*@
-        <td>
-            @Html.ActionLink("Add revision",
-            "AddRevision",
-            "ClientUsers",
-            new {
-                ownerId = item.OwnerId,
-                actionTitle = item.ActionTitle
-            },
-            null)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.future_reservations)
+    {
+        <tr>
+            @*<th>
+                    @Html.DisplayFor(model => item.Id)
+                </th>*@
+            @*<th>
+                    @Html.DisplayFor(model => item.ClientsEmailAddress)
+                </th>*@
+            <th>
+                @Html.DisplayFor(model => item.ActionTitle)
+            </th>
+            <th>
+                @Html.DisplayFor(model => item.StartDate)
+            </th>
+            <th>
+                @Html.DisplayFor(model => item.StartTime)
+            </th>
+            <th>
+                @Html.DisplayFor(model => item.EndDate)
+            </th>
+            <th>
+                @Html.DisplayFor(model => item.EndTime)
+            </th>
+            <th>
+                @Html.DisplayFor(model => item.Price)
+            </th>
+        </tr>
+    }
 
 </table>
+
+
+    <h2>Your reservation history</h2>
+    <table class="table">
+        <tr>
+            @*<th>Id</th>*@
+            @*<th>ClientsEmail</th>*@
+            <th>Action title</th>
+            <th>Start date</th>
+            <th>Start time</th>
+            <th>End date</th>
+            <th>End date</th>
+            <th>Price</th>
+            @*<th>OwnerId</th>*@
+        </tr>
+
+        @foreach (var item in Model.history_reservations)
+        {
+            <tr>
+                @*<th>
+                        @Html.DisplayFor(model => item.Id)
+                    </th>*@
+                @*<th>
+                        @Html.DisplayFor(model => item.ClientsEmailAddress)
+                    </th>*@
+                <th>
+                    @Html.DisplayFor(model => item.ActionTitle)
+                </th>
+                <th>
+                    @Html.DisplayFor(model => item.StartDate)
+                </th>
+                <th>
+                    @Html.DisplayFor(model => item.StartTime)
+                </th>
+                <th>
+                    @Html.DisplayFor(model => item.EndDate)
+                </th>
+                <th>
+                    @Html.DisplayFor(model => item.EndTime)
+                </th>
+                <th>
+                    @Html.DisplayFor(model => item.Price)
+                </th>
+                @*<th>
+                        @Html.DisplayFor(model => item.OwnerId)
+                    </th>*@
+                <td>
+                    @Html.ActionLink("Add revision",
+                    "AddRevision",
+                    "ClientUsers",
+                    new
+                         {
+                        ownerId = item.OwnerId,
+                        actionTitle = item.ActionTitle
+                    },
+                    null)
+                </td>
+            </tr>
+        }
+
+    </table>

@@ -13,6 +13,7 @@ using DHTMLX.Scheduler.Controls;
 using FishingBooker.Models;
 using Microsoft.AspNet.Identity;
 using FishingBookerLibrary.BusinessLogic;
+using FishingBookerLibrary.Models;
 
 namespace FishingBooker.Controllers
 {
@@ -41,7 +42,7 @@ namespace FishingBooker.Controllers
              */
             
  
-            scheduler.InitialDate = new DateTime(2022, 09, 03);
+            scheduler.InitialDate = DateTime.Now;
 
             scheduler.LoadData = true;
             scheduler.EnableDataprocessor = true;
@@ -53,49 +54,245 @@ namespace FishingBooker.Controllers
         {
             var scheduler_data = new SchedulerAjaxData();
             List<CalendarEvent> calendar_events = new List<CalendarEvent>();
-            var current_data = ReservationCRUD.LoadReservedAdventureReservationByInstructorId(User.Identity.GetUserId(), true);
-            foreach (var reservation in current_data)
+            if (User.IsInRole("ValidFishingInstructor"))
             {
-                int day = 0;
-                int month = 0;
-                int year = 0;
+                var instructor_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
+                var history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
+                var instructors_availability = ScheduleCRUD.LoadInstructorAvailability(User.Identity.GetUserId());
+                DateTime startDate = new DateTime();
                 DateTime endDate = new DateTime();
-                string[] duration = reservation.Duration.Split(',');
 
-                if (duration[1].ToLower().Contains("days"))
+                foreach (var reservation in instructor_reservations)
                 {
-                    day = reservation.StartDate.Day + Convert.ToInt32(duration[0]);
-                    month = reservation.StartDate.Month;
-                    year = reservation.StartDate.Year;
-                    endDate = new DateTime(year, month, day, Convert.ToInt32(reservation.StartTime.Hours), 
-                                                             Convert.ToInt32(reservation.StartTime.Minutes), 
-                                                             Convert.ToInt32(reservation.StartTime.Seconds));
-                }
-                else if(Convert.ToInt32(reservation.StartTime.Hours) + Convert.ToInt32(duration[0]) > 24)
+
+                    startDate = new DateTime(reservation.StartDate.Year,
+                                                 reservation.StartDate.Month,
+                                                 reservation.StartDate.Day,
+                                                 reservation.StartTime.Hours,
+                                                 reservation.StartTime.Minutes,
+                                                 reservation.StartTime.Seconds);
+
+                    endDate = new DateTime(reservation.EndDate.Year,
+                                           reservation.EndDate.Month,
+                                           reservation.EndDate.Day,
+                                           reservation.EndTime.Hours,
+                                           reservation.EndTime.Minutes,
+                                           reservation.EndTime.Seconds);
+
+                    calendar_events.Add(new CalendarEvent
                     {
-                    day = reservation.StartDate.Day + 1;
-                    month = reservation.StartDate.Month;
-                    year = reservation.StartDate.Year;
-                    endDate = new DateTime(year, month, day, Convert.ToInt32(reservation.StartTime.Hours),
-                                                             Convert.ToInt32(reservation.StartTime.Minutes),
-                                                             Convert.ToInt32(reservation.StartTime.Seconds));
+                        text = reservation.Place + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString(),
+                        start_date = startDate,
+                        end_date = endDate,
+                    });
                 }
-                else
+
+                foreach (var reservation in history_reservations)
                 {
-                    int hours = Convert.ToInt32(reservation.StartTime.Hours) + Convert.ToInt32(duration[0]);
-                    int minutes = Convert.ToInt32(reservation.StartTime.Minutes);
-                    int seconds = Convert.ToInt32(reservation.StartTime.Seconds);
-                    endDate = new DateTime(reservation.StartDate.Year, reservation.StartDate.Month, reservation.StartDate.Day, hours, minutes, seconds);
+
+                    startDate = new DateTime(reservation.StartDate.Year,
+                                                 reservation.StartDate.Month,
+                                                 reservation.StartDate.Day,
+                                                 reservation.StartTime.Hours,
+                                                 reservation.StartTime.Minutes,
+                                                 reservation.StartTime.Seconds);
+
+                    endDate = new DateTime(reservation.EndDate.Year,
+                                           reservation.EndDate.Month,
+                                           reservation.EndDate.Day,
+                                           reservation.EndTime.Hours,
+                                           reservation.EndTime.Minutes,
+                                           reservation.EndTime.Seconds);
+
+                    if (reservation.ClientsEmailAddress != null)
+                    {
+                        calendar_events.Add(new CalendarEvent
+                        {
+                            text = reservation.ActionTitle + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString(),
+                            start_date = startDate,
+                            end_date = endDate,
+                        });
+                    }
+                    else
+                    {
+                        calendar_events.Add(new CalendarEvent
+                        {
+                            text = "Not reserved yet",
+                            start_date = startDate,
+                            end_date = endDate,
+                        });
+                    }
                 }
+
                 calendar_events.Add(new CalendarEvent
                 {
-                    text = reservation.Place + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString(),
-                    start_date = reservation.StartDate,
-                    end_date = endDate,
+                    text = "Not available",
+                    start_date = instructors_availability.ToDate.AddDays(1),
+                    end_date = instructors_availability.FromDate.AddYears(1)
                 });
+
+                scheduler_data.Add(calendar_events);
             }
 
-            scheduler_data.Add(calendar_events);
+            else if (User.IsInRole("ValidCottageOwner"))
+            {
+                var cottage_owner_reservations = ReservationCRUD.LoadCottageReservationByOwnerId(User.Identity.GetUserId());
+                var history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
+                var cottage_owner_availability = ScheduleCRUD.LoadInstructorAvailability(User.Identity.GetUserId());
+                DateTime startDate = new DateTime();
+                DateTime endDate = new DateTime();
+
+                foreach (var reservation in cottage_owner_reservations)
+                {
+
+                    startDate = new DateTime(reservation.StartDate.Year,
+                                                 reservation.StartDate.Month,
+                                                 reservation.StartDate.Day,
+                                                 reservation.StartTime.Hours,
+                                                 reservation.StartTime.Minutes,
+                                                 reservation.StartTime.Seconds);
+
+                    endDate = new DateTime(reservation.EndDate.Year,
+                                           reservation.EndDate.Month,
+                                           reservation.EndDate.Day,
+                                           reservation.EndTime.Hours,
+                                           reservation.EndTime.Minutes,
+                                           reservation.EndTime.Seconds);
+
+                    calendar_events.Add(new CalendarEvent
+                    {
+                        text = reservation.CottageName + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString(),
+                        start_date = startDate,
+                        end_date = endDate,
+                    });
+                }
+
+                foreach (var reservation in history_reservations)
+                {
+
+                    startDate = new DateTime(reservation.StartDate.Year,
+                                                 reservation.StartDate.Month,
+                                                 reservation.StartDate.Day,
+                                                 reservation.StartTime.Hours,
+                                                 reservation.StartTime.Minutes,
+                                                 reservation.StartTime.Seconds);
+
+                    endDate = new DateTime(reservation.EndDate.Year,
+                                           reservation.EndDate.Month,
+                                           reservation.EndDate.Day,
+                                           reservation.EndTime.Hours,
+                                           reservation.EndTime.Minutes,
+                                           reservation.EndTime.Seconds);
+
+                    if (reservation.ClientsEmailAddress != null)
+                    {
+                        calendar_events.Add(new CalendarEvent
+                        {
+                            text = reservation.ActionTitle + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString(),
+                            start_date = startDate,
+                            end_date = endDate,
+                        });
+                    }
+                    else
+                    {
+                        calendar_events.Add(new CalendarEvent
+                        {
+                            text = "Not reserved yet",
+                            start_date = startDate,
+                            end_date = endDate,
+                        });
+                    }
+                }
+
+                calendar_events.Add(new CalendarEvent
+                {
+                    text = "Not available",
+                    start_date = cottage_owner_availability.ToDate.AddDays(1),
+                    end_date = cottage_owner_availability.FromDate.AddYears(1)
+                });
+
+                scheduler_data.Add(calendar_events);
+            }
+
+            else if (User.IsInRole("ValidShipOwner"))
+            {
+                var ship_owner_reservations = ReservationCRUD.LoadShipReservationByOwnerId(User.Identity.GetUserId());
+                var history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
+                var ship_owner_availability = ScheduleCRUD.LoadInstructorAvailability(User.Identity.GetUserId());
+                DateTime startDate = new DateTime();
+                DateTime endDate = new DateTime();
+
+                foreach (var reservation in ship_owner_reservations)
+                {
+
+                    startDate = new DateTime(reservation.StartDate.Year,
+                                                 reservation.StartDate.Month,
+                                                 reservation.StartDate.Day,
+                                                 reservation.StartTime.Hours,
+                                                 reservation.StartTime.Minutes,
+                                                 reservation.StartTime.Seconds);
+
+                    endDate = new DateTime(reservation.EndDate.Year,
+                                           reservation.EndDate.Month,
+                                           reservation.EndDate.Day,
+                                           reservation.EndTime.Hours,
+                                           reservation.EndTime.Minutes,
+                                           reservation.EndTime.Seconds);
+
+                    calendar_events.Add(new CalendarEvent
+                    {
+                        text = reservation.ShipName + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString(),
+                        start_date = startDate,
+                        end_date = endDate,
+                    });
+                }
+
+                foreach (var reservation in history_reservations)
+                {
+
+                    startDate = new DateTime(reservation.StartDate.Year,
+                                                 reservation.StartDate.Month,
+                                                 reservation.StartDate.Day,
+                                                 reservation.StartTime.Hours,
+                                                 reservation.StartTime.Minutes,
+                                                 reservation.StartTime.Seconds);
+
+                    endDate = new DateTime(reservation.EndDate.Year,
+                                           reservation.EndDate.Month,
+                                           reservation.EndDate.Day,
+                                           reservation.EndTime.Hours,
+                                           reservation.EndTime.Minutes,
+                                           reservation.EndTime.Seconds);
+
+                    if (reservation.ClientsEmailAddress != null)
+                    {
+                        calendar_events.Add(new CalendarEvent
+                        {
+                            text = reservation.ActionTitle + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString(),
+                            start_date = startDate,
+                            end_date = endDate,
+                        });
+                    }
+                    else
+                    {
+                        calendar_events.Add(new CalendarEvent
+                        {
+                            text = "Not reserved yet",
+                            start_date = startDate,
+                            end_date = endDate,
+                        });
+                    }
+                }
+
+                calendar_events.Add(new CalendarEvent
+                {
+                    text = "Not available",
+                    start_date = ship_owner_availability.ToDate.AddDays(1),
+                    end_date = ship_owner_availability.FromDate.AddYears(1)
+                });
+
+                scheduler_data.Add(calendar_events);
+            }
 
             return (ContentResult)scheduler_data;
         }
@@ -113,6 +310,9 @@ namespace FishingBooker.Controllers
                 switch (action.Type)
                 {
                     case DataActionTypes.Insert:
+
+                        
+                        //return RedirectToAction("FillARecord", "Manage", new { clientsEmail = "clientsEmail@gmail.com"});
                         //do insert
                         //action.TargetId = changedEvent.id;//assign postoperational id
                         break;

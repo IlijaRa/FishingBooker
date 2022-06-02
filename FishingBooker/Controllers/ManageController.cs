@@ -403,11 +403,11 @@ namespace FishingBooker.Controllers
             //var availability = RegUserCRUD.LoadAvailabilities().Find(x => x.InstructorId == User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_adventures = AdventureCRUD.LoadAdventures();
-
+            ViewData["FromDate"] = data_availability.FromDate;
             schedule.availability.Id = data_availability.Id;
-            schedule.availability.FromDate = data_availability.FromDate;
+            schedule.availability.FromDate = data_availability.FromDate.ToString();
             schedule.availability.FromTime = data_availability.FromTime.ToString();
-            schedule.availability.ToDate = data_availability.ToDate;
+            schedule.availability.ToDate = data_availability.ToDate.ToString();
             schedule.availability.ToTime = data_availability.ToTime.ToString();
             schedule.availability.InstructorId = data_availability.InstructorId;
 
@@ -428,7 +428,8 @@ namespace FishingBooker.Controllers
                                 ActionTitle = adventure.Title,
                                 StartDate = reservation.StartDate,
                                 StartTime = reservation.StartTime.ToString(),
-                                Duration = reservation.Duration,
+                                EndDate = reservation.EndDate,
+                                EndTime = reservation.EndTime.ToString(),
                                 Price = reservation.Price,
                                 OwnerId = User.Identity.GetUserId()
                             });
@@ -448,7 +449,8 @@ namespace FishingBooker.Controllers
                         ActionTitle = reservation.ActionTitle,
                         StartDate = reservation.StartDate,
                         StartTime = reservation.StartTime.ToString(),
-                        Duration = reservation.Duration.ToString(),
+                        EndDate = reservation.EndDate,
+                        EndTime = reservation.EndTime.ToString(),
                         Price = reservation.Price,
                         OwnerId = reservation.OwnerId,
                     });
@@ -464,16 +466,410 @@ namespace FishingBooker.Controllers
         {
             TimeSpan fromTime = TimeSpan.Parse(model.availability.FromTime.ToString());
             TimeSpan toTime = TimeSpan.Parse(model.availability.ToTime.ToString());
+            DateTime fromDate = DateTime.Parse(model.availability.FromDate.ToString());
+            DateTime toDate = DateTime.Parse(model.availability.ToDate.ToString());
 
             ScheduleCRUD.UpdateAvailability(model.availability.Id,
-                                            model.availability.FromDate,
+                                            fromDate,
                                             fromTime,
-                                            model.availability.ToDate,
+                                            toDate,
                                             toTime,
                                             model.availability.InstructorId);
 
             return RedirectToAction("InstructorSchedule", "Manage");
         }
+
+        public ActionResult SearchHistoryReservation(string searching)
+        {
+            var data = ReservationCRUD.LoadReservationsFromHistory();
+            List<ReservationFromHistoryViewModel> found_reservations = new List<ReservationFromHistoryViewModel>();
+            searching = searching.ToLower();
+
+            foreach (var reservation in data)
+            {
+                if (reservation.OwnerId == User.Identity.GetUserId())
+                {
+                    decimal result = -1;
+                    decimal.TryParse(searching, out result);
+                    if (reservation.ClientsEmailAddress.ToLower().Contains(searching) ||
+                        reservation.ActionTitle.ToLower().Contains(searching) ||
+                        reservation.Price == result ||
+                        reservation.Duration.ToLower().Contains(searching))
+                    {
+                        found_reservations.Add(new ReservationFromHistoryViewModel
+                        {
+                            ClientsEmailAddress = reservation.ClientsEmailAddress,
+                            ActionTitle = reservation.ActionTitle,
+                            StartDate = reservation.StartDate,
+                            StartTime = reservation.StartTime.ToString(),
+                            EndDate = reservation.EndDate,
+                            EndTime = reservation.EndTime.ToString(),
+                            Price = reservation.Price,
+                            OwnerId = reservation.OwnerId
+                        });
+                    }
+                }
+            }
+
+            InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
+            var data_availability = RegUserCRUD.LoadInstructorsAvailability(User.Identity.GetUserId());
+            //var availability = RegUserCRUD.LoadAvailabilities().Find(x => x.InstructorId == User.Identity.GetUserId());
+            var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
+            var data_adventures = AdventureCRUD.LoadAdventures();
+
+            schedule.availability.Id = data_availability.Id;
+            schedule.availability.FromDate = data_availability.FromDate.ToString();
+            schedule.availability.FromTime = data_availability.FromTime.ToString();
+            schedule.availability.ToDate = data_availability.ToDate.ToString();
+            schedule.availability.ToTime = data_availability.ToTime.ToString();
+            schedule.availability.InstructorId = data_availability.InstructorId;
+
+
+            foreach (var adventure in data_adventures)
+            {
+                if (adventure.InstructorId == User.Identity.GetUserId())
+                {
+                    List<Reservation> reservations = ReservationCRUD.LoadReservationsByAdventureId(adventure.Id);
+                    foreach (var reservation in reservations)
+                    {
+                        if (reservation.IsReserved == true)
+                        {
+                            schedule.current_reservations.Add(new CurrentReservationViewModel
+                            {
+                                Id = reservation.Id,
+                                ClientsEmailAddress = reservation.ClientsEmailAddress,
+                                ActionTitle = adventure.Title,
+                                StartDate = reservation.StartDate,
+                                StartTime = reservation.StartTime.ToString(),
+                                EndDate = reservation.EndDate,
+                                EndTime = reservation.EndTime.ToString(),
+                                Price = reservation.Price,
+                                OwnerId = User.Identity.GetUserId()
+                            });
+                        }
+                    }
+                }
+            }
+            schedule.reservation_history = found_reservations;
+
+            return View(schedule);
+        }
+
+
+        public ActionResult ShipOwnerSchedule()
+        {
+            InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
+            var data_availability = RegUserCRUD.LoadInstructorsAvailability(User.Identity.GetUserId());
+            var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
+            var data_ships = ShipCRUD.LoadShips();
+
+            schedule.availability.Id = data_availability.Id;
+            schedule.availability.FromDate = data_availability.FromDate.ToString();
+            schedule.availability.FromTime = data_availability.FromTime.ToString();
+            schedule.availability.ToDate = data_availability.ToDate.ToString();
+            schedule.availability.ToTime = data_availability.ToTime.ToString();
+            schedule.availability.InstructorId = data_availability.InstructorId;
+
+
+            foreach (var ship in data_ships)
+            {
+                if (ship.OwnerId == User.Identity.GetUserId())
+                {
+                    List<Reservation> reservations = ReservationCRUD.LoadReservationsByShipId(ship.Id);
+                    foreach (var reservation in reservations)
+                    {
+                        if (reservation.IsReserved == true)
+                        {
+                            schedule.current_reservations.Add(new CurrentReservationViewModel
+                            {
+                                Id = reservation.Id,
+                                ClientsEmailAddress = reservation.ClientsEmailAddress,
+                                ActionTitle = ship.Title,
+                                StartDate = reservation.StartDate,
+                                StartTime = reservation.StartTime.ToString(),
+                                EndDate = reservation.EndDate,
+                                EndTime = reservation.EndTime.ToString(),
+                                Price = reservation.Price,
+                                OwnerId = User.Identity.GetUserId()
+                            });
+                        }
+                    }
+                }
+            }
+
+            foreach (var reservation in data_history_reservations)
+            {
+                if (reservation.OwnerId == User.Identity.GetUserId())
+                {
+                    schedule.reservation_history.Add(new ReservationFromHistoryViewModel
+                    {
+                        Id = reservation.Id,
+                        ClientsEmailAddress = reservation.ClientsEmailAddress,
+                        ActionTitle = reservation.ActionTitle,
+                        StartDate = reservation.StartDate,
+                        StartTime = reservation.StartTime.ToString(),
+                        EndDate = reservation.EndDate,
+                        EndTime = reservation.EndTime.ToString(),
+                        Price = reservation.Price,
+                        OwnerId = reservation.OwnerId,
+                    });
+                }
+            }
+
+            return View(schedule);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ShipOwnerSchedule(InstructorScheduleViewModel model)
+        {
+            TimeSpan fromTime = TimeSpan.Parse(model.availability.FromTime.ToString());
+            TimeSpan toTime = TimeSpan.Parse(model.availability.ToTime.ToString());
+            DateTime fromDate = DateTime.Parse(model.availability.FromDate.ToString());
+            DateTime toDate = DateTime.Parse(model.availability.ToDate.ToString());
+
+            ScheduleCRUD.UpdateAvailability(model.availability.Id,
+                                            fromDate,
+                                            fromTime,
+                                            toDate,
+                                            toTime,
+                                            model.availability.InstructorId);
+
+            return RedirectToAction("ShipOwnerSchedule", "Manage");
+        }
+
+        public ActionResult SearchHistoryReservationShipOwner(string searching)
+        {
+            var data = ReservationCRUD.LoadReservationsFromHistory();
+            List<ReservationFromHistoryViewModel> found_reservations = new List<ReservationFromHistoryViewModel>();
+            searching = searching.ToLower();
+
+            foreach (var reservation in data)
+            {
+                if (reservation.OwnerId == User.Identity.GetUserId())
+                {
+                    decimal result = -1;
+                    decimal.TryParse(searching, out result);
+                    if (reservation.ClientsEmailAddress.ToLower().Contains(searching) ||
+                        reservation.ActionTitle.ToLower().Contains(searching) ||
+                        reservation.Price == result ||
+                        reservation.Duration.ToLower().Contains(searching))
+                    {
+                        found_reservations.Add(new ReservationFromHistoryViewModel
+                        {
+                            ClientsEmailAddress = reservation.ClientsEmailAddress,
+                            ActionTitle = reservation.ActionTitle,
+                            StartDate = reservation.StartDate,
+                            StartTime = reservation.StartTime.ToString(),
+                            EndDate = reservation.EndDate,
+                            EndTime = reservation.EndTime.ToString(),
+                            Price = reservation.Price,
+                            OwnerId = reservation.OwnerId
+                        });
+                    }
+                }
+            }
+
+            InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
+            var data_availability = RegUserCRUD.LoadInstructorsAvailability(User.Identity.GetUserId());
+            var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
+            var data_ships = ShipCRUD.LoadShips();
+
+            schedule.availability.Id = data_availability.Id;
+            schedule.availability.FromDate = data_availability.FromDate.ToString();
+            schedule.availability.FromTime = data_availability.FromTime.ToString();
+            schedule.availability.ToDate = data_availability.ToDate.ToString();
+            schedule.availability.ToTime = data_availability.ToTime.ToString();
+            schedule.availability.InstructorId = data_availability.InstructorId;
+
+
+            foreach (var ship in data_ships)
+            {
+                if (ship.OwnerId == User.Identity.GetUserId())
+                {
+                    List<Reservation> reservations = ReservationCRUD.LoadReservationsByShipId(ship.Id);
+                    foreach (var reservation in reservations)
+                    {
+                        if (reservation.IsReserved == true)
+                        {
+                            schedule.current_reservations.Add(new CurrentReservationViewModel
+                            {
+                                Id = reservation.Id,
+                                ClientsEmailAddress = reservation.ClientsEmailAddress,
+                                ActionTitle = ship.Title,
+                                StartDate = reservation.StartDate,
+                                StartTime = reservation.StartTime.ToString(),
+                                EndDate = reservation.EndDate,
+                                EndTime = reservation.EndTime.ToString(),
+                                Price = reservation.Price,
+                                OwnerId = User.Identity.GetUserId()
+                            });
+                        }
+                    }
+                }
+            }
+            schedule.reservation_history = found_reservations;
+
+            return View(schedule);
+        }
+
+        public ActionResult CottageOwnerSchedule()
+        {
+            InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
+            var data_availability = RegUserCRUD.LoadInstructorsAvailability(User.Identity.GetUserId());
+            var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
+            var data_cottages = CottageCRUD.LoadCottages();
+
+            schedule.availability.Id = data_availability.Id;
+            schedule.availability.FromDate = data_availability.FromDate.ToString();
+            schedule.availability.FromTime = data_availability.FromTime.ToString();
+            schedule.availability.ToDate = data_availability.ToDate.ToString();
+            schedule.availability.ToTime = data_availability.ToTime.ToString();
+            schedule.availability.InstructorId = data_availability.InstructorId;
+
+
+            foreach (var cottage in data_cottages)
+            {
+                if (cottage.OwnerId == User.Identity.GetUserId())
+                {
+                    List<Reservation> reservations = ReservationCRUD.LoadReservationsByCottageId(cottage.Id);
+                    foreach (var reservation in reservations)
+                    {
+                        if (reservation.IsReserved == true)
+                        {
+                            schedule.current_reservations.Add(new CurrentReservationViewModel
+                            {
+                                Id = reservation.Id,
+                                ClientsEmailAddress = reservation.ClientsEmailAddress,
+                                ActionTitle = cottage.Title,
+                                StartDate = reservation.StartDate,
+                                StartTime = reservation.StartTime.ToString(),
+                                EndDate = reservation.EndDate,
+                                EndTime = reservation.EndTime.ToString(),
+                                Price = reservation.Price,
+                                OwnerId = User.Identity.GetUserId()
+                            });
+                        }
+                    }
+                }
+            }
+
+            foreach (var reservation in data_history_reservations)
+            {
+                if (reservation.OwnerId == User.Identity.GetUserId())
+                {
+                    schedule.reservation_history.Add(new ReservationFromHistoryViewModel
+                    {
+                        Id = reservation.Id,
+                        ClientsEmailAddress = reservation.ClientsEmailAddress,
+                        ActionTitle = reservation.ActionTitle,
+                        StartDate = reservation.StartDate,
+                        StartTime = reservation.StartTime.ToString(),
+                        EndDate = reservation.EndDate,
+                        EndTime = reservation.EndTime.ToString(),
+                        Price = reservation.Price,
+                        OwnerId = reservation.OwnerId,
+                    });
+                }
+            }
+
+            return View(schedule);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CottageOwnerSchedule(InstructorScheduleViewModel model)
+        {
+            TimeSpan fromTime = TimeSpan.Parse(model.availability.FromTime.ToString());
+            TimeSpan toTime = TimeSpan.Parse(model.availability.ToTime.ToString());
+            DateTime fromDate = DateTime.Parse(model.availability.FromDate.ToString());
+            DateTime toDate = DateTime.Parse(model.availability.ToDate.ToString());
+
+            ScheduleCRUD.UpdateAvailability(model.availability.Id,
+                                            fromDate,
+                                            fromTime,
+                                            toDate,
+                                            toTime,
+                                            model.availability.InstructorId);
+
+            return RedirectToAction("CottageOwnerSchedule", "Manage");
+        }
+
+        public ActionResult SearchHistoryReservationCottageOwner(string searching)
+        {
+            var data = ReservationCRUD.LoadReservationsFromHistory();
+            List<ReservationFromHistoryViewModel> found_reservations = new List<ReservationFromHistoryViewModel>();
+            searching = searching.ToLower();
+
+            foreach (var reservation in data)
+            {
+                if (reservation.OwnerId == User.Identity.GetUserId())
+                {
+                    decimal result = -1;
+                    decimal.TryParse(searching, out result);
+                    if (reservation.ClientsEmailAddress.ToLower().Contains(searching) ||
+                        reservation.ActionTitle.ToLower().Contains(searching) ||
+                        reservation.Price == result ||
+                        reservation.Duration.ToLower().Contains(searching))
+                    {
+                        found_reservations.Add(new ReservationFromHistoryViewModel
+                        {
+                            ClientsEmailAddress = reservation.ClientsEmailAddress,
+                            ActionTitle = reservation.ActionTitle,
+                            StartDate = reservation.StartDate,
+                            StartTime = reservation.StartTime.ToString(),
+                            EndDate = reservation.EndDate,
+                            EndTime = reservation.EndTime.ToString(),
+                            Price = reservation.Price,
+                            OwnerId = reservation.OwnerId
+                        });
+                    }
+                }
+            }
+
+            InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
+            var data_availability = RegUserCRUD.LoadInstructorsAvailability(User.Identity.GetUserId());
+            var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
+            var data_cottages = CottageCRUD.LoadCottages();
+
+            schedule.availability.Id = data_availability.Id;
+            schedule.availability.FromDate = data_availability.FromDate.ToString();
+            schedule.availability.FromTime = data_availability.FromTime.ToString();
+            schedule.availability.ToDate = data_availability.ToDate.ToString();
+            schedule.availability.ToTime = data_availability.ToTime.ToString();
+            schedule.availability.InstructorId = data_availability.InstructorId;
+
+
+            foreach (var cottage in data_cottages)
+            {
+                if (cottage.OwnerId == User.Identity.GetUserId())
+                {
+                    List<Reservation> reservations = ReservationCRUD.LoadReservationsByCottageId(cottage.Id);
+                    foreach (var reservation in reservations)
+                    {
+                        if (reservation.IsReserved == true)
+                        {
+                            schedule.current_reservations.Add(new CurrentReservationViewModel
+                            {
+                                Id = reservation.Id,
+                                ClientsEmailAddress = reservation.ClientsEmailAddress,
+                                ActionTitle = cottage.Title,
+                                StartDate = reservation.StartDate,
+                                StartTime = reservation.StartTime.ToString(),
+                                EndDate = reservation.EndDate,
+                                EndTime = reservation.EndTime.ToString(),
+                                Price = reservation.Price,
+                                OwnerId = User.Identity.GetUserId()
+                            });
+                        }
+                    }
+                }
+            }
+            schedule.reservation_history = found_reservations;
+
+            return View(schedule);
+        }
+
 
         public ActionResult ClientProfileInfo(string email)
         {

@@ -62,8 +62,57 @@ namespace FishingBooker.Controllers
         public ActionResult ClientIndex()
         {
             ClientIndexViewModel model = new ClientIndexViewModel();
+            var data_adventure_reservations = ReservationCRUD.LoadAdventureReservationsByClient(User.Identity.GetUserName());
+            var data_cottage_reservations = ReservationCRUD.LoadCottageReservationsByClient(User.Identity.GetUserName());
+            var data_ship_reservations = ReservationCRUD.LoadShipReservationsByClient(User.Identity.GetUserName());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistoryByClientsEmailAddress(User.Identity.GetUserName());
+            List<ReservationToShowViewModel> fut_reservations = new List<ReservationToShowViewModel>();
             List<ReservationFromHistoryViewModel> his_reservations = new List<ReservationFromHistoryViewModel>();
+            
+            foreach (var reservation in data_adventure_reservations)
+            {
+                fut_reservations.Add(new ReservationToShowViewModel
+                {
+                    Id = reservation.Id,
+                    //ClientsEmailAddress = reservation.ClientsEmailAddress,
+                    ActionTitle = reservation.Place,
+                    StartDate = reservation.StartDate,
+                    StartTime = reservation.StartTime.ToString(),
+                    EndDate = reservation.EndDate,
+                    EndTime = reservation.EndTime.ToString(),
+                    Price = reservation.Price
+                });
+            }
+
+            foreach (var reservation in data_cottage_reservations)
+            {
+                fut_reservations.Add(new ReservationToShowViewModel
+                {
+                    Id = reservation.Id,
+                    //ClientsEmailAddress = reservation.ClientsEmailAddress,
+                    ActionTitle = reservation.CottageName,
+                    StartDate = reservation.StartDate,
+                    StartTime = reservation.StartTime.ToString(),
+                    EndDate = reservation.EndDate,
+                    EndTime = reservation.EndTime.ToString(),
+                    Price = reservation.Price
+                });
+            }
+
+            foreach (var reservation in data_ship_reservations)
+            {
+                fut_reservations.Add(new ReservationToShowViewModel
+                {
+                    Id = reservation.Id,
+                    //ClientsEmailAddress = reservation.ClientsEmailAddress,
+                    ActionTitle = reservation.ShipName,
+                    StartDate = reservation.StartDate,
+                    StartTime = reservation.StartTime.ToString(),
+                    EndDate = reservation.EndDate,
+                    EndTime = reservation.EndTime.ToString(),
+                    Price = reservation.Price
+                });
+            }
 
             foreach (var reservation in data_history_reservations)
             {
@@ -73,11 +122,13 @@ namespace FishingBooker.Controllers
                     ActionTitle = reservation.ActionTitle,
                     StartDate = reservation.StartDate,
                     StartTime = reservation.StartTime.ToString(),
-                    Duration = reservation.Duration,
+                    EndDate = reservation.EndDate,
+                    EndTime = reservation.EndTime.ToString(),
                     Price = reservation.Price,
                     OwnerId = reservation.OwnerId
                 });
             }
+            model.future_reservations = fut_reservations;
             model.history_reservations = his_reservations;
             return View(model);
         }
