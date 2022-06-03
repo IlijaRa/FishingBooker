@@ -124,7 +124,9 @@
 
         @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
 
-        @Html.ActionLink("Delete", "DeleteAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null)
+        @Html.ActionLink("Delete", "DeleteAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null) |
+
+        @Html.ActionLink("Business report", "BusinessReport", "InstructorUsers", new { advId = @item.AdventureId }, null)
     </td>
 </tr>
 }

@@ -1,0 +1,181 @@
+﻿@model FishingBooker.Models.BusinessReportViewModel
+@{
+    ViewBag.Title = "BusinessReport";
+    if (User.IsInRole("ValidFishingInstructor"))
+    {
+        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    }
+    else if (User.IsInRole("Admin"))
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+    else if (User.IsInRole("HeadAdmin"))
+    {
+        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    }
+}
+
+<h2>Business report</h2>
+<hr />
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+    @*<p class="highcharts-description">
+        This chart shows how data labels can be added to the data series. This
+        can increase readability and comprehension for small datasets.
+    </p>*@
+</figure>
+
+<script>
+    Highcharts.chart('container', {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Monthly Average Temperature'
+        },
+        subtitle: {
+            text: 'Source: WorldClimate.com'
+        },
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: {
+            title: {
+                text: 'Temperature (°C)'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            name: 'Tokyo',
+            data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        }, {
+            name: 'London',
+            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+        }]
+    });
+</script>
+@*@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()*@
+
+<div class="form-horizontal">
+    <hr />
+    <h2>Current action avg rating</h2>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @*@Html.HiddenFor(model => model.adventure.AdventureId, new { @class = "id" })*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AverageRate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.AverageRate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.AverageRate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <hr />
+    <h2>Income in a certain period of time.</h2>
+
+
+    @using (Html.BeginForm("BusinessReportFilteredDate", "InstructorUsers", FormMethod.Get))
+    {
+        @Html.HiddenFor(model => model.AdventureId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FromDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FromDate, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ToDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ToDate, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Search" class="btn btn-default" />
+            </div>
+        </div>
+    }
+
+    <table class="table">
+        <tr>
+            @*<th>Id</th>*@
+            <th>Clients email address</th>
+            @*<th>Action title</th>*@
+            <th>Start date</th>
+            <th>Start time</th>
+            <th>End date</th>
+            <th>End time</th>
+            <th>Price</th>
+            @*<th>Owner id</th>*@
+        </tr>
+        @foreach (var item in Model.reservations)
+        {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.AdventureId)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientsEmailAddress)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.ActionTitle)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                @*<td>
+                        @Html.ActionLink("Edit", "EditAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null) |
+
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+
+                        @Html.ActionLink("Delete", "DeleteAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null) |
+
+                        @Html.ActionLink("Business report", "BusinessReport", "InstructorUsers")
+                    </td>*@
+            </tr>
+        }
+
+    </table>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Income, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Income, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.Income, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+@*}*@
+

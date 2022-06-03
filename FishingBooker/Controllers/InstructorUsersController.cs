@@ -443,5 +443,95 @@ namespace FishingBooker.Controllers
             return isOk;
         }
 
+        public ActionResult BusinessReport(int advId)
+        {
+            var sum = 0.0;
+            int count = 0;
+            BusinessReportViewModel model = new BusinessReportViewModel();
+            List<ReservationToShowViewModel> reservations_to_show = new List<ReservationToShowViewModel>();
+            var data_instructor_revisions = RevisionCRUD.LoadConfirmedRevisionsForInstructor(User.Identity.GetUserName());
+            var data_instructor_history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
+            var data_adventure = AdventureCRUD.LoadAdventureById(advId);
+
+            foreach (var revision in data_instructor_revisions)
+            {
+                if (revision.EntityTitle.Equals(data_adventure.Title))
+                {
+                    sum += revision.ActionRating;
+                    count++;
+                }
+            }
+            model.AdventureId = advId;
+            model.AverageRate = sum / count;
+            sum = 0;
+            count = 0;
+            foreach (var reservation in data_instructor_history_reservations)
+            {
+                if (reservation.ActionTitle.Equals(data_adventure.Title)) {
+                    reservations_to_show.Add(new ReservationToShowViewModel
+                    {
+                        Id = reservation.Id,
+                        ClientsEmailAddress = reservation.ClientsEmailAddress,
+                        ActionTitle = reservation.ActionTitle,
+                        StartDate = reservation.StartDate,
+                        StartTime = reservation.StartTime.ToString(),
+                        EndDate = reservation.EndDate,
+                        EndTime = reservation.EndTime.ToString(),
+                        Price = reservation.Price,
+                        OwnerId = reservation.OwnerId
+                    });
+                    sum += Convert.ToDouble(reservation.Price);
+                }
+            }
+            model.reservations = reservations_to_show;
+            model.Income = sum;
+            return View(model);
+        }
+
+        public ActionResult BusinessReportFilteredDate(BusinessReportViewModel filter_model)
+        {
+            var sum = 0.0;
+            int count = 0;
+            BusinessReportViewModel model = new BusinessReportViewModel();
+            List<ReservationToShowViewModel> reservations_to_show = new List<ReservationToShowViewModel>();
+            var data_instructor_revisions = RevisionCRUD.LoadConfirmedRevisionsForInstructor(User.Identity.GetUserName());
+            var data_instructor_history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
+            var data_adventure = AdventureCRUD.LoadAdventureById(filter_model.AdventureId);
+
+            foreach (var revision in data_instructor_revisions)
+            {
+                if (revision.EntityTitle.Equals(data_adventure.Title))
+                {
+                    sum += revision.ActionRating;
+                    count++;
+                }
+            }
+            model.AdventureId = filter_model.AdventureId;
+            model.AverageRate = sum / count;
+            sum = 0;
+            count = 0;
+            foreach (var reservation in data_instructor_history_reservations)
+            {
+                if ((reservation.ActionTitle.Equals(data_adventure.Title)) && (filter_model.FromDate <= reservation.StartDate && reservation.EndDate <= filter_model.ToDate))
+                {
+                    reservations_to_show.Add(new ReservationToShowViewModel
+                    {
+                        Id = reservation.Id,
+                        ClientsEmailAddress = reservation.ClientsEmailAddress,
+                        ActionTitle = reservation.ActionTitle,
+                        StartDate = reservation.StartDate,
+                        StartTime = reservation.StartTime.ToString(),
+                        EndDate = reservation.EndDate,
+                        EndTime = reservation.EndTime.ToString(),
+                        Price = reservation.Price,
+                        OwnerId = reservation.OwnerId
+                    });
+                    sum += Convert.ToDouble(reservation.Price);
+                }
+            }
+            model.reservations = reservations_to_show;
+            model.Income = sum;
+            return View(model);
+        }
     }
 }

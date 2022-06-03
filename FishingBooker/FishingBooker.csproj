@@ -217,6 +217,7 @@
     <Compile Include="Models\AdventureReservationViewModel.cs" />
     <Compile Include="Models\AdventureInstructorViewModel.cs" />
     <Compile Include="Models\AnswerToComplaintViewModel.cs" />
+    <Compile Include="Models\BusinessReportViewModel.cs" />
     <Compile Include="Models\ClientComplaintViewModel.cs" />
     <Compile Include="Models\ClientProfileInfoViewModel.cs" />
     <Compile Include="Models\CottageReservationViewModel.cs" />
@@ -569,9 +570,12 @@
     <Content Include="Views\CottageUsers\CreateCottageReservationForCurrentlyActiveUser.cshtml" />
     <Content Include="Views\ShipUsers\CreateShipReservationForCurrentlyActiveUser.cshtml" />
     <Content Include="Views\Shared\DateAndTimeNotAllowed.cshtml" />
+    <Content Include="Views\InstructorUsers\BusinessReport.cshtml" />
+    <Content Include="Views\InstructorUsers\BusinessReportFilteredDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\BusinessReportGraph\" />
     <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>

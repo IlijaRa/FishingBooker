@@ -60,6 +60,15 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.LoadUnconfirmedRevisions<Revision>(sql, false);
         }
 
+        public static List<Revision> LoadConfirmedRevisionsForInstructor(string instructorsEmail)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.Revisions
+                            WHERE OwnersEmailAddress = @OwnersEmailAddress AND State = @State;";
+
+            return SSMSDataAccess.LoadConfirmedRevisionsForInstructor<Revision>(sql, instructorsEmail, true);
+        }
+
         public static int UpdateStatus(int revisionId)
         {
 
