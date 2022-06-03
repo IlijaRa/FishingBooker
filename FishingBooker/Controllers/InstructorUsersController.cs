@@ -533,5 +533,20 @@ namespace FishingBooker.Controllers
             model.Income = sum;
             return View(model);
         }
+
+        //public ActionResult PopulateGraphDataWeek(int advId)
+        //{
+        //    var adventure_week_income = ReservationCRUD.LoadIncomePerDayOfWeek(advId);
+        //    string[] adventure_week_income_string = new string[14];
+        //    for (int i = 0; i < 7; i++)
+        //    {
+        //        adventure_week_income_string[i] = adventure_week_income[i].dayOfWeek.ToString();
+        //    }
+        //    for (int i = 7; i < 14; i++)
+        //    {
+        //        adventure_week_income_string[i] = adventure_week_income[i].Income.ToString();
+        //    }
+        //    return Json(adventure_week_income_string, JsonRequestBehavior.AllowGet);
+        //}
     }
 }

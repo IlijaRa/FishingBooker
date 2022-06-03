@@ -15,7 +15,7 @@
     }
 }
 
-<h2>Business report</h2>
+<!--<h2>Business report</h2>
 <hr />
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -23,52 +23,69 @@
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 <figure class="highcharts-figure">
-    <div id="container"></div>
+    <div id="container"></div>-->
     @*<p class="highcharts-description">
-        This chart shows how data labels can be added to the data series. This
-        can increase readability and comprehension for small datasets.
-    </p>*@
-</figure>
+            This chart shows how data labels can be added to the data series. This
+            can increase readability and comprehension for small datasets.
+        </p>*@
+<!--</figure>-->
 
-<script>
-    Highcharts.chart('container', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Monthly Average Temperature'
-        },
-        subtitle: {
-            text: 'Source: WorldClimate.com'
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-        yAxis: {
-            title: {
-                text: 'Temperature (°C)'
+@*<script>
+    $(document).ready(function () {
+        $.ajax({
+        type: "GET",
+        url: '@Url.Action("PopulateGraphDataWeek", "InstructorUsers", new { advId = @Model.AdventureId }, null)',
+        success: function (json) {
+            debugger
+            var values = json.adventure_week_income_string
+            var days = [];
+            var incomes = [];
+            for (var i = 0; i < 7; i++) {
+                days.push(parseInt(values[i]));
             }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
+            for (var i = 7; i < 14; i++) {
+                incomes.push(parseInt(values[i]));
+            }
+
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'line'
                 },
-                enableMouseTracking: false
-            }
-        },
-        series: [{
-            name: 'Tokyo',
-            data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        }, {
-            name: 'London',
-            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-        }]
+                title: {
+                    text: 'Weekly Average Income'
+                },
+                //subtitle: {
+                //    text: 'Source: WorldClimate.com'
+                //},
+                xAxis: {
+                    categories: [0, 1, 2, 3, 4, 5]
+                },
+                yAxis: {
+                    title: {
+                        text: 'Temperature (°C)'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: 'Days in week',
+                    data: [5000, 900, 14000, 7000, 422, 5000]
+                }]
+            });
+        }
     });
-</script>
+    });
+
+</script>*@
 @*@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()*@
+    {
+        @Html.AntiForgeryToken()*@
 
 <div class="form-horizontal">
     <hr />
@@ -96,7 +113,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FromDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FromDate, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.EditorFor(model => model.FromDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -104,7 +121,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ToDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ToDate, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.EditorFor(model => model.ToDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
             </div>
         </div>

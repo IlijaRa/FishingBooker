@@ -127,8 +127,8 @@ namespace FishingBooker.Controllers
                 calendar_events.Add(new CalendarEvent
                 {
                     text = "Not available",
-                    start_date = instructors_availability.ToDate.AddDays(1),
-                    end_date = instructors_availability.FromDate.AddYears(1)
+                    start_date = instructors_availability.ToDate,
+                    end_date = instructors_availability.FromDate
                 });
 
                 scheduler_data.Add(calendar_events);
@@ -304,14 +304,20 @@ namespace FishingBooker.Controllers
             try
             {
                 var changedEvent = (CalendarEvent)DHXEventsHelper.Bind(typeof(CalendarEvent), actionValues);
-
+                
      
 
                 switch (action.Type)
                 {
                     case DataActionTypes.Insert:
-
-                        
+                        TimeSpan startTime = new TimeSpan(changedEvent.start_date.Hour, changedEvent.start_date.Minute, changedEvent.start_date.Second);
+                        TimeSpan endTime = new TimeSpan(changedEvent.end_date.Hour, changedEvent.end_date.Minute, changedEvent.end_date.Second);
+                        ScheduleCRUD.UpdateAvailability(1,
+                                                        changedEvent.start_date,
+                                                        startTime,
+                                                        changedEvent.end_date,
+                                                        endTime,
+                                                        User.Identity.GetUserId());
                         //return RedirectToAction("FillARecord", "Manage", new { clientsEmail = "clientsEmail@gmail.com"});
                         //do insert
                         //action.TargetId = changedEvent.id;//assign postoperational id

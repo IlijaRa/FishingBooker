@@ -35,6 +35,9 @@ namespace FishingBookerLibrary.BusinessLogic
                 EndTime = endtime,
                 ValidityPeriodDate = validitydate,
                 ValidityPeriodTime = validitytime,
+                dayOfWeek = Convert.ToInt32(startdate.DayOfWeek),
+                Month = startdate.Month,
+                Year = startdate.Year,
                 MaxNumberOfPeople = maxNum,
                 AdditionalServices = additionalServices,
                 Price = price,
@@ -46,8 +49,8 @@ namespace FishingBookerLibrary.BusinessLogic
                 InstructorId = instructorId
             };
 
-            string sql = @"INSERT INTO dbo.AdventureReservations (Place, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
-                           VALUES (@Place, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);";
+            string sql = @"INSERT INTO dbo.AdventureReservations (Place, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, dayOfWeek, Month, Year, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
+                           VALUES (@Place, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, dayOfWeek, Month, Year, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);";
 
             return SSMSDataAccess.SaveData(sql, data);
         }
@@ -299,6 +302,16 @@ namespace FishingBookerLibrary.BusinessLogic
 
             return SSMSDataAccess.LoadData<ShipReservation>(sql);
         }
+
+        //public static List<DayOfWeekIncome> LoadIncomePerDayOfWeek(int advId)
+        //{
+        //    string sql = @"SELECT dayOfWeek, SUM(Price)
+        //                   FROM AdventureReservations
+        //                   WHERE AdventureId = @AdventureId
+        //                   GROUP BY dayOfWeek";
+
+        //    return SSMSDataAccess.LoadIncomePerDayOfWeek<DayOfWeekIncome>(sql, advId);
+        //}
 
     }
 }

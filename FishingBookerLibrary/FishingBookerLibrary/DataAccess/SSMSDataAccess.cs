@@ -33,6 +33,14 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
+        public static T LoadLoyaltyProgram<T>(string sql, int loyaltyId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { Id = loyaltyId }).FirstOrDefault();
+            }
+        }
+
         public static int SaveData<T>(string sql, T data)
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
@@ -137,7 +145,7 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
-        public static List<T> LoadAdventureTitlesByInstructor<T>(string sql, string instructorId)
+        public static List<T> LoadAdventureByInstructorId<T>(string sql, string instructorId)
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
             {
@@ -222,6 +230,14 @@ namespace FishingBookerLibrary.DataAccess
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
             {
                 return cnn.Query<T>(sql, new { Title = shipTitle }).FirstOrDefault();
+            }
+        }
+
+        public static List<T> LoadIncomePerDayOfWeek<T>(string sql, int advId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { AdventureId = advId }).ToList();
             }
         }
     }

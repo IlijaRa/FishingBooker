@@ -15,6 +15,9 @@ namespace FishingBookerLibrary.Models
         public TimeSpan EndTime { get; set; }
         public DateTime ValidityPeriodDate { get; set; }
         public TimeSpan ValidityPeriodTime { get; set; }
+        public int dayOfWeek { get; set; }
+        public int Month { get; set; }
+        public int Year { get; set; }
         public int MaxNumberOfPeople { get; set; }
         public string AdditionalServices { get; set; }
         public decimal Price { get; set; }

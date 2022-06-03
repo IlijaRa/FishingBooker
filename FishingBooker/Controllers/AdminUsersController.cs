@@ -654,5 +654,61 @@ namespace FishingBooker.Controllers
             return RedirectToAction("ReadRevisions", "AdminUsers");
         }
 
+        public ActionResult LoyaltyProgram()
+        {
+            LoyaltyProgramViewModel model = new LoyaltyProgramViewModel();
+            var loyalty_program = LoyaltyProgramCRUD.LoadLoyaltyProgram(1);
+            loyalty_program.scales = LoyaltyProgramCRUD.LoadLoyaltyScales();
+
+            model.Id = loyalty_program.Id;
+            model.PointsAfterSuccResClient = loyalty_program.PointsAfterSuccResClient;
+            model.PointsAfterSuccResOwner = loyalty_program.PointsAfterSuccResOwner;
+
+            foreach (var scale in loyalty_program.scales)
+            {
+                model.scales.Add(new LoyaltyScaleViewModel { 
+                    Id = scale.Id,
+                    ScaleName = scale.ScaleName,
+                    ClientsBenefits = scale.ClientsBenefits,
+                    OwnerBenefits = scale.OwnerBenefits,
+                    MinEarnedPoints = scale.MinEarnedPoints
+                });
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveLoyaltyProgram(LoyaltyProgramViewModel model)
+        {
+            LoyaltyProgramCRUD.UpdateLoyaltyProgram(model.PointsAfterSuccResClient, model.PointsAfterSuccResOwner);
+            return RedirectToAction("LoyaltyProgram", "AdminUsers");
+
+            return View("Erorr");
+        }
+
+
+        [HttpGet]
+        public ActionResult CreateScale()
+        {
+            LoyaltyScaleViewModel model = new LoyaltyScaleViewModel();
+            model.LoyaltyProgramId = 1; // uvek ce biti ovaj id, jer ce postojati 1 program samo ce se azurirati itd...
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateScale(LoyaltyScaleViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                LoyaltyProgramCRUD.CreateScale(model.ScaleName, model.ClientsBenefits, model.OwnerBenefits, model.MinEarnedPoints);
+                return RedirectToAction("LoyaltyProgram", "AdminUsers");
+            }
+
+            return View();
+        }
+
     }
 }

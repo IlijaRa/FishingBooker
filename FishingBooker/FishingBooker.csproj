@@ -232,6 +232,8 @@
     <Compile Include="Models\IndexViewModels\ClientIndexViewModel.cs" />
     <Compile Include="Models\InstructorAvailabilityViewModel.cs" />
     <Compile Include="Models\InstructorScheduleViewModel.cs" />
+    <Compile Include="Models\LoyaltyProgramViewModel.cs" />
+    <Compile Include="Models\LoyaltyScaleViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RecordViewModel.cs" />
     <Compile Include="Models\RegUserViewModel.cs" />
@@ -572,6 +574,8 @@
     <Content Include="Views\Shared\DateAndTimeNotAllowed.cshtml" />
     <Content Include="Views\InstructorUsers\BusinessReport.cshtml" />
     <Content Include="Views\InstructorUsers\BusinessReportFilteredDate.cshtml" />
+    <Content Include="Views\AdminUsers\LoyaltyProgram.cshtml" />
+    <Content Include="Views\AdminUsers\CreateScale.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
