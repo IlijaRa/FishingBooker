@@ -98,6 +98,7 @@
     <Compile Include="Models\LoyaltyProgram.cs" />
     <Compile Include="Models\LoyaltyScale.cs" />
     <Compile Include="Models\MoneyFlow.cs" />
+    <Compile Include="Models\OwnersUnavailability.cs" />
     <Compile Include="Models\Record.cs" />
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\FishingInstructor.cs" />
