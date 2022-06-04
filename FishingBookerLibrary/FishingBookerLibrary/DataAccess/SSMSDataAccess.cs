@@ -33,6 +33,14 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
+        public static T LoadUserById<T>(string sql, string userId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { Id = userId }).FirstOrDefault();
+            }
+        }
+
         public static T LoadLoyaltyProgram<T>(string sql, int loyaltyId)
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))

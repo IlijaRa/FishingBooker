@@ -166,6 +166,15 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
+        public static RegUser LoadUserById(string userId)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.RegUsers
+                            WHERE Id = @Id;";
+
+            return SSMSDataAccess.LoadUserById<RegUser>(sql, userId);
+        }
+
         public static InstructorAvailability LoadInstructorsAvailability(string instructorsId)
         {
             string sql = @"SELECT *

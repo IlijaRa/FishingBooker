@@ -29,9 +29,9 @@ namespace FishingBookerLibrary.BusinessLogic
         }
 
         public static int CreateScale(string scaleName,
-                                      decimal clientsBenefits,
-                                      decimal ownerBenefits,
-                                      decimal minEarnedPoints)
+                                      float clientsBenefits,
+                                      float ownerBenefits,
+                                      float minEarnedPoints)
         {
             LoyaltyScale data = new LoyaltyScale
             {
@@ -62,7 +62,8 @@ namespace FishingBookerLibrary.BusinessLogic
                            FROM dbo.LoyaltyScale;";
 
             return SSMSDataAccess.LoadData<LoyaltyScale>(sql);
-        }
 
+
+        }
     }
 }
