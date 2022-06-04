@@ -40,10 +40,12 @@ namespace FishingBooker.Controllers
              * The default codebase folder is ~/Scripts/dhtmlxScheduler. It can be overriden:
              *      scheduler.Codebase = Url.Content("~/customCodebaseFolder");
              */
-            
- 
-            scheduler.InitialDate = DateTime.Now;
 
+            scheduler.Skin = DHXScheduler.Skins.Terrace;
+            //scheduler.Config.multi_day = true;//render multiday events
+            scheduler.InitialDate = DateTime.Now;
+            scheduler.Views.Items.RemoveAt(2);
+            scheduler.Views.Add(new YearView());
             scheduler.LoadData = true;
             scheduler.EnableDataprocessor = true;
 
