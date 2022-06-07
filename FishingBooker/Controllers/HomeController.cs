@@ -61,6 +61,8 @@ namespace FishingBooker.Controllers
         }
         public ActionResult ClientIndex()
         {
+            var sum_current = 0.0;
+            var sum_history = 0.0;
             ClientIndexViewModel model = new ClientIndexViewModel();
             var data_adventure_reservations = ReservationCRUD.LoadAdventureReservationsByClient(User.Identity.GetUserName());
             var data_cottage_reservations = ReservationCRUD.LoadCottageReservationsByClient(User.Identity.GetUserName());
@@ -68,7 +70,19 @@ namespace FishingBooker.Controllers
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistoryByClientsEmailAddress(User.Identity.GetUserName());
             List<ReservationToShowViewModel> fut_reservations = new List<ReservationToShowViewModel>();
             List<ReservationFromHistoryViewModel> his_reservations = new List<ReservationFromHistoryViewModel>();
-            
+            var data_client = RegUserCRUD.LoadUserById(User.Identity.GetUserId());
+            var loyalty_scales = LoyaltyProgramCRUD.LoadLoyaltyScales();
+            float benefits = 0;
+
+            foreach (var scale in loyalty_scales)
+            {
+                if (scale.MinEarnedPoints <= data_client.TotalScalePoints)
+                {
+                    benefits = scale.OwnerBenefits;
+                }
+            }
+
+
             foreach (var reservation in data_adventure_reservations)
             {
                 fut_reservations.Add(new ReservationToShowViewModel
@@ -80,9 +94,12 @@ namespace FishingBooker.Controllers
                     StartTime = reservation.StartTime.ToString(),
                     EndDate = reservation.EndDate,
                     EndTime = reservation.EndTime.ToString(),
-                    Price = reservation.Price
+                    Price = reservation.Price,
+                    ScaledPrice = Convert.ToDouble(reservation.Price) - (Convert.ToDouble(reservation.Price) * (benefits / 100)),
                 });
+                sum_current += Convert.ToDouble(reservation.Price);
             }
+
 
             foreach (var reservation in data_cottage_reservations)
             {
@@ -95,8 +112,10 @@ namespace FishingBooker.Controllers
                     StartTime = reservation.StartTime.ToString(),
                     EndDate = reservation.EndDate,
                     EndTime = reservation.EndTime.ToString(),
-                    Price = reservation.Price
+                    Price = reservation.Price,
+                    ScaledPrice = Convert.ToDouble(reservation.Price) - (Convert.ToDouble(reservation.Price) * (benefits / 100)),
                 });
+                sum_current += Convert.ToDouble(reservation.Price);
             }
 
             foreach (var reservation in data_ship_reservations)
@@ -110,13 +129,19 @@ namespace FishingBooker.Controllers
                     StartTime = reservation.StartTime.ToString(),
                     EndDate = reservation.EndDate,
                     EndTime = reservation.EndTime.ToString(),
-                    Price = reservation.Price
+                    Price = reservation.Price,
+                    ScaledPrice = Convert.ToDouble(reservation.Price) - (Convert.ToDouble(reservation.Price) * (benefits / 100)),
                 });
+                sum_current += Convert.ToDouble(reservation.Price);
+
             }
+
+            model.FutureOutcomes = sum_current - (sum_current * (benefits / 100));
 
             foreach (var reservation in data_history_reservations)
             {
-                his_reservations.Add(new ReservationFromHistoryViewModel { 
+                his_reservations.Add(new ReservationFromHistoryViewModel
+                {
                     Id = reservation.Id,
                     ClientsEmailAddress = reservation.ClientsEmailAddress,
                     ActionTitle = reservation.ActionTitle,
@@ -125,9 +150,14 @@ namespace FishingBooker.Controllers
                     EndDate = reservation.EndDate,
                     EndTime = reservation.EndTime.ToString(),
                     Price = reservation.Price,
+                    ScaledPrice = Convert.ToDouble(reservation.Price) - (Convert.ToDouble(reservation.Price) * (benefits / 100)),
                     OwnerId = reservation.OwnerId
                 });
+                sum_history += Convert.ToDouble(reservation.Price);
             }
+
+            model.HistoryOutcomes = sum_history - (sum_history * (benefits / 100));
+
             model.future_reservations = fut_reservations;
             model.history_reservations = his_reservations;
             return View(model);

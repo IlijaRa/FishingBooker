@@ -153,6 +153,13 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
+        public static List<T> LoadImagesByAdventureId<T>(string sql, int adventureId)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { AdventureId = adventureId }).ToList();
+            }
+        }
 
         public static T LoadRevisionByEmailsAndTitle<T>(string sql, T clientsEmail, T entityTitle, T ownersEmail)
         {

@@ -122,7 +122,7 @@
     <td>
         @Html.ActionLink("Edit", "EditAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null) |
 
-        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+        @Html.ActionLink("Details", "AdventureDetails", "InstructorUsers", new { advId = @item.AdventureId }, null) |
 
         @Html.ActionLink("Delete", "DeleteAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null) |
 

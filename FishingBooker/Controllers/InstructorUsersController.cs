@@ -147,7 +147,7 @@ namespace FishingBooker.Controllers
                     string[] address = rowa.Address.Split(',');
                     ViewData["MapSource"] = CalculateMapSource(rowa.Address);
 
-                    edit_adventure.adventure.AdventureId = rowa.Id;
+                    edit_adventure.adventure.AdventureId = advId;
                     edit_adventure.adventure.Title = rowa.Title;
                     edit_adventure.adventure.Street = address[0];
                     edit_adventure.adventure.AddressNumber = address[1];
@@ -186,6 +186,8 @@ namespace FishingBooker.Controllers
                     });
                 }
             }
+
+            edit_adventure.image.AdventureId = advId;
 
             edit_adventure.fast_reservations = fast_reservations_list;
 
@@ -250,6 +252,51 @@ namespace FishingBooker.Controllers
 
             return RedirectToAction("ViewAdventures");
         }
+
+        public ActionResult AddImage()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddImage(EditAdventureViewModel model, HttpPostedFileBase image1)
+        {
+            if (image1 != null)
+            {
+                model.image.image = new byte[image1.ContentLength];
+                image1.InputStream.Read(model.image.image, 0, image1.ContentLength);
+                ImageCRUD.SubmitImage(model.image.image, model.image.AdventureId);
+            }
+            else
+                return View("ImageSubmitError");
+
+            return RedirectToAction("EditAdventure", "InstructorUsers", new { advId = model.image.AdventureId });
+        }
+
+        public ActionResult AdventureDetails(int advId)
+        {
+            AdventureViewModel model = new AdventureViewModel();
+            var adventure = AdventureCRUD.LoadAdventureById(advId);
+            string[] address = adventure.Address.Split(',');
+            model.AdventureId = advId;
+            model.Title = adventure.Title;
+            model.Street = address[0];
+            model.AddressNumber = address[1];
+            model.City = address[2];
+            model.PromotionDescription = adventure.PromotionDescription;
+            model.BehaviourRules = adventure.BehaviourRules;
+            model.AdditionalServices = adventure.AdditionalServices;
+            model.Pricelist = adventure.Pricelist;
+            model.Price = adventure.Price;
+            model.MaxNumberOfPeople = adventure.MaxNumberOfPeople;
+            model.FishingEquipment = adventure.FishingEquipment;
+            model.CancellationPolicy = adventure.CancellationPolicy;
+            model.images = ImageCRUD.LoadImagesByAdventureId(advId);
+
+            return View(model);
+        }
+
 
         public ActionResult CreateReservation(int AdventureId)
         {
@@ -445,11 +492,14 @@ namespace FishingBooker.Controllers
 
         public ActionResult BusinessReport(int advId)
         {
-            var sum = 0.0;
+            var sum_current = 0.0;
+            var sum_history = 0.0;
             int count = 0;
             BusinessReportViewModel model = new BusinessReportViewModel();
-            List<ReservationToShowViewModel> reservations_to_show = new List<ReservationToShowViewModel>();
+            List<ReservationToShowViewModel> current_reservations_to_show = new List<ReservationToShowViewModel>();
+            List<ReservationToShowViewModel> history_reservations_to_show = new List<ReservationToShowViewModel>();
             var data_instructor_revisions = RevisionCRUD.LoadConfirmedRevisionsForInstructor(User.Identity.GetUserName());
+            var data_instructor_current_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
             var data_instructor_history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
             var data_adventure = AdventureCRUD.LoadAdventureById(advId);
             var data_instructor = RegUserCRUD.LoadUserById(User.Identity.GetUserId());
@@ -464,23 +514,51 @@ namespace FishingBooker.Controllers
                 }
             }
 
-            foreach (var revision in data_instructor_revisions)
+            model.AdventureId = advId;
+            model.AverageRate = data_adventure.Rating;
+
+            //foreach (var revision in data_instructor_revisions)
+            //{
+            //    if (revision.EntityTitle.Equals(data_adventure.Title))
+            //    {
+            //        sum += revision.ActionRating;
+            //        count++;
+            //    }
+            //}
+
+            //model.AverageRate = sum / count;
+            //sum_current = 0.0;
+            //sum_history = 0.0;
+            //count = 0;
+
+            // racuna samo income za rezervacije koje su trenutne
+            foreach (var reservation in data_instructor_current_reservations)
             {
-                if (revision.EntityTitle.Equals(data_adventure.Title))
+                if (reservation.Place.Equals(data_adventure.Title))
                 {
-                    sum += revision.ActionRating;
-                    count++;
+                    current_reservations_to_show.Add(new ReservationToShowViewModel
+                    {
+                        Id = reservation.Id,
+                        ClientsEmailAddress = reservation.ClientsEmailAddress,
+                        ActionTitle = reservation.Place,
+                        StartDate = reservation.StartDate,
+                        StartTime = reservation.StartTime.ToString(),
+                        EndDate = reservation.EndDate,
+                        EndTime = reservation.EndTime.ToString(),
+                        Price = reservation.Price,
+                        OwnerId = reservation.InstructorId
+                    });
+                    sum_current += Convert.ToDouble(reservation.Price);
                 }
             }
-            model.AdventureId = advId;
-            model.AverageRate = sum / count;
-            sum = 0;
-            count = 0;
+            model.current_reservations = current_reservations_to_show;
+            model.Income = sum_current + (sum_current * (benefits / 100));
+
             // racuna samo income za rezervacije koje su prosle
             foreach (var reservation in data_instructor_history_reservations)
             {
                 if (reservation.ActionTitle.Equals(data_adventure.Title)) {
-                    reservations_to_show.Add(new ReservationToShowViewModel
+                    history_reservations_to_show.Add(new ReservationToShowViewModel
                     {
                         Id = reservation.Id,
                         ClientsEmailAddress = reservation.ClientsEmailAddress,
@@ -492,21 +570,25 @@ namespace FishingBooker.Controllers
                         Price = reservation.Price,
                         OwnerId = reservation.OwnerId
                     });
-                    sum += Convert.ToDouble(reservation.Price);
+                    sum_history += Convert.ToDouble(reservation.Price);
                 }
             }
-            model.reservations = reservations_to_show;
-            model.Income = sum + (sum*(benefits/100));
+
+            model.reservations = history_reservations_to_show;
+            model.Income += sum_history + (sum_history * (benefits/100));
             return View(model);
         }
 
         public ActionResult BusinessReportFilteredDate(BusinessReportViewModel filter_model)
         {
-            var sum = 0.0;
+            var sum_current = 0.0;
+            var sum_history = 0.0;
             int count = 0;
             BusinessReportViewModel model = new BusinessReportViewModel();
-            List<ReservationToShowViewModel> reservations_to_show = new List<ReservationToShowViewModel>();
+            List<ReservationToShowViewModel> current_reservations_to_show = new List<ReservationToShowViewModel>();
+            List<ReservationToShowViewModel> history_reservations_to_show = new List<ReservationToShowViewModel>();
             var data_instructor_revisions = RevisionCRUD.LoadConfirmedRevisionsForInstructor(User.Identity.GetUserName());
+            var data_instructor_current_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
             var data_instructor_history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
             var data_adventure = AdventureCRUD.LoadAdventureById(filter_model.AdventureId);
             var data_instructor = RegUserCRUD.LoadUserById(User.Identity.GetUserId());
@@ -520,25 +602,49 @@ namespace FishingBooker.Controllers
                     benefits = scale.OwnerBenefits;
                 }
             }
+            model.AdventureId = filter_model.AdventureId;
+            model.AverageRate = data_adventure.Rating;
 
-            foreach (var revision in data_instructor_revisions)
+            //foreach (var revision in data_instructor_revisions)
+            //{
+            //    if (revision.EntityTitle.Equals(data_adventure.Title))
+            //    {
+            //        sum += revision.ActionRating;
+            //        count++;
+            //    }
+            //}
+
+            //model.AverageRate = sum / count;
+
+            // racuna samo income za rezervacije koje su trenutne
+            foreach (var reservation in data_instructor_current_reservations)
             {
-                if (revision.EntityTitle.Equals(data_adventure.Title))
+                if ((reservation.Place.Equals(data_adventure.Title)) && (filter_model.FromDate <= reservation.StartDate && reservation.EndDate <= filter_model.ToDate))
                 {
-                    sum += revision.ActionRating;
-                    count++;
+                    current_reservations_to_show.Add(new ReservationToShowViewModel
+                    {
+                        Id = reservation.Id,
+                        ClientsEmailAddress = reservation.ClientsEmailAddress,
+                        ActionTitle = reservation.Place,
+                        StartDate = reservation.StartDate,
+                        StartTime = reservation.StartTime.ToString(),
+                        EndDate = reservation.EndDate,
+                        EndTime = reservation.EndTime.ToString(),
+                        Price = reservation.Price,
+                        OwnerId = reservation.InstructorId
+                    });
+                    sum_current += Convert.ToDouble(reservation.Price);
                 }
             }
+            model.current_reservations = current_reservations_to_show;
+            model.Income = sum_current + (sum_current * (benefits / 100));
 
-            model.AdventureId = filter_model.AdventureId;
-            model.AverageRate = sum / count;
-            sum = 0;
-            count = 0;
+
             foreach (var reservation in data_instructor_history_reservations)
             {
                 if ((reservation.ActionTitle.Equals(data_adventure.Title)) && (filter_model.FromDate <= reservation.StartDate && reservation.EndDate <= filter_model.ToDate))
                 {
-                    reservations_to_show.Add(new ReservationToShowViewModel
+                    history_reservations_to_show.Add(new ReservationToShowViewModel
                     {
                         Id = reservation.Id,
                         ClientsEmailAddress = reservation.ClientsEmailAddress,
@@ -550,11 +656,11 @@ namespace FishingBooker.Controllers
                         Price = reservation.Price,
                         OwnerId = reservation.OwnerId
                     });
-                    sum += Convert.ToDouble(reservation.Price);
+                    sum_history += Convert.ToDouble(reservation.Price);
                 }
             }
-            model.reservations = reservations_to_show;
-            model.Income = sum + (sum * (benefits / 100));
+            model.reservations = history_reservations_to_show;
+            model.Income += sum_history + (sum_history * (benefits / 100));
             return View(model);
         }
 

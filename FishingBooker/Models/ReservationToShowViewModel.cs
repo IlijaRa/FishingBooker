@@ -70,9 +70,14 @@ namespace FishingBooker.Models
         public string ValidityPeriodTime { get; set; }
 
 
-        [Display(Name = "Price*")]
+        [Display(Name = "Full Price*")]
         [Required(ErrorMessage = "You need to enter a price.")]
         public decimal Price { get; set; }
+
+
+        [Display(Name = "Scaled Price*")]
+        [Required(ErrorMessage = "You need to enter a price.")]
+        public double ScaledPrice { get; set; }
 
 
         public string OwnerId { get; set; }

@@ -12,7 +12,10 @@ namespace FishingBooker.Models
 
 
         [Display(Name = "Average rate")]
-        public double AverageRate { get; set; }
+        public float AverageRate { get; set; }
+
+
+        public IEnumerable<ReservationToShowViewModel> current_reservations { get; set; }
 
 
         public IEnumerable<ReservationToShowViewModel> reservations { get; set; }

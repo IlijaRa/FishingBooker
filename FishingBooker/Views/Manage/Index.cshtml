@@ -74,6 +74,19 @@
         </dd>
     }
 
+    @if (User.IsInRole("ValidFishingInstructor") || User.IsInRole("ValidCottageOwner") || User.IsInRole("ValidShipOwner") || User.IsInRole("ValidClient"))
+    {
+        <dd>
+            <div class="form-group">
+                @Html.LabelFor(model => model.LoyaltyClassMember, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LoyaltyClassMember, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.LoyaltyClassMember, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </dd>
+    }
+
     <h4>Change your account settings</h4>
     <dl class="dl-horizontal">
         <dt>Your info:</dt>

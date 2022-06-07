@@ -16,6 +16,7 @@
         <th>End date</th>
         <th>End date</th>
         <th>Price</th>
+        <th>Scaled price</th>
         @*<th>OwnerId</th>*@
     </tr>
 
@@ -46,9 +47,18 @@
             <th>
                 @Html.DisplayFor(model => item.Price)
             </th>
+            <th>
+                @Html.DisplayFor(model => item.ScaledPrice)
+            </th>
         </tr>
     }
-
+    <div class="form-group">
+        @Html.LabelFor(model => model.FutureOutcomes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FutureOutcomes, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.FutureOutcomes, "", new { @class = "text-danger" })
+        </div>
+    </div>
 </table>
 
 
@@ -63,6 +73,7 @@
             <th>End date</th>
             <th>End date</th>
             <th>Price</th>
+            <th>Scaled price</th>
             @*<th>OwnerId</th>*@
         </tr>
 
@@ -70,11 +81,11 @@
         {
             <tr>
                 @*<th>
-                        @Html.DisplayFor(model => item.Id)
-                    </th>*@
+                    @Html.DisplayFor(model => item.Id)
+                </th>*@
                 @*<th>
-                        @Html.DisplayFor(model => item.ClientsEmailAddress)
-                    </th>*@
+                    @Html.DisplayFor(model => item.ClientsEmailAddress)
+                </th>*@
                 <th>
                     @Html.DisplayFor(model => item.ActionTitle)
                 </th>
@@ -93,9 +104,9 @@
                 <th>
                     @Html.DisplayFor(model => item.Price)
                 </th>
-                @*<th>
-                        @Html.DisplayFor(model => item.OwnerId)
-                    </th>*@
+                <th>
+                    @Html.DisplayFor(model => item.ScaledPrice)
+                </th>
                 <td>
                     @Html.ActionLink("Add revision",
                     "AddRevision",
@@ -109,5 +120,13 @@
                 </td>
             </tr>
         }
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HistoryOutcomes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HistoryOutcomes, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.HistoryOutcomes, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
     </table>

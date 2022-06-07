@@ -16,8 +16,8 @@ namespace FishingBookerLibrary.Models
         public string EntityTitle { get; set; }
         public string OwnersEmailAddress { get; set; }
         public string Description { get; set; }
-        public int ActionRating { get; set; }
-        public int OwnerInstructorRating { get; set; }
+        public float ActionRating { get; set; }
+        public float OwnerInstructorRating { get; set; }
         public bool State { get; set; }
     }
 }

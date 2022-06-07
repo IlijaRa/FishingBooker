@@ -16,8 +16,8 @@ namespace FishingBookerLibrary.Models
         public string Address { get; set; }
         public string PromotionDescription { get; set; }
         public float Rating { get; set; }
-        public int RatingSum { get; set; }
-        public int RatingCount { get; set; }
+        public float RatingSum { get; set; }
+        public float RatingCount { get; set; }
         public string BehaviourRules { get; set; }
         public string AdditionalServices { get; set; }
         public string Pricelist { get; set; }

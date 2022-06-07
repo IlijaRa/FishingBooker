@@ -81,7 +81,7 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
-        public static int UpdateRating(int adventureId, float rating, int ratingSum, int ratingCount)
+        public static int UpdateRating(int adventureId, float rating, float ratingSum, float ratingCount)
         {
 
             Adventure data = new Adventure

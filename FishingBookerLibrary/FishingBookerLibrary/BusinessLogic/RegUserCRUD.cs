@@ -100,7 +100,7 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
-        public static int UpdateRating(string userId, float rating, int ratingSum, int ratingCount)
+        public static int UpdateRating(string userId, float rating, float ratingSum, float ratingCount)
         {
 
             RegUser data = new RegUser

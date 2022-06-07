@@ -44,6 +44,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
@@ -74,6 +75,7 @@
     <Compile Include="BusinessLogic\ClientComplaintCRUD.cs" />
     <Compile Include="BusinessLogic\CottageCRUD.cs" />
     <Compile Include="BusinessLogic\DeactivationRequestCRUD.cs" />
+    <Compile Include="BusinessLogic\ImageCRUD.cs" />
     <Compile Include="BusinessLogic\LoyaltyProgramCRUD.cs" />
     <Compile Include="BusinessLogic\MoneyFlowCRUD.cs" />
     <Compile Include="BusinessLogic\RecordCRUD.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Models\DeletionRequest.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\LoyaltyProgram.cs" />
     <Compile Include="Models\LoyaltyScale.cs" />
     <Compile Include="Models\MoneyFlow.cs" />

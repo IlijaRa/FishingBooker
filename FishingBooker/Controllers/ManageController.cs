@@ -86,8 +86,18 @@ namespace FishingBooker.Controllers
             {
                 totalIncome = totalIncome + (ship.Price * percentage);
             }
-
             var userId = User.Identity.GetUserId();
+            var data_instructor = RegUserCRUD.LoadUserById(userId);
+            var loyalty_scales = LoyaltyProgramCRUD.LoadLoyaltyScales();
+            string loyaltyClass = "";
+            foreach (var scale in loyalty_scales)
+            {
+                if (scale.MinEarnedPoints <= data_instructor.TotalScalePoints)
+                {
+                    loyaltyClass = scale.ScaleName;
+                }
+            }
+            
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -95,6 +105,7 @@ namespace FishingBooker.Controllers
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                LoyaltyClassMember = loyaltyClass,
                 Percentage = percentage*100,
                 TotalIncome = totalIncome
             };

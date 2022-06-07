@@ -19,6 +19,9 @@ namespace FishingBooker.Models
                                                 // 
         [Display(Name = "Total income")]
         public decimal TotalIncome { get; set; }// koristi samo admin  
+
+        [Display(Name = "Loyalty class member")]
+        public string LoyaltyClassMember { get; set; }
     }
 
     public class ManageLoginsViewModel

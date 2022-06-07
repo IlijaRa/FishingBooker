@@ -576,6 +576,8 @@
     <Content Include="Views\InstructorUsers\BusinessReportFilteredDate.cshtml" />
     <Content Include="Views\AdminUsers\LoyaltyProgram.cshtml" />
     <Content Include="Views\AdminUsers\CreateScale.cshtml" />
+    <Content Include="Views\Shared\ImageSubmitError.cshtml" />
+    <Content Include="Views\InstructorUsers\AdventureDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

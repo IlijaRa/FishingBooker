@@ -24,8 +24,8 @@ namespace FishingBookerLibrary.Models
         public float TotalScalePoints { get; set; }
         public string Status { get; set; } = "Waiting";
         public float Rating { get; set; }
-        public int RatingSum { get; set; }
-        public int RatingCount { get; set; }
+        public float RatingSum { get; set; }
+        public float RatingCount { get; set; }
         public int Penalties { get; set; } = 0;
     }
 }

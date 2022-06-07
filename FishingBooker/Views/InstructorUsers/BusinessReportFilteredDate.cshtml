@@ -96,7 +96,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FromDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FromDate, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.EditorFor(model => model.FromDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -104,7 +104,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ToDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ToDate, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.EditorFor(model => model.ToDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -115,6 +115,64 @@
             </div>
         </div>
     }
+
+    <h2>Current reservations</h2>
+
+    <table class="table">
+        <tr>
+            @*<th>Id</th>*@
+            <th>Clients email address</th>
+            @*<th>Action title</th>*@
+            <th>Start date</th>
+            <th>Start time</th>
+            <th>End date</th>
+            <th>End time</th>
+            <th>Price</th>
+            @*<th>Owner id</th>*@
+        </tr>
+        @foreach (var item in Model.current_reservations)
+        {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.AdventureId)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClientsEmailAddress)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.ActionTitle)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                @*<td>
+                        @Html.ActionLink("Edit", "EditAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null) |
+
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+
+                        @Html.ActionLink("Delete", "DeleteAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null) |
+
+                        @Html.ActionLink("Business report", "BusinessReport", "InstructorUsers")
+                    </td>*@
+            </tr>
+        }
+
+    </table>
+
+    <h2>History reservations</h2>
+
 
     <table class="table">
         <tr>

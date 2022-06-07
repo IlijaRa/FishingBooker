@@ -14,8 +14,8 @@ namespace FishingBookerLibrary.BusinessLogic
                                          string entityTitle,
                                          string ownersEmailAddress,
                                          string description,
-                                         int actionRating,
-                                         int ownerInstructorRating)
+                                         float actionRating,
+                                         float ownerInstructorRating)
         {
             Revision data = new Revision
             {

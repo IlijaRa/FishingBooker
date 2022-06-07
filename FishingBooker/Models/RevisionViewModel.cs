@@ -40,14 +40,14 @@ namespace FishingBooker.Models
         [RegularExpression("([0-9][0-9]?)")]
         [Display(Name = "Action rating")]
         [Required(ErrorMessage = "You need to rate.")]
-        public int ActionRating { get; set; }
+        public float ActionRating { get; set; }
 
 
         [Range(1, 10, ErrorMessage = "Rate need to be between 1-10.")]
         [RegularExpression("([0-9][0-9]?)")]
         [Display(Name = "Owner/instructor rating")]
         [Required(ErrorMessage = "You need to rate.")]
-        public int OwnerInstructorRating { get; set; }
+        public float OwnerInstructorRating { get; set; }
         public bool State { get; set; }
     }
 }
