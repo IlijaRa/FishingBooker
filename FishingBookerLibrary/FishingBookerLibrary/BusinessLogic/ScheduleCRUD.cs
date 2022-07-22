@@ -10,6 +10,27 @@ namespace FishingBookerLibrary.BusinessLogic
 {
     public class ScheduleCRUD
     {
+        public static int CreateOwnerAvailabilityForStandardReservation(DateTime fromDate,
+                                                TimeSpan fromTime,
+                                                DateTime toDate,
+                                                TimeSpan toTime,
+                                                string instructorId)
+        {
+
+            OwnerAvailabilityForStandardReservation data = new OwnerAvailabilityForStandardReservation
+            {
+                FromDate = fromDate,
+                FromTime = fromTime,
+                ToDate = toDate,
+                ToTime = toTime,
+                InstructorId = instructorId
+            };
+            string sql = @" INSERT INTO dbo.OwnerAvailabilityStandardReservations(FromDate, FromTime, ToDate, ToTime, InstructorId)  
+                            VALUES (@FromDate, @FromTime, @ToDate, @ToTime, @InstructorId);";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
         public static int CreateUnavailability(DateTime fromDate,
                                                 TimeSpan fromTime,
                                                 DateTime toDate,
@@ -30,6 +51,30 @@ namespace FishingBookerLibrary.BusinessLogic
 
             return SSMSDataAccess.SaveData(sql, data);
         }
+
+
+        public static int UpdateOwnerAvailabilityForStandardReservation(DateTime fromDate,
+                                                                        TimeSpan fromTime,
+                                                                        DateTime toDate,
+                                                                        TimeSpan toTime,
+                                                                        string instructorId)
+        {
+
+            OwnerAvailabilityForStandardReservation data = new OwnerAvailabilityForStandardReservation
+            {
+                FromDate = fromDate,
+                FromTime = fromTime,
+                ToDate = toDate,
+                ToTime = toTime,
+                InstructorId = instructorId
+            };
+            string sql = @" UPDATE dbo.OwnerAvailabilityStandardReservations
+                            SET FromDate = @FromDate, FromTime = @FromTime, ToDate = @ToDate, ToTime = @ToTime  
+                            WHERE InstructorId = @InstructorId;";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
 
         public static int UpdateAvailability(   int id,
                                                 DateTime fromDate,
@@ -54,13 +99,37 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
-        public static InstructorAvailability LoadInstructorAvailability(string instructorId)
+        public static InstructorAvailability LoadOwnerAvailabilityForStandardReservation(string instructorId)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.OwnerAvailabilityStandardReservations
+                            WHERE InstructorId = @InstructorId;";
+            return SSMSDataAccess.LoadInstructorsAvailability<InstructorAvailability>(sql, instructorId);
+        }
+
+        public static InstructorAvailability LoadInstructorsAvailability(string instructorsId)
         {
             string sql = @"SELECT *
                             FROM dbo.InstructorsAvailabilities
                             WHERE InstructorId = @InstructorId;";
-            return SSMSDataAccess.LoadInstructorsAvailability<InstructorAvailability>(sql, instructorId);
+            return SSMSDataAccess.LoadInstructorsAvailability<InstructorAvailability>(sql, instructorsId);
         }
+
+        public static List<InstructorAvailability> LoadAvailabilities()
+        {
+            string sql = @"SELECT *
+                           FROM dbo.InstructorsAvailabilities;";
+
+            return SSMSDataAccess.LoadData<InstructorAvailability>(sql);
+        }
+
+        //public static InstructorAvailability LoadInstructorAvailability(string instructorId)
+        //{
+        //    string sql = @"SELECT *
+        //                    FROM dbo.InstructorsAvailabilities
+        //                    WHERE InstructorId = @InstructorId;";
+        //    return SSMSDataAccess.LoadInstructorsAvailability<InstructorAvailability>(sql, instructorId);
+        //}
 
         public static List<OwnersUnavailability> LoadOwnerUnavailability(string ownerId)
         {

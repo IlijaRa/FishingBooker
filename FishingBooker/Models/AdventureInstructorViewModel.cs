@@ -53,9 +53,9 @@ namespace FishingBooker.Models
         public string Pricelist { get; set; }
 
 
-        [Display(Name = "Price*")]
-        [Required(ErrorMessage = "You need to enter a price.")]
-        public decimal Price { get; set; }
+        //[Display(Name = "Price*")]
+        //[Required(ErrorMessage = "You need to enter a price.")]
+        //public decimal Price { get; set; }
 
 
         [RegularExpression("([0-9]+)")]

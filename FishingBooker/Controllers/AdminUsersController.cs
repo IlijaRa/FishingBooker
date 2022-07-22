@@ -137,6 +137,8 @@ namespace FishingBooker.Controllers
                 UserRoleCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidShipOwner);
             else if(type.Equals("Administrator"))
                 UserRoleCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.InvalidAdmin);
+            else if (type.Equals("Client"))
+                UserRoleCRUD.SetRoleInDB(id, Enums.RegistrationTypeInDB.ValidClient);
 
             return RedirectToAction("InvalidUsers", "AdminUsers");
         }
@@ -331,7 +333,7 @@ namespace FishingBooker.Controllers
                             BehaviourRules = row.BehaviourRules,
                             AdditionalServices = row.AdditionalServices,
                             Pricelist = row.Pricelist,
-                            Price = row.Price,
+                            //Price = row.Price,
                             MaxNumberOfPeople = row.MaxNumberOfPeople,
                             FishingEquipment = row.FishingEquipment,
                             CancellationPolicy = row.CancellationPolicy

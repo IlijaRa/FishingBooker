@@ -50,7 +50,7 @@ namespace FishingBookerLibrary.BusinessLogic
             };
 
             string sql = @"INSERT INTO dbo.AdventureReservations (Place, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, dayOfWeek, Month, Year, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
-                           VALUES (@Place, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, dayOfWeek, Month, Year, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);";
+                           VALUES (@Place, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, @dayOfWeek, @Month, @Year, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);";
 
             return SSMSDataAccess.SaveData(sql, data);
         }
@@ -174,6 +174,14 @@ namespace FishingBookerLibrary.BusinessLogic
             string sql = @"SELECT *
                             FROM dbo.AdventureReservations
                             WHERE InstructorId = @InstructorId;";
+            return SSMSDataAccess.LoadAdventureReservationsByInstructorId<AdventureReservation>(sql, instructorId);
+        }
+
+        public static List<AdventureReservation> LoadReservedAdventureReservationByInstructorId(string instructorId)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.AdventureReservations
+                            WHERE InstructorId = @InstructorId AND IsReserved = 'True';";
             return SSMSDataAccess.LoadAdventureReservationsByInstructorId<AdventureReservation>(sql, instructorId);
         }
 

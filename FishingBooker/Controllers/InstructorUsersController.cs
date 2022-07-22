@@ -40,7 +40,7 @@ namespace FishingBooker.Controllers
                                                model.BehaviourRules,
                                                model.AdditionalServices,
                                                model.Pricelist,
-                                               model.Price,
+                                               //model.Price,
                                                model.MaxNumberOfPeople,
                                                model.FishingEquipment,
                                                model.CancellationPolicy,
@@ -75,7 +75,7 @@ namespace FishingBooker.Controllers
                         BehaviourRules = row.BehaviourRules,
                         AdditionalServices = row.AdditionalServices,
                         Pricelist = row.Pricelist,
-                        Price = row.Price,
+                        //Price = row.Price,
                         MaxNumberOfPeople = row.MaxNumberOfPeople,
                         FishingEquipment = row.FishingEquipment,
                         CancellationPolicy = row.CancellationPolicy
@@ -104,7 +104,7 @@ namespace FishingBooker.Controllers
                         address[1].ToLower().Contains(searching) ||
                         address[2].ToLower().Contains(searching) ||
                         adventure.PromotionDescription.ToLower().Contains(searching) ||
-                        adventure.Price == result ||
+                        //adventure.Price == result ||
                         adventure.MaxNumberOfPeople == result)
                     {
                         found_adventures.Add(new AdventureViewModel
@@ -118,7 +118,7 @@ namespace FishingBooker.Controllers
                             BehaviourRules = adventure.BehaviourRules,
                             AdditionalServices = adventure.AdditionalServices,
                             Pricelist = adventure.Pricelist,
-                            Price = adventure.Price,
+                            //Price = adventure.Price,
                             MaxNumberOfPeople = adventure.MaxNumberOfPeople,
                             FishingEquipment = adventure.FishingEquipment,
                             CancellationPolicy = adventure.CancellationPolicy
@@ -156,7 +156,7 @@ namespace FishingBooker.Controllers
                     edit_adventure.adventure.BehaviourRules = rowa.BehaviourRules;
                     edit_adventure.adventure.AdditionalServices = rowa.AdditionalServices;
                     edit_adventure.adventure.Pricelist = rowa.Pricelist;
-                    edit_adventure.adventure.Price = rowa.Price;
+                    //edit_adventure.adventure.Price = rowa.Price;
                     edit_adventure.adventure.MaxNumberOfPeople = rowa.MaxNumberOfPeople;
                     edit_adventure.adventure.FishingEquipment = rowa.FishingEquipment;
                     edit_adventure.adventure.CancellationPolicy = rowa.CancellationPolicy;
@@ -235,7 +235,7 @@ namespace FishingBooker.Controllers
                                             model.adventure.BehaviourRules,
                                             model.adventure.AdditionalServices,
                                             model.adventure.Pricelist,
-                                            model.adventure.Price,
+                                            //model.adventure.Price,
                                             model.adventure.MaxNumberOfPeople,
                                             model.adventure.FishingEquipment,
                                             model.adventure.CancellationPolicy);
@@ -288,7 +288,7 @@ namespace FishingBooker.Controllers
             model.BehaviourRules = adventure.BehaviourRules;
             model.AdditionalServices = adventure.AdditionalServices;
             model.Pricelist = adventure.Pricelist;
-            model.Price = adventure.Price;
+            //model.Price = adventure.Price;
             model.MaxNumberOfPeople = adventure.MaxNumberOfPeople;
             model.FishingEquipment = adventure.FishingEquipment;
             model.CancellationPolicy = adventure.CancellationPolicy;
@@ -379,13 +379,13 @@ namespace FishingBooker.Controllers
         public ActionResult CreateAdventureReservationForCurrentlyActiveUser()
         {
             var adventure_titles = AdventureCRUD.LoadAdventureTitlesByInstructor(User.Identity.GetUserId());
-            var data_adventure_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
+            var data_adventure_reservations = ReservationCRUD.LoadReservedAdventureReservationByInstructorId(User.Identity.GetUserId());
             AdventureReservationViewModel model = new AdventureReservationViewModel();
             List<SelectListItem> action_titles = new List<SelectListItem>();
             
             foreach (var reservation in data_adventure_reservations)
             {
-                if(IsDateAndTimeOk(reservation) && reservation.ClientsEmailAddress != null)
+                if(IsDateAndTimeOk(reservation) /*&& reservation.ClientsEmailAddress != null*/)
                 {
                     model.ClientsEmailAddress = reservation.ClientsEmailAddress;
                     break;
@@ -425,9 +425,9 @@ namespace FishingBooker.Controllers
                 TimeSpan starttime = TimeSpan.Parse(model.StartTime.ToString());
                 TimeSpan endtime = TimeSpan.Parse(model.EndTime.ToString());
                 TimeSpan validitytime = TimeSpan.Parse("00:00:00");
-                if (IsDateAndTimeAllowed(User.Identity.GetUserId(), starttime, endtime, validitytime, model)) {
+                if (IsDateAndTimeAllowedAtThisPlace(User.Identity.GetUserId(), starttime, endtime, validitytime, model)) {
                     
-                    var adventure = AdventureCRUD.LoadAdventuresByName(model.Place);
+                    var adventure = AdventureCRUD.LoadAdventuresByName(model.AdventureTitle);
 
                     ReservationCRUD.CreateAdventureReservations(model.Place,
                                                model.StartDate,
@@ -470,21 +470,26 @@ namespace FishingBooker.Controllers
             return View();
         }
 
-        private static bool IsDateAndTimeAllowed(string userId, TimeSpan starttime, TimeSpan endtime, TimeSpan? validitytime, AdventureReservationViewModel model)
+        private static bool IsDateAndTimeAllowedAtThisPlace(string userId, TimeSpan starttime, TimeSpan endtime, TimeSpan? validitytime, AdventureReservationViewModel model)
         {
             var data_adventure_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(userId);
             var isOk = true;
             foreach (var adventure in data_adventure_reservations)
             {
-                DateTime adventure_start_date = new DateTime(adventure.StartDate.Year, adventure.StartDate.Month, adventure.StartDate.Day, adventure.StartTime.Hours, adventure.StartTime.Minutes, adventure.StartTime.Seconds);
-                DateTime adventure_end_date = new DateTime(adventure.EndDate.Year, adventure.EndDate.Month, adventure.EndDate.Day, adventure.EndTime.Hours, adventure.EndTime.Minutes, adventure.EndTime.Seconds);
-                
-                DateTime entered_start_date = new DateTime(model.StartDate.Year, model.StartDate.Month, model.StartDate.Day, starttime.Hours, starttime.Minutes, starttime.Seconds);
-                DateTime entered_end_date = new DateTime(model.EndDate.Year, model.EndDate.Month, model.EndDate.Day, endtime.Hours, endtime.Minutes, endtime.Seconds);
+                if((adventure.AdventureId == model.AdventureId) && (adventure.Place == model.Place))
+                {
+                    DateTime adventure_start_date = new DateTime(adventure.StartDate.Year, adventure.StartDate.Month, adventure.StartDate.Day, adventure.StartTime.Hours, adventure.StartTime.Minutes, adventure.StartTime.Seconds);
+                    DateTime adventure_end_date = new DateTime(adventure.EndDate.Year, adventure.EndDate.Month, adventure.EndDate.Day, adventure.EndTime.Hours, adventure.EndTime.Minutes, adventure.EndTime.Seconds);
 
-                if ((adventure_start_date <= entered_start_date && entered_start_date <= adventure_end_date) ||
-                    (adventure_start_date <= entered_end_date && entered_end_date <= adventure_end_date)) {
-                    isOk = false;
+                    DateTime entered_start_date = new DateTime(model.StartDate.Year, model.StartDate.Month, model.StartDate.Day, starttime.Hours, starttime.Minutes, starttime.Seconds);
+                    DateTime entered_end_date = new DateTime(model.EndDate.Year, model.EndDate.Month, model.EndDate.Day, endtime.Hours, endtime.Minutes, endtime.Seconds);
+
+                    if (//(adventure_start_date <= entered_start_date && entered_start_date <= adventure_end_date) ||
+                        (adventure_start_date <= entered_end_date && entered_end_date <= adventure_end_date)     ||
+                        (adventure_start_date <= entered_start_date && entered_start_date <= adventure_end_date))
+                    {
+                        isOk = false;
+                    }
                 }
             }
             return isOk;

@@ -19,9 +19,17 @@
         @Html.HiddenFor(model => model.ValidityPeriodTime, new { @value = new TimeSpan(0, 0, 0) })
         @Html.HiddenFor(model => model.IsReserved, new { @value = true })*@
         <div class="form-group">
+            @Html.LabelFor(model => model.AdventureTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.AdventureTitle, new SelectList(ViewBag.ActionTitles, "Text", "Value"), "-- Select Title --", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AdventureTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
             @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Place, new SelectList(ViewBag.ActionTitles, "Text", "Value"), "-- Select Title --", new { @class = "form-control" })
+                @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
             </div>
         </div>

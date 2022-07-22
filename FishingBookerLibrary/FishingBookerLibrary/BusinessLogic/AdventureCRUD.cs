@@ -16,7 +16,7 @@ namespace FishingBookerLibrary.BusinessLogic
                                           string behaviour,
                                           string additionalServices,
                                           string pricelist,
-                                          decimal price,
+                                          //decimal price,
                                           int maxNumberOfPeople,
                                           string fishingEquipment,
                                           Enums.CancellationPolicyType cancellationPolicy,
@@ -33,15 +33,15 @@ namespace FishingBookerLibrary.BusinessLogic
                 BehaviourRules = behaviour,
                 AdditionalServices = additionalServices,
                 Pricelist = pricelist,
-                Price = price,
+                //Price = price,
                 MaxNumberOfPeople = maxNumberOfPeople,
                 FishingEquipment = fishingEquipment,
                 CancellationPolicy = cancellationPolicy,
                 InstructorId = instructorId
             };
 
-            string sql = @"INSERT INTO dbo.Adventures (Title, Address, PromotionDescription, Rating, RatingSum, RatingCount, BehaviourRules, AdditionalServices, Pricelist, Price, MaxNumberOfPeople, FishingEquipment, CancellationPolicy, InstructorId)
-                           VALUES (@Title, @Address, @PromotionDescription, @Rating, @RatingSum, @RatingCount, @BehaviourRules, @AdditionalServices, @Pricelist, @Price, @MaxNumberOfPeople, @FishingEquipment, @CancellationPolicy, @InstructorId);";
+            string sql = @"INSERT INTO dbo.Adventures (Title, Address, PromotionDescription, Rating, RatingSum, RatingCount, BehaviourRules, AdditionalServices, Pricelist, MaxNumberOfPeople, FishingEquipment, CancellationPolicy, InstructorId)
+                           VALUES (@Title, @Address, @PromotionDescription, @Rating, @RatingSum, @RatingCount, @BehaviourRules, @AdditionalServices, @Pricelist, @MaxNumberOfPeople, @FishingEquipment, @CancellationPolicy, @InstructorId);";
 
             return SSMSDataAccess.SaveData(sql, data);
         }
@@ -53,7 +53,7 @@ namespace FishingBookerLibrary.BusinessLogic
                                           string behaviour,
                                           string additionalServices,
                                           string pricelist,
-                                          decimal price,
+                                          //decimal price,
                                           int maxNumberOfPeople,
                                           string fishingEquipment,
                                           Enums.CancellationPolicyType cancellationPolicy)
@@ -68,14 +68,14 @@ namespace FishingBookerLibrary.BusinessLogic
                 BehaviourRules = behaviour,
                 AdditionalServices = additionalServices,
                 Pricelist = pricelist,
-                Price = price,
+                //Price = price,
                 MaxNumberOfPeople = maxNumberOfPeople,
                 FishingEquipment = fishingEquipment,
                 CancellationPolicy = cancellationPolicy,
             };
 
             string sql = @"UPDATE dbo.Adventures 
-                           SET Title = @Title, Address = @Address, PromotionDescription = @PromotionDescription, BehaviourRules = @BehaviourRules, AdditionalServices = @AdditionalServices, Pricelist = @Pricelist, Price = @Price, MaxNumberOfPeople = @MaxNumberOfPeople, FishingEquipment = @FishingEquipment, CancellationPolicy = @CancellationPolicy
+                           SET Title = @Title, Address = @Address, PromotionDescription = @PromotionDescription, BehaviourRules = @BehaviourRules, AdditionalServices = @AdditionalServices, Pricelist = @Pricelist, MaxNumberOfPeople = @MaxNumberOfPeople, FishingEquipment = @FishingEquipment, CancellationPolicy = @CancellationPolicy
                            WHERE Id = @Id;";
 
             return SSMSDataAccess.SaveData(sql, data);

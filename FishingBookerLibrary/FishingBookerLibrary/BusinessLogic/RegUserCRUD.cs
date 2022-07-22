@@ -175,21 +175,7 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.LoadUserById<RegUser>(sql, userId);
         }
 
-        public static InstructorAvailability LoadInstructorsAvailability(string instructorsId)
-        {
-            string sql = @"SELECT *
-                            FROM dbo.InstructorsAvailabilities
-                            WHERE InstructorId = @InstructorId;";
-            return SSMSDataAccess.LoadInstructorsAvailability<InstructorAvailability>(sql, instructorsId);
-        }
-
-        public static List<InstructorAvailability> LoadAvailabilities()
-        {
-            string sql = @"SELECT *
-                           FROM dbo.InstructorsAvailabilities;";
-
-            return SSMSDataAccess.LoadData<InstructorAvailability>(sql);
-        }
+        
 
         public static int AddPenalty(string clientEmail, int numberOfPenalties)
         {

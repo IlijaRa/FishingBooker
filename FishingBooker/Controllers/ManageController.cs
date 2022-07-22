@@ -74,18 +74,19 @@ namespace FishingBooker.Controllers
             var adventures = AdventureCRUD.LoadAdventures();
             var ships = ShipCRUD.LoadShips();
 
-            foreach (var cottage in cottages)
-            {
-                totalIncome = totalIncome + (cottage.Price * percentage);
-            }
-            foreach (var adventure in adventures)
-            {
-                totalIncome = totalIncome + (adventure.Price * percentage);
-            }
-            foreach (var ship in ships)
-            {
-                totalIncome = totalIncome + (ship.Price * percentage);
-            }
+            // TODO: Odradi obracunavanje cene kod avantura
+            //foreach (var cottage in cottages)
+            //{
+            //    totalIncome = totalIncome + (cottage.Price * percentage);
+            //}
+            //foreach (var adventure in adventures)
+            //{
+            //    totalIncome = totalIncome + (adventure.Price * percentage);
+            //}
+            //foreach (var ship in ships)
+            //{
+            //    totalIncome = totalIncome + (ship.Price * percentage);
+            //}
             var userId = User.Identity.GetUserId();
             var data_instructor = RegUserCRUD.LoadUserById(userId);
             var loyalty_scales = LoyaltyProgramCRUD.LoadLoyaltyScales();
@@ -410,7 +411,7 @@ namespace FishingBooker.Controllers
         public ActionResult InstructorSchedule()
         {
             InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
-            var data_availability = RegUserCRUD.LoadInstructorsAvailability(User.Identity.GetUserId());
+            var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
             //var availability = RegUserCRUD.LoadAvailabilities().Find(x => x.InstructorId == User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_adventures = AdventureCRUD.LoadAdventures();
@@ -480,14 +481,29 @@ namespace FishingBooker.Controllers
             DateTime fromDate = DateTime.Parse(model.availability.FromDate.ToString());
             DateTime toDate = DateTime.Parse(model.availability.ToDate.ToString());
 
-            ScheduleCRUD.UpdateAvailability(model.availability.Id,
-                                            fromDate,
-                                            fromTime,
-                                            toDate,
-                                            toTime,
-                                            model.availability.InstructorId);
+            var instructor_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
 
-            return RedirectToAction("InstructorSchedule", "Manage");
+            if(instructor_availability == null)
+            {
+                ScheduleCRUD.CreateOwnerAvailabilityForStandardReservation(fromDate,
+                                                fromTime,
+                                                toDate,
+                                                toTime,
+                                                User.Identity.GetUserId());
+
+                return RedirectToAction("InstructorSchedule", "Manage");
+            }
+            else
+            {
+                ScheduleCRUD.UpdateOwnerAvailabilityForStandardReservation(fromDate,
+                                                fromTime,
+                                                toDate,
+                                                toTime,
+                                                User.Identity.GetUserId());
+
+                return RedirectToAction("InstructorSchedule", "Manage");
+            }
+            
         }
 
         public ActionResult SearchHistoryReservation(string searching)
@@ -504,8 +520,7 @@ namespace FishingBooker.Controllers
                     decimal.TryParse(searching, out result);
                     if (reservation.ClientsEmailAddress.ToLower().Contains(searching) ||
                         reservation.ActionTitle.ToLower().Contains(searching) ||
-                        reservation.Price == result ||
-                        reservation.Duration.ToLower().Contains(searching))
+                        reservation.Price == result)
                     {
                         found_reservations.Add(new ReservationFromHistoryViewModel
                         {
@@ -523,7 +538,7 @@ namespace FishingBooker.Controllers
             }
 
             InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
-            var data_availability = RegUserCRUD.LoadInstructorsAvailability(User.Identity.GetUserId());
+            var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
             //var availability = RegUserCRUD.LoadAvailabilities().Find(x => x.InstructorId == User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_adventures = AdventureCRUD.LoadAdventures();
@@ -570,7 +585,7 @@ namespace FishingBooker.Controllers
         public ActionResult ShipOwnerSchedule()
         {
             InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
-            var data_availability = RegUserCRUD.LoadInstructorsAvailability(User.Identity.GetUserId());
+            var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_ships = ShipCRUD.LoadShips();
 
@@ -682,7 +697,7 @@ namespace FishingBooker.Controllers
             }
 
             InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
-            var data_availability = RegUserCRUD.LoadInstructorsAvailability(User.Identity.GetUserId());
+            var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_ships = ShipCRUD.LoadShips();
 
@@ -727,7 +742,7 @@ namespace FishingBooker.Controllers
         public ActionResult CottageOwnerSchedule()
         {
             InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
-            var data_availability = RegUserCRUD.LoadInstructorsAvailability(User.Identity.GetUserId());
+            var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_cottages = CottageCRUD.LoadCottages();
 
@@ -839,7 +854,7 @@ namespace FishingBooker.Controllers
             }
 
             InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
-            var data_availability = RegUserCRUD.LoadInstructorsAvailability(User.Identity.GetUserId());
+            var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_cottages = CottageCRUD.LoadCottages();
 

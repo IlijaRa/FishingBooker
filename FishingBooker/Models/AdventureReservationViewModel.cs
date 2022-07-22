@@ -11,6 +11,12 @@ namespace FishingBooker.Models
         public int Id { get; set; }
 
 
+        [Display(Name = "Adventure*")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "You need to provide an Adventure title between 2-50 characters.")]
+        //[Required(ErrorMessage = "You need to give us a place.")]
+        public string AdventureTitle { get; set; }
+
+
         [Display(Name = "Place*")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "You need to provide a place name between 2-50 characters.")]
         [Required(ErrorMessage = "You need to give us a place.")]

@@ -29,7 +29,7 @@ namespace FishingBooker.Models.EmailSender
             smtp.Timeout = 1000000;
             smtp.EnableSsl = true;
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            NetworkCredential nc = new NetworkCredential("fishingbooker267@gmail.com", "admin267");//System.Configuration.ConfigurationManager.AppSettings["Email"].ToString(), System.Configuration.ConfigurationManager.AppSettings["Password"].ToString());
+            NetworkCredential nc = new NetworkCredential("fishingbooker267@gmail.com", "lanmhjtjvyyywpxz");//System.Configuration.ConfigurationManager.AppSettings["Email"].ToString(), System.Configuration.ConfigurationManager.AppSettings["Password"].ToString());
             smtp.UseDefaultCredentials = false;
             smtp.Credentials = nc;
             smtp.Send(mc);

@@ -20,8 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.availability.FromDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.Editor("txtpickupdate", DateTime.Now.ToShortDateString(), new { htmlAttributes = new { @class = "form-control", @placeholder = "mm/dd/yyyy" } })
-                @*@Html.Editor(model => model.availability.FromDate, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.EditorFor(model => model.availability.FromDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.availability.FromDate, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -72,9 +71,10 @@
     <tr>
         <th>Clients email</th>
         <th>Title</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Duration</th>
+        <th>Start date</th>
+        <th>Start time</th>
+        <th>End date</th>
+        <th>End time</th>
         <th>Price</th>
     </tr>
 
