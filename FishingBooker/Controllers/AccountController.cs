@@ -175,7 +175,12 @@ namespace FishingBooker.Controllers
                     City = model.City,
                     Country = model.Country,
                     Description = model.Description,
+                    Biography = model.Biography,
                     Status = "Waiting",
+                    TotalScalePoints = 0,
+                    Rating = 0,
+                    RatingSum = 0,
+                    RatingCount = 0,
                     Penalties = 0
                 };
 

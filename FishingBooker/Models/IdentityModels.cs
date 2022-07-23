@@ -16,7 +16,12 @@ namespace FishingBooker.Models
         public string City { get; set; }
         public string Country { get; set; }
         public string Description { get; set; }
+        public string Biography { get; set; }
         public string Status { get; set; }
+        public float TotalScalePoints { get; set; }
+        public float Rating { get; set; }
+        public float RatingSum { get; set; }
+        public float RatingCount { get; set; }
         public int Penalties { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

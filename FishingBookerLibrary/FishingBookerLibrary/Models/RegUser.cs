@@ -20,12 +20,12 @@ namespace FishingBookerLibrary.Models
         public string City { get; set; }
         public string Country { get; set; }
         public string Description { get; set; }
-        public string Biography { get; set; }
-        public float TotalScalePoints { get; set; }
-        public string Status { get; set; } = "Waiting";
-        public float Rating { get; set; }
-        public float RatingSum { get; set; }
-        public float RatingCount { get; set; }
-        public int Penalties { get; set; } = 0;
+        public string Biography { get; set; }// = "/";
+        public float TotalScalePoints { get; set; }// = 0;
+        public string Status { get; set; }// = "Waiting";
+        public float Rating { get; set; }// = 0;
+        public float RatingSum { get; set; }// = 0;
+        public float RatingCount { get; set; }// = 0;
+        public int Penalties { get; set; }// = 0;
     }
 }

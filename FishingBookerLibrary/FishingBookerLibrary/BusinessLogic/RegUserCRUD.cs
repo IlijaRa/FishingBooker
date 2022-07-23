@@ -34,7 +34,7 @@ namespace FishingBookerLibrary.BusinessLogic
                 City = city,
                 Country = country,
                 Description = description,
-                Biography = biography
+                Biography = biography,
             };
 
             string sql = @"INSERT INTO dbo.RegUsers (Name, Surname, PhoneNumber, EmailAddress, Password, Type, Address, City, Country, Description, Biography, Status, Penalties)

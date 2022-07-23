@@ -212,6 +212,10 @@
     <Compile Include="Migrations\202204181710110_AddedPenaltiesField.Designer.cs">
       <DependentUpon>202204181710110_AddedPenaltiesField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202207230040512_NewFieldInAplicationUser.cs" />
+    <Compile Include="Migrations\202207230040512_NewFieldInAplicationUser.designer.cs">
+      <DependentUpon>202207230040512_NewFieldInAplicationUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdventureReservationViewModel.cs" />
@@ -624,6 +628,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204181710110_AddedPenaltiesField.resx">
       <DependentUpon>202204181710110_AddedPenaltiesField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202207230040512_NewFieldInAplicationUser.resx">
+      <DependentUpon>202207230040512_NewFieldInAplicationUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
