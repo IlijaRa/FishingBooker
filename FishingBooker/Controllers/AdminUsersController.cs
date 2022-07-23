@@ -75,7 +75,7 @@ namespace FishingBooker.Controllers
                     });
                 }
             }
-            return Json(users);
+            return View(users);
         }
 
         public ActionResult SearchUsers(string searching)
@@ -713,5 +713,18 @@ namespace FishingBooker.Controllers
             return View();
         }
 
+        public ActionResult DeleteScale(int scaleId)
+        {
+            if (ModelState.IsValid)
+            {
+                int i = LoyaltyProgramCRUD.DeleteScale(scaleId);
+                if(i == 1)
+                    return RedirectToAction("LoyaltyProgram", "AdminUsers");
+                else
+                    return View("Error");
+            }
+
+            return View();
+        }
     }
 }

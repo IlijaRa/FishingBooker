@@ -9,8 +9,8 @@ namespace FishingBookerLibrary.Models
     public class LoyaltyProgram
     {
         public int Id { get; set; }
-        public decimal PointsAfterSuccResClient { get; set; }
-        public decimal PointsAfterSuccResOwner { get; set; }
+        public int PointsAfterSuccResClient { get; set; }
+        public int PointsAfterSuccResOwner { get; set; }
         public List<LoyaltyScale> scales { get; set; } = new List<LoyaltyScale>();
     }
 }

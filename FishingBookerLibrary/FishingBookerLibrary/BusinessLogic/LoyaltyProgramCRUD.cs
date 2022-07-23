@@ -11,8 +11,8 @@ namespace FishingBookerLibrary.BusinessLogic
     public class LoyaltyProgramCRUD
     {
 
-        public static int UpdateLoyaltyProgram(decimal pointsForClient,
-                                               decimal pointsForOwner)
+        public static int UpdateLoyaltyProgram(int pointsForClient,
+                                               int pointsForOwner)
         {
 
             LoyaltyProgram data = new LoyaltyProgram
@@ -29,9 +29,9 @@ namespace FishingBookerLibrary.BusinessLogic
         }
 
         public static int CreateScale(string scaleName,
-                                      float clientsBenefits,
-                                      float ownerBenefits,
-                                      float minEarnedPoints)
+                                      int clientsBenefits,
+                                      int ownerBenefits,
+                                      int minEarnedPoints)
         {
             LoyaltyScale data = new LoyaltyScale
             {
@@ -44,6 +44,21 @@ namespace FishingBookerLibrary.BusinessLogic
 
             string sql = @"INSERT INTO dbo.LoyaltyScale (LoyaltyProgramId, ScaleName, ClientsBenefits, OwnerBenefits, MinEarnedPoints)
                            VALUES (@LoyaltyProgramId, @ScaleName, @ClientsBenefits, @OwnerBenefits, @MinEarnedPoints);";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
+        public static int DeleteScale(int scaleId)
+        {
+            LoyaltyScale data = new LoyaltyScale
+            {
+                Id = scaleId,
+                LoyaltyProgramId = 1
+            };
+
+            string sql = @"DELETE 
+                            FROM dbo.LoyaltyScale
+                            WHERE Id = @Id;";
 
             return SSMSDataAccess.SaveData(sql, data);
         }

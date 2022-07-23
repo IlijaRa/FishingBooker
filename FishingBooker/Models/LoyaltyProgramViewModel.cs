@@ -15,13 +15,13 @@ namespace FishingBooker.Models
         [RegularExpression("([0-9]+)")]
         [Display(Name = "Points after successful reservation(Client)*")]
         [Required(ErrorMessage = "You need to enter a number.")]
-        public decimal PointsAfterSuccResClient { get; set; }
+        public int PointsAfterSuccResClient { get; set; }
 
 
         [RegularExpression("([0-9]+)")]
         [Display(Name = "Points after successful reservation(Owner)*")]
         [Required(ErrorMessage = "You need to enter a number.")]
-        public decimal PointsAfterSuccResOwner { get; set; }
+        public int PointsAfterSuccResOwner { get; set; }
 
 
         public List<LoyaltyScaleViewModel> scales { get; set; } = new List<LoyaltyScaleViewModel>();
