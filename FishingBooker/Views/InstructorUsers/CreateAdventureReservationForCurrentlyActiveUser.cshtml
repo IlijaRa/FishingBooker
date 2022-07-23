@@ -14,10 +14,11 @@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @*@Html.HiddenFor(model => model.AdventureId, new { @value = 0 })
-        @Html.HiddenFor(model => model.ValidityPeriodDate, new { @value = new DateTime(2000,10,10) })
+        @Html.HiddenFor(model => model.AdventureId) <!--TODO: ne prosledjuje dobro ovaj id od avanture-->
+        @*@Html.HiddenFor(model => model.ValidityPeriodDate, new { @value = new DateTime(2000,10,10) })
         @Html.HiddenFor(model => model.ValidityPeriodTime, new { @value = new TimeSpan(0, 0, 0) })
         @Html.HiddenFor(model => model.IsReserved, new { @value = true })*@
+
         <div class="form-group">
             @Html.LabelFor(model => model.AdventureTitle, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

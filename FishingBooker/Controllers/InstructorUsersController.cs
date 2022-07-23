@@ -425,7 +425,7 @@ namespace FishingBooker.Controllers
                 TimeSpan starttime = TimeSpan.Parse(model.StartTime.ToString());
                 TimeSpan endtime = TimeSpan.Parse(model.EndTime.ToString());
                 TimeSpan validitytime = TimeSpan.Parse("00:00:00");
-                if (IsDateAndTimeAllowedAtThisPlace(User.Identity.GetUserId(), starttime, endtime, validitytime, model)) {
+                if (IsDateAndTimeAllowed(User.Identity.GetUserId(), starttime, endtime, validitytime, model)) {
                     
                     var adventure = AdventureCRUD.LoadAdventuresByName(model.AdventureTitle);
 
@@ -470,26 +470,23 @@ namespace FishingBooker.Controllers
             return View();
         }
 
-        private static bool IsDateAndTimeAllowedAtThisPlace(string userId, TimeSpan starttime, TimeSpan endtime, TimeSpan? validitytime, AdventureReservationViewModel model)
+        private static bool IsDateAndTimeAllowed(string userId, TimeSpan starttime, TimeSpan endtime, TimeSpan? validitytime, AdventureReservationViewModel model)
         {
             var data_adventure_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(userId);
+            //var adv = AdventureCRUD.LoadAdventuresByName(model.AdventureTitle);
             var isOk = true;
             foreach (var adventure in data_adventure_reservations)
             {
-                if((adventure.AdventureId == model.AdventureId) && (adventure.Place == model.Place))
+                DateTime start_date = new DateTime(adventure.StartDate.Year, adventure.StartDate.Month, adventure.StartDate.Day, adventure.StartTime.Hours, adventure.StartTime.Minutes, adventure.StartTime.Seconds);
+                DateTime end_date = new DateTime(adventure.EndDate.Year, adventure.EndDate.Month, adventure.EndDate.Day, adventure.EndTime.Hours, adventure.EndTime.Minutes, adventure.EndTime.Seconds);
+
+                DateTime entered_start_date = new DateTime(model.StartDate.Year, model.StartDate.Month, model.StartDate.Day, starttime.Hours, starttime.Minutes, starttime.Seconds);
+                DateTime entered_end_date = new DateTime(model.EndDate.Year, model.EndDate.Month, model.EndDate.Day, endtime.Hours, endtime.Minutes, endtime.Seconds);
+
+                if ((start_date <= entered_start_date && entered_start_date <= end_date) ||
+                    (start_date <= entered_end_date && entered_end_date <= end_date))
                 {
-                    DateTime adventure_start_date = new DateTime(adventure.StartDate.Year, adventure.StartDate.Month, adventure.StartDate.Day, adventure.StartTime.Hours, adventure.StartTime.Minutes, adventure.StartTime.Seconds);
-                    DateTime adventure_end_date = new DateTime(adventure.EndDate.Year, adventure.EndDate.Month, adventure.EndDate.Day, adventure.EndTime.Hours, adventure.EndTime.Minutes, adventure.EndTime.Seconds);
-
-                    DateTime entered_start_date = new DateTime(model.StartDate.Year, model.StartDate.Month, model.StartDate.Day, starttime.Hours, starttime.Minutes, starttime.Seconds);
-                    DateTime entered_end_date = new DateTime(model.EndDate.Year, model.EndDate.Month, model.EndDate.Day, endtime.Hours, endtime.Minutes, endtime.Seconds);
-
-                    if (//(adventure_start_date <= entered_start_date && entered_start_date <= adventure_end_date) ||
-                        (adventure_start_date <= entered_end_date && entered_end_date <= adventure_end_date)     ||
-                        (adventure_start_date <= entered_start_date && entered_start_date <= adventure_end_date))
-                    {
-                        isOk = false;
-                    }
+                    isOk = false;
                 }
             }
             return isOk;
