@@ -412,17 +412,18 @@ namespace FishingBooker.Controllers
         {
             InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
             var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
-            //var availability = RegUserCRUD.LoadAvailabilities().Find(x => x.InstructorId == User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_adventures = AdventureCRUD.LoadAdventures();
-            ViewData["FromDate"] = data_availability.FromDate;
-            schedule.availability.Id = data_availability.Id;
-            schedule.availability.FromDate = data_availability.FromDate.ToString();
-            schedule.availability.FromTime = data_availability.FromTime.ToString();
-            schedule.availability.ToDate = data_availability.ToDate.ToString();
-            schedule.availability.ToTime = data_availability.ToTime.ToString();
-            schedule.availability.InstructorId = data_availability.InstructorId;
 
+            if (data_availability != null)
+            {
+                schedule.availability.Id = data_availability.Id;
+                schedule.availability.FromDate = data_availability.FromDate.ToString();
+                schedule.availability.FromTime = data_availability.FromTime.ToString();
+                schedule.availability.ToDate = data_availability.ToDate.ToString();
+                schedule.availability.ToTime = data_availability.ToTime.ToString();
+                schedule.availability.InstructorId = data_availability.InstructorId;
+            }
 
             foreach (var adventure in data_adventures)
             {
@@ -543,12 +544,15 @@ namespace FishingBooker.Controllers
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_adventures = AdventureCRUD.LoadAdventures();
 
-            schedule.availability.Id = data_availability.Id;
-            schedule.availability.FromDate = data_availability.FromDate.ToString();
-            schedule.availability.FromTime = data_availability.FromTime.ToString();
-            schedule.availability.ToDate = data_availability.ToDate.ToString();
-            schedule.availability.ToTime = data_availability.ToTime.ToString();
-            schedule.availability.InstructorId = data_availability.InstructorId;
+            if(data_availability != null)
+            {
+                schedule.availability.Id = data_availability.Id;
+                schedule.availability.FromDate = data_availability.FromDate.ToString();
+                schedule.availability.FromTime = data_availability.FromTime.ToString();
+                schedule.availability.ToDate = data_availability.ToDate.ToString();
+                schedule.availability.ToTime = data_availability.ToTime.ToString();
+                schedule.availability.InstructorId = data_availability.InstructorId;
+            }
 
 
             foreach (var adventure in data_adventures)
@@ -589,12 +593,15 @@ namespace FishingBooker.Controllers
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_ships = ShipCRUD.LoadShips();
 
-            schedule.availability.Id = data_availability.Id;
-            schedule.availability.FromDate = data_availability.FromDate.ToString();
-            schedule.availability.FromTime = data_availability.FromTime.ToString();
-            schedule.availability.ToDate = data_availability.ToDate.ToString();
-            schedule.availability.ToTime = data_availability.ToTime.ToString();
-            schedule.availability.InstructorId = data_availability.InstructorId;
+            if(data_availability != null)
+            {
+                schedule.availability.Id = data_availability.Id;
+                schedule.availability.FromDate = data_availability.FromDate.ToString();
+                schedule.availability.FromTime = data_availability.FromTime.ToString();
+                schedule.availability.ToDate = data_availability.ToDate.ToString();
+                schedule.availability.ToTime = data_availability.ToTime.ToString();
+                schedule.availability.InstructorId = data_availability.InstructorId;
+            }
 
 
             foreach (var ship in data_ships)
@@ -678,8 +685,7 @@ namespace FishingBooker.Controllers
                     decimal.TryParse(searching, out result);
                     if (reservation.ClientsEmailAddress.ToLower().Contains(searching) ||
                         reservation.ActionTitle.ToLower().Contains(searching) ||
-                        reservation.Price == result ||
-                        reservation.Duration.ToLower().Contains(searching))
+                        reservation.Price == result)
                     {
                         found_reservations.Add(new ReservationFromHistoryViewModel
                         {
@@ -701,13 +707,16 @@ namespace FishingBooker.Controllers
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_ships = ShipCRUD.LoadShips();
 
-            schedule.availability.Id = data_availability.Id;
-            schedule.availability.FromDate = data_availability.FromDate.ToString();
-            schedule.availability.FromTime = data_availability.FromTime.ToString();
-            schedule.availability.ToDate = data_availability.ToDate.ToString();
-            schedule.availability.ToTime = data_availability.ToTime.ToString();
-            schedule.availability.InstructorId = data_availability.InstructorId;
-
+            if(data_availability != null)
+            {
+                schedule.availability.Id = data_availability.Id;
+                schedule.availability.FromDate = data_availability.FromDate.ToString();
+                schedule.availability.FromTime = data_availability.FromTime.ToString();
+                schedule.availability.ToDate = data_availability.ToDate.ToString();
+                schedule.availability.ToTime = data_availability.ToTime.ToString();
+                schedule.availability.InstructorId = data_availability.InstructorId;
+            }
+            
 
             foreach (var ship in data_ships)
             {
@@ -746,12 +755,15 @@ namespace FishingBooker.Controllers
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_cottages = CottageCRUD.LoadCottages();
 
-            schedule.availability.Id = data_availability.Id;
-            schedule.availability.FromDate = data_availability.FromDate.ToString();
-            schedule.availability.FromTime = data_availability.FromTime.ToString();
-            schedule.availability.ToDate = data_availability.ToDate.ToString();
-            schedule.availability.ToTime = data_availability.ToTime.ToString();
-            schedule.availability.InstructorId = data_availability.InstructorId;
+            if (data_availability != null)
+            {
+                schedule.availability.Id = data_availability.Id;
+                schedule.availability.FromDate = data_availability.FromDate.ToString();
+                schedule.availability.FromTime = data_availability.FromTime.ToString();
+                schedule.availability.ToDate = data_availability.ToDate.ToString();
+                schedule.availability.ToTime = data_availability.ToTime.ToString();
+                schedule.availability.InstructorId = data_availability.InstructorId;
+            }
 
 
             foreach (var cottage in data_cottages)
@@ -835,8 +847,7 @@ namespace FishingBooker.Controllers
                     decimal.TryParse(searching, out result);
                     if (reservation.ClientsEmailAddress.ToLower().Contains(searching) ||
                         reservation.ActionTitle.ToLower().Contains(searching) ||
-                        reservation.Price == result ||
-                        reservation.Duration.ToLower().Contains(searching))
+                        reservation.Price == result)
                     {
                         found_reservations.Add(new ReservationFromHistoryViewModel
                         {
@@ -858,12 +869,15 @@ namespace FishingBooker.Controllers
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_cottages = CottageCRUD.LoadCottages();
 
-            schedule.availability.Id = data_availability.Id;
-            schedule.availability.FromDate = data_availability.FromDate.ToString();
-            schedule.availability.FromTime = data_availability.FromTime.ToString();
-            schedule.availability.ToDate = data_availability.ToDate.ToString();
-            schedule.availability.ToTime = data_availability.ToTime.ToString();
-            schedule.availability.InstructorId = data_availability.InstructorId;
+            if(data_availability != null)
+            {
+                schedule.availability.Id = data_availability.Id;
+                schedule.availability.FromDate = data_availability.FromDate.ToString();
+                schedule.availability.FromTime = data_availability.FromTime.ToString();
+                schedule.availability.ToDate = data_availability.ToDate.ToString();
+                schedule.availability.ToTime = data_availability.ToTime.ToString();
+                schedule.availability.InstructorId = data_availability.InstructorId;
+            }
 
 
             foreach (var cottage in data_cottages)
@@ -936,7 +950,12 @@ namespace FishingBooker.Controllers
                 {
                     var data_user = RegUserCRUD.LoadUsers().Find(x => x.EmailAddress == model.ClientsEmailAddress);
                     RegUserCRUD.AddPenalty(model.ClientsEmailAddress, data_user.Penalties + 1);
-                    return RedirectToAction("InstructorSchedule", "Manage");
+                    if(User.IsInRole("ValidInstructor"))
+                        return RedirectToAction("InstructorSchedule", "Manage");
+                    else if (User.IsInRole("ValidCottageOwner"))
+                        return RedirectToAction("CottageOwnerSchedule", "Manage");
+                    else if (User.IsInRole("ValidShipOwner"))
+                        return RedirectToAction("ShipOwnerSchedule", "Manage");
                 }
                 else if (model.ImpressionType == Enums.RecordImpressionType.BadExperience)
                 {
@@ -947,7 +966,12 @@ namespace FishingBooker.Controllers
                                             model.ClientId,
                                             model.InstructorId);
 
-                    return RedirectToAction("InstructorSchedule", "Manage");
+                    if (User.IsInRole("ValidInstructor"))
+                        return RedirectToAction("InstructorSchedule", "Manage");
+                    else if (User.IsInRole("ValidCottageOwner"))
+                        return RedirectToAction("CottageOwnerSchedule", "Manage");
+                    else if (User.IsInRole("ValidShipOwner"))
+                        return RedirectToAction("ShipOwnerSchedule", "Manage");
                 }
             }
             return View(model.ClientsEmailAddress);

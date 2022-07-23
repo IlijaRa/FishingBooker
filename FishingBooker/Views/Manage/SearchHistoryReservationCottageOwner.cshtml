@@ -72,9 +72,10 @@
     <tr>
         <th>Clients email</th>
         <th>Title</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Duration</th>
+        <th>Start date</th>
+        <th>Start time</th>
+        <th>End date</th>
+        <th>End time</th>
         <th>Price</th>
     </tr>
 
@@ -98,7 +99,10 @@
                 @Html.DisplayFor(modelItem => item.StartTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Duration)
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
@@ -138,7 +142,8 @@
         <th>Title</th>
         <th>Date</th>
         <th>Time</th>
-        <th>Duration</th>
+        <th>End date</th>
+        <th>End time</th>
         <th>Price</th>
     </tr>
 
@@ -162,7 +167,10 @@
                 @Html.DisplayFor(modelItem => item.StartTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Duration)
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
