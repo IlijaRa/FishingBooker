@@ -50,6 +50,7 @@ namespace FishingBooker.Controllers
             return View(users);
         }
 
+        //[AllowCrossSiteJson]
         public ActionResult AllUsers()
         {
             // ova akcija ipak prikazuje samo one validirane korisnike
@@ -74,7 +75,7 @@ namespace FishingBooker.Controllers
                     });
                 }
             }
-            return View(users);
+            return Json(users);
         }
 
         public ActionResult SearchUsers(string searching)
