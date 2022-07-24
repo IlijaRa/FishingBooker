@@ -71,7 +71,7 @@ namespace FishingBooker.Models
 
 
         [Display(Name = "Description*")]
-        [Required(ErrorMessage = "Please, add any description.")]
+        //[Required(ErrorMessage = "Please, add any description.")]
         public string Description { get; set; }
 
 
