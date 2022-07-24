@@ -1,5 +1,13 @@
 ﻿@model IEnumerable<FishingBooker.Models.RegUserViewModel>
+@section Scripts{
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
 
+    <!-- Load our React component. -->
+    <script src="@Url.Content("~/Scripts/JS/AllUsers.js")"></script>
+}
 @{
     ViewBag.Title = "AllUsers";
     if (User.IsInRole("Admin"))
@@ -112,40 +120,44 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Biography)
                 </th>*@
-        <td>
-            @Html.ActionLink(
-                "Details",
-                "DetailsAboutUser",
-                "AdminUsers",
-                new
-                     {
-                    userId = item.UserId,
-                    },
-                null
-            ) |
-            @Html.ActionLink(
-                "Block",
-                "BlockUser",
-                "AdminUsers",
-                new
-                     {
-                    email = item.EmailAddress,
-                    status = "Blocked"
-                    },
-                null
-            ) |
-            @Html.ActionLink(
-                "Delete",
-                "DeleteUser",
-                "AdminUsers",
-                new
-                     {
-                    email = item.EmailAddress,
-                    },
-                null
-            )
-        </td>
+            <td>
+                @Html.ActionLink(
+                    "Details",
+                    "DetailsAboutUser",
+                    "AdminUsers",
+                    new
+                         {
+                        userId = item.UserId,
+                        },
+                    null
+                ) |
+                @Html.ActionLink(
+                    "Block",
+                    "BlockUser",
+                    "AdminUsers",
+                    new
+                         {
+                        email = item.EmailAddress,
+                        status = "Blocked"
+                        },
+                    null
+                ) |
+                @Html.ActionLink(
+                    "Delete",
+                    "DeleteUser",
+                    "AdminUsers",
+                    new
+                         {
+                        email = item.EmailAddress,
+                        },
+                    null
+                )
+            </td>
         </tr>
     }
 
 </table>
+
+<div id="show_all_users">
+
+</div>

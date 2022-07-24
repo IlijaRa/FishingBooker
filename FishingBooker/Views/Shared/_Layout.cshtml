@@ -6,7 +6,6 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,15 +25,15 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
 
                     @*@if (User.IsInRole("Admin") || User.IsInRole("HeadAdmin"))
-                    {
-                        <li>@Html.ActionLink("Non-validated users", "InvalidUsers", "AdminUsers")</li>
-                        <li>@Html.ActionLink("Validated users", "AllUsers", "AdminUsers")</li>
-                    }
+                        {
+                            <li>@Html.ActionLink("Non-validated users", "InvalidUsers", "AdminUsers")</li>
+                            <li>@Html.ActionLink("Validated users", "AllUsers", "AdminUsers")</li>
+                        }
 
-                    @if (User.IsInRole("ValidFishingInstructor"))
-                    {
-                        <li>@Html.ActionLink("Your adventures", "ViewAdventures", "InstructorUsers")</li>
-                    }*@
+                        @if (User.IsInRole("ValidFishingInstructor"))
+                        {
+                            <li>@Html.ActionLink("Your adventures", "ViewAdventures", "InstructorUsers")</li>
+                        }*@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

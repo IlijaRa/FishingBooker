@@ -24,8 +24,8 @@
                 {
                     <ul class="nav navbar-nav">
                         @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                            <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                         <li>@Html.ActionLink("Non-validated users", "InvalidUsers", "AdminUsers")</li>
                         <li>@Html.ActionLink("All users", "AllUsers", "AdminUsers")</li>
                         <li>@Html.ActionLink("View records", "ViewRecords", "AdminUsers")</li>
@@ -41,7 +41,7 @@
                         <li>@Html.ActionLink("Change password", "ChangePassword", "Manage")</li>
                     </ul>
                 }
-                </div>
+            </div>
         </div>
     </div>
     <div class="container body-content">
@@ -54,6 +54,6 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
