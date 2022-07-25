@@ -27,11 +27,12 @@ namespace FishingBooker.Models
 
 
         [Display(Name = "Phone number*")]
+        [Required(ErrorMessage = "You need to give us your phone number.")]
         public string PhoneNumber { get; set; }
 
 
-        [DataType(DataType.EmailAddress)]
         [Display(Name = "Email address*")]
+        [DataType(DataType.EmailAddress)]
         [Required(ErrorMessage = "You need to give us your email address.")]
         public string EmailAddress { get; set; }
 
