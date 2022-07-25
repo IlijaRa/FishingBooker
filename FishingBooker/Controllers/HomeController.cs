@@ -29,7 +29,7 @@ namespace FishingBooker.Controllers
             }
             else if (User.IsInRole("ValidFishingInstructor"))
             {
-                return RedirectToAction("Index", "Manage");
+                return RedirectToAction("InstructorSchedule", "Manage");
             }
             return View();
         }

@@ -418,9 +418,9 @@ namespace FishingBooker.Controllers
             if (data_availability != null)
             {
                 schedule.availability.Id = data_availability.Id;
-                schedule.availability.FromDate = data_availability.FromDate.ToString();
+                schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
                 schedule.availability.FromTime = data_availability.FromTime.ToString();
-                schedule.availability.ToDate = data_availability.ToDate.ToString();
+                schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
                 schedule.availability.ToTime = data_availability.ToTime.ToString();
                 schedule.availability.InstructorId = data_availability.InstructorId;
             }
@@ -477,6 +477,7 @@ namespace FishingBooker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult InstructorSchedule(InstructorScheduleViewModel model)
         {
+            //TODO: osiguraj ako nije unet datum a klikunto save
             TimeSpan fromTime = TimeSpan.Parse(model.availability.FromTime.ToString());
             TimeSpan toTime = TimeSpan.Parse(model.availability.ToTime.ToString());
             DateTime fromDate = DateTime.Parse(model.availability.FromDate.ToString());
@@ -547,9 +548,9 @@ namespace FishingBooker.Controllers
             if(data_availability != null)
             {
                 schedule.availability.Id = data_availability.Id;
-                schedule.availability.FromDate = data_availability.FromDate.ToString();
+                schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
                 schedule.availability.FromTime = data_availability.FromTime.ToString();
-                schedule.availability.ToDate = data_availability.ToDate.ToString();
+                schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
                 schedule.availability.ToTime = data_availability.ToTime.ToString();
                 schedule.availability.InstructorId = data_availability.InstructorId;
             }
@@ -596,9 +597,9 @@ namespace FishingBooker.Controllers
             if(data_availability != null)
             {
                 schedule.availability.Id = data_availability.Id;
-                schedule.availability.FromDate = data_availability.FromDate.ToString();
+                schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
                 schedule.availability.FromTime = data_availability.FromTime.ToString();
-                schedule.availability.ToDate = data_availability.ToDate.ToString();
+                schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
                 schedule.availability.ToTime = data_availability.ToTime.ToString();
                 schedule.availability.InstructorId = data_availability.InstructorId;
             }
@@ -710,9 +711,9 @@ namespace FishingBooker.Controllers
             if(data_availability != null)
             {
                 schedule.availability.Id = data_availability.Id;
-                schedule.availability.FromDate = data_availability.FromDate.ToString();
+                schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
                 schedule.availability.FromTime = data_availability.FromTime.ToString();
-                schedule.availability.ToDate = data_availability.ToDate.ToString();
+                schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
                 schedule.availability.ToTime = data_availability.ToTime.ToString();
                 schedule.availability.InstructorId = data_availability.InstructorId;
             }
@@ -758,9 +759,9 @@ namespace FishingBooker.Controllers
             if (data_availability != null)
             {
                 schedule.availability.Id = data_availability.Id;
-                schedule.availability.FromDate = data_availability.FromDate.ToString();
+                schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
                 schedule.availability.FromTime = data_availability.FromTime.ToString();
-                schedule.availability.ToDate = data_availability.ToDate.ToString();
+                schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
                 schedule.availability.ToTime = data_availability.ToTime.ToString();
                 schedule.availability.InstructorId = data_availability.InstructorId;
             }
@@ -872,9 +873,9 @@ namespace FishingBooker.Controllers
             if(data_availability != null)
             {
                 schedule.availability.Id = data_availability.Id;
-                schedule.availability.FromDate = data_availability.FromDate.ToString();
+                schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
                 schedule.availability.FromTime = data_availability.FromTime.ToString();
-                schedule.availability.ToDate = data_availability.ToDate.ToString();
+                schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
                 schedule.availability.ToTime = data_availability.ToTime.ToString();
                 schedule.availability.InstructorId = data_availability.InstructorId;
             }
