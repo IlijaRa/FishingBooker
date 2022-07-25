@@ -11308,3 +11308,21 @@ html {
   background-repeat: no-repeat;
   min-height: 15rem;
 }
+
+/*New code*/
+tr:nth-child(even) {
+    background-color: #ddded9;
+}
+table {
+    table-layout: fixed;
+    width: inherit !important;
+}
+
+td, th {
+    width: 150px !important;
+    height: 50px !important;
+    max-width: 150px !important;
+    max-height: 75px !important;
+    min-width: 150px !important;
+    min-height: 50px !important;
+}

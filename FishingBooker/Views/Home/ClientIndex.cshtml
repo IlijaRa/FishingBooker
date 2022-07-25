@@ -2,131 +2,200 @@
 
 @{
     ViewBag.Title = "ClientIndex";
-    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    Layout = null;
+    int row_counter_future = 1;
+    int row_counter_history = 1;
 }
-
-<h2>Your future reservations</h2>
-<table class="table">
-    <tr>
-        @*<th>Id</th>*@
-        @*<th>ClientsEmail</th>*@
-        <th>Action title</th>
-        <th>Start date</th>
-        <th>Start time</th>
-        <th>End date</th>
-        <th>End date</th>
-        <th>Price</th>
-        <th>Scaled price</th>
-        @*<th>OwnerId</th>*@
-    </tr>
-
-    @foreach (var item in Model.future_reservations)
-    {
-        <tr>
-            @*<th>
-                    @Html.DisplayFor(model => item.Id)
-                </th>*@
-            @*<th>
-                    @Html.DisplayFor(model => item.ClientsEmailAddress)
-                </th>*@
-            <th>
-                @Html.DisplayFor(model => item.ActionTitle)
-            </th>
-            <th>
-                @Html.DisplayFor(model => item.StartDate)
-            </th>
-            <th>
-                @Html.DisplayFor(model => item.StartTime)
-            </th>
-            <th>
-                @Html.DisplayFor(model => item.EndDate)
-            </th>
-            <th>
-                @Html.DisplayFor(model => item.EndTime)
-            </th>
-            <th>
-                @Html.DisplayFor(model => item.Price)
-            </th>
-            <th>
-                @Html.DisplayFor(model => item.ScaledPrice)
-            </th>
-        </tr>
-    }
-    <div class="form-group">
-        @Html.LabelFor(model => model.FutureOutcomes, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FutureOutcomes, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-            @Html.ValidationMessageFor(model => model.FutureOutcomes, "", new { @class = "text-danger" })
-        </div>
-    </div>
-</table>
-
-
-    <h2>Your reservation history</h2>
-    <table class="table">
-        <tr>
-            @*<th>Id</th>*@
-            @*<th>ClientsEmail</th>*@
-            <th>Action title</th>
-            <th>Start date</th>
-            <th>Start time</th>
-            <th>End date</th>
-            <th>End date</th>
-            <th>Price</th>
-            <th>Scaled price</th>
-            @*<th>OwnerId</th>*@
-        </tr>
-
-        @foreach (var item in Model.history_reservations)
-        {
-            <tr>
-                @*<th>
-                    @Html.DisplayFor(model => item.Id)
-                </th>*@
-                @*<th>
-                    @Html.DisplayFor(model => item.ClientsEmailAddress)
-                </th>*@
-                <th>
-                    @Html.DisplayFor(model => item.ActionTitle)
-                </th>
-                <th>
-                    @Html.DisplayFor(model => item.StartDate)
-                </th>
-                <th>
-                    @Html.DisplayFor(model => item.StartTime)
-                </th>
-                <th>
-                    @Html.DisplayFor(model => item.EndDate)
-                </th>
-                <th>
-                    @Html.DisplayFor(model => item.EndTime)
-                </th>
-                <th>
-                    @Html.DisplayFor(model => item.Price)
-                </th>
-                <th>
-                    @Html.DisplayFor(model => item.ScaledPrice)
-                </th>
-                <td>
-                    @Html.ActionLink("Add revision",
-                    "AddRevision",
-                    "ClientUsers",
-                    new
-                         {
-                        ownerId = item.OwnerId,
-                        actionTitle = item.ActionTitle
-                    },
-                    null)
-                </td>
-            </tr>
-        }
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.HistoryOutcomes, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HistoryOutcomes, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.HistoryOutcomes, "", new { @class = "text-danger" })
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content />
+    <meta name="author" content />
+    <title>Modern Business - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="~/Content/assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="~/Content/css/styles.css" rel="stylesheet" />
+</head>
+<body class="d-flex flex-column">
+    <main class="flex-shrink-0">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <a class="navbar-brand" @Html.ActionLink("Fishing booker", "Index", "Home")>Fishing booker</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("About", "Home")">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Contact", "Home")">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Register", "Account")">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Account")">Sign in</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+                <!-- Page content-->
+                <br>
+                <h2 class="text-center">Your future reservations</h2>
+                <br>
+                <div class="row justify-content-center">
+                    <div class="col-auto">
+                        <div class="col-md-4">
+                            @*@Html.LabelFor(model => model.FutureOutcomes, htmlAttributes: new { @class = "control-label col-md-2 text-center" })*@
+                            <div class="form-floating mb-4">
+                                @Html.EditorFor(model => model.FutureOutcomes, new { htmlAttributes = new { @class = "form-control text-center", @readonly = "readonly", @id = "future-outcomes" } })
+                                <label class="text-center" for="future-outcomes">Future payments</label>
+                                @Html.ValidationMessageFor(model => model.FutureOutcomes, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-hover text-center table-responsive">
+                            <thread>
+                                <tr>
+                                    <th class="bg-primary" scope="col">#</th>
+                                    <th class="bg-primary" scope="col">Action title</th>
+                                    <th class="bg-primary" scope="col">Start date</th>
+                                    <th class="bg-primary" scope="col">Start time</th>
+                                    <th class="bg-primary" scope="col">End date</th>
+                                    <th class="bg-primary" scope="col">End time</th>
+                                    <th class="bg-primary" scope="col">Price</th>
+                                    <th class="table-dark" scope="col">Scaled price</th>
+                                </tr>
+                            </thread>
+                            <tbody>
+                                @foreach (var item in Model.future_reservations)
+                                {
+                                    <tr class="table-striped">
+                                        <th scope="row">@row_counter_future</th>
+                                        <td>
+                                            @Html.DisplayFor(model => item.ActionTitle)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.StartDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.StartTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.EndDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.EndTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.Price)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.ScaledPrice)
+                                        </td>
+                                    </tr>
+                                    row_counter_future++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <br>
+                <h2 class="text-center">Your reservation history</h2>
+                <br>
+                <div class="row justify-content-center">
+                    <div class="col-auto">
+                        <div class="col-md-4">
+                            @*@Html.LabelFor(model => model.FutureOutcomes, htmlAttributes: new { @class = "control-label col-md-2 text-center" })*@
+                            <div class="form-floating mb-4">
+                                @Html.EditorFor(model => model.HistoryOutcomes, new { htmlAttributes = new { @class = "form-control text-center", @readonly = "readonly", @id = "history-outcomes" } })
+                                <label class="text-center" for="history-outcomes">History payments</label>
+                                @Html.ValidationMessageFor(model => model.HistoryOutcomes, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-hover text-center table-responsive">
+                            <thread>
+                                <tr>
+                                    <th class="bg-primary" scope="col">#</th>
+                                    <th class="bg-primary" scope="col">Action title</th>
+                                    <th class="bg-primary" scope="col">Start date</th>
+                                    <th class="bg-primary" scope="col">Start time</th>
+                                    <th class="bg-primary" scope="col">End date</th>
+                                    <th class="bg-primary" scope="col">End time</th>
+                                    <th class="bg-primary" scope="col">Price</th>
+                                    <th class="table-dark" scope="col">Scaled price</th>
+                                    <th class="bg-primary" scope="col">Revision</th>
+                                </tr>
+                            </thread>
+                            <tbody>
+                                @foreach (var item in Model.history_reservations)
+                                {
+                                    <tr class="table-striped">
+                                        <th scope="row">@row_counter_history</th>
+                                        <td>
+                                            @Html.DisplayFor(model => item.ActionTitle)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.StartDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.StartTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.EndDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.EndTime)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.Price)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(model => item.ScaledPrice)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Add revision",
+                                            "AddRevision",
+                                            "ClientUsers",
+                                            new
+                                                 {
+                                                ownerId = item.OwnerId,
+                                                actionTitle = item.ActionTitle
+                                            },
+                                            null)
+                                        </td>
+                                    </tr>
+                                    row_counter_history++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        
+    <!-- Footer-->
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Your Website 2021</div></div>
+                <div class="col-auto">
+                    <a class="link-light small" href="#!">Privacy</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Terms</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Contact</a>
+                </div>
             </div>
         </div>
-
-    </table>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="~/Content/js/scripts.js"></script>
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
+</html>
