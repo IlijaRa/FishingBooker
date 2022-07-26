@@ -363,6 +363,7 @@
     <Content Include="images\our_team\employee2.png" />
     <Content Include="images\our_team\employee3.png" />
     <Content Include="images\our_team\employee4.png" />
+    <Content Include="images\roles\client_profile_image.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />

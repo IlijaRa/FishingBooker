@@ -956,7 +956,8 @@ namespace FishingBooker.Controllers
                 EmailAddress = data_user.EmailAddress,
                 Address = data_user.Address,
                 City = data_user.City,
-                Country = data_user.Country
+                Country = data_user.Country,
+                Biography = data_user.Biography
             };
             return View(data);
         }
