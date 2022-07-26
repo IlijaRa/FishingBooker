@@ -31,6 +31,14 @@ namespace FishingBooker.Controllers
             {
                 return RedirectToAction("InstructorSchedule", "Manage");
             }
+            else if (User.IsInRole("ValidCottageOwner"))
+            {
+                return RedirectToAction("CottageOwnerSchedule", "Manage");
+            }
+            else if (User.IsInRole("ValidShipOwner"))
+            {
+                return RedirectToAction("ShipOwnerSchedule", "Manage");
+            }
             return View();
         }
 
