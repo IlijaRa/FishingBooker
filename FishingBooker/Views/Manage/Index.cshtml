@@ -99,43 +99,55 @@
                 }
             }
 
-            @if (User.IsInRole("Admin") || User.IsInRole("HeadAdmin"))
-            {
-                <dt>Go see loyalty program:</dt>
-                <dd>
-                    [
-                    @Html.ActionLink("Loyalty program", "LoyaltyProgram", "AdminUsers")
-                    ]
-                </dd>
-            }
+            
             <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6">
                         <div class="card shadow py-2">
                             <div class="card-body d-grid ">
+                                
                                 <h4 class="text-center">Class member</h4>
                                 @if (User.IsInRole("ValidFishingInstructor") || User.IsInRole("ValidCottageOwner") || User.IsInRole("ValidShipOwner") || User.IsInRole("ValidClient"))
                                 {
                                     <input class="btn btn-primary btn-lg mb-3" id="LoyaltyClassMember" name="LoyaltyClassMember" type="button" value="@Model.LoyaltyClassMember.ToString()"></input>
+                                    <br>
+                                }
+
+                                <h4 class="text-center">Options</h4>
+                                @if (User.IsInRole("Admin") || User.IsInRole("HeadAdmin"))
+                                {
+                                    <br>
+                                    <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("LoyaltyProgram", "AdminUsers")">Manage loyalty program</a>
+                                    @*<dt>Go see loyalty program:</dt>
+                                    <dd>
+                                        [
+                                        @Html.ActionLink("Loyalty program", "LoyaltyProgram", "AdminUsers")
+                                        ]
+                                    </dd>*@
+                                }
+                                @if (User.IsInRole("ValidClient")) { 
+                                    
+                                    <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("Complaint", "ClientUsers")">Complaint</a>
+                                    <br>
                                 }
 
                                 <h4 class="text-center">Account settings</h4>
-                                <br>
+                                
                                 <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("ChangeBasicInfo", "Manage", new { email = User.Identity.Name })">Change basic info about you</a>
 
                                 @if (Model.HasPassword)
                                 {
-                                    <br>
+                                    
                                     <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("ChangePassword", "Manage")">Change your password</a>
                                     @*@Html.ActionLink("Change your password", "ChangePassword")*@
                                 }
                                 else
                                 {
-                                    <br>
+                                    
                                     <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("SetPassword", "Manage")">Create your password</a>
                                     @*@Html.ActionLink("Create", "SetPassword")*@
                                 }
-                                <br>
+                                
                                 <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("DeactivateAccount", "Manage", new { email = User.Identity.Name })">Deactivate your account</a>
                                 @*@Html.ActionLink("Deactivate", "DeactivateAccount", "Manage", new { email = User.Identity.Name }, null)*@
                                 <br>
