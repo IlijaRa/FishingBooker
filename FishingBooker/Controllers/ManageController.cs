@@ -280,23 +280,53 @@ namespace FishingBooker.Controllers
             {
                 return View(model);
             }
-            if(model.NewPassword == "Admin123*")
+
+            var users = RegUserCRUD.LoadUsers();
+            string user_type = "";
+
+            foreach (var user in users)
             {
+                if (user.EmailAddress == User.Identity.GetUserName())
+                {
+                    user_type = user.Type;
+                    break;
+                }
+            }
+            if(user_type == "Administrator")
+            {
+                if (model.NewPassword == "Admin123*")
+                {
+                    return View(model);
+                }
+                var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+                if (result.Succeeded)
+                {
+                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                    UserRoleCRUD.UpdateRoleInDB(user.Id, Enums.RegistrationTypeInDB.Admin);
+                    if (user != null)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    }
+                    return RedirectToAction("Index", "Home", new { Message = ManageMessageId.ChangePasswordSuccess });
+                }
+                AddErrors(result);
                 return View(model);
             }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
+            else
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                UserRoleCRUD.UpdateRoleInDB(user.Id, Enums.RegistrationTypeInDB.Admin);
-                if (user != null)
+                var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+                if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                    if (user != null)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    }
+                    return RedirectToAction("Index", "Home", new { Message = ManageMessageId.ChangePasswordSuccess });
                 }
-                return RedirectToAction("Index", "Home", new { Message = ManageMessageId.ChangePasswordSuccess });
+                AddErrors(result);
+                return View(model);
             }
-            AddErrors(result);
-            return View(model);
         }
 
         //
