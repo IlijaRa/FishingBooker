@@ -145,39 +145,7 @@
                     </div>
                 </div>
             </div>
-                        <dl class="dl-horizontal">
-
-                            @if (User.IsInRole("ValidShipOwner"))
-                            {
-                                <h2> CREATE NEW RESERVATION FOR CURRENTLY ACTIVE CLIENT</h2>
-                                using (Html.BeginForm("CreateShipReservationForCurrentlyActiveUser", "ShipUsers", FormMethod.Get))
-                                {
-                                    @Html.AntiForgeryToken()
-
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-10">
-                                            <input type="submit" value="Create new reservation" class="btn btn-default" />
-                                        </div>
-                                    </div>
-                                }
-                            }
-
-                            @if (User.IsInRole("ValidCottageOwner"))
-                            {
-                                <h2> CREATE NEW RESERVATION FOR CURRENTLY ACTIVE CLIENT</h2>
-                                using (Html.BeginForm("CreateCottageReservationForCurrentlyActiveUser", "CottageUsers", FormMethod.Get))
-                                {
-                                    @Html.AntiForgeryToken()
-
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-10">
-                                            <input type="submit" value="Create new reservation" class="btn btn-default" />
-                                        </div>
-                                    </div>
-                                }
-                            }
-                        </dl>
-                    </div>
+        </div>
                     <!-- Footer-->
                     <footer class="bg-dark py-4 mt-auto">
                         <div class="container px-5">

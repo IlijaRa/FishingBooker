@@ -695,14 +695,28 @@ namespace FishingBooker.Controllers
             DateTime fromDate = DateTime.Parse(model.availability.FromDate.ToString());
             DateTime toDate = DateTime.Parse(model.availability.ToDate.ToString());
 
-            ScheduleCRUD.UpdateAvailability(model.availability.Id,
-                                            fromDate,
-                                            fromTime,
-                                            toDate,
-                                            toTime,
-                                            model.availability.InstructorId);
+            var ship_owner_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
 
-            return RedirectToAction("ShipOwnerSchedule", "Manage");
+            if (ship_owner_availability == null)
+            {
+                ScheduleCRUD.CreateOwnerAvailabilityForStandardReservation(fromDate,
+                                                fromTime,
+                                                toDate,
+                                                toTime,
+                                                User.Identity.GetUserId());
+
+                return RedirectToAction("ShipOwnerSchedule", "Manage");
+            }
+            else
+            {
+                ScheduleCRUD.UpdateOwnerAvailabilityForStandardReservation(fromDate,
+                                                fromTime,
+                                                toDate,
+                                                toTime,
+                                                User.Identity.GetUserId());
+
+                return RedirectToAction("ShipOwnerSchedule", "Manage");
+            }
         }
 
         public ActionResult SearchHistoryReservationShipOwner(string searching)
@@ -857,14 +871,28 @@ namespace FishingBooker.Controllers
             DateTime fromDate = DateTime.Parse(model.availability.FromDate.ToString());
             DateTime toDate = DateTime.Parse(model.availability.ToDate.ToString());
 
-            ScheduleCRUD.UpdateAvailability(model.availability.Id,
-                                            fromDate,
-                                            fromTime,
-                                            toDate,
-                                            toTime,
-                                            model.availability.InstructorId);
+            var cottage_owner_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
 
-            return RedirectToAction("CottageOwnerSchedule", "Manage");
+            if (cottage_owner_availability == null)
+            {
+                ScheduleCRUD.CreateOwnerAvailabilityForStandardReservation(fromDate,
+                                                fromTime,
+                                                toDate,
+                                                toTime,
+                                                User.Identity.GetUserId());
+
+                return RedirectToAction("CottageOwnerSchedule", "Manage");
+            }
+            else
+            {
+                ScheduleCRUD.UpdateOwnerAvailabilityForStandardReservation(fromDate,
+                                                fromTime,
+                                                toDate,
+                                                toTime,
+                                                User.Identity.GetUserId());
+
+                return RedirectToAction("CottageOwnerSchedule", "Manage");
+            }
         }
 
         public ActionResult SearchHistoryReservationCottageOwner(string searching)
