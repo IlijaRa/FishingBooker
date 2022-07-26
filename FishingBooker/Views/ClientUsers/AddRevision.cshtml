@@ -2,86 +2,179 @@
 
 @{
     ViewBag.Title = "AddRevision";
-    Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    //Layout = "~/Views/Shared/_LayoutClient.cshtml";
+    Layout = null;
 }
 
-<h2>Add revision</h2>
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Write and send a revision</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ClientsEmailAddress)
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.ClientsEmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ClientsEmailAddress, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.ClientsEmailAddress, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EntityTitle, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EntityTitle, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.EntityTitle, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OwnersEmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OwnersEmailAddress, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.OwnersEmailAddress, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" }, rows = 7, cols=42 })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ActionRating, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ActionRating, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ActionRating, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OwnerInstructorRating, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OwnerInstructorRating, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OwnerInstructorRating, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Status)
-                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+@*<h2>Add revision</h2>*@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Record page</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="~/Content/assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="~/Content/css/styles.css" rel="stylesheet" />
+</head>
+<body class="d-flex flex-column">
+    <main class="flex-shrink-0">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <a class="navbar-brand" @Html.ActionLink("Fishing booker", "Index", "Home")>Fishing booker</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("About", "Home")">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Contact", "Home")">Contact</a></li>
+                        @*<li class="nav-item"><a class="nav-link" href="@Url.Action("Register", "Account")">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Account")">Sign in</a></li>*@
+                    </ul>
+                    @Html.Partial("_LoginPartial")
                 </div>
             </div>
-        </div>*@
+        </nav>
+        <!-- Page content-->
+        <section class="py-5">
+            <div class="container px-5">
+                <!-- Contact form-->
+                <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+                    <div class="text-center mb-5">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
+                        <h1 class="fw-bolder">Send a revision</h1>
+                        <p class="lead fw-normal text-muted mb-0">Do it in form below</p>
+                    </div>
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-8 col-xl-6">
+                            <!-- * * * * * * * * * * * * * * *-->
+                            <!-- * * SB Forms Contact Form * *-->
+                            <!-- * * * * * * * * * * * * * * *-->
+                            <!-- This form is pre-integrated with SB Forms.-->
+                            <!-- To make this form functional, sign up at-->
+                            <!-- https://startbootstrap.com/solution/contact-forms-->
+                            <!-- to get an API token!-->
+                            @using (Html.BeginForm("AddRevision", "ClientUsers", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                                @Html.HiddenFor(model => model.ClientsEmailAddress)
+                                @*<div class="form-group">
+                                    @Html.LabelFor(model => model.ClientsEmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ClientsEmailAddress, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                        @Html.ValidationMessageFor(model => model.ClientsEmailAddress, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                                <div class="form-floating mb-3">
+                                    @Html.EditorFor(model => model.EntityTitle, new { htmlAttributes = new { @class = "form-control", @id = "entity-title", @type = "text", @placeholder = "Enter entity title...", @readonly = "readonly" } })
+                                    <label for="entity-title">Title</label>
+                                    @Html.ValidationMessageFor(model => model.EntityTitle, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    @Html.EditorFor(model => model.OwnersEmailAddress, new { htmlAttributes = new { @class = "form-control", @id = "owners-email-address", @type = "text", @placeholder = "Enter entity title...", @readonly = "readonly" } })
+                                    <label for="owners-email-address">Owners email address</label>
+                                    @Html.ValidationMessageFor(model => model.OwnersEmailAddress, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" id="Description" name="Description" type="text" placeholder="Enter your description here..." style="height: 10rem"></textarea>
+                                    <label for="Description">Description</label>
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id = "ActionRating" name ="ActionRating" type = "number" placeholder = "Enter action rating..." min = "1" max = "10" />
+                                    <label for="ActionRating">Rate reservation</label>
+                                    @Html.ValidationMessageFor(model => model.ActionRating, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id = "OwnerInstructorRating" name ="OwnerInstructorRating" type = "number" placeholder = "Enter supervisor rating..." min = "1" max = "10" />
+                                    <label for="OwnerInstructorRating">Rate supervisor</label>
+                                    @Html.ValidationMessageFor(model => model.OwnerInstructorRating, "", new { @class = "text-danger" })
+                                </div>
+                                @*<div class="form-group">
+                                    @Html.LabelFor(model => model.OwnerInstructorRating, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.OwnerInstructorRating, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.OwnerInstructorRating, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+                                @*<div class="form-group">
+                                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        <div class="checkbox">
+                                            @Html.EditorFor(model => model.Status)
+                                            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>*@
+
+                                <!-- Submit Button-->
+                                <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Submit</button></div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- Contact cards-->
+                <div class="row gx-5 row-cols-2 row-cols-lg-4 py-5">
+                    <div class="col text-center">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-chat-dots"></i></div>
+                        <div class="h5 mb-2">Chat with us</div>
+                        <p class="text-muted mb-0">Chat live with one of our support specialists.</p>
+                    </div>
+                    <div class="col text-center">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-people"></i></div>
+                        <div class="h5">Ask the community</div>
+                        <p class="text-muted mb-0">Explore our community forums and communicate with other users.</p>
+                    </div>
+                    <div class="col text-center">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-question-circle"></i></div>
+                        <div class="h5">Support center</div>
+                        <p class="text-muted mb-0">Browse FAQ's and support articles to find solutions.</p>
+                    </div>
+                    <div class="col text-center">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-telephone"></i></div>
+                        <div class="h5">Call us</div>
+                        <p class="text-muted mb-0">Call us during normal business hours at (555) 892-9403.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer-->
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Your Website 2021</div></div>
+                <div class="col-auto">
+                    <a class="link-light small" href="#!">Privacy</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Terms</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Contact</a>
+                </div>
             </div>
         </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="~/Content/js/scripts.js"></script>
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
+</html>
