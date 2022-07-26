@@ -46,6 +46,8 @@ namespace FishingBooker.Models
         [Required(ErrorMessage = "You need to give us a title.")]
         public string SelectedActionTitle { get; set; }
 
+        //public List<SelectListItem> allowed_titles_to_select { get; set; } = new List<SelectListItem>();
+
         [Display(Name = "Reason*")]
         [Required(ErrorMessage = "You need to give us a reason.")]
         public string Reason { get; set; }

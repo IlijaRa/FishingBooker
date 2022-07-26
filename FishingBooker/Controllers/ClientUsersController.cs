@@ -17,7 +17,7 @@ namespace FishingBooker.Controllers
         {
             return View();
         }
-
+        
         public ActionResult Complaint()
         {
             // ova akcija ipak prikazuje samo one validirane korisnike
@@ -133,6 +133,7 @@ namespace FishingBooker.Controllers
                 }
                 //complaint.ActionTitles = action_titles_to_show_on_page.Select(x => new SelectListItem { Text = x, Value = x }).ToList();
                 ViewBag.ActionTitles = action_titles;
+                //complaint.allowed_titles_to_select = action_titles;
             }
             else if (user.Type == "CottageOwner")
             {
@@ -146,6 +147,7 @@ namespace FishingBooker.Controllers
                 }
                 //complaint.ActionTitles = action_titles_to_show_on_page.Select(x => new SelectListItem { Text = x, Value = x }).ToList();
                 ViewBag.ActionTitles = action_titles;
+                //complaint.allowed_titles_to_select = action_titles;
             }
             else if (user.Type == "ShipOwner")
             {
@@ -159,6 +161,7 @@ namespace FishingBooker.Controllers
                 }
                 //complaint.ActionTitles = action_titles_to_show_on_page.Select(x => new SelectListItem { Text = x, Value = x }).ToList();
                 ViewBag.ActionTitles = action_titles;
+                //complaint.allowed_titles_to_select = action_titles;
             }
             return View(complaint);
         }
@@ -167,13 +170,14 @@ namespace FishingBooker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult MakeAComplaint(ClientComplaintViewModel model)
         {
+            
             //model.ClientsEmailAddress = User.Identity.GetUserName();
             //ViewBag.ActionTitles = model.SelectedActionTitle;
             //if (ModelState.IsValid)
             //{
             if (model.SelectedActionTitle != null)
             {
-                var selectedActionTitle = model.SelectedActionTitle;
+                    var selectedActionTitle = model.SelectedActionTitle;
                 ClientComplaintCRUD.CreateClientComplaint(model.OwnerId,
                                                               model.OwnerName,
                                                               model.OwnerSurname,
@@ -183,8 +187,11 @@ namespace FishingBooker.Controllers
                                                               model.Reason);
                 return RedirectToAction("Complaint", "ClientUsers");
             }
-            else
+            else 
+            {
                 return View("ClientDidNotSelectActionTitle");
+                //return RedirectToAction("MakeAComplaint", "ClientUsers", new { ownerId = model.OwnerId});
+            }
         }
 
         public ActionResult AddRevision(string ownerId, string actionTitle)
