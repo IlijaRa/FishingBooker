@@ -106,6 +106,11 @@ namespace FishingBooker.Models
         [Required(ErrorMessage = "You need to enter country.")]
         public string Country { get; set; }
 
+
+        [Display(Name = "Biography")]
+        [Required(ErrorMessage = "You need to enter new biography.")]
+        public string Biography { get; set; }
+
     }
 
     public class AddPhoneNumberViewModel

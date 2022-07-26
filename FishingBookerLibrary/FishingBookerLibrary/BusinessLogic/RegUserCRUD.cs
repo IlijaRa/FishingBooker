@@ -49,7 +49,8 @@ namespace FishingBookerLibrary.BusinessLogic
                                               string email,
                                               string address,
                                               string city,
-                                              string country)
+                                              string country,
+                                              string biography)
         {
 
             RegUser data = new RegUser
@@ -60,10 +61,11 @@ namespace FishingBookerLibrary.BusinessLogic
                 EmailAddress = email,
                 Address = address,
                 City = city,
-                Country = country
+                Country = country,
+                Biography = biography
             };
             string sql = @" UPDATE dbo.RegUsers
-                            SET Name = @Name, Surname = @Surname, PhoneNumber = @PhoneNumber, Address = @Address, City = @City, Country = @Country  
+                            SET Name = @Name, Surname = @Surname, PhoneNumber = @PhoneNumber, Address = @Address, City = @City, Country = @Country , Biography = @Biography 
                             WHERE EmailAddress = @EmailAddress;";
 
             return SSMSDataAccess.SaveData(sql, data);

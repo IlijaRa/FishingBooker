@@ -345,10 +345,12 @@ namespace FishingBooker.Controllers
                     changeInfo.Name = row.Name;
                     changeInfo.Surname = row.Surname;
                     changeInfo.PhoneNumber = row.PhoneNumber;
-                    changeInfo.EmailAddress = row.EmailAddress;
+                    //changeInfo.EmailAddress = row.EmailAddress;
                     changeInfo.Address = row.Address;
                     changeInfo.City = row.City;
                     changeInfo.Country = row.Country;
+                    changeInfo.Biography = row.Biography;
+                    break;
                 }
 
             }
@@ -367,7 +369,8 @@ namespace FishingBooker.Controllers
                                             User.Identity.Name,
                                             model.Address,
                                             model.City,
-                                            model.Country);
+                                            model.Country,
+                                            model.Biography);
 
             if (i == 1)
                 return RedirectToAction("Index", "Manage");
