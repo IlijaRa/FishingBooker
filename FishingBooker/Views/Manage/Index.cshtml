@@ -119,7 +119,7 @@
                                 {
                                     <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("LoyaltyProgram", "AdminUsers")">Manage loyalty program</a>
                                     <br>
-                                 }
+                                }
 
                                 @if (User.IsInRole("ValidClient"))
                                 {
@@ -134,12 +134,13 @@
                                     <br>
                                 }
 
-                                @if (User.IsInRole("ValidCottageOwner"))
+                                @if (User.IsInRole("ValidShipOwner"))
                                 {
-
+                                    <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("ViewShips", "ShipUsers")">View ships</a>
+                                    <br>
                                 }
 
-                                @if (User.IsInRole("ValidCottageOwner"))
+                                @if (User.IsInRole("ValidFishingInstructor"))
                                 {
 
                                 }
