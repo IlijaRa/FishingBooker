@@ -84,99 +84,99 @@
                             {
                                 @Html.AntiForgeryToken()
                                 @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-floating mb-3">
-                                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @id = "Title", @type = "text", @placeholder = "Enter your title..." } })
-                                        <label for="Title">Title</label>
-                                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-                                    </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-floating mb-3">
+                                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @id = "Title", @type = "text", @placeholder = "Enter your title..." } })
+                                            <label for="Title">Title</label>
+                                            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                                        </div>
 
-                                    <div class="form-floating mb-3">
-                                        @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @id = "Street", @type = "text", @placeholder = "Enter your street..." } })
-                                        <label for="Street">Street</label>
-                                        @Html.ValidationMessageFor(model => model.Street, "", new { @class = "text-danger" })
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control", @id = "Street", @type = "text", @placeholder = "Enter your street..." } })
+                                            <label for="Street">Street</label>
+                                            @Html.ValidationMessageFor(model => model.Street, "", new { @class = "text-danger" })
+                                        </div>
 
-                                    <div class="form-floating mb-3">
-                                        @Html.EditorFor(model => model.AddressNumber, new { htmlAttributes = new { @class = "form-control", @id = "AddressNumber", @type = "text", @placeholder = "Enter your address number..." } })
-                                        <label for="AddressNumber">Address number</label>
-                                        @Html.ValidationMessageFor(model => model.AddressNumber, "", new { @class = "text-danger" })
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            @Html.EditorFor(model => model.AddressNumber, new { htmlAttributes = new { @class = "form-control", @id = "AddressNumber", @type = "text", @placeholder = "Enter your address number..." } })
+                                            <label for="AddressNumber">Address number</label>
+                                            @Html.ValidationMessageFor(model => model.AddressNumber, "", new { @class = "text-danger" })
+                                        </div>
 
-                                    <div class="form-floating mb-3">
-                                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @id = "City", @type = "text", @placeholder = "Enter your city..." } })
-                                        <label for="City">City</label>
-                                        @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @id = "City", @type = "text", @placeholder = "Enter your city..." } })
+                                            <label for="City">City</label>
+                                            @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                                        </div>
 
-                                    <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="PromotionDescription" name="PromotionDescription" type="text" placeholder="Enter your promotion here..." style="height: 7rem"></textarea>
-                                        <label for="PromotionDescription">Promotion</label>
-                                        @Html.ValidationMessageFor(model => model.PromotionDescription, "", new { @class = "text-danger" })
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" id="PromotionDescription" name="PromotionDescription" type="text" placeholder="Enter your promotion here..." style="height: 7rem"></textarea>
+                                            <label for="PromotionDescription">Promotion</label>
+                                            @Html.ValidationMessageFor(model => model.PromotionDescription, "", new { @class = "text-danger" })
+                                        </div>
 
-                                    <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="BehaviourRules" name="BehaviourRules" type="text" placeholder="Enter your behaviour rules..." style="height: 7rem"></textarea>
-                                        <label for="BehaviourRules">Behaviour rules</label>
-                                        @Html.ValidationMessageFor(model => model.BehaviourRules, "", new { @class = "text-danger" })
-                                    </div>
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" id="BehaviourRules" name="BehaviourRules" type="text" placeholder="Enter your behaviour rules..." style="height: 7rem"></textarea>
+                                            <label for="BehaviourRules">Behaviour rules</label>
+                                            @Html.ValidationMessageFor(model => model.BehaviourRules, "", new { @class = "text-danger" })
+                                        </div>
 
 
 
-                                    <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="AdditionalServices" name="AdditionalServices" type="text" placeholder="Enter your additional services..." style="height: 7rem"></textarea>
-                                        <label for="AdditionalServices">Additional services</label>
-                                        @Html.ValidationMessageFor(model => model.AdditionalServices, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="Pricelist" name="Pricelist" type="text" placeholder="Enter your pricelist..." style="height: 10rem"></textarea>
-                                        <label for="Pricelist">Pricelist</label>
-                                        @Html.ValidationMessageFor(model => model.Pricelist, "", new { @class = "text-danger" })
-                                    </div>
-
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="Price" name="Price" type="number" placeholder="Enter Price..." />
-                                        <label for="Price">Price</label>
-                                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-                                    </div>
-
-                                    <div class="form-floating mb-3">
-                                        <input class="form-control" id="MaxNumberOfPeople" name="MaxNumberOfPeople" type="number" placeholder="Enter max number of people..." min="1" max="200" />
-                                        <label for="MaxNumberOfPeople">Max number of people</label>
-                                        @Html.ValidationMessageFor(model => model.MaxNumberOfPeople, "", new { @class = "text-danger" })
-                                    </div>
-
-                                    <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="FishingEquipment" name="FishingEquipment" type="text" placeholder="Enter your available equipment..." style="height: 10rem"></textarea>
-                                        <label for="FishingEquipment">Available equipment</label>
-                                        @Html.ValidationMessageFor(model => model.FishingEquipment, "", new { @class = "text-danger" })
-                                    </div>
-
-                                    <div class="form-floating mb-3">
-                                        @*@Html.LabelFor(model => model.CancellationPolicy, htmlAttributes: new { @class = "control-label col-md-2" })*@
-                                        <div class="col-md-12">
-                                            @Html.RadioButtonFor(model => model.CancellationPolicy, value: "ForFree") For free
-                                            @Html.ValidationMessageFor(model => model.CancellationPolicy, "", new { @class = "text-danger"})
-                                            <br />
-                                            @Html.RadioButtonFor(model => model.CancellationPolicy, value: "Suspension10") Suspension 10%
-                                            @Html.ValidationMessageFor(model => model.CancellationPolicy, "", new { @class = "text-danger" })
-                                            <br />
-                                            @Html.RadioButtonFor(model => model.CancellationPolicy, value: "Suspension20") Suspension 20%
-                                            @Html.ValidationMessageFor(model => model.CancellationPolicy, "", new { @class = "text-danger" })
-                                            <br />
-                                            @Html.RadioButtonFor(model => model.CancellationPolicy, value: "Suspension30") Suspension 30%
-                                            @Html.ValidationMessageFor(model => model.CancellationPolicy, "", new { @class = "text-danger" })
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" id="AdditionalServices" name="AdditionalServices" type="text" placeholder="Enter your additional services..." style="height: 7rem"></textarea>
+                                            <label for="AdditionalServices">Additional services</label>
+                                            @Html.ValidationMessageFor(model => model.AdditionalServices, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" id="Pricelist" name="Pricelist" type="text" placeholder="Enter your pricelist..." style="height: 10rem"></textarea>
+                                            <label for="Pricelist">Pricelist</label>
+                                            @Html.ValidationMessageFor(model => model.Pricelist, "", new { @class = "text-danger" })
+                                        </div>
 
-                                    <!-- Submit Button-->
-                                    <div class="d-grid"><button class="btn btn-primary btn-lg" id="createButton" type="submit">Create</button></div>
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="Price" name="Price" type="number" placeholder="Enter Price..." />
+                                            <label for="Price">Price</label>
+                                            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="MaxNumberOfPeople" name="MaxNumberOfPeople" type="number" placeholder="Enter max number of people..." min="1" max="200" />
+                                            <label for="MaxNumberOfPeople">Max number of people</label>
+                                            @Html.ValidationMessageFor(model => model.MaxNumberOfPeople, "", new { @class = "text-danger" })
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" id="FishingEquipment" name="FishingEquipment" type="text" placeholder="Enter your available equipment..." style="height: 10rem"></textarea>
+                                            <label for="FishingEquipment">Available equipment</label>
+                                            @Html.ValidationMessageFor(model => model.FishingEquipment, "", new { @class = "text-danger" })
+                                        </div>
+
+                                        <div class="form-floating mb-3">
+                                            @*@Html.LabelFor(model => model.CancellationPolicy, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                            <div class="col-md-12">
+                                                @Html.RadioButtonFor(model => model.CancellationPolicy, value: "ForFree") For free
+                                                @Html.ValidationMessageFor(model => model.CancellationPolicy, "", new { @class = "text-danger"})
+                                                <br />
+                                                @Html.RadioButtonFor(model => model.CancellationPolicy, value: "Suspension10") Suspension 10%
+                                                @Html.ValidationMessageFor(model => model.CancellationPolicy, "", new { @class = "text-danger" })
+                                                <br />
+                                                @Html.RadioButtonFor(model => model.CancellationPolicy, value: "Suspension20") Suspension 20%
+                                                @Html.ValidationMessageFor(model => model.CancellationPolicy, "", new { @class = "text-danger" })
+                                                <br />
+                                                @Html.RadioButtonFor(model => model.CancellationPolicy, value: "Suspension30") Suspension 30%
+                                                @Html.ValidationMessageFor(model => model.CancellationPolicy, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <!-- Submit Button-->
+                                        <div class="d-grid"><button class="btn btn-primary btn-lg" id="createButton" type="submit">Create</button></div>
+                                    </div>
+
                                 </div>
-
-                            </div>
 
                             }
                         </div>
