@@ -46,10 +46,12 @@
             </div>
         </nav>
         <!-- Page content-->
+        <br>
+        <h2 class="text-center">Your availability</h2>
         <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6">
-                    <h2 class="text-center">Your availability</h2>
+
                     @using (Html.BeginForm("InstructorSchedule", "Manage", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
@@ -66,9 +68,9 @@
                                             htmlAttributes = new
                                             {
                                                 @class = "form-control",
-                                                @id = "availavility-from-date",@*@type = "date",*@ @placeholder = "Enter your name..."
-                                            }
-                                        })
+                                                @id = "availavility-from-date",@*@type = "date",*@@placeholder = "Enter your name..."
+}
+})
                                         @Html.ValidationMessageFor(model => model.availability.FromDate, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -140,169 +142,169 @@
                 </div>
             </div>
         </div>
-                    <br>
-                    <h2 class="text-center">Active reservations</h2>
-                    <br>
-                    <div class="row justify-content-center">
-                        <div class="col-auto">
-                            <table class="table table-bordered table-hover text-center table-responsive">
-                                <thread>
-                                    <tr>
-                                        <th class="bg-primary" scope="col">#</th>
-                                        <th class="bg-primary" scope="col">Clients email</th>
-                                        <th class="bg-primary" scope="col">Action title</th>
-                                        <th class="bg-primary" scope="col">Start date</th>
-                                        <th class="bg-primary" scope="col">Start time</th>
-                                        <th class="bg-primary" scope="col">End date</th>
-                                        <th class="bg-primary" scope="col">End time</th>
-                                        <th class="bg-primary" scope="col">Price</th>
-                                        <th class="bg-primary" scope="col">Clients info</th>
-                                    </tr>
-                                </thread>
-                                <tbody>
-                                    @foreach (var item in Model.current_reservations)
-                                    {
-                                        <tr class="table-striped">
-                                            @Html.HiddenFor(modelItem => item.Id)
-                                            <th scope="row">@row_counter_current</th>
-                                            <td>
-                                                @Html.DisplayFor(model => item.ClientsEmailAddress)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.ActionTitle)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.StartDate)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.StartTime)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.EndDate)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.EndTime)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.Price)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink(
-                                                        "View profile",
-                                                        "ClientProfileInfo",
-                                                        "Manage",
-                                                        new
-                                                             {
-                                                            email = item.ClientsEmailAddress
-                                                            },
-                                                        null
-                                                )
-                                            </td>
-                                        </tr>
-                                        row_counter_current++;
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+        <br>
+        <h2 class="text-center">Active reservations</h2>
+        <br>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <table class="table table-bordered table-hover text-center table-responsive">
+                    <thread>
+                        <tr>
+                            <th class="bg-primary" scope="col">#</th>
+                            <th class="bg-primary" scope="col">Clients email</th>
+                            <th class="bg-primary" scope="col">Action title</th>
+                            <th class="bg-primary" scope="col">Start date</th>
+                            <th class="bg-primary" scope="col">Start time</th>
+                            <th class="bg-primary" scope="col">End date</th>
+                            <th class="bg-primary" scope="col">End time</th>
+                            <th class="bg-primary" scope="col">Price</th>
+                            <th class="bg-primary" scope="col">Clients info</th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                        @foreach (var item in Model.current_reservations)
+                        {
+                            <tr class="table-striped">
+                                @Html.HiddenFor(modelItem => item.Id)
+                                <th scope="row">@row_counter_current</th>
+                                <td>
+                                    @Html.DisplayFor(model => item.ClientsEmailAddress)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.ActionTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.StartDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.StartTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.EndDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.EndTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Price)
+                                </td>
+                                <td>
+                                    @Html.ActionLink(
+                                            "View profile",
+                                            "ClientProfileInfo",
+                                            "Manage",
+                                            new
+                                                 {
+                                                email = item.ClientsEmailAddress
+                                                },
+                                            null
+                                    )
+                                </td>
+                            </tr>
+                            row_counter_current++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-                    <br>
-                    <h2 class="text-center">History reservations</h2>
-                    <br>
-                    <div class="row justify-content-center">
-                        <div class="col-auto">
-                            @using (Html.BeginForm("SearchHistoryReservation", "Manage", FormMethod.Get))
-                            {
-                                <!--<input id="searching" name="searching" type="text" value="" class="form-control col-md-3" placeholder="Fill in..." />-->
-                                <!-- Submit Button-->
-                                <!--<div><button class="btn btn-primary btn-lg" type="submit">Search</button></div>-->
-                                <div class="container">
-                                    <div class="row d-flex justify-content-center align-items-center">
-                                        <div class="col-md-8">
-                                            <div class="search">
-                                                <i class="fa fa-search"></i>
-                                                <input id="searching" name="searching" type="text" class="form-control" placeholder="Fill in...">
-                                                <button class="btn btn-primary" type="submit">Search</button>
-                                            </div>
-                                        </div>
-                                    </div>
+        <br>
+        <h2 class="text-center">History reservations</h2>
+        <br>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                @using (Html.BeginForm("SearchHistoryReservation", "Manage", FormMethod.Get))
+                {
+                    <!--<input id="searching" name="searching" type="text" value="" class="form-control col-md-3" placeholder="Fill in..." />-->
+                    <!-- Submit Button-->
+                    <!--<div><button class="btn btn-primary btn-lg" type="submit">Search</button></div>-->
+                    <div class="container">
+                        <div class="row d-flex justify-content-center align-items-center">
+                            <div class="col-md-8">
+                                <div class="search">
+                                    <i class="fa fa-search"></i>
+                                    <input id="searching" name="searching" type="text" class="form-control" placeholder="Fill in...">
+                                    <button class="btn btn-primary" type="submit">Search</button>
                                 </div>
-                            }
-                            <br>
-                            <table class="table table-bordered table-hover text-center table-responsive">
-                                <thread>
-                                    <tr>
-                                        <th class="bg-primary" scope="col">#</th>
-                                        <th class="bg-primary" scope="col">Clients email</th>
-                                        <th class="bg-primary" scope="col">Action title</th>
-                                        <th class="bg-primary" scope="col">Start date</th>
-                                        <th class="bg-primary" scope="col">Start time</th>
-                                        <th class="bg-primary" scope="col">End date</th>
-                                        <th class="bg-primary" scope="col">End time</th>
-                                        <th class="bg-primary" scope="col">Price</th>
-                                        <th class="bg-primary" scope="col">Clients info</th>
-                                        <th class="bg-primary" scope="col">Record</th>
-                                    </tr>
-                                </thread>
-                                <tbody>
-                                    @foreach (var item in Model.reservation_history)
-                                    {
-                                        <tr class="table-striped">
-
-                                            <th scope="row">@row_counter_history</th>
-                                            @Html.HiddenFor(modelItem => item.Id)
-                                            <td>
-                                                @Html.DisplayFor(model => item.ClientsEmailAddress)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.ActionTitle)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.StartDate)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.StartTime)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.EndDate)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.EndTime)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(model => item.Price)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink(
-                                                        "View profile",
-                                                        "ClientProfileInfo",
-                                                        "Manage",
-                                                        new
-                                                             {
-                                                            email = item.ClientsEmailAddress
-                                                            },
-                                                        null
-                                                )
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink(
-                                                        "Fill in a record",
-                                                        "FillARecord",
-                                                        "Manage",
-                                                        new
-                                                             {
-                                                            clientsEmail = item.ClientsEmailAddress
-                                                            },
-                                                        null
-                                                );
-                                            </td>
-                                        </tr>
-                                        row_counter_history++;
-                                    }
-                                </tbody>
-                            </table>
+                            </div>
                         </div>
                     </div>
+                }
+                <br>
+                <table class="table table-bordered table-hover text-center table-responsive">
+                    <thread>
+                        <tr>
+                            <th class="bg-primary" scope="col">#</th>
+                            <th class="bg-primary" scope="col">Clients email</th>
+                            <th class="bg-primary" scope="col">Action title</th>
+                            <th class="bg-primary" scope="col">Start date</th>
+                            <th class="bg-primary" scope="col">Start time</th>
+                            <th class="bg-primary" scope="col">End date</th>
+                            <th class="bg-primary" scope="col">End time</th>
+                            <th class="bg-primary" scope="col">Price</th>
+                            <th class="bg-primary" scope="col">Clients info</th>
+                            <th class="bg-primary" scope="col">Record</th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                        @foreach (var item in Model.reservation_history)
+                        {
+                            <tr class="table-striped">
+
+                                <th scope="row">@row_counter_history</th>
+                                @Html.HiddenFor(modelItem => item.Id)
+                                <td>
+                                    @Html.DisplayFor(model => item.ClientsEmailAddress)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.ActionTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.StartDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.StartTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.EndDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.EndTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Price)
+                                </td>
+                                <td>
+                                    @Html.ActionLink(
+                                            "View profile",
+                                            "ClientProfileInfo",
+                                            "Manage",
+                                            new
+                                                 {
+                                                email = item.ClientsEmailAddress
+                                                },
+                                            null
+                                    )
+                                </td>
+                                <td>
+                                    @Html.ActionLink(
+                                            "Fill in a record",
+                                            "FillARecord",
+                                            "Manage",
+                                            new
+                                                 {
+                                                clientsEmail = item.ClientsEmailAddress
+                                                },
+                                            null
+                                    );
+                                </td>
+                            </tr>
+                            row_counter_history++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
         <!-- Footer-->
         <footer class="bg-dark py-4 mt-auto">

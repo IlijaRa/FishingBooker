@@ -39,17 +39,19 @@
                         <li class="nav-item"><a class="nav-link" href="@Url.Action("About", "Home")">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="@Url.Action("Contact", "Home")">Contact</a></li>
                         @*<li class="nav-item"><a class="nav-link" href="@Url.Action("Register", "Account")">Register</a></li>
-                            <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Account")">Sign in</a></li>*@
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Account")">Sign in</a></li>*@
                     </ul>
                     @Html.Partial("_LoginPartial")
                 </div>
             </div>
         </nav>
         <!-- Page content-->
+        <br>
+        <h2 class="text-center">Your availability</h2>
         <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6">
-                    <h2 class="text-center">Your availability</h2>
+
                     @using (Html.BeginForm("CottageOwnerSchedule", "Manage", FormMethod.Post))
                     {
                         @Html.AntiForgeryToken()
@@ -107,12 +109,12 @@
 
 
                         @*<div class="form-group">
-                                @Html.LabelFor(model => model.availability.InstructorId, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.availability.InstructorId, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.availability.InstructorId, "", new { @class = "text-danger" })
-                                </div>
-                            </div>*@
+                            @Html.LabelFor(model => model.availability.InstructorId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.availability.InstructorId, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.availability.InstructorId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>*@
 
 
                         @* </div> *@
@@ -131,10 +133,10 @@
                             <div class="d-grid col-md-12"><button class="btn btn-primary btn-lg" type="submit">RESERVATION FOR CURRENTLY ACTIVE CLIENT</button></div>
 
                             @*<div class="form-group">
-                                    <div class="col-md-offset-2 col-md-8">
-                                        <input type="submit" value="Create new reservation" class="btn btn-default" />
-                                    </div>
-                                </div>*@
+                                <div class="col-md-offset-2 col-md-8">
+                                    <input type="submit" value="Create new reservation" class="btn btn-default" />
+                                </div>
+                            </div>*@
                         }
                     </div>
                 </div>
