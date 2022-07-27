@@ -105,7 +105,7 @@
                     <div class="col-lg-8 col-xl-6">
                         <div class="card shadow py-2">
                             <div class="card-body d-grid ">
-                                
+
                                 <h4 class="text-center">Class member</h4>
                                 @if (User.IsInRole("ValidFishingInstructor") || User.IsInRole("ValidCottageOwner") || User.IsInRole("ValidShipOwner") || User.IsInRole("ValidClient"))
                                 {
@@ -114,40 +114,53 @@
                                 }
 
                                 <h4 class="text-center">Options</h4>
+
                                 @if (User.IsInRole("Admin") || User.IsInRole("HeadAdmin"))
                                 {
-                                    <br>
                                     <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("LoyaltyProgram", "AdminUsers")">Manage loyalty program</a>
-                                    @*<dt>Go see loyalty program:</dt>
-                                    <dd>
-                                        [
-                                        @Html.ActionLink("Loyalty program", "LoyaltyProgram", "AdminUsers")
-                                        ]
-                                    </dd>*@
-                                }
-                                @if (User.IsInRole("ValidClient")) { 
-                                    
+                                    <br>
+                                 }
+
+                                @if (User.IsInRole("ValidClient"))
+                                {
                                     <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("Complaint", "ClientUsers")">Complaint</a>
                                     <br>
                                 }
 
+
+                                @if (User.IsInRole("ValidCottageOwner"))
+                                {
+                                    <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("ViewCottages", "CottageUsers")">View cottages</a>
+                                    <br>
+                                }
+
+                                @if (User.IsInRole("ValidCottageOwner"))
+                                {
+
+                                }
+
+                                @if (User.IsInRole("ValidCottageOwner"))
+                                {
+
+                                }
+
                                 <h4 class="text-center">Account settings</h4>
-                                
+
                                 <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("ChangeBasicInfo", "Manage", new { email = User.Identity.Name })">Change basic info about you</a>
 
                                 @if (Model.HasPassword)
                                 {
-                                    
+
                                     <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("ChangePassword", "Manage")">Change your password</a>
                                     @*@Html.ActionLink("Change your password", "ChangePassword")*@
                                 }
                                 else
                                 {
-                                    
+
                                     <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("SetPassword", "Manage")">Create your password</a>
                                     @*@Html.ActionLink("Create", "SetPassword")*@
                                 }
-                                
+
                                 <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("DeactivateAccount", "Manage", new { email = User.Identity.Name })">Deactivate your account</a>
                                 @*@Html.ActionLink("Deactivate", "DeactivateAccount", "Manage", new { email = User.Identity.Name }, null)*@
                                 <br>
