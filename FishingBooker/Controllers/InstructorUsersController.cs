@@ -24,7 +24,9 @@ namespace FishingBooker.Controllers
         public ActionResult CreateAdventure()
         {
             ViewBag.Message = "Create adventure";
-            return View();
+            AdventureViewModel adventure = new AdventureViewModel();
+            adventure.CancellationPolicy = Enums.CancellationPolicyType.ForFree;
+            return View(adventure);
         }
 
         [HttpPost]
