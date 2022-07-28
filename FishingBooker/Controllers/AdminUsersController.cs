@@ -41,7 +41,8 @@ namespace FishingBooker.Controllers
                         Address = row.Address,
                         City = row.City,
                         Country = row.Country,
-                        Description = row.Description
+                        Description = row.Description,
+                        Biography = row.Biography
                     });
                 }
 
