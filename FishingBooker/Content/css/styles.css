@@ -11376,11 +11376,11 @@ td, th {
         height:500px;
     }
     .carousel {
-        color: grey;
-        background-color: grey !important;
+        color: #212529;
+        background-color: #212529 !important;
     }
 
     .carousel .item {
-        color: grey;
-        background-color: grey;
+        color: 2#2E2B21;
+        background-color: #212529;
     }

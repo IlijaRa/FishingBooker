@@ -313,6 +313,7 @@
     <Compile Include="Models\CurrentReservationViewModel.cs" />
     <Compile Include="Models\DeactivationRequestViewModel.cs" />
     <Compile Include="Models\DetailsAboutUserViewModel.cs" />
+    <Compile Include="Models\DetailsAdventureViewModel.cs" />
     <Compile Include="Models\EditAdventureViewModel.cs" />
     <Compile Include="Models\EmailSender\Gmail.cs" />
     <Compile Include="Models\IdentityModels.cs" />

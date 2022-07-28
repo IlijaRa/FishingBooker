@@ -278,23 +278,52 @@ namespace FishingBooker.Controllers
 
         public ActionResult AdventureDetails(int advId)
         {
-            AdventureViewModel model = new AdventureViewModel();
+            DetailsAdventureViewModel model = new DetailsAdventureViewModel();
             var adventure = AdventureCRUD.LoadAdventureById(advId);
+            var instructor = RegUserCRUD.LoadUserById(adventure.InstructorId);
+            var data_fast_reservations = ReservationCRUD.LoadAdventureReservations();
+            List<AdventureReservationViewModel> fast_reservations_list = new List<AdventureReservationViewModel>();
+            ViewData["MapSource"] = CalculateMapSource(adventure.Address);
             string[] address = adventure.Address.Split(',');
-            model.AdventureId = advId;
-            model.Title = adventure.Title;
-            model.Street = address[0];
-            model.AddressNumber = address[1];
-            model.City = address[2];
-            model.PromotionDescription = adventure.PromotionDescription;
-            model.BehaviourRules = adventure.BehaviourRules;
-            model.AdditionalServices = adventure.AdditionalServices;
-            model.Pricelist = adventure.Pricelist;
+            model.adventure.AdventureId = advId;
+            model.adventure.Title = adventure.Title;
+            model.adventure.Street = address[0];
+            model.adventure.AddressNumber = address[1];
+            model.adventure.City = address[2];
+            model.adventure.PromotionDescription = adventure.PromotionDescription;
+            model.adventure.BehaviourRules = adventure.BehaviourRules;
+            model.adventure.AdditionalServices = adventure.AdditionalServices;
+            model.adventure.Pricelist = adventure.Pricelist;
             //model.Price = adventure.Price;
-            model.MaxNumberOfPeople = adventure.MaxNumberOfPeople;
-            model.FishingEquipment = adventure.FishingEquipment;
-            model.CancellationPolicy = adventure.CancellationPolicy;
+            model.adventure.MaxNumberOfPeople = adventure.MaxNumberOfPeople;
+            model.adventure.FishingEquipment = adventure.FishingEquipment;
+            model.adventure.CancellationPolicy = adventure.CancellationPolicy;
+            model.adventure.Biography = instructor.Biography;
             model.images = ImageCRUD.LoadImagesByAdventureId(advId);
+
+            foreach (var row in data_fast_reservations)
+            {
+                if (row.AdventureId == advId)
+                {
+                    fast_reservations_list.Add(new AdventureReservationViewModel
+                    {
+                        Id = row.Id,
+                        Place = row.Place,
+                        StartDate = row.StartDate,
+                        StartTime = row.StartTime.ToString(),
+                        EndDate = row.EndDate,
+                        EndTime = row.EndTime.ToString(),
+                        ValidityPeriodDate = row.ValidityPeriodDate,
+                        ValidityPeriodTime = row.ValidityPeriodTime.ToString(),
+                        MaxNumberOfPeople = row.MaxNumberOfPeople,
+                        AdditionalServices = row.AdditionalServices,
+                        Price = row.Price,
+                        IsReserved = row.IsReserved
+                    });
+                }
+            }
+
+            model.fast_reservations = fast_reservations_list;
 
             return View(model);
         }
