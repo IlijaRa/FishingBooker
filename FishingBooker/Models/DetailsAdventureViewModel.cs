@@ -8,7 +8,6 @@ namespace FishingBooker.Models
 {
     public class DetailsAdventureViewModel : EditAdventureViewModel
     {
-        [System.ComponentModel.DataAnnotations.Display(Name = "Images")]
-        public List<Image> images { get; set; } = new List<Image>();
+        
     }
 }

@@ -2,343 +2,391 @@
 
 @{
     ViewBag.Title = "EditAdventure";
-    if (User.IsInRole("ValidFishingInstructor"))
-    {
-        Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
-    }
-    else if (User.IsInRole("ValidCottageOwner"))
-    {
-        Layout = "~/Views/Shared/_LayoutCottageOwner.cshtml";
-    }
-    else if (User.IsInRole("ValidShipOwner"))
-    {
-        Layout = "~/Views/Shared/_LayoutShipOwner.cshtml";
-    }
-    else if (User.IsInRole("Admin"))
-    {
-        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    }
-    else if (User.IsInRole("HeadAdmin"))
-    {
-        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
-    }
-    int adventureId = (int)ViewData["AdventureId"];
+    Layout = null;
+    int row_counter = 1;
+    //if (User.IsInRole("ValidFishingInstructor"))
+    //{
+    //    Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
+    //}
+    //else if (User.IsInRole("ValidCottageOwner"))
+    //{
+    //    Layout = "~/Views/Shared/_LayoutCottageOwner.cshtml";
+    //}
+    //else if (User.IsInRole("ValidShipOwner"))
+    //{
+    //    Layout = "~/Views/Shared/_LayoutShipOwner.cshtml";
+    //}
+    //else if (User.IsInRole("Admin"))
+    //{
+    //    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    //}
+    //else if (User.IsInRole("HeadAdmin"))
+    //{
+    //    Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    //}
+            int adventureId = (int)ViewData["AdventureId"];
     //string MapSource = (string)ViewData["MapSource"];
     //MapSource = "\"" + MapSource + "\"";
 }
 
-<h2>Edit adventure</h2>
+@*<h2>Edit adventure</h2>*@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjf80OnyVrHoYZ2QKDWm7q8VN8bIrxS58&callback=initMap"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Adventure details page</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="~/Content/assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="~/Content/css/styles.css" rel="stylesheet" />
 </head>
-
-<div>
-    <div id="modal-map2" style="height:76%; width:77%; position: absolute; overflow:hidden;"></div>
-</div>
-
-
-<div class="row">
-    <div class="col-sm-6">
-        @using (Html.BeginForm("EditAdventure", "InstructorUsers", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            <div class="form-horizontal">
-                <h4>Change information about your adventure</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                @Html.HiddenFor(model => model.adventure.AdventureId, new { @class = "id" })
-
-                @*<div class="form-group">
-                        @Html.LabelFor(model => model.AdventureId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.AdventureId, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.AdventureId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>*@
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.adventure.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.adventure.Title, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.adventure.Title, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.adventure.Street, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.adventure.Street, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.adventure.Street, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.adventure.AddressNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.adventure.AddressNumber, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.adventure.AddressNumber, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.adventure.City, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.adventure.City, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.adventure.City, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.adventure.PromotionDescription, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.adventure.PromotionDescription, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.adventure.PromotionDescription, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.adventure.BehaviourRules, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.adventure.BehaviourRules, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.adventure.BehaviourRules, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.adventure.AdditionalServices, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.adventure.AdditionalServices, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.adventure.AdditionalServices, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.adventure.Pricelist, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.adventure.Pricelist, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.adventure.Pricelist, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                @*<div class="form-group">
-                    @Html.LabelFor(model => model.adventure.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.adventure.Price, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.adventure.Price, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.adventure.MaxNumberOfPeople, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.adventure.MaxNumberOfPeople, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.adventure.MaxNumberOfPeople, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.adventure.FishingEquipment, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.adventure.FishingEquipment, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.adventure.FishingEquipment, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.adventure.CancellationPolicy, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.RadioButtonFor(model => model.adventure.CancellationPolicy, value: "ForFree") For free
-                        @Html.ValidationMessageFor(model => model.adventure.CancellationPolicy, "", new { @class = "text-danger" })
-                        <br />
-                        @Html.RadioButtonFor(model => model.adventure.CancellationPolicy, value: "Suspension10") Suspension 10%
-                        @Html.ValidationMessageFor(model => model.adventure.CancellationPolicy, "", new { @class = "text-danger" })
-                        <br />
-                        @Html.RadioButtonFor(model => model.adventure.CancellationPolicy, value: "Suspension20") Suspension 20%
-                        @Html.ValidationMessageFor(model => model.adventure.CancellationPolicy, "", new { @class = "text-danger" })
-                        <br />
-                        @Html.RadioButtonFor(model => model.adventure.CancellationPolicy, value: "Suspension30") Suspension 30%
-                        @Html.ValidationMessageFor(model => model.adventure.CancellationPolicy, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.adventure.Biography, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.adventure.Biography, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.adventure.Biography, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
-                    </div>
+<body class="d-flex flex-column">
+    <main class="flex-shrink-0">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">Fishing booker</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("About", "Home")">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Contact", "Home")">Contact</a></li>
+                        @*<li class="nav-item"><a class="nav-link" href="@Url.Action("Register", "Account")">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Account")">Sign in</a></li>*@
+                    </ul>
+                    @Html.Partial("_LoginPartial")
                 </div>
             </div>
-        }
-    </div>
+        </nav>
+        <!-- Page content -->
+        <!-- slider -->
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                @for (int i = 0; i < Model.images.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        <li data-target="#carouselExampleIndicators" data-slide-to="@i " class="active"></li>
+                    }
+                    else
+                    {
+                        <li data-target="#carouselExampleIndicators" data-slide-to="@i "></li>
+                    }
+                }
+            </ol>
+            <div class="carousel-inner">
+                @foreach (var item in Model.images)
+                {
+                    if (Model.images.First() == item)
+                    {
+                        var base64 = Convert.ToBase64String(item.image);
+                        var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+                        <div class="carousel-item active">
+                            <img src="@imgsrc" class="d-block vw-75">
+                        </div>
+                    }
+                    else
+                    {
+                        var base64 = Convert.ToBase64String(item.image);
+                        var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+                        <div class="carousel-item">
+                            <img src="@imgsrc" class="d-block vw-75">
+                        </div>
+                    }
+                }
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </a>
+        </div>
+        <br>
+        <div class="col-sm-12 text-center">
+            @using (Html.BeginForm("AddImage", "InstructorUsers", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
 
-    <div class="col-sm-6">
-        @using (Html.BeginForm("AddImage", "InstructorUsers", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-
-            <div class="form-horizontal">
-                <h4>Image</h4>
-                <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.image.AdventureId, new { @class = "id" })
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.image, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <input type="file" id="image1" name="image1" />
+                <div class="form-floating mb-3">
+                    @*@Html.LabelFor(model => model.image, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    <div class="col-md-12">
+                        <input type="file" id="image1" name="image1" class="btn btn-primary" />
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Submit" class="btn btn-default" />
+                <div class="form-floating mb-3">
+                    <div class="col-md-offset-2 col-md-12">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
                     </div>
+                </div>
+
+            }
+        </div>
+        <h2 class="text-center">Edit adventure</h2>
+        <section class="py-5">
+            <div class="container px-5">
+                <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+                    @*<div class="row gx-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6">*@
+                    <!-- * * * * * * * * * * * * * * *-->
+                    <!-- * * SB Forms Contact Form * *-->
+                    <!-- * * * * * * * * * * * * * * *-->
+                    <!-- This form is pre-integrated with SB Forms.-->
+                    <!-- To make this form functional, sign up at-->
+                    <!-- https://startbootstrap.com/solution/contact-forms-->
+                    <!-- to get an API token!-->
+
+
+                    @using (Html.BeginForm("EditAdventure", "InstructorUsers", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.adventure.AdventureId, htmlAttributes: new { @class = "id" })
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-floating mb-3">
+                                    @Html.EditorFor(model => model.adventure.Title, new { htmlAttributes = new { @class = "form-control", @id = "Title", @type = "text" } })
+                                    <label for="Title">Title</label>
+                                    @Html.ValidationMessageFor(model => model.adventure.Title, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    @Html.EditorFor(model => model.adventure.Street, new { htmlAttributes = new { @class = "form-control", @id = "Street", @type = "text" } })
+                                    <label for="Street">Street</label>
+                                    @Html.ValidationMessageFor(model => model.adventure.Street, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    @Html.EditorFor(model => model.adventure.AddressNumber, new { htmlAttributes = new { @class = "form-control", @id = "AddressNumber", @type = "text" } })
+                                    <label for="AddressNumber">Number</label>
+                                    @Html.ValidationMessageFor(model => model.adventure.AddressNumber, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    @Html.EditorFor(model => model.adventure.City, new { htmlAttributes = new { @class = "form-control", @id = "City", @type = "text" } })
+                                    <label for="City">City</label>
+                                    @Html.ValidationMessageFor(model => model.adventure.City, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    @Html.TextAreaFor(model => model.adventure.PromotionDescription, new { @class = "form-control", @style = "height: 10rem" })
+                                    <label for="PromotionDescription">Promotion description</label>
+                                    @Html.ValidationMessageFor(model => model.adventure.PromotionDescription, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    @Html.TextAreaFor(model => model.adventure.BehaviourRules, new { @class = "form-control", @style = "height: 10rem" })
+                                    <label for="BehaviourRules">Behaviour rules</label>
+                                    @Html.ValidationMessageFor(model => model.adventure.BehaviourRules, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    @Html.TextAreaFor(model => model.adventure.AdditionalServices, new { @class = "form-control", @style = "height: 10rem" })
+                                    <label for="AdditionalServices">Additional services</label>
+                                    @Html.ValidationMessageFor(model => model.adventure.AdditionalServices, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6">
+
+                                <div class="form-floating mb-3">
+                                    @Html.TextAreaFor(model => model.adventure.Pricelist, new { @class = "form-control", @style = "height: 10rem" })
+                                    <label for="Pricelist">Pricelist</label>
+                                    @Html.ValidationMessageFor(model => model.adventure.Pricelist, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    @Html.EditorFor(model => model.adventure.MaxNumberOfPeople, new { htmlAttributes = new { @class = "form-control", @id = "MaxNumberOfPeople", @type = "text" } })
+                                    <label for="MaxNumberOfPeople">People</label>
+                                    @Html.ValidationMessageFor(model => model.adventure.MaxNumberOfPeople, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    @Html.TextAreaFor(model => model.adventure.FishingEquipment, new { @class = "form-control", @style = "height: 10rem" })
+                                    <label for="FishingEquipment">Fishing equipment</label>
+                                    @Html.ValidationMessageFor(model => model.adventure.FishingEquipment, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    @* @Html.LabelFor(model => model.adventure.CancellationPolicy, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                    <div class="col-md-12">
+                                        @Html.RadioButtonFor(model => model.adventure.CancellationPolicy, value: "ForFree") For free
+                                        @Html.ValidationMessageFor(model => model.adventure.CancellationPolicy, "", new { @class = "text-danger" })
+                                        <br />
+                                        @Html.RadioButtonFor(model => model.adventure.CancellationPolicy, value: "Suspension10") Suspension 10%
+                                        @Html.ValidationMessageFor(model => model.adventure.CancellationPolicy, "", new { @class = "text-danger" })
+                                        <br />
+                                        @Html.RadioButtonFor(model => model.adventure.CancellationPolicy, value: "Suspension20") Suspension 20%
+                                        @Html.ValidationMessageFor(model => model.adventure.CancellationPolicy, "", new { @class = "text-danger" })
+                                        <br />
+                                        @Html.RadioButtonFor(model => model.adventure.CancellationPolicy, value: "Suspension30") Suspension 30%
+                                        @Html.ValidationMessageFor(model => model.adventure.CancellationPolicy, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    @Html.TextAreaFor(model => model.adventure.Biography, new { @class = "form-control", @style = "height: 17rem" })
+                                    <label for="Biography">Instructors biography</label>
+                                    @Html.ValidationMessageFor(model => model.adventure.Biography, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+
+                            <br>
+
+                            <!-- Submit Button-->
+                            <div class="d-grid"><button class="btn btn-primary btn-lg" id="saveButton" type="submit">Save</button></div>
+                        </div>
+                    }
+                    <br>
+
                 </div>
             </div>
+        </section>
 
-        }
-    </div>
-</div>
 
-<h2>Fast reservations</h2>
-@Html.ActionLink("Create reservation", "CreateReservation", "InstructorUsers", new { AdventureId = adventureId }, null);
-<table class="table">
-    <tr>
-        <th>Place</th>
-        <th>Start date</th>
-        <th>Start time</th>
-        <th>End date</th>
-        <th>End time</th>
-        <th>Valid until date</th>
-        <th>Valid until time</th>
-        <th>Max number of people</th>
-        <th>Additional services</th>
-        <th>Price</th>
-        <th>Is reserved?</th>
-    </tr>
 
-    @foreach (var item in Model.fast_reservations)
-    {
-        <tr>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>*@
-            @Html.HiddenFor(modelItem => item.Id)
-            <td>
-                @Html.DisplayFor(modelItem => item.Place)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValidityPeriodDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValidityPeriodTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxNumberOfPeople)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AdditionalServices)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsReserved)
-            </td>
-            <td>
-            <td>
-                @Html.ActionLink(
-                    "Delete",
-                    "DeleteFastReservation",
-                    "InstructorUsers",
-                    new
-                         {
-                        advId = adventureId,
-                        reservationId = item.Id
-                        },
-                    null
-                )
-            </td>
-        </tr>
+        <h2 class="text-center">Fast reservations</h2>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <div class="text-center">
+                    @Html.ActionLink("Create reservation", "CreateReservation", "InstructorUsers", new { AdventureId = adventureId }, null);
+                </div>
+                <br>
+                <table class="table table-bordered table-hover text-center table-responsive">
+                    <thread>
+                        <tr>
+                            <th class="bg-primary" scope="col">#</th>
+                            <th class="bg-primary" scope="col">Place</th>
+                            <th class="bg-primary" scope="col">Start date</th>
+                            <th class="bg-primary" scope="col">Start time</th>
+                            <th class="bg-primary" scope="col">End date</th>
+                            <th class="bg-primary" scope="col">End time</th>
+                            <th class="bg-primary" scope="col">People</th>
+                            <th class="bg-primary" scope="col">Additional services</th>
+                            <th class="bg-primary" scope="col">Price</th>
+                            <th class="bg-primary" scope="col">Is reserved?</th>
+                            <th class="bg-primary" scope="col">Delete</th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                        @foreach (var item in Model.fast_reservations)
+                        {
+                            <tr class="table-striped">
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.UserId)
+                                </td>*@
+                                @Html.HiddenFor(modelItem => item.Id)
+                                <th scope="row">@row_counter</th>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Place)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaxNumberOfPeople)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AdditionalServices)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IsReserved)
+                                </td>
+                                <td>
+                                    @Html.ActionLink(
+                                        "Delete",
+                                        "DeleteFastReservation",
+                                        "InstructorUsers",
+                                        new
+                                             {
+                                            advId = adventureId,
+                                            reservationId = item.Id
+                                            },
+                                        null
+                                    )
+                                </td>
+                            </tr>
+                            row_counter++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mapouter">
+            <div class="gmap_canvas">
+                <iframe width="100%" height="500" id="gmap_canvas" src=@(ViewData["MapSource"]) frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://fmovies-online.net">fmovies</a><br>
+                <style>
+                    .mapouter {
+                        position: relative;
+                        text-align: right;
+                        height: 500px;
+                        width: 100%;
+                    }
+                </style><a href="https://www.embedgooglemap.net">google maps embed iframe</a>
+                <style>
+                    .gmap_canvas {
+                        overflow: hidden;
+                        background: none !important;
+                        height: 500px;
+                        width: 100%;
+                    }
+                </style>
+            </div>
+        </div>
+    </main>
+    <!-- Footer-->
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Your Website 2021</div></div>
+                <div class="col-auto">
+                    <a class="link-light small" href="#!">Privacy</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Terms</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="~/Content/js/scripts.js"></script>
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js" integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjf80OnyVrHoYZ2QKDWm7q8VN8bIrxS58&callback=initMap"></script>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
     }
-
-</table>
-
-<!--<h2 style="background-color: #CCCCCC; color: #333333; text-align: center;">You can see our location here</h2>
-<fieldset>
-    <legend style="font-family: arial; color: #333333; font-size: large;"></legend>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <div id="map" style="width:100%;height:500px"></div>
-    <script>
-
-        function myMap() {
-            var mapCanvas = document.getElementById("map");
-            var mapOptions = {
-                center: new google.maps.LatLng(20.296100, 85.824500),
-                zoom: 18,
-                mapTypeId: google.maps.MapTypeId.HYBRID
-            };
-            var map = new google.maps.Map(mapCanvas, mapOptions);
-        }
-    </script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjf80OnyVrHoYZ2QKDWm7q8VN8bIrxS58&callback=myMap"></script>
-
-</fieldset>
-<footer>
-    <p style="background-color: #CCCCCC; color: #333333; text-align: center;">© @DateTime.Now.ToLocalTime()</p>-->
-@*Add Date Time*@
-<!--</footer>-->
-
-<div class="mapouter">
-    <div class="gmap_canvas">
-        <iframe width="100%" height="500" id="gmap_canvas" src=@(ViewData["MapSource"]) frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://fmovies-online.net">fmovies</a><br>
-        <style>
-            .mapouter {
-                position: relative;
-                text-align: right;
-                height: 500px;
-                width: 100%;
-            }
-        </style><a href="https://www.embedgooglemap.net">google maps embed iframe</a>
-        <style>
-            .gmap_canvas {
-                overflow: hidden;
-                background: none !important;
-                height: 500px;
-                width: 100%;
-            }
-        </style>
-    </div>
-</div>
-
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+</body>
+</html>

@@ -140,8 +140,7 @@ namespace FishingBooker.Controllers
             var data_adventures = AdventureCRUD.LoadAdventures();
             var data_fast_reservations = ReservationCRUD.LoadAdventureReservations();
             List<AdventureReservationViewModel> fast_reservations_list = new List<AdventureReservationViewModel>();
-            RegUser user = RegUserCRUD.LoadUsers().Find(x => x.Id == User.Identity.GetUserId());
-
+            //RegUser user = RegUserCRUD.LoadUsers().Find(x => x.Id == User.Identity.GetUserId());
             foreach (var rowa in data_adventures)
             {
                 if (rowa.Id == advId)
@@ -162,7 +161,8 @@ namespace FishingBooker.Controllers
                     edit_adventure.adventure.MaxNumberOfPeople = rowa.MaxNumberOfPeople;
                     edit_adventure.adventure.FishingEquipment = rowa.FishingEquipment;
                     edit_adventure.adventure.CancellationPolicy = rowa.CancellationPolicy;
-                    edit_adventure.adventure.Biography = user.Biography;
+                    edit_adventure.adventure.Biography = RegUserCRUD.LoadUserById(rowa.InstructorId).Biography;
+                    edit_adventure.images = ImageCRUD.LoadImagesByAdventureId(advId);
                     break;
                 }
             }
@@ -229,22 +229,26 @@ namespace FishingBooker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditAdventure(EditAdventureViewModel model)
         {
-            string address = model.adventure.Street + "," + model.adventure.AddressNumber + "," + model.adventure.City;
-            AdventureCRUD.UpdateAdventure(model.adventure.AdventureId,
-                                            model.adventure.Title,
-                                            address,
-                                            model.adventure.PromotionDescription,
-                                            model.adventure.BehaviourRules,
-                                            model.adventure.AdditionalServices,
-                                            model.adventure.Pricelist,
-                                            //model.adventure.Price,
-                                            model.adventure.MaxNumberOfPeople,
-                                            model.adventure.FishingEquipment,
-                                            model.adventure.CancellationPolicy);
+            if (ModelState.IsValid)
+            {
+                string address = model.adventure.Street + "," + model.adventure.AddressNumber + "," + model.adventure.City;
+                AdventureCRUD.UpdateAdventure(model.adventure.AdventureId,
+                                                model.adventure.Title,
+                                                address,
+                                                model.adventure.PromotionDescription,
+                                                model.adventure.BehaviourRules,
+                                                model.adventure.AdditionalServices,
+                                                model.adventure.Pricelist,
+                                                //model.adventure.Price,
+                                                model.adventure.MaxNumberOfPeople,
+                                                model.adventure.FishingEquipment,
+                                                model.adventure.CancellationPolicy);
 
-            RegUserCRUD.UpdateBiography(User.Identity.GetUserId(), model.adventure.Biography);
+                RegUserCRUD.UpdateBiography(User.Identity.GetUserId(), model.adventure.Biography);
 
-            return RedirectToAction("EditAdventure", "InstructorUsers", new { advId = model.adventure.AdventureId });
+                return RedirectToAction("EditAdventure", "InstructorUsers", new { advId = model.adventure.AdventureId });
+            }
+            return View("Error");
         }
 
         public ActionResult DeleteAdventure(int advId)
@@ -269,11 +273,10 @@ namespace FishingBooker.Controllers
                 model.image.image = new byte[image1.ContentLength];
                 image1.InputStream.Read(model.image.image, 0, image1.ContentLength);
                 ImageCRUD.SubmitImage(model.image.image, model.image.AdventureId);
+                return RedirectToAction("EditAdventure", "InstructorUsers", new { advId = model.image.AdventureId });
             }
             else
                 return View("ImageSubmitError");
-
-            return RedirectToAction("EditAdventure", "InstructorUsers", new { advId = model.image.AdventureId });
         }
 
         public ActionResult AdventureDetails(int advId)
