@@ -10,28 +10,19 @@
 }
 @{
     ViewBag.Title = "AllUsers";
-    if (User.IsInRole("Admin"))
-    {
-        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    }
-    else if (User.IsInRole("HeadAdmin"))
-    {
-        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
-    }
+    Layout = null;
+    int row_counter = 1;
+    //if (User.IsInRole("Admin"))
+    //{
+    //    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    //}
+    //else if (User.IsInRole("HeadAdmin"))
+    //{
+    //    Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    //}
 }
 
-<h2>All users</h2>
-@if (User.IsInRole("HeadAdmin"))
-{
-    @Html.ActionLink("Create admin", "Register", "Account")
-}
-
-
-@using (Html.BeginForm("SearchUsers", "AdminUsers", FormMethod.Get))
-{
-    @Html.TextBox("searching")
-    <input type="submit" , value="Search" />
-}
+@*<h2>All users</h2>*@
 
 <!DOCTYPE html>
 <html lang="en">
@@ -61,136 +52,123 @@
                         <li class="nav-item"><a class="nav-link" href="@Url.Action("About", "Home")">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="@Url.Action("Contact", "Home")">Contact</a></li>
                         @*<li class="nav-item"><a class="nav-link" href="@Url.Action("Register", "Account")">Register</a></li>
-                            <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Account")">Sign in</a></li>*@
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Account")">Sign in</a></li>*@
                     </ul>
                     @Html.Partial("_LoginPartial")
                 </div>
             </div>
         </nav>
-
-        <table class="table">
-            <tr>
-                @*<th>
-                        @Html.DisplayNameFor(model => model.UserId)
-                    </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Surname)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EmailAddress)
-                </th>
-                @*<th>
-                        @Html.DisplayNameFor(model => model.Password)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ConfirmPassword)
-                    </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.Type)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Address)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.City)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Country)
-                </th>
-                @*<th>
-                        @Html.DisplayNameFor(model => model.Description)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Biography)
-                    </th>*@
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
+        <br>
+        <h2 class="text-center">All users</h2>
+        <div class="text-center">
+            @if (User.IsInRole("HeadAdmin"))
             {
-                <tr>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.UserId)
-                        </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Surname)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PhoneNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EmailAddress)
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.Password)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ConfirmPassword)
-                        </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.City)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Country)
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Biography)
-                        </th>*@
-                    <td>
-                        @Html.ActionLink(
-                            "Details",
-                            "DetailsAboutUser",
-                            "AdminUsers",
-                            new
-                                 {
-                                userId = item.UserId,
-                                },
-                            null
-                        ) |
-                        @Html.ActionLink(
-                            "Block",
-                            "BlockUser",
-                            "AdminUsers",
-                            new
-                                 {
-                                email = item.EmailAddress,
-                                status = "Blocked"
-                                },
-                            null
-                        ) |
-                        @Html.ActionLink(
-                            "Delete",
-                            "DeleteUser",
-                            "AdminUsers",
-                            new
-                                 {
-                                email = item.EmailAddress,
-                                },
-                            null
-                        )
-                    </td>
-                </tr>
-            }
+                @Html.ActionLink("Create admin", "Register", "Account")
 
-        </table>
+            }
+        </div>
+        <br>
+        @using (Html.BeginForm("SearchUsers", "AdminUsers", FormMethod.Get))
+        {
+            <div class="container">
+                <div class="row d-flex justify-content-center align-items-center">
+                    <div class="col-md-8">
+                        <div class="search">
+                            <i class="fa fa-search"></i>
+                            <input id="searching" name="searching" type="text" class="form-control" placeholder="Fill in...">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <br>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <table class="table table-bordered table-hover text-center table-responsive">
+                    <thread>
+                        <tr>
+                            <th class="bg-primary" scope="col">#</th>
+                            <th class="bg-primary" scope="col">Name</th>
+                            <th class="bg-primary" scope="col">Surname</th>
+                            <th class="bg-primary" scope="col">Phone number</th>
+                            <th class="bg-primary" scope="col">Email address</th>
+                            <th class="bg-primary" scope="col">Type</th>
+                            <th class="bg-primary" scope="col">Address</th>
+                            <th class="bg-primary" scope="col">City</th>
+                            <th class="bg-primary" scope="col">Country</th>
+                            <th class="bg-primary" scope="col">Options</th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="table-striped">
+                                <th scope="row">@row_counter</th>
+                                <td>
+                                    @Html.DisplayFor(model => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Surname)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.PhoneNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.EmailAddress)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Type)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Address)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.City)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Country)
+                                </td>
+                                <td>
+                                    @Html.ActionLink(
+                                        "Details",
+                                        "DetailsAboutUser",
+                                        "AdminUsers",
+                                        new
+                                             {
+                                            userId = item.UserId,
+                                            },
+                                        null
+                                    ) |
+                                    @Html.ActionLink(
+                                        "Block",
+                                        "BlockUser",
+                                        "AdminUsers",
+                                        new
+                                             {
+                                            email = item.EmailAddress,
+                                            status = "Blocked"
+                                            },
+                                        null
+                                    ) |
+                                    @Html.ActionLink(
+                                        "Delete",
+                                        "DeleteUser",
+                                        "AdminUsers",
+                                        new
+                                             {
+                                            email = item.EmailAddress,
+                                            },
+                                        null
+                                    )
+                                </td>
+                            </tr>
+                            row_counter++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </main>
     <!-- Footer-->
     <footer class="bg-dark py-4 mt-auto">
