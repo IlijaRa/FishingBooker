@@ -11371,3 +11371,16 @@ td, th {
         width: 110px;
         background: #0C66EA;
     }
+    .carousel-inner img {
+        margin: auto;
+        height:500px;
+    }
+    .carousel {
+        color: grey;
+        background-color: grey !important;
+    }
+
+    .carousel .item {
+        color: grey;
+        background-color: grey;
+    }
