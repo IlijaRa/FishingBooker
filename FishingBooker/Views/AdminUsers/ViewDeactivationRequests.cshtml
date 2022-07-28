@@ -2,56 +2,124 @@
 
 @{
     ViewBag.Title = "ViewDeactivationRequests";
-    if (User.IsInRole("Admin"))
-    {
-        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    }
-    else if (User.IsInRole("HeadAdmin"))
-    {
-        Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
-    }
+    Layout = null;
+    int row_counter = 1;
+    //if (User.IsInRole("Admin"))
+    //{
+    //    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    //}
+    //else if (User.IsInRole("HeadAdmin"))
+    //{
+    //    Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
+    //}
 }
 
-<h2>Deactivation requests</h2>
+@*<h2>Deactivation requests</h2>*@
 
-<h2></h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Ships page</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="~/Content/assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="~/Content/css/styles.css" rel="stylesheet" />
+</head>
+<body class="d-flex flex-column">
+    <main class="flex-shrink-0">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <a class="navbar-brand" @Html.ActionLink("Fishing booker", "Index", "Home")>Fishing booker</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Home")">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("About", "Home")">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Contact", "Home")">Contact</a></li>
+                        @*<li class="nav-item"><a class="nav-link" href="@Url.Action("Register", "Account")">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Account")">Sign in</a></li>*@
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </nav>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UserSurname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmailAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Reason)
-        </th>
-        <th></th>
-    </tr>
+        <br>
+        <h2 class="text-center">Deactivation requests</h2>
+        <br>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserSurname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EmailAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Reason)
-        </td>
-        <td>
-            @Html.ActionLink("Accept", "AcceptedDeactivationEmailForm", "AdminUsers", new { emailToSend = item.EmailAddress }, null ) |
-            @Html.ActionLink("Reject", "RejectedDeactivationEmailForm", "AdminUsers", new { emailToSend = item.EmailAddress }, null )
-        </td>
-    </tr>
-}
-
-</table>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <table class="table table-bordered table-hover text-center table-responsive">
+                    <thread>
+                        <tr>
+                            <th class="bg-primary" scope="col">#</th>
+                            <th class="bg-primary" scope="col">Users name</th>
+                            <th class="bg-primary" scope="col">Users surname</th>
+                            <th class="bg-primary" scope="col">Email address</th>
+                            <th class="bg-primary" scope="col">Reason</th>
+                            <th class="bg-primary" scope="col">Options</th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="table-striped">
+                                <th scope="row">@row_counter</th>
+                                <td>
+                                    @Html.DisplayFor(model => item.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.UserSurname)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.EmailAddress)
+                                </td>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Reason)
+                                </th>
+                                <td>
+                                    @Html.ActionLink("Accept", "AcceptedDeactivationEmailForm", "AdminUsers", new { emailToSend = item.EmailAddress }, null) |
+                                    @Html.ActionLink("Reject", "RejectedDeactivationEmailForm", "AdminUsers", new { emailToSend = item.EmailAddress }, null)
+                                </td>
+                            </tr>
+                            row_counter++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <!-- Footer-->
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Your Website 2021</div></div>
+                <div class="col-auto">
+                    <a class="link-light small" href="#!">Privacy</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Terms</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="~/Content/js/scripts.js"></script>
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
+</html>
