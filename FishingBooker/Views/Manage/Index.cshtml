@@ -66,49 +66,50 @@
                 </div>
             </div>
         </nav>
-        <div>
-            @if (User.IsInRole("Admin") || User.IsInRole("HeadAdmin"))
-            {
-                using (Html.BeginForm("SaveMoneyFlow", "Manage", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="form-horizontal">
-                        <h4>Money flow</h4>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Percentage, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.TotalIncome, htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.EditorFor(model => model.TotalIncome, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                                @Html.ValidationMessageFor(model => model.TotalIncome, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Update percentage" class="btn btn-default" />
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
-
+        
             
             <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6">
                         <div class="card shadow py-2">
                             <div class="card-body d-grid ">
+                                <div>
+                                    @if (User.IsInRole("Admin") || User.IsInRole("HeadAdmin"))
+                                    {
+                                        using (Html.BeginForm("SaveMoneyFlow", "Manage", FormMethod.Post))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <div class="form-horizontal">
+                                                <h4 class="text-center">Money flow</h4>
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Percentage, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
 
-                                <h4 class="text-center">Class member</h4>
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.TotalIncome, htmlAttributes: new { @class = "control-label col-md-2" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.TotalIncome, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                                        @Html.ValidationMessageFor(model => model.TotalIncome, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-2 col-md-10">
+                                                        <input type="submit" value="Update percentage" class="btn btn-default" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+
                                 @if (User.IsInRole("ValidFishingInstructor") || User.IsInRole("ValidCottageOwner") || User.IsInRole("ValidShipOwner") || User.IsInRole("ValidClient"))
                                 {
+                                    <h4 class="text-center">Class member</h4>
                                     <input class="btn btn-primary btn-lg mb-3" id="LoyaltyClassMember" name="LoyaltyClassMember" type="button" value="@Model.LoyaltyClassMember.ToString()"></input>
                                     <br>
                                 }
@@ -118,6 +119,19 @@
                                 @if (User.IsInRole("Admin") || User.IsInRole("HeadAdmin"))
                                 {
                                     <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("LoyaltyProgram", "AdminUsers")">Manage loyalty program</a>
+
+                                    <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("InvalidUsers", "AdminUsers")">Registration requests</a>
+
+                                    <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("AllUsers", "AdminUsers")">Registered users</a>
+
+                                    <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("ViewRecords", "AdminUsers")">Records</a>
+
+                                    <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("ViewDeactivationRequests", "AdminUsers")">Deactivation requests</a>
+
+                                    <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("ReadClientComplaints", "AdminUsers")">Client complaints</a>
+
+                                    <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("ReadRevisions", "AdminUsers")">Revisions</a>
+
                                     <br>
                                 }
 
@@ -172,7 +186,6 @@
                     </div>
                 </div>
             </div>
-        </div>
                     <!-- Footer-->
                     <footer class="bg-dark py-4 mt-auto">
                         <div class="container px-5">
