@@ -14,7 +14,7 @@ namespace FishingBooker.Models
 
         [Display(Name = "Scale name*")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "You need to provide a name between 2-100 characters.")]
-        [Required(ErrorMessage = "You need to give us your title.")]
+        [Required(ErrorMessage = "You need enter scale name.")]
         public string ScaleName { get; set; }
 
 
