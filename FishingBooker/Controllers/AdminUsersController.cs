@@ -454,7 +454,7 @@ namespace FishingBooker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AcceptedDeactivationEmailForm(Gmail model)
         {
-            try
+            if (ModelState.IsValid)
             {
                 var gmail = new Gmail
                 {
@@ -469,7 +469,7 @@ namespace FishingBooker.Controllers
                 DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
                 return RedirectToAction("ViewDeactivationRequests", "AdminUsers");
             }
-            catch (Exception)
+            else
             {
                 return View();
             }
