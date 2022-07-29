@@ -1029,7 +1029,7 @@ namespace FishingBooker.Controllers
                                             model.ClientId,
                                             model.InstructorId);
 
-                    if (User.IsInRole("ValidInstructor"))
+                    if (User.IsInRole("ValidFishingInstructor"))
                         return RedirectToAction("InstructorSchedule", "Manage");
                     else if (User.IsInRole("ValidCottageOwner"))
                         return RedirectToAction("CottageOwnerSchedule", "Manage");
@@ -1037,7 +1037,8 @@ namespace FishingBooker.Controllers
                         return RedirectToAction("ShipOwnerSchedule", "Manage");
                 }
             }
-            return View(model.ClientsEmailAddress);
+            return RedirectToAction("FillARecord", "Manage", new { clientsEmail = model.ClientsEmailAddress });
+            //return View();
         }
 
         //
