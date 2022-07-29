@@ -544,7 +544,7 @@ namespace FishingBooker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AnswerToComplaint(AnswerToComplaintViewModel model)
         {
-            try
+            if(ModelState.IsValid)
             {
                 var client_gmail = new Gmail
                 {
@@ -565,10 +565,11 @@ namespace FishingBooker.Controllers
                 ClientComplaintCRUD.DeleteClientComplaintById(model.complaintId);
                 return RedirectToAction("ReadClientComplaints", "AdminUsers");
             }
-            catch (Exception)
+            else
             {
                 return View();
             }
+            
         }
 
         public ActionResult ReadRevisions()

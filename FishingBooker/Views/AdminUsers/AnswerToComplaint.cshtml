@@ -71,9 +71,10 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" id="Body" name="Body" type="text" placeholder="Enter body here..." style="height: 15rem"></textarea>
+                                @Html.TextAreaFor(model => model.client_gmail.Body, new { @class = "form-control", @style = "height: 15rem" })
                                 <label for="Body">Body</label>
                                 @Html.ValidationMessageFor(model => model.client_gmail.Body, "", new { @class = "text-danger" })
+
                             </div>
                         </div>
 
@@ -94,7 +95,7 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <textarea class="form-control" id="Body" name="Body" type="text" placeholder="Enter body here..." style="height: 15rem"></textarea>
+                                @Html.TextAreaFor(model => model.owner_gmail.Body, new { @class = "form-control", @style = "height: 15rem" })
                                 <label for="Body">Body</label>
                                 @Html.ValidationMessageFor(model => model.owner_gmail.Body, "", new { @class = "text-danger" })
                             </div>
@@ -103,8 +104,6 @@
                         <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Submit</button></div>
                     </div>
                 }
-            </div>
-            </div>
             </div>
             <!-- Contact cards-->
             <div class="row gx-5 row-cols-2 row-cols-lg-4 py-5">
@@ -128,7 +127,6 @@
                     <div class="h5">Call us</div>
                     <p class="text-muted mb-0">Call us during normal business hours at (555) 892-9403.</p>
                 </div>
-            </div>
             </div>
         </section>
     </main>
