@@ -56,61 +56,58 @@
                             <!-- To make this form functional, sign up at-->
                             <!-- https://startbootstrap.com/solution/contact-forms-->
                             <!-- to get an API token!-->
-                            <div class="form-floating mb-3">
-                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @id = "name", @type = "text", @placeholder = "Enter your name...", @readonly = "readonly" } })
-                                <label for="name">Name</label>
-                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                            </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-floating mb-3">
+                                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @id = "name", @type = "text", @placeholder = "Enter your name...", @readonly = "readonly" } })
+                                                <label for="name">Name</label>
+                                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                            </div>
 
-                            <div class="form-floating mb-3">
-                                @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control", @id = "surname", @type = "text", @placeholder = "Enter your surname...", @readonly = "readonly" } })
-                                <label for="surname">Surname</label>
-                                @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
-                            </div>
+                                            <div class="form-floating mb-3">
+                                                @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control", @id = "surname", @type = "text", @placeholder = "Enter your surname...", @readonly = "readonly" } })
+                                                <label for="surname">Surname</label>
+                                                @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                                            </div>
 
-                            <div class="form-floating mb-3">
-                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @id = "phone-number", @type = "text", @placeholder = "(+123) 456-7890", @readonly = "readonly" } })
-                                <label for="phone-number">Phone number</label>
-                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-                            </div>
+                                            <div class="form-floating mb-3">
+                                                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @id = "phone-number", @type = "text", @placeholder = "(+123) 456-7890", @readonly = "readonly" } })
+                                                <label for="phone-number">Phone number</label>
+                                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                            </div>
 
-                            <div class="form-floating mb-3">
-                                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control", @id = "email-address", @type = "text", @placeholder = "Enter your address...", @readonly = "readonly" } })
-                                <label for="email-address">Email address</label>
-                                @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
-                            </div>
+                                            <div class="form-floating mb-3">
+                                                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control", @id = "email-address", @type = "text", @placeholder = "Enter your address...", @readonly = "readonly" } })
+                                                <label for="email-address">Email address</label>
+                                                @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+                                            </div>
 
-                            @*<div class="form-group">
-            @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", @readonly = "readonly" } })
-                @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                                            <div class="form-floating mb-3">
+                                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @id = "address", @type = "text", @placeholder = "Enter your address...", @readonly = "readonly" } })
+                                                <label for="address">Address</label>
+                                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-floating mb-3">
+                                                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @id = "city", @type = "text", @placeholder = "Enter your city...", @readonly = "readonly" } })
+                                                <label for="city">City</label>
+                                                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                                            </div>
 
-                            <div class="form-floating mb-3">
-                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @id = "address", @type = "text", @placeholder = "Enter your address...", @readonly = "readonly" } })
-                                <label for="address">Address</label>
-                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                            </div>
+                                            <div class="form-floating mb-3">
+                                                @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", @id = "country", @type = "text", @placeholder = "Enter your country...", @readonly = "readonly" } })
+                                                <label for="country">Country</label>
+                                                @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                                            </div>
 
-                            <div class="form-floating mb-3">
-                                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @id = "city", @type = "text", @placeholder = "Enter your city...", @readonly = "readonly" } })
-                                <label for="city">City</label>
-                                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
-                            </div>
-
-                            <div class="form-floating mb-3">
-                                @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "form-control", @id = "country", @type = "text", @placeholder = "Enter your country...", @readonly = "readonly" } })
-                                <label for="country">Country</label>
-                                @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
-                            </div>
-
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="Biography" name="Biography" type="text" placeholder="Enter your biography here..." readonly="readonly" style="height: 10rem">@Model.Biography</textarea>
-                                <label for="biography">Biography</label>
-                                @Html.ValidationMessageFor(model => model.Biography, "", new { @class = "text-danger" })
-                            </div>
+                                            <div class="form-floating mb-3">
+                                                <textarea class="form-control" id="Biography" name="Biography" type="text" placeholder="Enter your biography here..." readonly="readonly" style="height: 13rem">@Model.Biography</textarea>
+                                                <label for="biography">Biography</label>
+                                                @Html.ValidationMessageFor(model => model.Biography, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
                         </div>
                     </div>
                 </div>
