@@ -157,7 +157,7 @@ namespace FishingBooker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RejectUserRegistration(Gmail model)
         {
-            try
+            if(ModelState.IsValid)
             {
                 var gmail = new Gmail
                 {
@@ -169,7 +169,7 @@ namespace FishingBooker.Controllers
                 int i = RegUserCRUD.DeleteUserByEmail(model.To);
                 return RedirectToAction("InvalidUsers", "AdminUsers");
             }
-            catch (Exception)
+            else
             {
                 return View();
             }
