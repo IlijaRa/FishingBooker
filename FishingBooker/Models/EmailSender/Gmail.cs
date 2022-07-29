@@ -11,15 +11,15 @@ namespace FishingBooker.Models.EmailSender
     public class Gmail
     {
         [Display(Name = "To")]
-        [Required(ErrorMessage = "You need to fill this field.")]
+        [Required(ErrorMessage = "You need to fill To field.")]
         public string To { get; set; }
 
         [Display(Name = "Subject")]
-        [Required(ErrorMessage = "You need to fill this field.")]
+        [Required(ErrorMessage = "You need to fill Subject field.")]
         public string Subject { get; set; }
 
         [Display(Name = "Body")]
-        [Required(ErrorMessage = "You need to fill this field.")]
+        [Required(ErrorMessage = "You need to fill Body field.")]
         public string Body { get; set; }
 
         public void SendEmail()
