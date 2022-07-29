@@ -315,8 +315,17 @@ namespace FishingBooker.Controllers
             user_details.user.Description = data_user.Description;
             user_details.user.Biography = data_user.Biography;
 
+            if (data_user.Type == "Client")
+            {
+                return View("DetailsAboutUser", user_details);
+            }
 
-            if (data_user.Type == "FishingInstructor")
+            else if (data_user.Type == "Administrator")
+            {
+                return View("DetailsAboutUser", user_details);
+            }
+
+            else if (data_user.Type == "FishingInstructor")
             {
                 foreach (var row in data_adventures)
                 {
@@ -402,6 +411,7 @@ namespace FishingBooker.Controllers
                 }
                 return View("DetailsAboutShipOwner", user_details);
             }
+            
             return View(user_details);
         }
 
