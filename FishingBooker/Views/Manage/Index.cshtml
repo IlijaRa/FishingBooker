@@ -118,7 +118,7 @@
 
                                 @if (User.IsInRole("Admin") || User.IsInRole("HeadAdmin"))
                                 {
-                                    <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("LoyaltyProgram", "AdminUsers")">Manage loyalty program</a>
+                                    <a class="btn btn-danger btn-lg mb-3" href="@Url.Action("LoyaltyProgram", "AdminUsers")">Manage loyalty program</a>
 
                                     <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("InvalidUsers", "AdminUsers")">Registration requests</a>
 
