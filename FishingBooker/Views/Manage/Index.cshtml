@@ -79,30 +79,25 @@
                                         using (Html.BeginForm("SaveMoneyFlow", "Manage", FormMethod.Post))
                                         {
                                             @Html.AntiForgeryToken()
-                                            <div class="form-horizontal">
                                                 <h4 class="text-center">Money flow</h4>
-                                                <div class="form-group">
-                                                    @Html.LabelFor(model => model.Percentage, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                    <div class="col-md-12">
-                                                        @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control" } })
-                                                        @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
-                                                    </div>
+                                                <div class="form-floating mb-3">
+                                                    @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control", @id = "Percentage", @type = "text" } })
+                                                    <label for="Percentage">Profit for a system (%)</label>
+                                                    @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
+                                                </div>
+
+                                                <div class="form-floating mb-3">
+                                                    @Html.EditorFor(model => model.TotalIncome, new { htmlAttributes = new { @class = "form-control", @id = "TotalIncome", @type = "text" } })
+                                                    <label for="TotalIncome">Total income</label>
+                                                    @Html.ValidationMessageFor(model => model.TotalIncome, "", new { @class = "text-danger" })
                                                 </div>
 
                                                 <div class="form-group">
-                                                    @Html.LabelFor(model => model.TotalIncome, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                    <div class="col-md-12">
-                                                        @Html.EditorFor(model => model.TotalIncome, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                                                        @Html.ValidationMessageFor(model => model.TotalIncome, "", new { @class = "text-danger" })
+                                                    <div class="col-md-offset-2 col-md-12 text-center">
+                                                        <input type="submit" value="Update percentage" class="btn btn-primary" />
                                                     </div>
                                                 </div>
-
-                                                <div class="form-group">
-                                                    <div class="col-md-offset-2 col-md-12">
-                                                        <input type="submit" value="Update percentage" class="btn btn-default" />
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                <br>
                                         }
                                     }
                                 </div>
