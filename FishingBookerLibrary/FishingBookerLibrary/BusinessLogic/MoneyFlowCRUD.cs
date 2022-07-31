@@ -18,7 +18,7 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.LoadData<MoneyFlow>(sql).FirstOrDefault();
         }
 
-        public static int UpdatePercentage(decimal percentage)
+        public static int UpdatePercentage(int percentage)
         {
 
             MoneyFlow data = new MoneyFlow

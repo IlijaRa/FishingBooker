@@ -41,7 +41,7 @@ namespace FishingBooker.Controllers
              *      scheduler.Codebase = Url.Content("~/customCodebaseFolder");
              */
 
-            scheduler.Skin = DHXScheduler.Skins.Terrace;
+            scheduler.Skin = DHXScheduler.Skins.ContrastWhite;
             //scheduler.Config.multi_day = true;//render multiday events
             scheduler.InitialDate = DateTime.Now;
             scheduler.Views.Items.RemoveAt(2);
@@ -56,6 +56,7 @@ namespace FishingBooker.Controllers
         {
             var scheduler_data = new SchedulerAjaxData();
             List<CalendarEvent> calendar_events = new List<CalendarEvent>();
+            var availability_for_standard_reservation = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
             if (User.IsInRole("ValidFishingInstructor"))
             {
                 var instructor_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
@@ -63,7 +64,7 @@ namespace FishingBooker.Controllers
                 var instructors_unavailabilities = ScheduleCRUD.LoadOwnerUnavailability(User.Identity.GetUserId());
                 DateTime startDate = new DateTime();
                 DateTime endDate = new DateTime();
-
+                
                 foreach (var reservation in instructor_reservations)
                 {
 
@@ -99,6 +100,7 @@ namespace FishingBooker.Controllers
                             end_date = endDate,
                         });
                     }
+                    
                 }
 
                 foreach (var reservation in history_reservations)
@@ -149,7 +151,22 @@ namespace FishingBooker.Controllers
                         end_date = endDate,
                     });
                 }
-
+                calendar_events.Add(new CalendarEvent
+                {
+                    text = "Available for standard reservations",
+                    start_date = new DateTime(availability_for_standard_reservation.FromDate.Year,
+                                              availability_for_standard_reservation.FromDate.Month,
+                                              availability_for_standard_reservation.FromDate.Day,
+                                              availability_for_standard_reservation.FromTime.Hours,
+                                              availability_for_standard_reservation.FromTime.Minutes,
+                                              availability_for_standard_reservation.FromTime.Seconds),
+                    end_date = new DateTime(availability_for_standard_reservation.ToDate.Year,
+                                              availability_for_standard_reservation.ToDate.Month,
+                                              availability_for_standard_reservation.ToDate.Day,
+                                              availability_for_standard_reservation.ToTime.Hours,
+                                              availability_for_standard_reservation.ToTime.Minutes,
+                                              availability_for_standard_reservation.ToTime.Seconds),
+                });
                 scheduler_data.Add(calendar_events);
             }
 
@@ -234,7 +251,22 @@ namespace FishingBooker.Controllers
                         end_date = endDate,
                     });
                 }
-
+                calendar_events.Add(new CalendarEvent
+                {
+                    text = "Available for standard reservations",
+                    start_date = new DateTime(availability_for_standard_reservation.FromDate.Year,
+                                              availability_for_standard_reservation.FromDate.Month,
+                                              availability_for_standard_reservation.FromDate.Day,
+                                              availability_for_standard_reservation.FromTime.Hours,
+                                              availability_for_standard_reservation.FromTime.Minutes,
+                                              availability_for_standard_reservation.FromTime.Seconds),
+                    end_date = new DateTime(availability_for_standard_reservation.ToDate.Year,
+                                              availability_for_standard_reservation.ToDate.Month,
+                                              availability_for_standard_reservation.ToDate.Day,
+                                              availability_for_standard_reservation.ToTime.Hours,
+                                              availability_for_standard_reservation.ToTime.Minutes,
+                                              availability_for_standard_reservation.ToTime.Seconds),
+                });
                 scheduler_data.Add(calendar_events);
             }
 
@@ -320,6 +352,23 @@ namespace FishingBooker.Controllers
                     });
                 }
 
+                calendar_events.Add(new CalendarEvent
+                {
+                    text = "Available for standard reservations",
+                    start_date = new DateTime(availability_for_standard_reservation.FromDate.Year,
+                                              availability_for_standard_reservation.FromDate.Month,
+                                              availability_for_standard_reservation.FromDate.Day,
+                                              availability_for_standard_reservation.FromTime.Hours,
+                                              availability_for_standard_reservation.FromTime.Minutes,
+                                              availability_for_standard_reservation.FromTime.Seconds),
+                    end_date = new DateTime(availability_for_standard_reservation.ToDate.Year,
+                                              availability_for_standard_reservation.ToDate.Month,
+                                              availability_for_standard_reservation.ToDate.Day,
+                                              availability_for_standard_reservation.ToTime.Hours,
+                                              availability_for_standard_reservation.ToTime.Minutes,
+                                              availability_for_standard_reservation.ToTime.Seconds),
+                });
+
                 scheduler_data.Add(calendar_events);
             }
 
@@ -333,14 +382,13 @@ namespace FishingBooker.Controllers
             try
             {
                 var changedEvent = (CalendarEvent)DHXEventsHelper.Bind(typeof(CalendarEvent), actionValues);
-                
-     
+                TimeSpan startTime = new TimeSpan(changedEvent.start_date.Hour, changedEvent.start_date.Minute, changedEvent.start_date.Second);
+                TimeSpan endTime = new TimeSpan(changedEvent.end_date.Hour, changedEvent.end_date.Minute, changedEvent.end_date.Second);
 
                 switch (action.Type)
                 {
                     case DataActionTypes.Insert:
-                        TimeSpan startTime = new TimeSpan(changedEvent.start_date.Hour, changedEvent.start_date.Minute, changedEvent.start_date.Second);
-                        TimeSpan endTime = new TimeSpan(changedEvent.end_date.Hour, changedEvent.end_date.Minute, changedEvent.end_date.Second);
+                        
                         ScheduleCRUD.CreateUnavailability(changedEvent.start_date,
                                                             startTime,
                                                             changedEvent.end_date,
@@ -351,7 +399,11 @@ namespace FishingBooker.Controllers
                         //action.TargetId = changedEvent.id;//assign postoperational id
                         break;
                     case DataActionTypes.Delete:
-                        //do delete
+                        ScheduleCRUD.DeleteUnavailability(changedEvent.start_date,
+                                                            startTime,
+                                                            changedEvent.end_date,
+                                                            endTime,
+                                                            User.Identity.GetUserId());
                         break;
                     default:// "update"                          
                         //do update

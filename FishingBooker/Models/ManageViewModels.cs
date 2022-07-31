@@ -14,8 +14,8 @@ namespace FishingBooker.Models
         public bool BrowserRemembered { get; set; }
 
         [Display(Name = "Percentage for a system(%)")]
-        [Range(1, 100, ErrorMessage = "Percentage must be between 1 and 100!")]
-        public decimal Percentage { get; set; }// koristi samo admin
+        [Range(0, 100, ErrorMessage = "Percentage must be between 0 and 100!")]
+        public int Percentage { get; set; }// koristi samo admin
                                                 // 
         [Display(Name = "Total income")]
         public decimal TotalIncome { get; set; }// koristi samo admin  

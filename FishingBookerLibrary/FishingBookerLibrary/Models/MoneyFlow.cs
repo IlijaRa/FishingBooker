@@ -9,7 +9,7 @@ namespace FishingBookerLibrary.Models
     public class MoneyFlow
     {
         public int Id { get; set; } = 1;
-        public decimal Percentage { get; set; }
+        public int Percentage { get; set; }
         public decimal TotalSum { get; set; }
     }
 }

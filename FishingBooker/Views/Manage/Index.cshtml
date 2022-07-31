@@ -79,25 +79,25 @@
                                         using (Html.BeginForm("SaveMoneyFlow", "Manage", FormMethod.Post))
                                         {
                                             @Html.AntiForgeryToken()
-                                                <h4 class="text-center">Money flow</h4>
-                                                <div class="form-floating mb-3">
-                                                    @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control", @id = "Percentage", @type = "text" } })
-                                                    <label for="Percentage">Profit for a system (%)</label>
-                                                    @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
-                                                </div>
+                                            <h4 class="text-center">Money flow</h4>
+                                            <div class="form-floating mb-3">
+                                                @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control", @id = "Percentage", @type = "number" } })
+                                                <label for="Percentage">Profit for a system (%)</label>
+                                                @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
+                                            </div>
 
-                                                <div class="form-floating mb-3">
-                                                    @Html.EditorFor(model => model.TotalIncome, new { htmlAttributes = new { @class = "form-control", @id = "TotalIncome", @type = "text" } })
-                                                    <label for="TotalIncome">Total income</label>
-                                                    @Html.ValidationMessageFor(model => model.TotalIncome, "", new { @class = "text-danger" })
-                                                </div>
+                                            <div class="form-floating mb-3">
+                                                @Html.EditorFor(model => model.TotalIncome, new { htmlAttributes = new { @class = "form-control", @id = "TotalIncome", @type = "text" } })
+                                                <label for="TotalIncome">Total income</label>
+                                                @Html.ValidationMessageFor(model => model.TotalIncome, "", new { @class = "text-danger" })
+                                            </div>
 
-                                                <div class="form-group">
-                                                    <div class="col-md-offset-2 col-md-12 text-center">
-                                                        <input type="submit" value="Update percentage" class="btn btn-primary" />
-                                                    </div>
+                                            <div class="form-group">
+                                                <div class="col-md-offset-2 col-md-12 text-center">
+                                                    <input type="submit" value="Update percentage" class="btn btn-primary" />
                                                 </div>
-                                                <br>
+                                            </div>
+                                            <br>
                                         }
                                     }
                                 </div>
@@ -105,7 +105,7 @@
                                 @if (User.IsInRole("ValidFishingInstructor") || User.IsInRole("ValidCottageOwner") || User.IsInRole("ValidShipOwner") || User.IsInRole("ValidClient"))
                                 {
                                     <h4 class="text-center">Class member</h4>
-                                    <input class="btn btn-primary btn-lg mb-3" id="LoyaltyClassMember" name="LoyaltyClassMember" type="button" value="@Model.LoyaltyClassMember.ToString()"></input>
+                                    <input class="btn btn-success btn-lg mb-3" id="LoyaltyClassMember" name="LoyaltyClassMember" type="button" value="@Model.LoyaltyClassMember.ToString()"/>
                                     <br>
                                 }
 
@@ -140,18 +140,27 @@
                                 @if (User.IsInRole("ValidCottageOwner"))
                                 {
                                     <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("ViewCottages", "CottageUsers")">View cottages</a>
+
+                                    <a class="btn btn-danger btn-lg mb-3" href="@Url.Action("Index", "Calendar")">Occupancy calendar</a>
+
                                     <br>
                                 }
 
                                 @if (User.IsInRole("ValidShipOwner"))
                                 {
                                     <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("ViewShips", "ShipUsers")">View ships</a>
+
+                                    <a class="btn btn-danger btn-lg mb-3" href="@Url.Action("Index", "Calendar")">Occupancy calendar</a>
+
                                     <br>
                                 }
 
                                 @if (User.IsInRole("ValidFishingInstructor"))
                                 {
                                     <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("ViewAdventures", "InstructorUsers")">View adventures</a>
+
+                                    <a class="btn btn-danger btn-lg mb-3" href="@Url.Action("Index", "Calendar")">Occupancy calendar</a>
+
                                     <br>
                                 }
 
@@ -181,6 +190,7 @@
                     </div>
                 </div>
             </div>
+        </main>
                     <!-- Footer-->
                     <footer class="bg-dark py-4 mt-auto">
                         <div class="container px-5">

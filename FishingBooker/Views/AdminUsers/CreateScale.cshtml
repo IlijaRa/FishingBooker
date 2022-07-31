@@ -78,19 +78,19 @@
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="ClientsBenefits" name="ClientsBenefits" type="number" placeholder="Enter clients benefits..." min="1" max="100" />
+                                    <input class="form-control" id="ClientsBenefits" name="ClientsBenefits" type="number" placeholder="Enter clients benefits..." min="0" max="100" />
                                     <label for="ClientsBenefits">Clients benefit (%)</label>
                                     @Html.ValidationMessageFor(model => model.ClientsBenefits, "", new { @class = "text-danger" })
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="OwnerBenefits" name="OwnerBenefits" type="number" placeholder="Enter owner benefits..." min="1" max="100" />
+                                    <input class="form-control" id="OwnerBenefits" name="OwnerBenefits" type="number" placeholder="Enter owner benefits..." min="0" max="100" />
                                     <label for="OwnerBenefits">Owner benefit (%)</label>
                                     @Html.ValidationMessageFor(model => model.OwnerBenefits, "", new { @class = "text-danger" })
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="MinEarnedPoints" name="MinEarnedPoints" type="number" placeholder="Enter min earned points..." min="1" max="999999" />
+                                    <input class="form-control" id="MinEarnedPoints" name="MinEarnedPoints" type="number" placeholder="Enter min earned points..." min="0" max="999999" />
                                     <label for="MinEarnedPoints">Min earned points</label>
                                     @Html.ValidationMessageFor(model => model.MinEarnedPoints, "", new { @class = "text-danger" })
                                 </div>

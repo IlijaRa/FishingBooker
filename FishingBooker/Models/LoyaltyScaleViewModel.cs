@@ -19,12 +19,12 @@ namespace FishingBooker.Models
 
 
         [Display(Name = "Clients benefits for this scale(%)")]
-        [Range(1, 100, ErrorMessage = "Percentage must be between 1 and 100!")]
+        [Range(0, 100, ErrorMessage = "Percentage must be between 1 and 100!")]
         public int ClientsBenefits { get; set; }
 
 
         [Display(Name = "Owners benefits for this scale(%)")]
-        [Range(1, 100, ErrorMessage = "Percentage must be between 1 and 100!")]
+        [Range(0, 100, ErrorMessage = "Percentage must be between 1 and 100!")]
         public int OwnerBenefits { get; set; }
 
 

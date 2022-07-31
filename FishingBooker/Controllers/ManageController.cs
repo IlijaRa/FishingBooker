@@ -69,31 +69,40 @@ namespace FishingBooker.Controllers
                 : "";
 
             decimal totalIncome = 0;
-            decimal percentage = MoneyFlowCRUD.LoadMoneyFlow().Percentage/100;
-            var cottages = CottageCRUD.LoadCottages();
-            var adventures = AdventureCRUD.LoadAdventures();
-            var ships = ShipCRUD.LoadShips();
+            int percentage = MoneyFlowCRUD.LoadMoneyFlow().Percentage;
+
+            //var cottages = CottageCRUD.LoadCottages();
+            var cottage_reservations = ReservationCRUD.LoadCottageReservations();
+
+            //var adventures = AdventureCRUD.LoadAdventures();
+            var adventure_reservations = ReservationCRUD.LoadAdventureReservations();
+
+            //var ships = ShipCRUD.LoadShips();
+            var ship_reservations = ReservationCRUD.LoadShipReservations();
 
             // TODO: Odradi obracunavanje cene kod avantura
-            //foreach (var cottage in cottages)
-            //{
-            //    totalIncome = totalIncome + (cottage.Price * percentage);
-            //}
-            //foreach (var adventure in adventures)
-            //{
-            //    totalIncome = totalIncome + (adventure.Price * percentage);
-            //}
-            //foreach (var ship in ships)
-            //{
-            //    totalIncome = totalIncome + (ship.Price * percentage);
-            //}
+            foreach (var reservation in cottage_reservations)
+            {
+                totalIncome = totalIncome + (reservation.Price * Convert.ToDecimal(percentage)/100);
+            }
+
+            foreach (var reservation in adventure_reservations)
+            {
+                totalIncome = totalIncome + (reservation.Price * Convert.ToDecimal(percentage) / 100);
+            }
+
+            foreach (var reservation in ship_reservations)
+            {
+                totalIncome = totalIncome + (reservation.Price * Convert.ToDecimal(percentage) / 100);
+            }
+
             var userId = User.Identity.GetUserId();
-            var data_instructor = RegUserCRUD.LoadUserById(userId);
+            var data_owner = RegUserCRUD.LoadUserById(userId);
             var loyalty_scales = LoyaltyProgramCRUD.LoadLoyaltyScales();
             string loyaltyClass = "";
             foreach (var scale in loyalty_scales)
             {
-                if (scale.MinEarnedPoints <= data_instructor.TotalScalePoints)
+                if (scale.MinEarnedPoints <= data_owner.TotalScalePoints)
                 {
                     loyaltyClass = scale.ScaleName;
                 }
@@ -107,7 +116,7 @@ namespace FishingBooker.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
                 LoyaltyClassMember = loyaltyClass,
-                Percentage = percentage*100,
+                Percentage = percentage,
                 TotalIncome = totalIncome
             };
             return View(model);
@@ -115,7 +124,8 @@ namespace FishingBooker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveMoneyFlow(IndexViewModel model) {
+        public ActionResult SaveMoneyFlow(IndexViewModel model) 
+        {
             if (ModelState.IsValid)
             {
                 MoneyFlowCRUD.UpdatePercentage(model.Percentage);
