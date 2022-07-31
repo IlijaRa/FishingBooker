@@ -690,6 +690,22 @@ namespace FishingBooker.Controllers
                 });
             }
 
+            //sorting scales by min earned points
+            var temp = new LoyaltyScaleViewModel();
+            for (int j = 0; j <= model.scales.Count - 2; j++)
+            {
+                for (int i = 0; i <= model.scales.Count - 2; i++)
+                {
+                    if (model.scales[i].MinEarnedPoints > model.scales[i + 1].MinEarnedPoints)
+                    {
+                        temp = model.scales[i + 1];
+                        model.scales[i + 1] = model.scales[i];
+                        model.scales[i] = temp;
+                    }
+                }
+            }
+
+
             return View(model);
         }
 
