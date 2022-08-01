@@ -14,6 +14,9 @@ using FishingBooker.Models;
 using Microsoft.AspNet.Identity;
 using FishingBookerLibrary.BusinessLogic;
 using FishingBookerLibrary.Models;
+using Newtonsoft.Json.Linq;
+using static Microsoft.ClearScript.V8.V8CpuProfile;
+using System.Net;
 
 namespace FishingBooker.Controllers
 {
@@ -51,15 +54,14 @@ namespace FishingBooker.Controllers
 
             // adding special controls to lightbox
             scheduler.Lightbox.AddDefaults();
-
-            var radio = new LightboxRadio("textColor", "Event type");
-
+            var radio = new LightboxRadio("radio_button", "Event type");
             var items = new List<object>(){
-                new { key = "1", label = "Not reserved yet" },
+                new { key = "1", label = "Available" },
                 new { key = "2", label = "Not available" }
             };
-
             radio.AddOptions(items);
+            radio.Vertical = true;
+            radio.MapTo = "radio_button";
             scheduler.Lightbox.Add(radio);
 
             return View(scheduler);
@@ -69,32 +71,23 @@ namespace FishingBooker.Controllers
         {
             var scheduler_data = new SchedulerAjaxData();
             List<CalendarEvent> calendar_events = new List<CalendarEvent>();
-            var availability_for_standard_reservation = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+            
 
             if (User.IsInRole("ValidFishingInstructor"))
             {
-                var instructor_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
-                var history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
+                var adventure_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
+                //var history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
                 var instructors_unavailabilities = ScheduleCRUD.LoadOwnerUnavailability(User.Identity.GetUserId());
+                var availability_for_standard_reservation = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+
                 DateTime startDate = new DateTime();
                 DateTime endDate = new DateTime();
                 
-                foreach (var reservation in instructor_reservations)
+                foreach (var reservation in adventure_reservations)
                 {
 
-                    startDate = new DateTime(reservation.StartDate.Year,
-                                                 reservation.StartDate.Month,
-                                                 reservation.StartDate.Day,
-                                                 reservation.StartTime.Hours,
-                                                 reservation.StartTime.Minutes,
-                                                 reservation.StartTime.Seconds);
-
-                    endDate = new DateTime(reservation.EndDate.Year,
-                                           reservation.EndDate.Month,
-                                           reservation.EndDate.Day,
-                                           reservation.EndTime.Hours,
-                                           reservation.EndTime.Minutes,
-                                           reservation.EndTime.Seconds);
+                    startDate = new DateTime(reservation.StartDate.Year,reservation.StartDate.Month,reservation.StartDate.Day,reservation.StartTime.Hours,reservation.StartTime.Minutes,reservation.StartTime.Seconds);
+                    endDate = new DateTime(reservation.EndDate.Year,reservation.EndDate.Month,reservation.EndDate.Day,reservation.EndTime.Hours,reservation.EndTime.Minutes,reservation.EndTime.Seconds);
 
                     if (reservation.ClientsEmailAddress != null && reservation.IsReserved == true)
                     {
@@ -123,49 +116,38 @@ namespace FishingBooker.Controllers
                     
                 }
 
-                foreach (var reservation in history_reservations)
-                {
+                //foreach (var reservation in history_reservations)
+                //{
 
-                    startDate = new DateTime(reservation.StartDate.Year,
-                                                 reservation.StartDate.Month,
-                                                 reservation.StartDate.Day,
-                                                 reservation.StartTime.Hours,
-                                                 reservation.StartTime.Minutes,
-                                                 reservation.StartTime.Seconds);
+                //    startDate = new DateTime(reservation.StartDate.Year,
+                //                                 reservation.StartDate.Month,
+                //                                 reservation.StartDate.Day,
+                //                                 reservation.StartTime.Hours,
+                //                                 reservation.StartTime.Minutes,
+                //                                 reservation.StartTime.Seconds);
 
-                    endDate = new DateTime(reservation.EndDate.Year,
-                                           reservation.EndDate.Month,
-                                           reservation.EndDate.Day,
-                                           reservation.EndTime.Hours,
-                                           reservation.EndTime.Minutes,
-                                           reservation.EndTime.Seconds);
+                //    endDate = new DateTime(reservation.EndDate.Year,
+                //                           reservation.EndDate.Month,
+                //                           reservation.EndDate.Day,
+                //                           reservation.EndTime.Hours,
+                //                           reservation.EndTime.Minutes,
+                //                           reservation.EndTime.Seconds);
 
-                    calendar_events.Add(new CalendarEvent
-                    {
-                        id = reservation.Id,
-                        event_type = Enums.CalendarEventType.History,
-                        text = reservation.ActionTitle + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString() + " " + "- finished",
-                        start_date = startDate,
-                        end_date = endDate,
-                        color = "#6779f0"
-                    });
-                }
+                //    calendar_events.Add(new CalendarEvent
+                //    {
+                //        id = reservation.Id,
+                //        event_type = Enums.CalendarEventType.History,
+                //        text = reservation.ActionTitle + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString() + " " + "- finished",
+                //        start_date = startDate,
+                //        end_date = endDate,
+                //        color = "#6779f0"
+                //    });
+                //}
 
                 foreach (var unavailability in instructors_unavailabilities)
                 {
-                    startDate = new DateTime(unavailability.FromDate.Year,
-                                                 unavailability.FromDate.Month,
-                                                 unavailability.FromDate.Day,
-                                                 unavailability.FromTime.Hours,
-                                                 unavailability.FromTime.Minutes,
-                                                 unavailability.FromTime.Seconds);
-
-                    endDate = new DateTime(unavailability.ToDate.Year,
-                                           unavailability.ToDate.Month,
-                                           unavailability.ToDate.Day,
-                                           unavailability.ToTime.Hours,
-                                           unavailability.ToTime.Minutes,
-                                           unavailability.ToTime.Seconds);
+                    startDate = new DateTime(unavailability.FromDate.Year,unavailability.FromDate.Month,unavailability.FromDate.Day,unavailability.FromTime.Hours,unavailability.FromTime.Minutes,unavailability.FromTime.Seconds);
+                    endDate = new DateTime(unavailability.ToDate.Year,unavailability.ToDate.Month,unavailability.ToDate.Day,unavailability.ToTime.Hours,unavailability.ToTime.Minutes,unavailability.ToTime.Seconds);
 
                     calendar_events.Add(new CalendarEvent
                     {
@@ -205,6 +187,8 @@ namespace FishingBooker.Controllers
                 var cottage_owner_reservations = ReservationCRUD.LoadCottageReservationByOwnerId(User.Identity.GetUserId());
                 var history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
                 var cottage_owner_unavailabilities = ScheduleCRUD.LoadOwnerUnavailability(User.Identity.GetUserId());
+                var availability_for_standard_reservation = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+
                 DateTime startDate = new DateTime();
                 DateTime endDate = new DateTime();
 
@@ -305,6 +289,8 @@ namespace FishingBooker.Controllers
                 var ship_owner_reservations = ReservationCRUD.LoadShipReservationByOwnerId(User.Identity.GetUserId());
                 var history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
                 var ship_owner_unavailabilities = ScheduleCRUD.LoadOwnerUnavailability(User.Identity.GetUserId());
+                var availability_for_standard_reservation = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+
                 DateTime startDate = new DateTime();
                 DateTime endDate = new DateTime();
 
@@ -418,11 +404,22 @@ namespace FishingBooker.Controllers
                 switch (action.Type)
                 {
                     case DataActionTypes.Insert:
-                        ScheduleCRUD.CreateUnavailability(changedEvent.start_date,
-                                                            startTime,
-                                                            changedEvent.end_date,
-                                                            endTime,
-                                                            User.Identity.GetUserId());
+                        if (User.IsInRole("ValidFishingInstructor"))
+                        {
+                            if (changedEvent.radio_button == "1")
+                            {
+                                //ScheduleCRUD.CreateAvailability();
+                            }
+                            else if (changedEvent.radio_button == "2")
+                            {
+                                ScheduleCRUD.CreateUnavailability(changedEvent.start_date,
+                                                                startTime,
+                                                                changedEvent.end_date,
+                                                                endTime,
+                                                                User.Identity.GetUserId());
+                            }
+                        }
+                        
                         //return RedirectToAction("FillARecord", "Manage", new { clientsEmail = "clientsEmail@gmail.com"});
                         //do insert
                         //action.TargetId = changedEvent.id;//assign postoperational id

@@ -87,7 +87,7 @@
                                             </div>
 
                                             <div class="form-floating mb-3">
-                                                @Html.EditorFor(model => model.TotalIncome, new { htmlAttributes = new { @class = "form-control", @id = "TotalIncome", @type = "text" } })
+                                                @Html.EditorFor(model => model.TotalIncome, new { htmlAttributes = new { @class = "form-control", @id = "TotalIncome", @type = "text", @readonly ="readonly" } })
                                                 <label for="TotalIncome">Total income</label>
                                                 @Html.ValidationMessageFor(model => model.TotalIncome, "", new { @class = "text-danger" })
                                             </div>

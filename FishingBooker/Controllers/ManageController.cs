@@ -132,7 +132,7 @@ namespace FishingBooker.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View("MoneyFlowUpdateError");
+            return View();
         }
 
         //
