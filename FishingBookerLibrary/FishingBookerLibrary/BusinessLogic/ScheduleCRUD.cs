@@ -99,6 +99,31 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
+        public static int UpdateUnavailability( int id,
+                                                DateTime fromDate,
+                                                TimeSpan fromTime,
+                                                DateTime toDate,
+                                                TimeSpan toTime,
+                                                string ownersId)
+        {
+
+            OwnersUnavailability data = new OwnersUnavailability
+            {
+                Id = id,
+                FromDate = fromDate,
+                FromTime = fromTime,
+                ToDate = toDate,
+                ToTime = toTime,
+                OwnerId = ownersId
+            };
+
+            string sql = @" UPDATE dbo.OwnerUnavailabilities
+                            SET FromDate = @FromDate, FromTime = @FromTime, ToDate = @ToDate, ToTime = @ToTime  
+                            WHERE Id = @Id;";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
         public static int DeleteUnavailability(DateTime fromDate,
                                                 TimeSpan fromTime,
                                                 DateTime toDate,

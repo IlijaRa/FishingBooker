@@ -49,6 +49,19 @@ namespace FishingBooker.Controllers
             scheduler.LoadData = true;
             scheduler.EnableDataprocessor = true;
 
+            // adding special controls to lightbox
+            scheduler.Lightbox.AddDefaults();
+
+            var radio = new LightboxRadio("textColor", "Event type");
+
+            var items = new List<object>(){
+                new { key = "1", label = "Not reserved yet" },
+                new { key = "2", label = "Not available" }
+            };
+
+            radio.AddOptions(items);
+            scheduler.Lightbox.Add(radio);
+
             return View(scheduler);
         }
 
@@ -57,6 +70,7 @@ namespace FishingBooker.Controllers
             var scheduler_data = new SchedulerAjaxData();
             List<CalendarEvent> calendar_events = new List<CalendarEvent>();
             var availability_for_standard_reservation = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+
             if (User.IsInRole("ValidFishingInstructor"))
             {
                 var instructor_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
@@ -82,22 +96,28 @@ namespace FishingBooker.Controllers
                                            reservation.EndTime.Minutes,
                                            reservation.EndTime.Seconds);
 
-                    if (reservation.ClientsEmailAddress != null)
+                    if (reservation.ClientsEmailAddress != null && reservation.IsReserved == true)
                     {
                         calendar_events.Add(new CalendarEvent
                         {
-                            text = reservation.Place + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString(),
+                            id = reservation.Id,
+                            event_type = Enums.CalendarEventType.Reserved,
+                            text = reservation.Place + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString() + " " + "- reserved",
                             start_date = startDate,
                             end_date = endDate,
+                            color = "#46c267"
                         });
                     }
                     else
                     {
                         calendar_events.Add(new CalendarEvent
                         {
+                            id = reservation.Id,
+                            event_type = Enums.CalendarEventType.NotReserved,
                             text = "Not reserved yet",
                             start_date = startDate,
                             end_date = endDate,
+                            color = "#e84d4d"
                         });
                     }
                     
@@ -122,9 +142,12 @@ namespace FishingBooker.Controllers
 
                     calendar_events.Add(new CalendarEvent
                     {
-                        text = reservation.ActionTitle + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString(),
+                        id = reservation.Id,
+                        event_type = Enums.CalendarEventType.History,
+                        text = reservation.ActionTitle + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString() + " " + "- finished",
                         start_date = startDate,
                         end_date = endDate,
+                        color = "#6779f0"
                     });
                 }
 
@@ -146,13 +169,19 @@ namespace FishingBooker.Controllers
 
                     calendar_events.Add(new CalendarEvent
                     {
+                        id = unavailability.Id,
+                        event_type = Enums.CalendarEventType.Unavailability,
                         text = "Not available",
                         start_date = startDate,
                         end_date = endDate,
+                        color = "#332d2e",
+                        textColor = "#f7f5f5"
                     });
                 }
                 calendar_events.Add(new CalendarEvent
                 {
+                    id = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId()).Id,
+                    event_type = Enums.CalendarEventType.AvailabilityForStandardReservation,
                     text = "Available for standard reservations",
                     start_date = new DateTime(availability_for_standard_reservation.FromDate.Year,
                                               availability_for_standard_reservation.FromDate.Month,
@@ -166,6 +195,7 @@ namespace FishingBooker.Controllers
                                               availability_for_standard_reservation.ToTime.Hours,
                                               availability_for_standard_reservation.ToTime.Minutes,
                                               availability_for_standard_reservation.ToTime.Seconds),
+                    color = "#0ad2f5"
                 });
                 scheduler_data.Add(calendar_events);
             }
@@ -388,7 +418,6 @@ namespace FishingBooker.Controllers
                 switch (action.Type)
                 {
                     case DataActionTypes.Insert:
-                        
                         ScheduleCRUD.CreateUnavailability(changedEvent.start_date,
                                                             startTime,
                                                             changedEvent.end_date,
@@ -406,7 +435,54 @@ namespace FishingBooker.Controllers
                                                             User.Identity.GetUserId());
                         break;
                     default:// "update"                          
-                        //do update
+                        //TODO: update zavrsi
+                        if (changedEvent.text == "Available for standard reservations")
+                        {
+                            ScheduleCRUD.UpdateOwnerAvailabilityForStandardReservation(changedEvent.start_date,
+                                                            startTime,
+                                                            changedEvent.end_date,
+                                                            endTime,
+                                                            User.Identity.GetUserId());
+                        }
+                        else if (changedEvent.text == "Not available")
+                        {
+                            ScheduleCRUD.UpdateUnavailability(changedEvent.id,
+                                                            changedEvent.start_date,
+                                                            startTime,
+                                                            changedEvent.end_date,
+                                                            endTime,
+                                                            User.Identity.GetUserId());
+                        }
+                        else if (changedEvent.text.Contains("- reserved") || changedEvent.text.Contains("Not reserved yet")) {
+                            if (User.IsInRole("ValidFishingInstructor")) {
+                                ReservationCRUD.UpdateAdventureReservationDates(changedEvent.id,
+                                                               changedEvent.start_date,
+                                                               startTime,
+                                                               changedEvent.end_date,
+                                                               endTime,
+                                                               User.Identity.GetUserId());
+                            }
+                            //TODO: odradi ovo ispod tako sto ces napraviti nove funkcije za update rezervacija za cottage i ship
+                            //else if (User.IsInRole("ValidCottageOwner"))
+                            //{
+                            //    ReservationCRUD.UpdateAdventureReservationDates(changedEvent.id,
+                            //                                   changedEvent.start_date,
+                            //                                   startTime,
+                            //                                   changedEvent.end_date,
+                            //                                   endTime,
+                            //                                   User.Identity.GetUserId());
+                            //}
+                            //else if (User.IsInRole("ValidShipOwner"))
+                            //{
+                            //    ReservationCRUD.UpdateAdventureReservationDates(changedEvent.id,
+                            //                                   changedEvent.start_date,
+                            //                                   startTime,
+                            //                                   changedEvent.end_date,
+                            //                                   endTime,
+                            //                                   User.Identity.GetUserId());
+                            //}
+
+                        }
                         break;
                 }
             }

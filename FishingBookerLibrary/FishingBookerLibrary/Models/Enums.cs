@@ -71,5 +71,14 @@ namespace FishingBookerLibrary.Models
             BadExperience,
             DidNotShowUp
         }
+
+        public enum CalendarEventType
+        {
+            Reserved,
+            NotReserved,
+            History,
+            Unavailability,
+            AvailabilityForStandardReservation
+        }
     }
 }

@@ -139,6 +139,31 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.SaveData(sql, data);
         }
 
+        public static int UpdateAdventureReservationDates(int id,
+                                                DateTime fromDate,
+                                                TimeSpan fromTime,
+                                                DateTime toDate,
+                                                TimeSpan toTime,
+                                                string ownersId)
+        {
+
+            AdventureReservation data = new AdventureReservation
+            {
+                Id = id,
+                StartDate = fromDate,
+                StartTime = fromTime,
+                EndDate = toDate,
+                EndTime = toTime,
+                InstructorId = ownersId
+            };
+
+            string sql = @" UPDATE dbo.AdventureReservations
+                            SET StartDate = @StartDate, StartTime = @StartTime, EndDate = @EndDate, EndTime = @EndTime  
+                            WHERE Id = @Id AND InstructorId = @InstructorId;";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
         public static int DeleteAdventureReservation(int reservationId)
         {
             Reservation data = new Reservation
