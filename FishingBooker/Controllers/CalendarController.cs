@@ -52,8 +52,11 @@ namespace FishingBooker.Controllers
             scheduler.LoadData = true;
             scheduler.EnableDataprocessor = true;
 
-            // adding special controls to lightbox
+            //default textbox and date-time
             scheduler.Lightbox.AddDefaults();
+
+            // adding special controls to lightbox
+            //radiobutton
             var radio = new LightboxRadio("radio_button", "Event type");
             var items = new List<object>(){
                 new { key = "1", label = "Available" },
@@ -64,6 +67,23 @@ namespace FishingBooker.Controllers
             radio.MapTo = "radio_button";
             scheduler.Lightbox.Add(radio);
 
+            //profile button
+            ////default buttons
+            //scheduler.Config.buttons_left = new LightboxButtonList{
+            //    LightboxButtonList.Save,
+            //    LightboxButtonList.Cancel
+            //};
+            //scheduler.Config.buttons_right = new LightboxButtonList{
+            //    LightboxButtonList.Delete
+            //};
+
+            // new button
+            scheduler.Config.buttons_right.Add(new EventButton
+            {
+                Label = "Profile",
+                OnClick = "get_email",
+                Name = "Profile"
+            });
             return View(scheduler);
         }
 
@@ -95,6 +115,7 @@ namespace FishingBooker.Controllers
                             id = reservation.Id,
                             event_type = Enums.CalendarEventType.Reserved,
                             text = reservation.Place + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString() + " " + "- Reserved",
+                            clients_email = reservation.ClientsEmailAddress,
                             start_date = startDate,
                             end_date = endDate,
                             color = "#46c267"
@@ -172,6 +193,7 @@ namespace FishingBooker.Controllers
                             id = reservation.Id,
                             event_type = Enums.CalendarEventType.Reserved,
                             text = reservation.CottageName + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString() + " " + "- Reserved",
+                            clients_email = reservation.ClientsEmailAddress,
                             start_date = startDate,
                             end_date = endDate,
                             color = "#46c267"
@@ -265,6 +287,7 @@ namespace FishingBooker.Controllers
                             id = reservation.Id,
                             event_type = Enums.CalendarEventType.Reserved,
                             text = reservation.ShipName + " " + reservation.ClientsEmailAddress + " " + reservation.Price.ToString() + " " + "- Reserved",
+                            clients_email = reservation.ClientsEmailAddress,
                             start_date = startDate,
                             end_date = endDate,
                             color = "#46c267"
@@ -411,17 +434,17 @@ namespace FishingBooker.Controllers
                         //}
                         if (changedEvent.event_type == Enums.CalendarEventType.Availability)
                         {
-                            if ((changedEvent.radio_button == "1") || (changedEvent.radio_button == "null"))
-                            {
-                                ScheduleCRUD.UpdateAvailability(changedEvent.id,
-                                                            changedEvent.start_date,
-                                                            startTime,
-                                                            changedEvent.end_date,
-                                                            endTime,
-                                                            User.Identity.GetUserId(),
-                                                            changedEvent.text);
-                            }
-                            else if (changedEvent.radio_button == "2")
+                            //if ((changedEvent.radio_button == "1")/* || (changedEvent.radio_button == "null")*/)
+                            //{
+                            //    ScheduleCRUD.UpdateAvailability(changedEvent.id,
+                            //                                changedEvent.start_date,
+                            //                                startTime,
+                            //                                changedEvent.end_date,
+                            //                                endTime,
+                            //                                User.Identity.GetUserId(),
+                            //                                changedEvent.text);
+                            //}
+                            if (changedEvent.radio_button == "2")
                             {
                                 ScheduleCRUD.DeleteAvailability(changedEvent.id, User.Identity.GetUserId());
                                 ScheduleCRUD.CreateUnavailability(changedEvent.start_date,
@@ -431,20 +454,30 @@ namespace FishingBooker.Controllers
                                                             User.Identity.GetUserId(),
                                                             changedEvent.text);
                             }
+                            else
+                            {
+                                ScheduleCRUD.UpdateAvailability(changedEvent.id,
+                                                            changedEvent.start_date,
+                                                            startTime,
+                                                            changedEvent.end_date,
+                                                            endTime,
+                                                            User.Identity.GetUserId(),
+                                                            changedEvent.text);
+                            }
                         }
                         else if (changedEvent.event_type == Enums.CalendarEventType.Unavailability) 
                         {
-                            if ((changedEvent.radio_button == "2") || (changedEvent.radio_button == "null"))
-                            {
-                                ScheduleCRUD.UpdateUnavailability(changedEvent.id,
-                                                                changedEvent.start_date,
-                                                                startTime,
-                                                                changedEvent.end_date,
-                                                                endTime,
-                                                                User.Identity.GetUserId(),
-                                                                changedEvent.text);
-                            }
-                            else if(changedEvent.radio_button == "1")
+                            //if ((changedEvent.radio_button == "2")/* || (changedEvent.radio_button == "null")*/)
+                            //{
+                            //    ScheduleCRUD.UpdateUnavailability(changedEvent.id,
+                            //                                    changedEvent.start_date,
+                            //                                    startTime,
+                            //                                    changedEvent.end_date,
+                            //                                    endTime,
+                            //                                    User.Identity.GetUserId(),
+                            //                                    changedEvent.text);
+                            //}
+                            if(changedEvent.radio_button == "1")
                             {
                                 ScheduleCRUD.DeleteUnavailability(changedEvent.id, User.Identity.GetUserId());
                                 ScheduleCRUD.CreateAvailability(changedEvent.start_date,
@@ -453,6 +486,16 @@ namespace FishingBooker.Controllers
                                                             endTime,
                                                             User.Identity.GetUserId(),
                                                             changedEvent.text);
+                            }
+                            else
+                            {
+                                ScheduleCRUD.UpdateUnavailability(changedEvent.id,
+                                                                changedEvent.start_date,
+                                                                startTime,
+                                                                changedEvent.end_date,
+                                                                endTime,
+                                                                User.Identity.GetUserId(),
+                                                                changedEvent.text);
                             }
                         }
                         else if (changedEvent.event_type == Enums.CalendarEventType.Reserved || changedEvent.event_type == Enums.CalendarEventType.NotReserved)
