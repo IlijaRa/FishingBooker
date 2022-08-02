@@ -454,19 +454,19 @@ namespace FishingBooker.Controllers
         public ActionResult InstructorSchedule()
         {
             InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
-            var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+            //var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_adventures = AdventureCRUD.LoadAdventures();
 
-            if (data_availability != null)
-            {
-                schedule.availability.Id = data_availability.Id;
-                schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
-                schedule.availability.FromTime = data_availability.FromTime.ToString();
-                schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
-                schedule.availability.ToTime = data_availability.ToTime.ToString();
-                schedule.availability.InstructorId = data_availability.InstructorId;
-            }
+            //if (data_availability != null)
+            //{
+            //    schedule.availability.Id = data_availability.Id;
+            //    schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
+            //    schedule.availability.FromTime = data_availability.FromTime.ToString();
+            //    schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
+            //    schedule.availability.ToTime = data_availability.ToTime.ToString();
+            //    schedule.availability.InstructorId = data_availability.InstructorId;
+            //}
 
             foreach (var adventure in data_adventures)
             {
@@ -526,28 +526,29 @@ namespace FishingBooker.Controllers
             DateTime fromDate = DateTime.Parse(model.availability.FromDate.ToString());
             DateTime toDate = DateTime.Parse(model.availability.ToDate.ToString());
 
-            var instructor_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+            //var instructor_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
 
-            if(instructor_availability == null)
-            {
-                ScheduleCRUD.CreateOwnerAvailabilityForStandardReservation(fromDate,
-                                                fromTime,
-                                                toDate,
-                                                toTime,
-                                                User.Identity.GetUserId());
+            //if(instructor_availability == null)
+            //{
+            //    ScheduleCRUD.CreateOwnerAvailabilityForStandardReservation(fromDate,
+            //                                    fromTime,
+            //                                    toDate,
+            //                                    toTime,
+            //                                    User.Identity.GetUserId());
 
-                return RedirectToAction("InstructorSchedule", "Manage");
-            }
-            else
-            {
-                ScheduleCRUD.UpdateOwnerAvailabilityForStandardReservation(fromDate,
-                                                fromTime,
-                                                toDate,
-                                                toTime,
-                                                User.Identity.GetUserId());
+            //    return RedirectToAction("InstructorSchedule", "Manage");
+            //}
+            //else
+            //{
+            //    ScheduleCRUD.UpdateOwnerAvailabilityForStandardReservation(fromDate,
+            //                                    fromTime,
+            //                                    toDate,
+            //                                    toTime,
+            //                                    User.Identity.GetUserId());
 
-                return RedirectToAction("InstructorSchedule", "Manage");
-            }
+            //    return RedirectToAction("InstructorSchedule", "Manage");
+            //}
+            return View();
             
         }
 
@@ -583,20 +584,20 @@ namespace FishingBooker.Controllers
             }
 
             InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
-            var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+            //var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
             //var availability = RegUserCRUD.LoadAvailabilities().Find(x => x.InstructorId == User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_adventures = AdventureCRUD.LoadAdventures();
 
-            if(data_availability != null)
-            {
-                schedule.availability.Id = data_availability.Id;
-                schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
-                schedule.availability.FromTime = data_availability.FromTime.ToString();
-                schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
-                schedule.availability.ToTime = data_availability.ToTime.ToString();
-                schedule.availability.InstructorId = data_availability.InstructorId;
-            }
+            //if(data_availability != null)
+            //{
+            //    schedule.availability.Id = data_availability.Id;
+            //    schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
+            //    schedule.availability.FromTime = data_availability.FromTime.ToString();
+            //    schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
+            //    schedule.availability.ToTime = data_availability.ToTime.ToString();
+            //    schedule.availability.InstructorId = data_availability.InstructorId;
+            //}
 
 
             foreach (var adventure in data_adventures)
@@ -633,19 +634,19 @@ namespace FishingBooker.Controllers
         public ActionResult ShipOwnerSchedule()
         {
             InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
-            var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+            //var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_ships = ShipCRUD.LoadShips();
 
-            if(data_availability != null)
-            {
-                schedule.availability.Id = data_availability.Id;
-                schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
-                schedule.availability.FromTime = data_availability.FromTime.ToString();
-                schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
-                schedule.availability.ToTime = data_availability.ToTime.ToString();
-                schedule.availability.InstructorId = data_availability.InstructorId;
-            }
+            //if(data_availability != null)
+            //{
+            //    schedule.availability.Id = data_availability.Id;
+            //    schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
+            //    schedule.availability.FromTime = data_availability.FromTime.ToString();
+            //    schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
+            //    schedule.availability.ToTime = data_availability.ToTime.ToString();
+            //    schedule.availability.InstructorId = data_availability.InstructorId;
+            //}
 
 
             foreach (var ship in data_ships)
@@ -705,28 +706,29 @@ namespace FishingBooker.Controllers
             DateTime fromDate = DateTime.Parse(model.availability.FromDate.ToString());
             DateTime toDate = DateTime.Parse(model.availability.ToDate.ToString());
 
-            var ship_owner_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+            //var ship_owner_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
 
-            if (ship_owner_availability == null)
-            {
-                ScheduleCRUD.CreateOwnerAvailabilityForStandardReservation(fromDate,
-                                                fromTime,
-                                                toDate,
-                                                toTime,
-                                                User.Identity.GetUserId());
+            //if (ship_owner_availability == null)
+            //{
+            //    ScheduleCRUD.CreateOwnerAvailabilityForStandardReservation(fromDate,
+            //                                    fromTime,
+            //                                    toDate,
+            //                                    toTime,
+            //                                    User.Identity.GetUserId());
 
-                return RedirectToAction("ShipOwnerSchedule", "Manage");
-            }
-            else
-            {
-                ScheduleCRUD.UpdateOwnerAvailabilityForStandardReservation(fromDate,
-                                                fromTime,
-                                                toDate,
-                                                toTime,
-                                                User.Identity.GetUserId());
+            //    return RedirectToAction("ShipOwnerSchedule", "Manage");
+            //}
+            //else
+            //{
+            //    ScheduleCRUD.UpdateOwnerAvailabilityForStandardReservation(fromDate,
+            //                                    fromTime,
+            //                                    toDate,
+            //                                    toTime,
+            //                                    User.Identity.GetUserId());
 
-                return RedirectToAction("ShipOwnerSchedule", "Manage");
-            }
+            //    return RedirectToAction("ShipOwnerSchedule", "Manage");
+            //}
+            return View();
         }
 
         public ActionResult SearchHistoryReservationShipOwner(string searching)
@@ -761,19 +763,19 @@ namespace FishingBooker.Controllers
             }
 
             InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
-            var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+            //var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_ships = ShipCRUD.LoadShips();
 
-            if(data_availability != null)
-            {
-                schedule.availability.Id = data_availability.Id;
-                schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
-                schedule.availability.FromTime = data_availability.FromTime.ToString();
-                schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
-                schedule.availability.ToTime = data_availability.ToTime.ToString();
-                schedule.availability.InstructorId = data_availability.InstructorId;
-            }
+            //if(data_availability != null)
+            //{
+            //    schedule.availability.Id = data_availability.Id;
+            //    schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
+            //    schedule.availability.FromTime = data_availability.FromTime.ToString();
+            //    schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
+            //    schedule.availability.ToTime = data_availability.ToTime.ToString();
+            //    schedule.availability.InstructorId = data_availability.InstructorId;
+            //}
             
 
             foreach (var ship in data_ships)
@@ -809,19 +811,19 @@ namespace FishingBooker.Controllers
         public ActionResult CottageOwnerSchedule()
         {
             InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
-            var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+            //var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_cottages = CottageCRUD.LoadCottages();
 
-            if (data_availability != null)
-            {
-                schedule.availability.Id = data_availability.Id;
-                schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
-                schedule.availability.FromTime = data_availability.FromTime.ToString();
-                schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
-                schedule.availability.ToTime = data_availability.ToTime.ToString();
-                schedule.availability.InstructorId = data_availability.InstructorId;
-            }
+            //if (data_availability != null)
+            //{
+            //    schedule.availability.Id = data_availability.Id;
+            //    schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
+            //    schedule.availability.FromTime = data_availability.FromTime.ToString();
+            //    schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
+            //    schedule.availability.ToTime = data_availability.ToTime.ToString();
+            //    schedule.availability.InstructorId = data_availability.InstructorId;
+            //}
 
 
             foreach (var cottage in data_cottages)
@@ -881,28 +883,29 @@ namespace FishingBooker.Controllers
             DateTime fromDate = DateTime.Parse(model.availability.FromDate.ToString());
             DateTime toDate = DateTime.Parse(model.availability.ToDate.ToString());
 
-            var cottage_owner_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+            //var cottage_owner_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
 
-            if (cottage_owner_availability == null)
-            {
-                ScheduleCRUD.CreateOwnerAvailabilityForStandardReservation(fromDate,
-                                                fromTime,
-                                                toDate,
-                                                toTime,
-                                                User.Identity.GetUserId());
+            //if (cottage_owner_availability == null)
+            //{
+            //    ScheduleCRUD.CreateOwnerAvailabilityForStandardReservation(fromDate,
+            //                                    fromTime,
+            //                                    toDate,
+            //                                    toTime,
+            //                                    User.Identity.GetUserId());
 
-                return RedirectToAction("CottageOwnerSchedule", "Manage");
-            }
-            else
-            {
-                ScheduleCRUD.UpdateOwnerAvailabilityForStandardReservation(fromDate,
-                                                fromTime,
-                                                toDate,
-                                                toTime,
-                                                User.Identity.GetUserId());
+            //    return RedirectToAction("CottageOwnerSchedule", "Manage");
+            //}
+            //else
+            //{
+            //    ScheduleCRUD.UpdateOwnerAvailabilityForStandardReservation(fromDate,
+            //                                    fromTime,
+            //                                    toDate,
+            //                                    toTime,
+            //                                    User.Identity.GetUserId());
 
-                return RedirectToAction("CottageOwnerSchedule", "Manage");
-            }
+            //    return RedirectToAction("CottageOwnerSchedule", "Manage");
+            //}
+            return View();
         }
 
         public ActionResult SearchHistoryReservationCottageOwner(string searching)
@@ -937,19 +940,19 @@ namespace FishingBooker.Controllers
             }
 
             InstructorScheduleViewModel schedule = new InstructorScheduleViewModel();
-            var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+            //var data_availability = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_cottages = CottageCRUD.LoadCottages();
 
-            if(data_availability != null)
-            {
-                schedule.availability.Id = data_availability.Id;
-                schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
-                schedule.availability.FromTime = data_availability.FromTime.ToString();
-                schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
-                schedule.availability.ToTime = data_availability.ToTime.ToString();
-                schedule.availability.InstructorId = data_availability.InstructorId;
-            }
+            //if(data_availability != null)
+            //{
+            //    schedule.availability.Id = data_availability.Id;
+            //    schedule.availability.FromDate = data_availability.FromDate.ToString("yyyy-MM-dd");
+            //    schedule.availability.FromTime = data_availability.FromTime.ToString();
+            //    schedule.availability.ToDate = data_availability.ToDate.ToString("yyyy-MM-dd");
+            //    schedule.availability.ToTime = data_availability.ToTime.ToString();
+            //    schedule.availability.InstructorId = data_availability.InstructorId;
+            //}
 
 
             foreach (var cottage in data_cottages)

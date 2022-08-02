@@ -78,7 +78,7 @@ namespace FishingBooker.Controllers
                 var adventure_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
                 //var history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
                 var instructors_unavailabilities = ScheduleCRUD.LoadOwnerUnavailability(User.Identity.GetUserId());
-                var availability_for_standard_reservation = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
+                //var availability_for_standard_reservation = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId());
 
                 DateTime startDate = new DateTime();
                 DateTime endDate = new DateTime();
@@ -160,25 +160,25 @@ namespace FishingBooker.Controllers
                         textColor = "#f7f5f5"
                     });
                 }
-                calendar_events.Add(new CalendarEvent
-                {
-                    id = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId()).Id,
-                    event_type = Enums.CalendarEventType.AvailabilityForStandardReservation,
-                    text = "Available for standard reservations",
-                    start_date = new DateTime(availability_for_standard_reservation.FromDate.Year,
-                                              availability_for_standard_reservation.FromDate.Month,
-                                              availability_for_standard_reservation.FromDate.Day,
-                                              availability_for_standard_reservation.FromTime.Hours,
-                                              availability_for_standard_reservation.FromTime.Minutes,
-                                              availability_for_standard_reservation.FromTime.Seconds),
-                    end_date = new DateTime(availability_for_standard_reservation.ToDate.Year,
-                                              availability_for_standard_reservation.ToDate.Month,
-                                              availability_for_standard_reservation.ToDate.Day,
-                                              availability_for_standard_reservation.ToTime.Hours,
-                                              availability_for_standard_reservation.ToTime.Minutes,
-                                              availability_for_standard_reservation.ToTime.Seconds),
-                    color = "#0ad2f5"
-                });
+                //calendar_events.Add(new CalendarEvent
+                //{
+                //    id = ScheduleCRUD.LoadOwnerAvailabilityForStandardReservation(User.Identity.GetUserId()).Id,
+                //    event_type = Enums.CalendarEventType.AvailabilityForStandardReservation,
+                //    text = "Available for standard reservations",
+                //    start_date = new DateTime(availability_for_standard_reservation.FromDate.Year,
+                //                              availability_for_standard_reservation.FromDate.Month,
+                //                              availability_for_standard_reservation.FromDate.Day,
+                //                              availability_for_standard_reservation.FromTime.Hours,
+                //                              availability_for_standard_reservation.FromTime.Minutes,
+                //                              availability_for_standard_reservation.FromTime.Seconds),
+                //    end_date = new DateTime(availability_for_standard_reservation.ToDate.Year,
+                //                              availability_for_standard_reservation.ToDate.Month,
+                //                              availability_for_standard_reservation.ToDate.Day,
+                //                              availability_for_standard_reservation.ToTime.Hours,
+                //                              availability_for_standard_reservation.ToTime.Minutes,
+                //                              availability_for_standard_reservation.ToTime.Seconds),
+                //    color = "#0ad2f5"
+                //});
                 scheduler_data.Add(calendar_events);
             }
 
