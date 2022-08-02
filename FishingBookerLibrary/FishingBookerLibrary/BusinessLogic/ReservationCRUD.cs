@@ -144,7 +144,7 @@ namespace FishingBookerLibrary.BusinessLogic
                                                 TimeSpan fromTime,
                                                 DateTime toDate,
                                                 TimeSpan toTime,
-                                                string ownersId)
+                                                string instructorId)
         {
 
             AdventureReservation data = new AdventureReservation
@@ -154,7 +154,7 @@ namespace FishingBookerLibrary.BusinessLogic
                 StartTime = fromTime,
                 EndDate = toDate,
                 EndTime = toTime,
-                InstructorId = ownersId
+                InstructorId = instructorId
             };
 
             string sql = @" UPDATE dbo.AdventureReservations
@@ -163,6 +163,57 @@ namespace FishingBookerLibrary.BusinessLogic
 
             return SSMSDataAccess.SaveData(sql, data);
         }
+
+        public static int UpdateCottageReservationDates(int id,
+                                                DateTime fromDate,
+                                                TimeSpan fromTime,
+                                                DateTime toDate,
+                                                TimeSpan toTime,
+                                                string ownerId)
+        {
+
+            CottageReservation data = new CottageReservation
+            {
+                Id = id,
+                StartDate = fromDate,
+                StartTime = fromTime,
+                EndDate = toDate,
+                EndTime = toTime,
+                OwnerId = ownerId
+            };
+
+            string sql = @" UPDATE dbo.CottageReservations
+                            SET StartDate = @StartDate, StartTime = @StartTime, EndDate = @EndDate, EndTime = @EndTime  
+                            WHERE Id = @Id AND OwnerId = @OwnerId;";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
+        public static int UpdateShipReservationDates(int id,
+                                                DateTime fromDate,
+                                                TimeSpan fromTime,
+                                                DateTime toDate,
+                                                TimeSpan toTime,
+                                                string ownerId)
+        {
+
+            ShipReservation data = new ShipReservation
+            {
+                Id = id,
+                StartDate = fromDate,
+                StartTime = fromTime,
+                EndDate = toDate,
+                EndTime = toTime,
+                OwnerId = ownerId
+            };
+
+            string sql = @" UPDATE dbo.ShipReservations
+                            SET StartDate = @StartDate, StartTime = @StartTime, EndDate = @EndDate, EndTime = @EndTime  
+                            WHERE Id = @Id AND OwnerId = @OwnerId;";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
 
         public static int DeleteAdventureReservation(int reservationId)
         {
@@ -173,6 +224,34 @@ namespace FishingBookerLibrary.BusinessLogic
 
             string sql = @" DELETE 
                             FROM dbo.AdventureReservations
+                            WHERE Id = @Id;";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
+        public static int DeleteCottageReservation(int reservationId)
+        {
+            Reservation data = new Reservation
+            {
+                Id = reservationId
+            };
+
+            string sql = @" DELETE 
+                            FROM dbo.CottageReservations
+                            WHERE Id = @Id;";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
+        public static int DeleteShipReservation(int reservationId)
+        {
+            Reservation data = new Reservation
+            {
+                Id = reservationId
+            };
+
+            string sql = @" DELETE 
+                            FROM dbo.ShipReservations
                             WHERE Id = @Id;";
 
             return SSMSDataAccess.SaveData(sql, data);

@@ -137,21 +137,21 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
-        public static T LoadInstructorsAvailability<T>(string sql, string instructorId)
+        public static List<T> LoadOwnerAvailabilitiesUnavailabilities<T>(string sql, string ownerId, int type)
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
             {
-                return cnn.Query<T>(sql, new { InstructorId = instructorId }).FirstOrDefault();
+                return cnn.Query<T>(sql, new { OwnerId = ownerId, Type = type }).ToList();
             }
         }
 
-        public static List<T> LoadOwnerUnavailabilities<T>(string sql, string ownerId)
-        {
-            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
-            {
-                return cnn.Query<T>(sql, new { OwnerId = ownerId }).ToList();
-            }
-        }
+        //public static List<T> LoadOwnerUnavailabilities<T>(string sql, string ownerId)
+        //{
+        //    using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+        //    {
+        //        return cnn.Query<T>(sql, new { OwnerId = ownerId }).ToList();
+        //    }
+        //}
 
         public static List<T> LoadImagesByAdventureId<T>(string sql, int adventureId)
         {

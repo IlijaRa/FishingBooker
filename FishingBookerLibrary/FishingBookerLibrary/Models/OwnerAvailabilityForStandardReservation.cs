@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FishingBookerLibrary.Models
 {
-    public class OwnerAvailabilityForStandardReservation : InstructorAvailability
+    public class OwnerAvailabilityForStandardReservation : OwnerAvailabilityUnavailability
     {
     }
 }

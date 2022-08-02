@@ -106,7 +106,7 @@
     <Compile Include="Models\Record.cs" />
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\FishingInstructor.cs" />
-    <Compile Include="Models\InstructorAvailability.cs" />
+    <Compile Include="Models\OwnerAvailabilityUnavailability.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\ReservationFromHistory.cs" />
     <Compile Include="Models\Security\CustomPasswordHasher.cs" />

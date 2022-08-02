@@ -76,9 +76,14 @@ namespace FishingBookerLibrary.Models
         {
             Reserved,
             NotReserved,
-            History,
+            Availability,
             Unavailability,
-            AvailabilityForStandardReservation
+        }
+
+        public enum AvailabilityUnavailabilityType
+        {
+            Availability,
+            Unavailability
         }
     }
 }
