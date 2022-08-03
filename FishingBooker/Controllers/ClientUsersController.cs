@@ -62,6 +62,10 @@ namespace FishingBooker.Controllers
 
         public ActionResult SearchUsers(string searching)
         {
+            if(searching == "")
+            {
+                return RedirectToAction("Complaint", "ClientUsers");
+            }
             var data = RegUserCRUD.LoadUsers();
             List<RegUserViewModel> found_users = new List<RegUserViewModel>();
             searching = searching.ToLower();
