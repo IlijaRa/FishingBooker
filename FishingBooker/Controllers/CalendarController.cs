@@ -84,6 +84,7 @@ namespace FishingBooker.Controllers
                 OnClick = "get_email",
                 Name = "Profile"
             });
+
             return View(scheduler);
         }
 

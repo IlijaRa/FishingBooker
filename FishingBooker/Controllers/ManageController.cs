@@ -100,6 +100,22 @@ namespace FishingBooker.Controllers
             var data_owner = RegUserCRUD.LoadUserById(userId);
             var loyalty_scales = LoyaltyProgramCRUD.LoadLoyaltyScales();
             string loyaltyClass = "";
+
+            //sorting scales by min earned points
+            var temp = new LoyaltyScale();
+            for (int j = 0; j <= loyalty_scales.Count - 2; j++)
+            {
+                for (int i = 0; i <= loyalty_scales.Count - 2; i++)
+                {
+                    if (loyalty_scales[i].MinEarnedPoints > loyalty_scales[i + 1].MinEarnedPoints)
+                    {
+                        temp = loyalty_scales[i + 1];
+                        loyalty_scales[i + 1] = loyalty_scales[i];
+                        loyalty_scales[i] = temp;
+                    }
+                }
+            }
+
             foreach (var scale in loyalty_scales)
             {
                 if (scale.MinEarnedPoints <= data_owner.TotalScalePoints)

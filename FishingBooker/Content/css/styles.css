@@ -11384,3 +11384,8 @@ td, th {
         color: 2#2E2B21;
         background-color: #212529;
     }
+
+.chart-container {
+    width: 50%;
+    margin: auto;
+}

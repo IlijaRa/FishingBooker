@@ -15,10 +15,10 @@ namespace FishingBooker.Models
         public float AverageRate { get; set; }
 
 
-        public IEnumerable<ReservationToShowViewModel> current_reservations { get; set; }
+        public IEnumerable<ReservationToShowViewModel> active_reservations { get; set; }
 
 
-        public IEnumerable<ReservationToShowViewModel> reservations { get; set; }
+        public IEnumerable<ReservationToShowViewModel> history_reservations { get; set; }
 
 
         //it is used to filter reservations and their income
@@ -36,8 +36,26 @@ namespace FishingBooker.Models
         [DataType(DataType.Date)]
         public DateTime ToDate { get; set; }
 
+        //[Display(Name = "Day of week")]
+        //[Required(ErrorMessage = "You need to enter day of week.")]
+        //public int DayOfWeek { get; set; }
+
+
+        //[Display(Name = "Month")]
+        //[Required(ErrorMessage = "You need to enter a month.")]
+        //public int Month { get; set; }
+
+
+        //[Display(Name = "Year")]
+        //[Required(ErrorMessage = "You need to enter a year.")]
+        //public int Year { get; set; }
+
 
         [Display(Name = "Income")]
-        public double Income { get; set; }
+        public double Active_Income { get; set; }
+
+
+        [Display(Name = "Income")]
+        public double History_Income { get; set; }
     }
 }

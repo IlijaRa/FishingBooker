@@ -528,20 +528,38 @@ namespace FishingBooker.Controllers
 
         public ActionResult BusinessReport(int advId)
         {
-            var sum_current = 0.0;
+            var sum_active = 0.0;
             var sum_history = 0.0;
-            int count = 0;
+            float benefits = 0;
+            //int count = 0;
             BusinessReportViewModel model = new BusinessReportViewModel();
-            List<ReservationToShowViewModel> current_reservations_to_show = new List<ReservationToShowViewModel>();
+            List<ReservationToShowViewModel> active_reservations_to_show = new List<ReservationToShowViewModel>();
             List<ReservationToShowViewModel> history_reservations_to_show = new List<ReservationToShowViewModel>();
-            var data_instructor_revisions = RevisionCRUD.LoadConfirmedRevisionsForInstructor(User.Identity.GetUserName());
-            var data_instructor_current_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
+            //var data_instructor_revisions = RevisionCRUD.LoadConfirmedRevisionsForInstructor(User.Identity.GetUserName());
+            var data_instructor_active_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
             var data_instructor_history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
             var data_adventure = AdventureCRUD.LoadAdventureById(advId);
             var data_instructor = RegUserCRUD.LoadUserById(User.Identity.GetUserId());
             var loyalty_scales = LoyaltyProgramCRUD.LoadLoyaltyScales();
-            float benefits = 0;
-            
+
+            model.AdventureId = advId;
+            model.AverageRate = data_adventure.Rating;
+
+            //sorting scales by min earned points
+            var temp = new LoyaltyScale();
+            for (int j = 0; j <= loyalty_scales.Count - 2; j++)
+            {
+                for (int i = 0; i <= loyalty_scales.Count - 2; i++)
+                {
+                    if (loyalty_scales[i].MinEarnedPoints > loyalty_scales[i + 1].MinEarnedPoints)
+                    {
+                        temp = loyalty_scales[i + 1];
+                        loyalty_scales[i + 1] = loyalty_scales[i];
+                        loyalty_scales[i] = temp;
+                    }
+                }
+            }
+
             foreach (var scale in loyalty_scales)
             {
                 if(scale.MinEarnedPoints <= data_instructor.TotalScalePoints)
@@ -550,31 +568,15 @@ namespace FishingBooker.Controllers
                 }
             }
 
-            model.AdventureId = advId;
-            model.AverageRate = data_adventure.Rating;
-
-            //foreach (var revision in data_instructor_revisions)
-            //{
-            //    if (revision.EntityTitle.Equals(data_adventure.Title))
-            //    {
-            //        sum += revision.ActionRating;
-            //        count++;
-            //    }
-            //}
-
-            //model.AverageRate = sum / count;
-            //sum_current = 0.0;
-            //sum_history = 0.0;
-            //count = 0;
-
-            // racuna samo income za rezervacije koje su trenutne
-            foreach (var reservation in data_instructor_current_reservations)
+            // racuna samo income za rezervacije koje su aktivne
+            foreach (var reservation in data_instructor_active_reservations)
             {
-                if (reservation.Place.Equals(data_adventure.Title))
+                if (reservation.AdventureId == data_adventure.Id)
                 {
-                    current_reservations_to_show.Add(new ReservationToShowViewModel
+                    active_reservations_to_show.Add(new ReservationToShowViewModel
                     {
                         Id = reservation.Id,
+                        Place = reservation.Place,
                         ClientsEmailAddress = reservation.ClientsEmailAddress,
                         ActionTitle = reservation.Place,
                         StartDate = reservation.StartDate,
@@ -582,13 +584,15 @@ namespace FishingBooker.Controllers
                         EndDate = reservation.EndDate,
                         EndTime = reservation.EndTime.ToString(),
                         Price = reservation.Price,
-                        OwnerId = reservation.InstructorId
+                        OwnerId = reservation.InstructorId,
+                        IsReserved = reservation.IsReserved
                     });
-                    sum_current += Convert.ToDouble(reservation.Price);
+                    if(reservation.IsReserved == true)
+                        sum_active += Convert.ToDouble(reservation.Price);
                 }
             }
-            model.current_reservations = current_reservations_to_show;
-            model.Income = sum_current + (sum_current * (benefits / 100));
+            model.active_reservations = active_reservations_to_show;
+            model.Active_Income = sum_active + (sum_active * (benefits / 100));
 
             // racuna samo income za rezervacije koje su prosle
             foreach (var reservation in data_instructor_history_reservations)
@@ -610,21 +614,21 @@ namespace FishingBooker.Controllers
                 }
             }
 
-            model.reservations = history_reservations_to_show;
-            model.Income += sum_history + (sum_history * (benefits/100));
+            model.history_reservations = history_reservations_to_show;
+            model.History_Income += sum_history;// + (sum_history * (benefits/100));
             return View(model);
         }
 
         public ActionResult BusinessReportFilteredDate(BusinessReportViewModel filter_model)
         {
-            var sum_current = 0.0;
+            var sum_active = 0.0;
             var sum_history = 0.0;
             int count = 0;
             BusinessReportViewModel model = new BusinessReportViewModel();
-            List<ReservationToShowViewModel> current_reservations_to_show = new List<ReservationToShowViewModel>();
+            List<ReservationToShowViewModel> active_reservations_to_show = new List<ReservationToShowViewModel>();
             List<ReservationToShowViewModel> history_reservations_to_show = new List<ReservationToShowViewModel>();
             var data_instructor_revisions = RevisionCRUD.LoadConfirmedRevisionsForInstructor(User.Identity.GetUserName());
-            var data_instructor_current_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
+            var data_instructor_active_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
             var data_instructor_history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
             var data_adventure = AdventureCRUD.LoadAdventureById(filter_model.AdventureId);
             var data_instructor = RegUserCRUD.LoadUserById(User.Identity.GetUserId());
@@ -653,11 +657,11 @@ namespace FishingBooker.Controllers
             //model.AverageRate = sum / count;
 
             // racuna samo income za rezervacije koje su trenutne
-            foreach (var reservation in data_instructor_current_reservations)
+            foreach (var reservation in data_instructor_active_reservations)
             {
                 if ((reservation.Place.Equals(data_adventure.Title)) && (filter_model.FromDate <= reservation.StartDate && reservation.EndDate <= filter_model.ToDate))
                 {
-                    current_reservations_to_show.Add(new ReservationToShowViewModel
+                    active_reservations_to_show.Add(new ReservationToShowViewModel
                     {
                         Id = reservation.Id,
                         ClientsEmailAddress = reservation.ClientsEmailAddress,
@@ -669,11 +673,11 @@ namespace FishingBooker.Controllers
                         Price = reservation.Price,
                         OwnerId = reservation.InstructorId
                     });
-                    sum_current += Convert.ToDouble(reservation.Price);
+                    sum_active += Convert.ToDouble(reservation.Price);
                 }
             }
-            model.current_reservations = current_reservations_to_show;
-            model.Income = sum_current + (sum_current * (benefits / 100));
+            model.active_reservations = active_reservations_to_show;
+            model.Active_Income = sum_active + (sum_active * (benefits / 100));
 
 
             foreach (var reservation in data_instructor_history_reservations)
@@ -695,8 +699,8 @@ namespace FishingBooker.Controllers
                     sum_history += Convert.ToDouble(reservation.Price);
                 }
             }
-            model.reservations = history_reservations_to_show;
-            model.Income += sum_history + (sum_history * (benefits / 100));
+            model.history_reservations = history_reservations_to_show;
+            model.History_Income += sum_history + (sum_history * (benefits / 100));
             return View(model);
         }
 

@@ -11,6 +11,12 @@ namespace FishingBooker.Models
         public int Id { get; set; }
 
 
+        [Display(Name = "Place*")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "You need to provide a place name between 2-50 characters.")]
+        [Required(ErrorMessage = "You need to give us a place.")]
+        public string Place { get; set; }
+
+
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email address*")]
         [Required(ErrorMessage = "You need to give us your email address.")]
@@ -78,6 +84,10 @@ namespace FishingBooker.Models
         [Display(Name = "Scaled Price*")]
         [Required(ErrorMessage = "You need to enter a price.")]
         public double ScaledPrice { get; set; }
+
+
+        [Display(Name = "Is reserved?")]
+        public bool IsReserved { get; set; }
 
 
         public string OwnerId { get; set; }
