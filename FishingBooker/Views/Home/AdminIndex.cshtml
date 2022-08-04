@@ -1,13 +1,240 @@
-﻿@model FishingBooker.Models.RegisterViewModel
-
+﻿@model FishingBooker.Models.AdminBusinessReportViewModel
 @{
-    ViewBag.Title = "AdminIndex";
-    //Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "AdminBusinessReport";
     Layout = null;
+    int row_counter = 1;
+    int history_row_counter = 1;
+
+    var good_experience = (int)ViewData["GoodExperience"];
+    var bad_experience = (int)ViewData["BadExperience"];
+    var instant_penalty = (int)ViewData["InstantPenalty"];
+
+    var admins = (int)ViewData["Admins"];
+    var clients = (int)ViewData["Clients"];
+    var fishing_instructors = (int)ViewData["FishingInstructors"];
+    var cottage_owners = (int)ViewData["CottageOwners"];
+    var ship_owners = (int)ViewData["ShipOwners"];
+
+    var complaints = (int)ViewData["Complaints"];
+    var revisions = (int)ViewData["Revisions"];
+    var records = (int)ViewData["Records"];
+    var deactivation_requests = (int)ViewData["DeactivationRequests"];
+    var registration_requests = (int)ViewData["RegistrationRequests"];
+
+    int[] Days = new int[7];
+    int[] Months = new int[12];
+    int[] Years = new int[10];
+    foreach (var reservations in Model.active_reservations)
+    {
+        switch (Convert.ToInt32(reservations.StartDate.DayOfWeek))
+        {
+            case 1:
+                Days[0] = Days[0] + 1;
+                break;
+            case 2:
+                Days[1] = Days[1] + 1;
+                break;
+            case 3:
+                Days[2] = Days[2] + 1;
+                break;
+            case 4:
+                Days[3] = Days[3] + 1;
+                break;
+            case 5:
+                Days[4] = Days[4] + 1;
+                break;
+            case 6:
+                Days[5] = Days[5] + 1;
+                break;
+            case 7:
+                Days[6] = Days[6] + 1;
+                break;
+            default:
+                break;
+        }
+        switch (Convert.ToInt32(reservations.StartDate.Month))
+        {
+            case 1:
+                Months[0] = Months[0] + 1;
+                break;
+            case 2:
+                Months[1] = Months[1] + 1;
+                break;
+            case 3:
+                Months[2] = Months[2] + 1;
+                break;
+            case 4:
+                Months[3] = Months[3] + 1;
+                break;
+            case 5:
+                Months[4] = Months[4] + 1;
+                break;
+            case 6:
+                Months[5] = Months[5] + 1;
+                break;
+            case 7:
+                Months[6] = Months[6] + 1;
+                break;
+            case 8:
+                Months[7] = Months[7] + 1;
+                break;
+            case 9:
+                Months[8] = Months[8] + 1;
+                break;
+            case 10:
+                Months[9] = Months[9] + 1;
+                break;
+            case 11:
+                Months[10] = Months[10] + 1;
+                break;
+            case 12:
+                Months[11] = Months[11] + 1;
+                break;
+            default:
+                break;
+        }
+        switch (Convert.ToInt32(reservations.StartDate.Year))
+        {
+            case 2013:
+                Years[0] = Years[0] + 1;
+                break;
+            case 2014:
+                Years[1] = Years[1] + 1;
+                break;
+            case 2015:
+                Years[2] = Years[2] + 1;
+                break;
+            case 2016:
+                Years[3] = Years[3] + 1;
+                break;
+            case 2017:
+                Years[4] = Years[4] + 1;
+                break;
+            case 2018:
+                Years[5] = Years[5] + 1;
+                break;
+            case 2019:
+                Years[6] = Years[6] + 1;
+                break;
+            case 2020:
+                Years[7] = Years[7] + 1;
+                break;
+            case 2021:
+                Years[8] = Years[8] + 1;
+                break;
+            case 2022:
+                Years[9] = Years[9] + 1;
+                break;
+            default:
+                break;
+        }
+    }
+    foreach (var reservations in Model.history_reservations)
+    {
+        switch (Convert.ToInt32(reservations.StartDate.DayOfWeek))
+        {
+            case 1:
+                Days[0] = Days[0] + 1;
+                break;
+            case 2:
+                Days[1] = Days[1] + 1;
+                break;
+            case 3:
+                Days[2] = Days[2] + 1;
+                break;
+            case 4:
+                Days[3] = Days[3] + 1;
+                break;
+            case 5:
+                Days[4] = Days[4] + 1;
+                break;
+            case 6:
+                Days[5] = Days[5] + 1;
+                break;
+            case 7:
+                Days[6] = Days[6] + 1;
+                break;
+            default:
+                break;
+        }
+        switch (Convert.ToInt32(reservations.StartDate.Month))
+        {
+            case 1:
+                Months[0] = Months[0] + 1;
+                break;
+            case 2:
+                Months[1] = Months[1] + 1;
+                break;
+            case 3:
+                Months[2] = Months[2] + 1;
+                break;
+            case 4:
+                Months[3] = Months[3] + 1;
+                break;
+            case 5:
+                Months[4] = Months[4] + 1;
+                break;
+            case 6:
+                Months[5] = Months[5] + 1;
+                break;
+            case 7:
+                Months[6] = Months[6] + 1;
+                break;
+            case 8:
+                Months[7] = Months[7] + 1;
+                break;
+            case 9:
+                Months[8] = Months[8] + 1;
+                break;
+            case 10:
+                Months[9] = Months[9] + 1;
+                break;
+            case 11:
+                Months[10] = Months[10] + 1;
+                break;
+            case 12:
+                Months[11] = Months[11] + 1;
+                break;
+            default:
+                break;
+        }
+        switch (Convert.ToInt32(reservations.StartDate.Year))
+        {
+            case 2013:
+                Years[0] = Years[0] + 1;
+                break;
+            case 2014:
+                Years[1] = Years[1] + 1;
+                break;
+            case 2015:
+                Years[2] = Years[2] + 1;
+                break;
+            case 2016:
+                Years[3] = Years[3] + 1;
+                break;
+            case 2017:
+                Years[4] = Years[4] + 1;
+                break;
+            case 2018:
+                Years[5] = Years[5] + 1;
+                break;
+            case 2019:
+                Years[6] = Years[6] + 1;
+                break;
+            case 2020:
+                Years[7] = Years[7] + 1;
+                break;
+            case 2021:
+                Years[8] = Years[8] + 1;
+                break;
+            case 2022:
+                Years[9] = Years[9] + 1;
+                break;
+            default:
+                break;
+        }
+    }
 }
-
-@*<h2>AdminIndex</h2>*@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,13 +242,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Ships page</title>
+    <title>Bussines report page</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="~/Content/assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="~/Content/css/styles.css" rel="stylesheet" />
+
 </head>
 <body class="d-flex flex-column">
     <main class="flex-shrink-0">
@@ -42,6 +270,191 @@
                 </div>
             </div>
         </nav>
+        <!-- Page content-->
+        <br>
+        <h2 class="text-center">Business report</h2>
+        <br>
+        <figure class="highcharts-figure">
+            <div id="container-column"></div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <div id="container-pie"></div>
+                </div>
+                <div class="col-sm-4">
+                    <div id="container-donut"></div>
+                </div>
+                <div class="col-sm-4">
+                    <div id="container-column2"></div>
+                </div>
+            </div>
+
+        </figure>
+
+        <section class="py-5">
+            <div class="container px-5">
+                <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-8 col-xl-6">
+                            <h2 class="text-center">Filter date</h2>
+
+                            @using (Html.BeginForm("BusinessReportFilteredDate", "InstructorUsers", FormMethod.Get))
+                            {
+                                @Html.HiddenFor(model => model.AdventureId)
+
+                                <div class="form-group">
+                                    @*@Html.LabelFor(model => model.FromDate, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                    <div class="col-md-12">
+                                        <label for="FromDate">From date</label>
+                                        @Html.EditorFor(model => model.FromDate, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @*@Html.LabelFor(model => model.ToDate, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                                    <div class="col-md-12">
+                                        <label for="ToDate">To date</label>
+                                        @Html.EditorFor(model => model.ToDate, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-12 text-center">
+                                        <input type="submit" value="Search" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h2 class="text-center">Active reservations</h2>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <div class="col-md-4">
+                        @*@Html.LabelFor(model => model.FutureOutcomes, htmlAttributes: new { @class = "control-label col-md-2 text-center" })*@
+                        <div class="form-floating mb-4">
+                            @Html.EditorFor(model => model.Active_Income, new { htmlAttributes = new { @class = "form-control text-center", @readonly = "readonly", @id = "Active_Income" } })
+                            <label class="text-center" for="Active_Income">Payments in the future (benefits are included)</label>
+                            @Html.ValidationMessageFor(model => model.Active_Income, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-hover text-center table-responsive">
+                        <thread>
+                            <tr>
+                                <th class="bg-primary" scope="col">#</th>
+                                <th class="bg-primary" scope="col">Place</th>
+                                <th class="bg-primary" scope="col">Clients email</th>
+                                <th class="bg-primary" scope="col">Start date</th>
+                                <th class="bg-primary" scope="col">Start time</th>
+                                <th class="bg-primary" scope="col">End date</th>
+                                <th class="bg-primary" scope="col">End time</th>
+                                <th class="bg-primary" scope="col">Price</th>
+                                <th class="bg-primary" scope="col">Is reserved?</th>
+                            </tr>
+                        </thread>
+                        <tbody>
+                            @foreach (var item in Model.active_reservations)
+                            {
+                                <tr class="table-striped">
+                                    @*@Html.HiddenFor(modelItem => item.ShipId)*@
+                                    <th scope="row">@row_counter</th>
+                                    <td>
+                                        @Html.DisplayFor(model => item.Place)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.ClientsEmailAddress)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.StartDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.StartTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.EndDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.EndTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.Price)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.IsReserved)
+                                    </td>
+                                </tr>
+                                row_counter++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <h2 class="text-center">History reservations</h2>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <div class="col-md-4">
+
+                        <div class="form-floating mb-4">
+                            @Html.EditorFor(model => model.History_Income, new { htmlAttributes = new { @class = "form-control text-center", @readonly = "readonly", @id = "History_Income" } })
+                            <label class="text-center" for="History_Income">Payments from past</label>
+                            @Html.ValidationMessageFor(model => model.History_Income, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-hover text-center table-responsive">
+                        <thread>
+                            <tr>
+                                <th class="bg-primary" scope="col">#</th>
+                                <th class="bg-primary" scope="col">Title</th>
+                                <th class="bg-primary" scope="col">Clients email</th>
+                                <th class="bg-primary" scope="col">Start date</th>
+                                <th class="bg-primary" scope="col">Start time</th>
+                                <th class="bg-primary" scope="col">End date</th>
+                                <th class="bg-primary" scope="col">End time</th>
+                                <th class="bg-primary" scope="col">Price</th>
+                            </tr>
+                        </thread>
+                        <tbody>
+                            @foreach (var item in Model.history_reservations)
+                            {
+                                <tr class="table-striped">
+                                    <th scope="row">@history_row_counter</th>
+                                    <td>
+                                        @Html.DisplayFor(model => item.ActionTitle)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.ClientsEmailAddress)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.StartDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.StartTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.EndDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.EndTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.Price)
+                                    </td>
+                                </tr>
+                                history_row_counter++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
     </main>
     <!-- Footer-->
@@ -68,5 +481,274 @@
     <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+    <!--Highscharts-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script>
+        // 0.chart
+        Highcharts.chart('container-column', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Weekly, Monthly and Yearly reservation counter'
+            },
+            subtitle: {
+                //text: 'Source: WorldClimate.com'
+            },
+            xAxis: {
+                //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'Values'
+                }
+            },
+            plotOptions: {
+                column: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                },
+                series: {
+                    events: {
+                        show: function () {
+                            var chart = this.chart,
+                                series = chart.series,
+                                i = series.length,
+                                otherSeries;
+                            while (i--) {
+                                otherSeries = series[i];
+                                if (otherSeries != this && otherSeries.visible) {
+                                    otherSeries.hide();
+                                }
+                            }
+                        },
+                        legendItemClick: function () {
+                            if (this.visible) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            },
+            series: [
+                {
+                    name: 'Weekly',
+                    data: [['Monday', @Days[0]], ['Tuesday', @Days[1]], ['Wednesday', @Days[2]], ['Thursday', @Days[3]], ['Friday', @Days[4]], ['Saturday', @Days[5]], ['Sunday', @Days[6]]]
+                },
+                {
+                    name: 'Monthly',
+                    data: [['January', @Months[0]], ['February', @Months[1]], ['March', @Months[2]], ['April', @Months[3]], ['May', @Months[4]], ['June', @Months[5]], ['July', @Months[6]], ['August', @Months[7]], ['September', @Months[8]], ['October', @Months[9]], ['November', @Months[10]], ['December', @Months[11]]],
+                    visible: false
+                },
+                {
+                    name: 'Yearly',
+                    data: [['2013', @Years[0]], ['2014', @Years[1]], ['2015', @Years[2]], ['2016', @Years[3]], ['2017', @Years[4]], ['2018', @Years[5]], ['2019', @Years[6]], ['2020', @Years[7]], ['2021', @Years[8]], ['2022', @Years[9]]],
+                    visible: false
+                }
+            ]
+        });
+
+        //1. chart
+        Highcharts.chart('container-pie', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'Outcomes based on record researches'
+            },
+            subtitle: {
+                //text: 'Source: WorldClimate.com'
+            },
+            xAxis: {
+                //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'Values'
+                }
+            },
+            plotOptions: {
+                column: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                },
+                series: {
+                    events: {
+                        show: function () {
+                            var chart = this.chart,
+                                series = chart.series,
+                                i = series.length,
+                                otherSeries;
+                            while (i--) {
+                                otherSeries = series[i];
+                                if (otherSeries != this && otherSeries.visible) {
+                                    otherSeries.hide();
+                                }
+                            }
+                        },
+                        legendItemClick: function () {
+                            if (this.visible) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            },
+            series: [
+                {
+                    name: 'Outcomes',
+                    data: [['Good experience', @good_experience], ['Bad experience', @bad_experience], ['Instant penalty', @instant_penalty]]
+                }
+            ]
+        });
+
+        //2. chart
+        Highcharts.chart('container-donut', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: 0,
+                plotShadow: false
+            },
+            title: {
+                text: 'Users per role',
+                align: 'center',
+                verticalAlign: 'middle',
+                y: 60
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: true,
+                        distance: -50,
+                        style: {
+                            fontWeight: 'bold',
+                            color: 'white'
+                        }
+                    },
+                    startAngle: -90,
+                    endAngle: 90,
+                    center: ['50%', '75%'],
+                    size: '110%'
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                innerSize: '50%',
+                data: [
+                    ['Admins', @admins],
+                    ['Clients', @clients],
+                    ['Fishing instructors', @fishing_instructors],
+                    ['Cottage owners', @cottage_owners],
+                    ['Ship owners', @ship_owners]
+                ]
+            }]
+        });
+
+        // 3. chart
+        Highcharts.chart('container-column2', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                align: 'center',
+                text: 'Requests indicator'
+            },
+            accessibility: {
+                announceNewData: {
+                    enabled: true
+                }
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                title: {
+                    text: 'Values'
+                }
+
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y}'
+                    }
+                }
+            },
+
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b><br/>'
+            },
+
+            series: [
+                {
+                    name: "Requests",
+                    colorByPoint: true,
+                    data: [
+                        {
+                            name: "Complaints",
+                            y: @complaints,
+                            drilldown: "Complaints"
+                        },
+                        {
+                            name: "Revisions",
+                            y: @revisions,
+                            drilldown: "FirRevisionsefox"
+                        },
+                        {
+                            name: "Records",
+                            y: @records,
+                            drilldown: "Records"
+                        },
+                        {
+                            name: "Deactivation requests",
+                            y: @deactivation_requests,
+                            drilldown: "Deactivation requests"
+                        },
+                        {
+                            name: "Registration requests",
+                            y: @registration_requests,
+                            drilldown: "Registration requests"
+                        }
+                    ]
+                }
+            ],
+            drilldown: {
+                breadcrumbs: {
+                    position: {
+                        align: 'right'
+                    }
+                }
+            }
+        });
+
+    </script>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 </body>
 </html>

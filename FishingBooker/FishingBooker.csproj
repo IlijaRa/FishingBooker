@@ -302,6 +302,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminBusinessReportViewModel.cs" />
     <Compile Include="Models\AdventureReservationViewModel.cs" />
     <Compile Include="Models\AdventureInstructorViewModel.cs" />
     <Compile Include="Models\AnswerToComplaintViewModel.cs" />
@@ -708,7 +709,6 @@
     <Content Include="Views\ClientUsers\AddRevision.cshtml" />
     <Content Include="Views\Shared\ClientAlreadyRated.cshtml" />
     <Content Include="Views\AdminUsers\ReadRevisions.cshtml" />
-    <Content Include="Views\Home\AdminIndex.cshtml" />
     <Content Include="Views\Home\HeadAdminIndex.cshtml" />
     <Content Include="Views\Home\FishingInstructorIndex.cshtml" />
     <Content Include="Views\Shared\MoneyFlowUpdateError.cshtml" />
@@ -733,6 +733,7 @@
     <Content Include="Views\AdminUsers\CreateScale.cshtml" />
     <Content Include="Views\Shared\ImageSubmitError.cshtml" />
     <Content Include="Views\InstructorUsers\AdventureDetails.cshtml" />
+    <Content Include="Views\Home\AdminIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,6 +3,7 @@
     ViewBag.Title = "BusinessReport";
     Layout = null;
     int row_counter = 1;
+    int history_row_counter = 1;
     int[] Days = new int[7];
     int[] Months = new int[12];
     int[] Years = new int[10];
@@ -368,7 +369,7 @@
                             {
                                 <tr class="table-striped">
                                     @*@Html.HiddenFor(modelItem => item.ShipId)*@
-                                    <th scope="row">@row_counter</th>
+                                    <th scope="row">@history_row_counter</th>
                                     <td>
                                         @Html.DisplayFor(model => item.ClientsEmailAddress)
                                     </td>
@@ -388,7 +389,7 @@
                                         @Html.DisplayFor(model => item.Price)
                                     </td>
                                 </tr>
-                                row_counter++;
+                                history_row_counter++;
                             }
                         </tbody>
                     </table>

@@ -1042,14 +1042,14 @@ namespace FishingBooker.Controllers
                 {
                     var data_user = RegUserCRUD.LoadUsers().Find(x => x.EmailAddress == model.ClientsEmailAddress);
                     RegUserCRUD.AddPenalty(model.ClientsEmailAddress, data_user.Penalties + 1);
-                    if(User.IsInRole("ValidInstructor"))
-                        return RedirectToAction("InstructorSchedule", "Manage");
-                    else if (User.IsInRole("ValidCottageOwner"))
-                        return RedirectToAction("CottageOwnerSchedule", "Manage");
-                    else if (User.IsInRole("ValidShipOwner"))
-                        return RedirectToAction("ShipOwnerSchedule", "Manage");
+                    RecordCRUD.CreateRecord(model.ClientsEmailAddress,
+                                            model.InstructorsEmailAddress,
+                                            model.Comment,
+                                            model.ImpressionType,
+                                            model.ClientId,
+                                            model.InstructorId);
                 }
-                else if (model.ImpressionType == Enums.RecordImpressionType.BadExperience)
+                else if (model.ImpressionType == Enums.RecordImpressionType.BadExperience || model.ImpressionType == Enums.RecordImpressionType.GoodExperience)
                 {
                     RecordCRUD.CreateRecord(model.ClientsEmailAddress,
                                             model.InstructorsEmailAddress,
@@ -1058,13 +1058,19 @@ namespace FishingBooker.Controllers
                                             model.ClientId,
                                             model.InstructorId);
 
-                    if (User.IsInRole("ValidFishingInstructor"))
-                        return RedirectToAction("InstructorSchedule", "Manage");
-                    else if (User.IsInRole("ValidCottageOwner"))
-                        return RedirectToAction("CottageOwnerSchedule", "Manage");
-                    else if (User.IsInRole("ValidShipOwner"))
-                        return RedirectToAction("ShipOwnerSchedule", "Manage");
+                    //if (User.IsInRole("ValidFishingInstructor"))
+                    //    return RedirectToAction("InstructorSchedule", "Manage");
+                    //else if (User.IsInRole("ValidCottageOwner"))
+                    //    return RedirectToAction("CottageOwnerSchedule", "Manage");
+                    //else if (User.IsInRole("ValidShipOwner"))
+                    //    return RedirectToAction("ShipOwnerSchedule", "Manage");
                 }
+                if (User.IsInRole("ValidFishingInstructor"))
+                    return RedirectToAction("InstructorSchedule", "Manage");
+                else if (User.IsInRole("ValidCottageOwner"))
+                    return RedirectToAction("CottageOwnerSchedule", "Manage");
+                else if (User.IsInRole("ValidShipOwner"))
+                    return RedirectToAction("ShipOwnerSchedule", "Manage");
             }
             return RedirectToAction("FillARecord", "Manage", new { clientsEmail = model.ClientsEmailAddress });
             //return View();

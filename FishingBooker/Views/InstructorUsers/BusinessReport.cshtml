@@ -3,6 +3,7 @@
     ViewBag.Title = "BusinessReport";
     Layout = null;
     int row_counter = 1;
+    int history_row_counter = 1;
     int[] Days = new int[7];
     int[] Months = new int[12];
     int[] Years = new int[10];
@@ -111,18 +112,111 @@
                 break;
         }
     }
-    //if (User.IsInRole("ValidFishingInstructor"))
-    //{
-    //    Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
-    //}
-    //else if (User.IsInRole("Admin"))
-    //{
-    //    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    //}
-    //else if (User.IsInRole("HeadAdmin"))
-    //{
-    //    Layout = "~/Views/Shared/_LayoutHeadAdmin.cshtml";
-    //}
+    foreach (var reservations in Model.history_reservations)
+    {
+        switch (Convert.ToInt32(reservations.StartDate.DayOfWeek))
+        {
+            case 1:
+                Days[0] = Days[0] + 1;
+                break;
+            case 2:
+                Days[1] = Days[1] + 1;
+                break;
+            case 3:
+                Days[2] = Days[2] + 1;
+                break;
+            case 4:
+                Days[3] = Days[3] + 1;
+                break;
+            case 5:
+                Days[4] = Days[4] + 1;
+                break;
+            case 6:
+                Days[5] = Days[5] + 1;
+                break;
+            case 7:
+                Days[6] = Days[6] + 1;
+                break;
+            default:
+                break;
+        }
+        switch (Convert.ToInt32(reservations.StartDate.Month))
+        {
+            case 1:
+                Months[0] = Months[0] + 1;
+                break;
+            case 2:
+                Months[1] = Months[1] + 1;
+                break;
+            case 3:
+                Months[2] = Months[2] + 1;
+                break;
+            case 4:
+                Months[3] = Months[3] + 1;
+                break;
+            case 5:
+                Months[4] = Months[4] + 1;
+                break;
+            case 6:
+                Months[5] = Months[5] + 1;
+                break;
+            case 7:
+                Months[6] = Months[6] + 1;
+                break;
+            case 8:
+                Months[7] = Months[7] + 1;
+                break;
+            case 9:
+                Months[8] = Months[8] + 1;
+                break;
+            case 10:
+                Months[9] = Months[9] + 1;
+                break;
+            case 11:
+                Months[10] = Months[10] + 1;
+                break;
+            case 12:
+                Months[11] = Months[11] + 1;
+                break;
+            default:
+                break;
+        }
+        switch (Convert.ToInt32(reservations.StartDate.Year))
+        {
+            case 2013:
+                Years[0] = Years[0] + 1;
+                break;
+            case 2014:
+                Years[1] = Years[1] + 1;
+                break;
+            case 2015:
+                Years[2] = Years[2] + 1;
+                break;
+            case 2016:
+                Years[3] = Years[3] + 1;
+                break;
+            case 2017:
+                Years[4] = Years[4] + 1;
+                break;
+            case 2018:
+                Years[5] = Years[5] + 1;
+                break;
+            case 2019:
+                Years[6] = Years[6] + 1;
+                break;
+            case 2020:
+                Years[7] = Years[7] + 1;
+                break;
+            case 2021:
+                Years[8] = Years[8] + 1;
+                break;
+            case 2022:
+                Years[9] = Years[9] + 1;
+                break;
+            default:
+                break;
+        }
+    }
     }
 <!DOCTYPE html>
 <html lang="en">
@@ -365,7 +459,7 @@
                             {
                                 <tr class="table-striped">
                                     @*@Html.HiddenFor(modelItem => item.ShipId)*@
-                                    <th scope="row">@row_counter</th>
+                                    <th scope="row">@history_row_counter</th>
                                     <td>
                                         @Html.DisplayFor(model => item.ClientsEmailAddress)
                                     </td>
@@ -385,7 +479,7 @@
                                         @Html.DisplayFor(model => item.Price)
                                     </td>
                                 </tr>
-                                row_counter++;
+                                history_row_counter++;
                             }
                         </tbody>
                     </table>
@@ -484,7 +578,7 @@
                 },
                 {
                     name: 'Yearly',
-                    data: [['January', @Years[0]], ['January', @Years[1]], ['January', @Years[2]], ['January', @Years[3]], ['January', @Years[4]], ['January', @Years[5]], ['January', @Years[6]], ['January', @Years[7]], ['January', @Years[8]], ['January', @Years[9]]],
+                    data: [['2013', @Years[0]], ['2014', @Years[1]], ['2015', @Years[2]], ['2016', @Years[3]], ['2017', @Years[4]], ['2018', @Years[5]], ['2019', @Years[6]], ['2020', @Years[7]], ['2021', @Years[8]], ['2022', @Years[9]]],
                     visible: false
                 }
             ]
