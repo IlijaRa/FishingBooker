@@ -302,6 +302,7 @@
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.HiddenFor(model => model.AdventureId)
+
                                 <div class="form-group">
                                     @*@Html.LabelFor(model => model.FromDate, htmlAttributes: new { @class = "control-label col-md-2" })*@
                                     <div class="col-md-12">
@@ -340,9 +341,12 @@
                         @*@Html.LabelFor(model => model.FutureOutcomes, htmlAttributes: new { @class = "control-label col-md-2 text-center" })*@
                         <div class="form-floating mb-4">
                             @Html.EditorFor(model => model.Active_Income, new { htmlAttributes = new { @class = "form-control text-center", @readonly = "readonly", @id = "Active_Income" } })
-                            <label class="text-center" for="Active_Income">Payments in the future</label>
+                            <label class="text-center" for="Active_Income">Payments in the future (benefits are included)</label>
                             @Html.ValidationMessageFor(model => model.Active_Income, "", new { @class = "text-danger" })
                         </div>
+                    </div>
+                    <div>
+                        @Html.ActionLink("Back to list", "AdminIndex", "Home")
                     </div>
                     <table class="table table-bordered table-hover text-center table-responsive">
                         <thread>
@@ -407,7 +411,7 @@
                             <label class="text-center" for="History_Income">Payments from past</label>
                             @Html.ValidationMessageFor(model => model.History_Income, "", new { @class = "text-danger" })
                         </div>
-                    </div*@
+                    </div>*@
                     <table class="table table-bordered table-hover text-center table-responsive">
                         <thread>
                             <tr>
@@ -418,7 +422,7 @@
                                 <th class="bg-primary" scope="col">Start time</th>
                                 <th class="bg-primary" scope="col">End date</th>
                                 <th class="bg-primary" scope="col">End time</th>
-                                @*<th class="bg-primary" scope="col">Price</th>*@
+                                <th class="bg-primary" scope="col">Price</th>
                             </tr>
                         </thread>
                         <tbody>
@@ -444,9 +448,9 @@
                                     <td>
                                         @Html.DisplayFor(model => item.EndTime)
                                     </td>
-                                    @*<td>
+                                    <td>
                                         @Html.DisplayFor(model => item.Price)
-                                    </td>*@
+                                    </td>
                                 </tr>
                                 history_row_counter++;
                             }

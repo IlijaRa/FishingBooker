@@ -734,6 +734,7 @@
     <Content Include="Views\Shared\ImageSubmitError.cshtml" />
     <Content Include="Views\InstructorUsers\AdventureDetails.cshtml" />
     <Content Include="Views\Home\AdminIndex.cshtml" />
+    <Content Include="Views\Home\AdminIndexFilteredDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
