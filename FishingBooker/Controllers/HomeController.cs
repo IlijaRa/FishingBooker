@@ -133,35 +133,8 @@ namespace FishingBooker.Controllers
             ViewData["Records"] = RecordCRUD.LoadRecords().Count();
             ViewData["DeactivationRequests"] = DeactivationRequestCRUD.LoadDeactivationRequests().Count();
             ViewData["RegistrationRequests"] = DeactivationRequestCRUD.LoadDeactivationRequests().Count();
-            //var data_adventure = AdventureCRUD.LoadAdventureById(advId);
-            //var data_instructor = RegUserCRUD.LoadUserById(User.Identity.GetUserId());
-            //var loyalty_scales = LoyaltyProgramCRUD.LoadLoyaltyScales();
 
-            //model.AdventureId = advId;
-            //model.AverageRate = data_adventure.Rating;
-
-            ////sorting scales by min earned points
-            //var temp = new LoyaltyScale();
-            //for (int j = 0; j <= loyalty_scales.Count - 2; j++)
-            //{
-            //    for (int i = 0; i <= loyalty_scales.Count - 2; i++)
-            //    {
-            //        if (loyalty_scales[i].MinEarnedPoints > loyalty_scales[i + 1].MinEarnedPoints)
-            //        {
-            //            temp = loyalty_scales[i + 1];
-            //            loyalty_scales[i + 1] = loyalty_scales[i];
-            //            loyalty_scales[i] = temp;
-            //        }
-            //    }
-            //}
-
-            //foreach (var scale in loyalty_scales)
-            //{
-            //    if (scale.MinEarnedPoints <= data_instructor.TotalScalePoints)
-            //    {
-            //        benefits = scale.OwnerBenefits;
-            //    }
-            //}
+            var money_flow = MoneyFlowCRUD.LoadMoneyFlow();
 
             // racuna samo income za rezervacije koje su aktivne kod instruktora
             foreach (var reservation in data_active_adventure_reservations)
@@ -227,7 +200,7 @@ namespace FishingBooker.Controllers
                 if (reservation.IsReserved == true)
                     sum_active += Convert.ToDouble(reservation.Price);
             }
-            model.Active_Income = sum_active + (sum_active * (benefits / 100));
+            model.Active_Income = sum_active * (Convert.ToDouble(money_flow.Percentage) / 100);
             model.active_reservations = reservations_to_show;
 
             // racuna samo income za rezervacije koje su prosle
@@ -248,7 +221,7 @@ namespace FishingBooker.Controllers
                 sum_history += Convert.ToDouble(reservation.Price);
             }
             model.history_reservations = history_reservations_to_show;
-            model.History_Income += sum_history;// + (sum_history * (benefits/100));
+            model.History_Income += sum_history * (Convert.ToDouble(money_flow.Percentage)/100);
 
             return View(model);
         }
