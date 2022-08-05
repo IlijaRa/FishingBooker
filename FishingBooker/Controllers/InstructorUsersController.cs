@@ -568,6 +568,8 @@ namespace FishingBooker.Controllers
                 }
             }
 
+            ViewData["Benefits"] = Convert.ToDouble(benefits / 100);
+
             // racuna samo income za rezervacije koje su aktivne
             foreach (var reservation in data_instructor_active_reservations)
             {
@@ -662,6 +664,8 @@ namespace FishingBooker.Controllers
                     benefits = scale.OwnerBenefits;
                 }
             }
+
+            ViewData["Benefits"] = Convert.ToDouble(benefits / 100);
 
             // racuna samo income za rezervacije koje su trenutne
             foreach (var reservation in data_instructor_active_reservations)

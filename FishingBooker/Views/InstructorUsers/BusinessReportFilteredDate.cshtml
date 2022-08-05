@@ -4,9 +4,17 @@
     Layout = null;
     int row_counter = 1;
     int history_row_counter = 1;
+
     int[] Days = new int[7];
     int[] Months = new int[12];
     int[] Years = new int[10];
+
+    double[] Days_Income = new double[7];
+    double[] Months_Income = new double[12];
+    double[] Years_Income = new double[10];
+
+    var benefits = (double)ViewData["Benefits"];
+
     foreach (var reservations in Model.active_reservations)
     {
         if (reservations.IsReserved != true)
@@ -222,7 +230,222 @@
                 break;
         }
     }
-}
+    foreach (var reservations in Model.active_reservations)
+    {
+        if (reservations.IsReserved != true)
+        {
+            continue;
+        }
+
+        switch (Convert.ToInt32(reservations.StartDate.DayOfWeek))
+        {
+            case 1:
+                Days_Income[0] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 2:
+                Days_Income[1] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 3:
+                Days_Income[2] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 4:
+                Days_Income[3] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 5:
+                Days_Income[4] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 6:
+                Days_Income[5] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 0:
+                Days_Income[6] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            default:
+                break;
+        }
+        switch (Convert.ToInt32(reservations.StartDate.Month))
+        {
+            case 1:
+                Months_Income[0] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 2:
+                Months_Income[1] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 3:
+                Months_Income[2] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 4:
+                Months_Income[3] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 5:
+                Months_Income[4] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 6:
+                Months_Income[5] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 7:
+                Months_Income[6] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 8:
+                Months_Income[7] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 9:
+                Months_Income[8] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 10:
+                Months_Income[9] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 11:
+                Months_Income[10] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 12:
+                Months_Income[11] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            default:
+                break;
+        }
+        switch (Convert.ToInt32(reservations.StartDate.Year))
+        {
+            case 2013:
+                Years_Income[0] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 2014:
+                Years_Income[1] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 2015:
+                Years_Income[2] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 2016:
+                Years_Income[3] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 2017:
+                Years_Income[4] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 2018:
+                Years_Income[5] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 2019:
+                Years_Income[6] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 2020:
+                Years_Income[7] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 2021:
+                Years_Income[8] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            case 2022:
+                Years_Income[9] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * benefits);
+                break;
+            default:
+                break;
+        }
+    }
+    foreach (var reservations in Model.history_reservations)
+    {
+        switch (Convert.ToInt32(reservations.StartDate.DayOfWeek))
+        {
+            case 1:
+                Days_Income[0] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 2:
+                Days_Income[1] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 3:
+                Days_Income[2] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 4:
+                Days_Income[3] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 5:
+                Days_Income[4] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 6:
+                Days_Income[5] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 0:
+                Days_Income[6] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            default:
+                break;
+        }
+        switch (Convert.ToInt32(reservations.StartDate.Month))
+        {
+            case 1:
+                Months_Income[0] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 2:
+                Months_Income[1] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 3:
+                Months_Income[2] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 4:
+                Months_Income[3] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 5:
+                Months_Income[4] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 6:
+                Months_Income[5] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 7:
+                Months_Income[6] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 8:
+                Months_Income[7] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 9:
+                Months_Income[8] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 10:
+                Months_Income[9] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 11:
+                Months_Income[10] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 12:
+                Months_Income[11] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            default:
+                break;
+        }
+        switch (Convert.ToInt32(reservations.StartDate.Year))
+        {
+            case 2013:
+                Years_Income[0] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 2014:
+                Years_Income[1] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 2015:
+                Years_Income[2] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 2016:
+                Years_Income[3] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 2017:
+                Years_Income[4] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 2018:
+                Years_Income[5] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 2019:
+                Years_Income[6] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 2020:
+                Years_Income[7] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 2021:
+                Years_Income[8] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            case 2022:
+                Years_Income[9] += Convert.ToDouble(reservations.Price) + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.OwnerPercentage) / 100));
+                break;
+            default:
+                break;
+        }
+    }
+    }
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -263,11 +486,18 @@
         <h2 class="text-center">Business report</h2>
         <br>
         <figure class="highcharts-figure">
-            <div id="container"></div>
-            @*<p class="highcharts-description">
-                    This chart shows how data labels can be added to the data series. This
-                    can increase readability and comprehension for small datasets.
-                </p>*@
+            <div id="container-column1"></div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div id="container-pie1"></div>
+                </div>
+                <div class="col-sm-4">
+                    <div id="container-pie2"></div>
+                </div>
+                <div class="col-sm-4">
+                    <div id="container-pie3"></div>
+                </div>
+            </div>
         </figure>
 
 
@@ -531,12 +761,12 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script>
-        Highcharts.chart('container', {
+        Highcharts.chart('container-column1', {
             chart: {
                 type: 'column'
             },
             title: {
-                text: 'Weekly, Monthly and Yearly reservation counter'
+                text: 'Weekly, Monthly and Yearly number of reservation indicator'
             },
             subtitle: {
                 //text: 'Source: WorldClimate.com'
@@ -592,6 +822,143 @@
                     name: 'Yearly',
                     data: [['January', @Years[0]], ['January', @Years[1]], ['January', @Years[2]], ['January', @Years[3]], ['January', @Years[4]], ['January', @Years[5]], ['January', @Years[6]], ['January', @Years[7]], ['January', @Years[8]], ['January', @Years[9]]],
                     visible: false
+                }
+            ]
+        });
+
+        //Weekly income indicator
+        Highcharts.chart('container-pie1', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'Income indicator - days in a week'
+            },
+            subtitle: {
+                //text: 'Source: WorldClimate.com'
+            },
+            xAxis: {
+                //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'Values'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                }
+            },
+            series: [
+                {
+                    name: 'Weekly',
+                    data: [
+                        ['Monday', @Days_Income[0]],
+                        ['Tuesday', @Days_Income[1]],
+                        ['Wednesday', @Days_Income[2]],
+                        ['Thursday', @Days_Income[3]],
+                        ['Friday', @Days_Income[4]],
+                        ['Saturday', @Days_Income[5]],
+                        ['Sunday', @Days_Income[6]]
+                    ]
+                }
+            ]
+        });
+
+        //Monthly income indicator
+        Highcharts.chart('container-pie2', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'Income indicator - last few years'
+            },
+            subtitle: {
+                //text: 'Source: WorldClimate.com'
+            },
+            xAxis: {
+                //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'Values'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                }
+            },
+            series: [
+                {
+                    name: 'Monthly',
+                    data: [
+                        ['January', @Months_Income[0]],
+                        ['February', @Months_Income[1]],
+                        ['March', @Months_Income[2]],
+                        ['April', @Months_Income[3]],
+                        ['May', @Months_Income[4]],
+                        ['June', @Months_Income[5]],
+                        ['July', @Months_Income[6]],
+                        ['August', @Months_Income[7]],
+                        ['September', @Months_Income[8]],
+                        ['October', @Months_Income[9]],
+                        ['November', @Months_Income[10]],
+                        ['December', @Months_Income[11]]
+                    ]
+                }
+            ]
+        });
+
+        //Yearly income indicator
+        Highcharts.chart('container-pie3', {
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'Income indicator - months in a year'
+            },
+            subtitle: {
+                //text: 'Source: WorldClimate.com'
+            },
+            xAxis: {
+                //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'Values'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                }
+            },
+            series: [
+                {
+                    name: 'Yearly',
+                    data: [
+                        ['2013', @Years_Income[0]],
+                        ['2014', @Years_Income[1]],
+                        ['2015', @Years_Income[2]],
+                        ['2016', @Years_Income[3]],
+                        ['2017', @Years_Income[4]],
+                        ['2018', @Years_Income[5]],
+                        ['2019', @Years_Income[6]],
+                        ['2020', @Years_Income[7]],
+                        ['2021', @Years_Income[8]],
+                        ['2022', @Years_Income[9]]
+                    ]
                 }
             ]
         });
