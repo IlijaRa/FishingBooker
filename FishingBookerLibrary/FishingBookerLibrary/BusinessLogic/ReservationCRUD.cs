@@ -354,6 +354,15 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.LoadReservationsByAdventureId<Reservation>(sql, adventureId);
         }
 
+        public static List<AdventureReservation> LoadAdventureReservationsByAdventureId(int adventureId)
+        {
+            string sql = @"SELECT *
+                           FROM dbo.AdventureReservations
+                           WHERE AdventureId = @AdventureId;";
+
+            return SSMSDataAccess.LoadReservationsByAdventureId<AdventureReservation>(sql, adventureId);
+        }
+
         public static List<Reservation> LoadReservationsByShipId(int shipId)
         {
             string sql = @"SELECT *

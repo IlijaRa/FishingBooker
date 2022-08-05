@@ -59,7 +59,7 @@ namespace FishingBooker.Controllers
 
             var data = AdventureCRUD.LoadAdventures();
             List<AdventureViewModel> adventures = new List<AdventureViewModel>();
-
+            
             foreach (var row in data)
             {
                 if (row.InstructorId == User.Identity.GetUserId()) // ovo ce da propusta samo avanture od instruktora koji je trenutno ulogovan
@@ -82,6 +82,21 @@ namespace FishingBooker.Controllers
                         FishingEquipment = row.FishingEquipment,
                         CancellationPolicy = row.CancellationPolicy
                     });
+                }
+            }
+
+            foreach (var adventure in adventures)
+            {
+                adventure.IsEditableDeletable = true;
+                var adventure_reservations = ReservationCRUD.LoadAdventureReservationsByAdventureId(adventure.AdventureId);
+                foreach (var reservation in adventure_reservations)
+                {
+                    //IsDateAndTimeOk function tells if there is acitve reservation at the moment 
+                    if (IsDateAndTimeOk(reservation))
+                    {
+                        adventure.IsEditableDeletable = false;
+                        break;
+                    }
                 }
             }
 
