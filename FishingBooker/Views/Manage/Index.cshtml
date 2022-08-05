@@ -104,7 +104,7 @@
                                 @if (User.IsInRole("ValidFishingInstructor") || User.IsInRole("ValidCottageOwner") || User.IsInRole("ValidShipOwner") || User.IsInRole("ValidClient"))
                                 {
                                     <h4 class="text-center">Class member</h4>
-                                    <input class="btn btn-success btn-lg mb-3" id="LoyaltyClassMember" name="LoyaltyClassMember" type="button" value="@Model.LoyaltyClassMember.ToString()"/>
+                                    <input style="background: @Model.LoyaltyClass.PickedColor" class="btn btn-lg mb-3" id="LoyaltyClass" name="LoyaltyClass" type="button" value="@Model.LoyaltyClass.ScaleName.ToString()"/>
                                     <br>
                                 }
 

@@ -32,5 +32,10 @@ namespace FishingBooker.Models
         [Range(0, 999999, ErrorMessage = "Range is between 0 and 999999")]
         [Required(ErrorMessage = "You need to enter a number.")]
         public int MinEarnedPoints { get; set; }
+
+
+        [Display(Name = "Picked color")]
+        [Required(ErrorMessage = "You need to enter a number.")]
+        public string PickedColor { get; set; }
     }
 }

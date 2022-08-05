@@ -80,7 +80,6 @@ namespace FishingBooker.Controllers
             //var ships = ShipCRUD.LoadShips();
             var ship_reservations = ReservationCRUD.LoadShipReservations();
 
-            // TODO: Odradi obracunavanje cene kod avantura
             foreach (var reservation in cottage_reservations)
             {
                 totalIncome = totalIncome + (reservation.Price * Convert.ToDecimal(percentage)/100);
@@ -99,7 +98,9 @@ namespace FishingBooker.Controllers
             var userId = User.Identity.GetUserId();
             var data_owner = RegUserCRUD.LoadUserById(userId);
             var loyalty_scales = LoyaltyProgramCRUD.LoadLoyaltyScales();
-            string loyaltyClass = "";
+            var loyalty_scale = new LoyaltyScale();
+            var loyalty_scale_viewmodel = new LoyaltyScaleViewModel();
+            //string loyaltyClass = "";
 
             //sorting scales by min earned points
             var temp = new LoyaltyScale();
@@ -120,10 +121,17 @@ namespace FishingBooker.Controllers
             {
                 if (scale.MinEarnedPoints <= data_owner.TotalScalePoints)
                 {
-                    loyaltyClass = scale.ScaleName;
+                    loyalty_scale = scale;
                 }
             }
-            
+
+            loyalty_scale_viewmodel.Id = loyalty_scale.Id;
+            loyalty_scale_viewmodel.ScaleName = loyalty_scale.ScaleName;
+            loyalty_scale_viewmodel.ClientsBenefits = loyalty_scale.ClientsBenefits;
+            loyalty_scale_viewmodel.OwnerBenefits = loyalty_scale.OwnerBenefits;
+            loyalty_scale_viewmodel.MinEarnedPoints = loyalty_scale.MinEarnedPoints;
+            loyalty_scale_viewmodel.PickedColor = loyalty_scale.PickedColor;
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
@@ -131,7 +139,7 @@ namespace FishingBooker.Controllers
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
-                LoyaltyClassMember = loyaltyClass,
+                LoyaltyClass = loyalty_scale_viewmodel,
                 Percentage = percentage,
                 TotalIncome = totalIncome
             };

@@ -21,7 +21,7 @@ namespace FishingBooker.Models
         public decimal TotalIncome { get; set; }// koristi samo admin  
 
         [Display(Name = "Loyalty class member")]
-        public string LoyaltyClassMember { get; set; }
+        public LoyaltyScaleViewModel LoyaltyClass { get; set; }
     }
 
     public class ManageLoginsViewModel
