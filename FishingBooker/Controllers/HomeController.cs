@@ -133,7 +133,7 @@ namespace FishingBooker.Controllers
             ViewData["DeactivationRequests"] = DeactivationRequestCRUD.LoadDeactivationRequests().Count();
             ViewData["RegistrationRequests"] = DeactivationRequestCRUD.LoadDeactivationRequests().Count();
 
-            
+            ViewData["MoneyFlowPercentage"] = Convert.ToDouble(money_flow.Percentage);
 
             // racuna samo income za rezervacije koje su aktivne kod instruktora
             foreach (var reservation in data_active_adventure_reservations)
@@ -253,6 +253,7 @@ namespace FishingBooker.Controllers
             var data_history_reservations = ReservationCRUD.LoadReservationsFromHistory();
             var data_records = RecordCRUD.LoadRecords();
             var data_users = RegUserCRUD.LoadUsers();
+            var money_flow = MoneyFlowCRUD.LoadMoneyFlow();
 
             foreach (var record in data_records)
             {
@@ -303,8 +304,8 @@ namespace FishingBooker.Controllers
             ViewData["Records"] = RecordCRUD.LoadRecords().Count();
             ViewData["DeactivationRequests"] = DeactivationRequestCRUD.LoadDeactivationRequests().Count();
             ViewData["RegistrationRequests"] = DeactivationRequestCRUD.LoadDeactivationRequests().Count();
-
-            var money_flow = MoneyFlowCRUD.LoadMoneyFlow();
+            
+            ViewData["MoneyFlowPercentage"] = Convert.ToDouble(money_flow.Percentage);
 
             // racuna samo income za rezervacije koje su aktivne kod instruktora
             foreach (var reservation in data_active_adventure_reservations)
@@ -418,6 +419,7 @@ namespace FishingBooker.Controllers
         {
             var sum_current = 0.0;
             var sum_history = 0.0;
+            float benefits = 0;
             ClientIndexViewModel model = new ClientIndexViewModel();
             var data_adventure_reservations = ReservationCRUD.LoadAdventureReservationsByClient(User.Identity.GetUserName());
             var data_cottage_reservations = ReservationCRUD.LoadCottageReservationsByClient(User.Identity.GetUserName());
@@ -427,7 +429,21 @@ namespace FishingBooker.Controllers
             List<ReservationFromHistoryViewModel> his_reservations = new List<ReservationFromHistoryViewModel>();
             var data_client = RegUserCRUD.LoadUserById(User.Identity.GetUserId());
             var loyalty_scales = LoyaltyProgramCRUD.LoadLoyaltyScales();
-            float benefits = 0;
+
+            //sorting scales by min earned points
+            var temp = new LoyaltyScale();
+            for (int j = 0; j <= loyalty_scales.Count - 2; j++)
+            {
+                for (int i = 0; i <= loyalty_scales.Count - 2; i++)
+                {
+                    if (loyalty_scales[i].MinEarnedPoints > loyalty_scales[i + 1].MinEarnedPoints)
+                    {
+                        temp = loyalty_scales[i + 1];
+                        loyalty_scales[i + 1] = loyalty_scales[i];
+                        loyalty_scales[i] = temp;
+                    }
+                }
+            }
 
             foreach (var scale in loyalty_scales)
             {
