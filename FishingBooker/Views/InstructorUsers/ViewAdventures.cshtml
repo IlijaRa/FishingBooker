@@ -100,24 +100,26 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr class="table-striped">
-                                @*@Html.HiddenFor(modelItem => item.ShipId)*@
-                                <th scope="row">@row_counter</th>
-                                <td>
-                                    @Html.DisplayFor(model => item.Title)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.Street)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.AddressNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.City)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(model => item.MaxNumberOfPeople)
-                                </td>
+                        <tr class="table-striped">
+                            @*@Html.HiddenFor(modelItem => item.ShipId)*@
+                            <th scope="row">@row_counter</th>
+                            <td>
+                                @Html.DisplayFor(model => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Street)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.AddressNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.City)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.MaxNumberOfPeople)
+                            </td>
+                            @if (item.IsEditableDeletable)
+                            {
                                 <td>
                                     @Html.ActionLink("Edit", "EditAdventure", "InstructorUsers", new { advId = @item.AdventureId }, null) |
 
@@ -127,9 +129,18 @@
 
                                     @Html.ActionLink("Business report", "BusinessReport", "InstructorUsers", new { advId = @item.AdventureId }, null)
                                 </td>
-                            </tr>
-                            row_counter++;
-                        }
+                            }
+                            else
+                            {
+                                <td>
+                                    @Html.ActionLink("Details", "AdventureDetails", "InstructorUsers", new { advId = @item.AdventureId }, null) |
+
+                                    @Html.ActionLink("Business report", "BusinessReport", "InstructorUsers", new { advId = @item.AdventureId }, null)
+                                </td>
+                            }
+                        </tr>
+                    row_counter++;
+                    }
                     </tbody>
                 </table>
             </div>

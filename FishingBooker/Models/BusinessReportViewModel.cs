@@ -18,7 +18,7 @@ namespace FishingBooker.Models
         public IEnumerable<ReservationToShowViewModel> active_reservations { get; set; }
 
 
-        public IEnumerable<ReservationToShowViewModel> history_reservations { get; set; }
+        public IEnumerable<ReservationFromHistoryViewModel> history_reservations { get; set; }
 
 
         //it is used to filter reservations and their income
