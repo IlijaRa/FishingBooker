@@ -14,5 +14,6 @@ namespace FishingBookerLibrary.Models
         public int ClientsBenefits { get; set; }
         public int OwnerBenefits { get; set; }
         public int MinEarnedPoints { get; set; }
+        public string PickedColor { get; set; }
     }
 }

@@ -31,7 +31,8 @@ namespace FishingBookerLibrary.BusinessLogic
         public static int CreateScale(string scaleName,
                                       int clientsBenefits,
                                       int ownerBenefits,
-                                      int minEarnedPoints)
+                                      int minEarnedPoints,
+                                      string pickedColor)
         {
             LoyaltyScale data = new LoyaltyScale
             {
@@ -39,11 +40,12 @@ namespace FishingBookerLibrary.BusinessLogic
                 ScaleName = scaleName,
                 ClientsBenefits = clientsBenefits,
                 OwnerBenefits = ownerBenefits,
-                MinEarnedPoints = minEarnedPoints
+                MinEarnedPoints = minEarnedPoints,
+                PickedColor = pickedColor
             };
 
-            string sql = @"INSERT INTO dbo.LoyaltyScale (LoyaltyProgramId, ScaleName, ClientsBenefits, OwnerBenefits, MinEarnedPoints)
-                           VALUES (@LoyaltyProgramId, @ScaleName, @ClientsBenefits, @OwnerBenefits, @MinEarnedPoints);";
+            string sql = @"INSERT INTO dbo.LoyaltyScale (LoyaltyProgramId, ScaleName, ClientsBenefits, OwnerBenefits, MinEarnedPoints, PickedColor)
+                           VALUES (@LoyaltyProgramId, @ScaleName, @ClientsBenefits, @OwnerBenefits, @MinEarnedPoints, @PickedColor);";
 
             return SSMSDataAccess.SaveData(sql, data);
         }

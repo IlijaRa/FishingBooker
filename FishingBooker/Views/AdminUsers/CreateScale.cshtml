@@ -95,6 +95,12 @@
                                     @Html.ValidationMessageFor(model => model.MinEarnedPoints, "", new { @class = "text-danger" })
                                 </div>
 
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="PickedColor" name="PickedColor" type="color" placeholder="Enter color..."/>
+                                    <label for="PickedColor">Pick color</label>
+                                    @Html.ValidationMessageFor(model => model.PickedColor, "", new { @class = "text-danger" })
+                                </div>
+                                <br>
                                 <!-- Submit Button-->
                                 <div class="d-grid"><button class="btn btn-danger btn-lg" id="submitButton" type="submit">Submit</button></div>
                             }

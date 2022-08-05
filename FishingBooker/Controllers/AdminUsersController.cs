@@ -686,7 +686,8 @@ namespace FishingBooker.Controllers
                     ScaleName = scale.ScaleName,
                     ClientsBenefits = scale.ClientsBenefits,
                     OwnerBenefits = scale.OwnerBenefits,
-                    MinEarnedPoints = scale.MinEarnedPoints
+                    MinEarnedPoints = scale.MinEarnedPoints,
+                    PickedColor = scale.PickedColor
                 });
             }
 
@@ -734,7 +735,7 @@ namespace FishingBooker.Controllers
         {
             if(ModelState.IsValid)
             {
-                LoyaltyProgramCRUD.CreateScale(model.ScaleName, model.ClientsBenefits, model.OwnerBenefits, model.MinEarnedPoints);
+                LoyaltyProgramCRUD.CreateScale(model.ScaleName, model.ClientsBenefits, model.OwnerBenefits, model.MinEarnedPoints, model.PickedColor);
                 return RedirectToAction("LoyaltyProgram", "AdminUsers");
             }
 

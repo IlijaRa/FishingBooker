@@ -110,6 +110,7 @@
                                 <th class="bg-danger" scope="col">Clients benefits</th>
                                 <th class="bg-danger" scope="col">Owner benefits</th>
                                 <th class="bg-danger" scope="col">Min earned points</th>
+                                <th class="bg-danger" scope="col">Color</th>
                                 <th class="bg-danger" scope="col">Options</th>
                             </tr>
                         </thread>
@@ -129,6 +130,9 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.MinEarnedPoints)
+                                    </td>
+                                    <td style="background: @item.PickedColor">
+                                        @Html.DisplayFor(modelItem => item.PickedColor)
                                     </td>
                                     <td>
                                         <p>@Html.ActionLink("Delete", "DeleteScale", "AdminUsers", new { scaleId = @item.Id }, new { style = "color: #CC3140" })</p>
