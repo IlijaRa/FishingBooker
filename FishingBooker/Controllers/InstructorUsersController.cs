@@ -608,14 +608,16 @@ namespace FishingBooker.Controllers
                         EndDate = reservation.EndDate,
                         EndTime = reservation.EndTime.ToString(),
                         Price = reservation.Price,
-                        OwnerId = reservation.OwnerId
+                        OwnerId = reservation.OwnerId,
+                        ClientPercentage = reservation.ClientPercentage,
+                        OwnerPercentage = reservation.OwnerPercentage,
+                        MoneyFlowPercentage = reservation.MoneyFlowPercentage
                     });
-                    sum_history += Convert.ToDouble(reservation.Price);
+                    model.History_Income += Convert.ToDouble(reservation.Price) + (Convert.ToDouble(reservation.Price) * (Convert.ToDouble(reservation.OwnerPercentage))/100);
                 }
             }
-
             model.history_reservations = history_reservations_to_show;
-            model.History_Income += sum_history;// + (sum_history * (benefits/100));
+
             return View(model);
         }
 
@@ -690,7 +692,7 @@ namespace FishingBooker.Controllers
 
             foreach (var reservation in data_instructor_history_reservations)
             {
-                if (reservation.ActionTitle.Equals(data_adventure.Title))
+                if (reservation.ActionTitle.Equals(data_adventure.Title) && (filter_model.FromDate <= reservation.StartDate && reservation.EndDate <= filter_model.ToDate))
                 {
                     history_reservations_to_show.Add(new ReservationFromHistoryViewModel
                     {
@@ -702,13 +704,16 @@ namespace FishingBooker.Controllers
                         EndDate = reservation.EndDate,
                         EndTime = reservation.EndTime.ToString(),
                         Price = reservation.Price,
-                        OwnerId = reservation.OwnerId
+                        OwnerId = reservation.OwnerId,
+                        ClientPercentage = reservation.ClientPercentage,
+                        OwnerPercentage = reservation.OwnerPercentage,
+                        MoneyFlowPercentage = reservation.MoneyFlowPercentage
                     });
-                    sum_history += Convert.ToDouble(reservation.Price);
+                    model.History_Income += Convert.ToDouble(reservation.Price) + (Convert.ToDouble(reservation.Price) * (Convert.ToDouble(reservation.OwnerPercentage)) / 100);
                 }
             }
             model.history_reservations = history_reservations_to_show;
-            model.History_Income += sum_history;// + (sum_history * (benefits/100));
+
             return View(model);
         }
     }

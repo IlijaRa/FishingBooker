@@ -9,6 +9,11 @@
     int[] Years = new int[10];
     foreach (var reservations in Model.active_reservations)
     {
+        if (reservations.IsReserved != true)
+        {
+            continue;
+        }
+
         switch (Convert.ToInt32(reservations.StartDate.DayOfWeek))
         {
             case 1:
@@ -29,7 +34,7 @@
             case 6:
                 Days[5] = Days[5] + 1;
                 break;
-            case 7:
+            case 0:
                 Days[6] = Days[6] + 1;
                 break;
             default:
@@ -134,7 +139,7 @@
             case 6:
                 Days[5] = Days[5] + 1;
                 break;
-            case 7:
+            case 0:
                 Days[6] = Days[6] + 1;
                 break;
             default:
@@ -452,6 +457,7 @@
                                 <th class="bg-primary" scope="col">End date</th>
                                 <th class="bg-primary" scope="col">End time</th>
                                 <th class="bg-primary" scope="col">Price</th>
+                                <th class="bg-primary" scope="col">Benefits %</th>
                             </tr>
                         </thread>
                         <tbody>
@@ -477,6 +483,9 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(model => item.Price)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.OwnerPercentage)
                                     </td>
                                 </tr>
                                 history_row_counter++;
