@@ -18,5 +18,8 @@ namespace FishingBookerLibrary.Models
         public string Duration { get; set; }
         public decimal Price { get; set; }
         public string OwnerId { get; set; }
+        public int ClientPercentage { get; set; }
+        public int OwnerPercentage { get; set; }
+        public int MoneyFlowPercentage { get; set; }
     }
 }

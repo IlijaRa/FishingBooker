@@ -534,7 +534,7 @@ namespace FishingBooker.Controllers
             //int count = 0;
             BusinessReportViewModel model = new BusinessReportViewModel();
             List<ReservationToShowViewModel> active_reservations_to_show = new List<ReservationToShowViewModel>();
-            List<ReservationToShowViewModel> history_reservations_to_show = new List<ReservationToShowViewModel>();
+            List<ReservationFromHistoryViewModel> history_reservations_to_show = new List<ReservationFromHistoryViewModel>();
             //var data_instructor_revisions = RevisionCRUD.LoadConfirmedRevisionsForInstructor(User.Identity.GetUserName());
             var data_instructor_active_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
             var data_instructor_history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
@@ -598,7 +598,7 @@ namespace FishingBooker.Controllers
             foreach (var reservation in data_instructor_history_reservations)
             {
                 if (reservation.ActionTitle.Equals(data_adventure.Title)) {
-                    history_reservations_to_show.Add(new ReservationToShowViewModel
+                    history_reservations_to_show.Add(new ReservationFromHistoryViewModel
                     {
                         Id = reservation.Id,
                         ClientsEmailAddress = reservation.ClientsEmailAddress,
@@ -627,7 +627,7 @@ namespace FishingBooker.Controllers
             //int count = 0;
             BusinessReportViewModel model = new BusinessReportViewModel();
             List<ReservationToShowViewModel> active_reservations_to_show = new List<ReservationToShowViewModel>();
-            List<ReservationToShowViewModel> history_reservations_to_show = new List<ReservationToShowViewModel>();
+            List<ReservationFromHistoryViewModel> history_reservations_to_show = new List<ReservationFromHistoryViewModel>();
             //var data_instructor_revisions = RevisionCRUD.LoadConfirmedRevisionsForInstructor(User.Identity.GetUserName());
             var data_instructor_active_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(User.Identity.GetUserId());
             var data_instructor_history_reservations = ReservationCRUD.LoadReservationsFromHistoryByOwnerId(User.Identity.GetUserId());
@@ -692,7 +692,7 @@ namespace FishingBooker.Controllers
             {
                 if (reservation.ActionTitle.Equals(data_adventure.Title))
                 {
-                    history_reservations_to_show.Add(new ReservationToShowViewModel
+                    history_reservations_to_show.Add(new ReservationFromHistoryViewModel
                     {
                         Id = reservation.Id,
                         ClientsEmailAddress = reservation.ClientsEmailAddress,

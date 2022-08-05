@@ -136,111 +136,112 @@
                 break;
         }
     }
-    //foreach (var reservations in Model.history_reservations)
-    //{
-    //    switch (Convert.ToInt32(reservations.StartDate.DayOfWeek))
-    //    {
-    //        case 1:
-    //            Days[0] = Days[0] + 1;
-    //            break;
-    //        case 2:
-    //            Days[1] = Days[1] + 1;
-    //            break;
-    //        case 3:
-    //            Days[2] = Days[2] + 1;
-    //            break;
-    //        case 4:
-    //            Days[3] = Days[3] + 1;
-    //            break;
-    //        case 5:
-    //            Days[4] = Days[4] + 1;
-    //            break;
-    //        case 6:
-    //            Days[5] = Days[5] + 1;
-    //            break;
-    //        case 7:
-    //            Days[6] = Days[6] + 1;
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //    switch (Convert.ToInt32(reservations.StartDate.Month))
-    //    {
-    //        case 1:
-    //            Months[0] = Months[0] + 1;
-    //            break;
-    //        case 2:
-    //            Months[1] = Months[1] + 1;
-    //            break;
-    //        case 3:
-    //            Months[2] = Months[2] + 1;
-    //            break;
-    //        case 4:
-    //            Months[3] = Months[3] + 1;
-    //            break;
-    //        case 5:
-    //            Months[4] = Months[4] + 1;
-    //            break;
-    //        case 6:
-    //            Months[5] = Months[5] + 1;
-    //            break;
-    //        case 7:
-    //            Months[6] = Months[6] + 1;
-    //            break;
-    //        case 8:
-    //            Months[7] = Months[7] + 1;
-    //            break;
-    //        case 9:
-    //            Months[8] = Months[8] + 1;
-    //            break;
-    //        case 10:
-    //            Months[9] = Months[9] + 1;
-    //            break;
-    //        case 11:
-    //            Months[10] = Months[10] + 1;
-    //            break;
-    //        case 12:
-    //            Months[11] = Months[11] + 1;
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //    switch (Convert.ToInt32(reservations.StartDate.Year))
-    //    {
-    //        case 2013:
-    //            Years[0] = Years[0] + 1;
-    //            break;
-    //        case 2014:
-    //            Years[1] = Years[1] + 1;
-    //            break;
-    //        case 2015:
-    //            Years[2] = Years[2] + 1;
-    //            break;
-    //        case 2016:
-    //            Years[3] = Years[3] + 1;
-    //            break;
-    //        case 2017:
-    //            Years[4] = Years[4] + 1;
-    //            break;
-    //        case 2018:
-    //            Years[5] = Years[5] + 1;
-    //            break;
-    //        case 2019:
-    //            Years[6] = Years[6] + 1;
-    //            break;
-    //        case 2020:
-    //            Years[7] = Years[7] + 1;
-    //            break;
-    //        case 2021:
-    //            Years[8] = Years[8] + 1;
-    //            break;
-    //        case 2022:
-    //            Years[9] = Years[9] + 1;
-    //            break;
-    //        default:
-    //            break;
-    //    }
-}
+    foreach (var reservations in Model.history_reservations)
+    {
+
+        switch (Convert.ToInt32(reservations.StartDate.DayOfWeek))
+        {
+            case 1:
+                Days[0] = Days[0] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 2:
+                Days[1] = Days[1] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 3:
+                Days[2] = Days[2] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 4:
+                Days[3] = Days[3] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 5:
+                Days[4] = Days[4] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 6:
+                Days[5] = Days[5] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 0:
+                Days[6] = Days[6] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            default:
+                break;
+        }
+        switch (Convert.ToInt32(reservations.StartDate.Month))
+        {
+            case 1:
+                Months[0] = Months[0] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 2:
+                Months[1] = Months[1] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 3:
+                Months[2] = Months[2] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 4:
+                Months[3] = Months[3] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 5:
+                Months[4] = Months[4] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 6:
+                Months[5] = Months[5] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 7:
+                Months[6] = Months[6] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 8:
+                Months[7] = Months[7] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 9:
+                Months[8] = Months[8] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 10:
+                Months[9] = Months[9] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 11:
+                Months[10] = Months[10] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 12:
+                Months[11] = Months[11] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            default:
+                break;
+        }
+        switch (Convert.ToInt32(reservations.StartDate.Year))
+        {
+            case 2013:
+                Years[0] = Years[0] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 2014:
+                Years[1] = Years[1] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 2015:
+                Years[2] = Years[2] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 2016:
+                Years[3] = Years[3] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 2017:
+                Years[4] = Years[4] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 2018:
+                Years[5] = Years[5] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 2019:
+                Years[6] = Years[6] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 2020:
+                Years[7] = Years[7] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 2021:
+                Years[8] = Years[8] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            case 2022:
+                Years[9] = Years[9] + (Convert.ToDouble(reservations.Price) * (Convert.ToDouble(reservations.MoneyFlowPercentage) / 100));
+                break;
+            default:
+                break;
+        }
+    }
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -411,14 +412,13 @@
             <br>
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    @*<div class="col-md-4">
-
+                    <div class="col-md-4">
                         <div class="form-floating mb-4">
                             @Html.EditorFor(model => model.History_Income, new { htmlAttributes = new { @class = "form-control text-center", @readonly = "readonly", @id = "History_Income" } })
                             <label class="text-center" for="History_Income">Payments from past</label>
                             @Html.ValidationMessageFor(model => model.History_Income, "", new { @class = "text-danger" })
                         </div>
-                    </div>*@
+                    </div>
                     <table class="table table-bordered table-hover text-center table-responsive">
                         <thread>
                             <tr>
@@ -430,6 +430,7 @@
                                 <th class="bg-primary" scope="col">End date</th>
                                 <th class="bg-primary" scope="col">End time</th>
                                 <th class="bg-primary" scope="col">Price</th>
+                                <th class="bg-primary" scope="col">Money flow %</th>
                             </tr>
                         </thread>
                         <tbody>
@@ -457,6 +458,9 @@
                                     </td>
                                     <td>
                                         @Html.DisplayFor(model => item.Price)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => item.MoneyFlowPercentage)
                                     </td>
                                 </tr>
                                 history_row_counter++;

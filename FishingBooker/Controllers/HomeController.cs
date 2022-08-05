@@ -73,7 +73,7 @@ namespace FishingBooker.Controllers
             //int count = 0;
             AdminBusinessReportViewModel model = new AdminBusinessReportViewModel();
             List<ReservationToShowViewModel> reservations_to_show = new List<ReservationToShowViewModel>();
-            List<ReservationToShowViewModel> history_reservations_to_show = new List<ReservationToShowViewModel>();
+            List<ReservationFromHistoryViewModel> history_reservations_to_show = new List<ReservationFromHistoryViewModel>();
             //var data_instructor_revisions = RevisionCRUD.LoadConfirmedRevisionsForInstructor(User.Identity.GetUserName());
             var data_active_adventure_reservations = ReservationCRUD.LoadAdventureReservations();
             var data_active_cottage_reservations = ReservationCRUD.LoadCottageReservations();
@@ -205,7 +205,7 @@ namespace FishingBooker.Controllers
             // racuna samo income za rezervacije koje su prosle
             foreach (var reservation in data_history_reservations)
             {
-                history_reservations_to_show.Add(new ReservationToShowViewModel
+                history_reservations_to_show.Add(new ReservationFromHistoryViewModel
                 {
                     Id = reservation.Id,
                     ClientsEmailAddress = reservation.ClientsEmailAddress,
@@ -215,12 +215,14 @@ namespace FishingBooker.Controllers
                     EndDate = reservation.EndDate,
                     EndTime = reservation.EndTime.ToString(),
                     Price = reservation.Price,
-                    OwnerId = reservation.OwnerId
+                    OwnerId = reservation.OwnerId,
+                    ClientPercentage = reservation.ClientPercentage,
+                    OwnerPercentage = reservation.OwnerPercentage,
+                    MoneyFlowPercentage = reservation.MoneyFlowPercentage
                 });
-                sum_history += Convert.ToDouble(reservation.Price);
+                model.History_Income += Convert.ToDouble(reservation.Price) * (Convert.ToDouble(reservation.MoneyFlowPercentage) / 100);
             }
             model.history_reservations = history_reservations_to_show;
-            model.History_Income += sum_history * (Convert.ToDouble(money_flow.Percentage)/100);
 
             return View(model);
         }
@@ -245,7 +247,7 @@ namespace FishingBooker.Controllers
             //int count = 0;
             AdminBusinessReportViewModel model = new AdminBusinessReportViewModel();
             List<ReservationToShowViewModel> reservations_to_show = new List<ReservationToShowViewModel>();
-            List<ReservationToShowViewModel> history_reservations_to_show = new List<ReservationToShowViewModel>();
+            List<ReservationFromHistoryViewModel> history_reservations_to_show = new List<ReservationFromHistoryViewModel>();
             //var data_instructor_revisions = RevisionCRUD.LoadConfirmedRevisionsForInstructor(User.Identity.GetUserName());
             var data_active_adventure_reservations = ReservationCRUD.LoadAdventureReservations();
             var data_active_cottage_reservations = ReservationCRUD.LoadCottageReservations();
@@ -387,19 +389,25 @@ namespace FishingBooker.Controllers
             // racuna samo income za rezervacije koje su prosle
             foreach (var reservation in data_history_reservations)
             {
-                history_reservations_to_show.Add(new ReservationToShowViewModel
+                if (filter_model.FromDate <= reservation.StartDate && reservation.EndDate <= filter_model.ToDate)
                 {
-                    Id = reservation.Id,
-                    ClientsEmailAddress = reservation.ClientsEmailAddress,
-                    ActionTitle = reservation.ActionTitle,
-                    StartDate = reservation.StartDate,
-                    StartTime = reservation.StartTime.ToString(),
-                    EndDate = reservation.EndDate,
-                    EndTime = reservation.EndTime.ToString(),
-                    Price = reservation.Price,
-                    OwnerId = reservation.OwnerId
-                });
-                sum_history += Convert.ToDouble(reservation.Price);
+                    history_reservations_to_show.Add(new ReservationFromHistoryViewModel
+                    {
+                        Id = reservation.Id,
+                        ClientsEmailAddress = reservation.ClientsEmailAddress,
+                        ActionTitle = reservation.ActionTitle,
+                        StartDate = reservation.StartDate,
+                        StartTime = reservation.StartTime.ToString(),
+                        EndDate = reservation.EndDate,
+                        EndTime = reservation.EndTime.ToString(),
+                        Price = reservation.Price,
+                        OwnerId = reservation.OwnerId,
+                        ClientPercentage = reservation.ClientPercentage,
+                        OwnerPercentage = reservation.OwnerPercentage,
+                        MoneyFlowPercentage = reservation.MoneyFlowPercentage
+                    });
+                    sum_history += Convert.ToDouble(reservation.Price);
+                }
             }
             model.history_reservations = history_reservations_to_show;
             model.History_Income += sum_history * (Convert.ToDouble(money_flow.Percentage) / 100);
