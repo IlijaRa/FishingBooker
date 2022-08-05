@@ -92,7 +92,7 @@ namespace FishingBooker.Controllers
                 foreach (var reservation in adventure_reservations)
                 {
                     //IsDateAndTimeOk function tells if there is acitve reservation at the moment 
-                    if (IsDateAndTimeOk(reservation))
+                    if (IsDateAndTimeOk(reservation) && reservation.IsReserved == true)
                     {
                         adventure.IsEditableDeletable = false;
                         break;
