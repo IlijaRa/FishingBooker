@@ -469,7 +469,7 @@ namespace FishingBooker.Controllers
 
             foreach (var request in deactivation_requests)
             {
-                if(request.EmailAddress == model.EmailAddress)
+                if(request.EmailAddress == model.EmailAddress && model.Status == Enums.DeactivationRequestStatus.Waiting)
                 {
                     return View("DeactivationRequestUnsuccessful");
                 }
