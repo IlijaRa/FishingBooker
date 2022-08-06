@@ -7,6 +7,7 @@ using Dapper;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using FishingBookerLibrary.Models;
 
 namespace FishingBookerLibrary.DataAccess
 {

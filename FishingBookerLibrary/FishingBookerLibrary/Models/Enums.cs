@@ -85,5 +85,11 @@ namespace FishingBookerLibrary.Models
             Availability,
             Unavailability
         }
+
+        public enum DeactivationRequestStatus
+        {
+            NotErased,
+            Erased
+        }
     }
 }

@@ -5,9 +5,11 @@ using FishingBookerLibrary.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace FishingBooker.Controllers
@@ -441,42 +443,80 @@ namespace FishingBooker.Controllers
 
             foreach (var request in data_requests)
             {
+                if (request.Status == Enums.DeactivationRequestStatus.Erased)
+                {
+                    continue;
+                }
                 deactivation_requests.Add(new DeactivationRequestViewModel
                 {
+                    Id = request.Id,
                     UserName = request.UserName,
                     UserSurname = request.UserSurname,
                     EmailAddress = request.EmailAddress,
-                    Reason = request.Reason
+                    Reason = request.Reason,
+                    Status = request.Status,
+                    ConcurrencyToken = request.ConcurrencyToken
                 });
             }
 
             return View(deactivation_requests);
         }
 
-        public ActionResult AcceptedDeactivationEmailForm(string emailToSend)
+        public ActionResult AcceptedDeactivationEmailForm(string email_address)
         {
+            GmailDeactivationRequestViewModel model = new GmailDeactivationRequestViewModel();
+            var deactivation_request = DeactivationRequestCRUD.LoadDeactivationRequests().Find(x => x.EmailAddress == email_address);
+
+
+            //DeactivationRequest deactivation_request = new DeactivationRequest() {
+            //    Id = id,
+            //    UserName = user_name,
+            //    UserSurname = user_surname,
+            //    EmailAddress = email_address,
+            //    Reason = reason,
+            //    Status = status,
+            //    ConcurrencyToken = concurrency_token
+            //};
+
             Gmail gmail = new Gmail();
-            gmail.To = emailToSend;
-            return View(gmail);
+            gmail.To = email_address;
+
+            model.gmail = gmail;
+            model.deactivation_request = deactivation_request;
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AcceptedDeactivationEmailForm(Gmail model)
+        public ActionResult AcceptedDeactivationEmailForm(GmailDeactivationRequestViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var gmail = new Gmail
-                {
-                    To = model.To,
-                    Subject = model.Subject,
-                    Body = model.Body
-                };
 
-                gmail.SendEmail();
-                UserRoleCRUD.DeleteUserInUserRole(RegUserCRUD.LoadUsers().Find(x => x.EmailAddress.Equals(model.To)).Id);
-                int i = RegUserCRUD.DeleteUserByEmail(model.To);
-                DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
+                DeactivationRequest request = model.deactivation_request;
+                request.Status = Enums.DeactivationRequestStatus.Erased;
+
+                int row = DeactivationRequestCRUD.UpdateDeactivationRequest(request);
+                
+                if(row == 1)
+                {
+                    var gmail = new Gmail
+                    {
+                        To = model.gmail.To,
+                        Subject = model.gmail.Subject,
+                        Body = model.gmail.Body
+                    };
+
+                    gmail.SendEmail();
+                    UserRoleCRUD.DeleteUserInUserRole(RegUserCRUD.LoadUsers().Find(x => x.EmailAddress.Equals(model.gmail.To)).Id);
+                    int i = RegUserCRUD.DeleteUserByEmail(model.gmail.To);
+                }
+                else
+                {
+                    throw new Exception("Oh no, someone else edited this record!");
+                }
+
+                //DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
                 return RedirectToAction("ViewDeactivationRequests", "AdminUsers");
             }
             else

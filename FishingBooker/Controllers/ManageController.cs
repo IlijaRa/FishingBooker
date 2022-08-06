@@ -465,14 +465,25 @@ namespace FishingBooker.Controllers
         {
             var user = RegUserCRUD.LoadUsers().Find(x => x.Id == User.Identity.GetUserId());
 
+            var deactivation_requests = DeactivationRequestCRUD.LoadDeactivationRequests();
+
+            foreach (var request in deactivation_requests)
+            {
+                if(request.EmailAddress == model.EmailAddress)
+                {
+                    return View("DeactivationRequestUnsuccessful");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 DeactivationRequestCRUD.SendDeactivationRequest(user.Name,
                                                 user.Surname,
                                                 user.EmailAddress,
                                                 model.Reason);
+                return View("DeactivationRequestSuccessful");
             }
-            return View("DeactivationRequestSuccessful");
+            return View();
         }
 
         public ActionResult InstructorSchedule()

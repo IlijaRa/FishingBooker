@@ -86,7 +86,7 @@
                                     @Html.DisplayFor(model => item.Reason)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Accept", "AcceptedDeactivationEmailForm", "AdminUsers", new { emailToSend = item.EmailAddress }, null) |
+                                    @Html.ActionLink("Accept", "AcceptedDeactivationEmailForm", "AdminUsers", new { email_address = item.EmailAddress}, null) |
                                     @Html.ActionLink("Reject", "RejectedDeactivationEmailForm", "AdminUsers", new { emailToSend = item.EmailAddress }, null)
                                 </td>
                             </tr>
