@@ -88,6 +88,7 @@ namespace FishingBookerLibrary.Models
 
         public enum DeactivationRequestStatus
         {
+            Waiting,
             NotErased,
             Erased
         }

@@ -1,4 +1,4 @@
-﻿@model FishingBooker.Models.EmailSender.Gmail
+﻿@model FishingBooker.Models.GmailDeactivationRequestViewModel
 
 @{
     ViewBag.Title = "RejectedDeactivationEmailForm";
@@ -71,23 +71,30 @@
                             @using (Html.BeginForm("RejectedDeactivationEmailForm", "AdminUsers", FormMethod.Post))
                             {
                                 @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.deactivation_request.Id)
+                                @Html.HiddenFor(model => model.deactivation_request.UserName)
+                                @Html.HiddenFor(model => model.deactivation_request.UserSurname)
+                                @Html.HiddenFor(model => model.deactivation_request.EmailAddress)
+                                @Html.HiddenFor(model => model.deactivation_request.Reason)
+                                @Html.HiddenFor(model => model.deactivation_request.Status)
+                                @Html.HiddenFor(model => model.deactivation_request.ConcurrencyToken)
                                 @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
                                 <div class="form-floating mb-3">
-                                    @Html.EditorFor(model => model.To, new { htmlAttributes = new { @class = "form-control", @id = "To", @type = "text", @placeholder = "Enter your name...", @readonly = "readonly" } })
+                                    @Html.EditorFor(model => model.gmail.To, new { htmlAttributes = new { @class = "form-control", @id = "To", @type = "text", @placeholder = "Enter your name...", @readonly = "readonly" } })
                                     <label for="To">To</label>
-                                    @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.gmail.To, "", new { @class = "text-danger" })
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control", @id = "Subject", @type = "text", @placeholder = "Enter your subject..." } })
+                                    @Html.EditorFor(model => model.gmail.Subject, new { htmlAttributes = new { @class = "form-control", @id = "Subject", @type = "text", @placeholder = "Enter your subject..." } })
                                     <label for="Subject">Subject</label>
-                                    @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.gmail.Subject, "", new { @class = "text-danger" })
                                 </div>
 
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="Body" name="Body" type="text" placeholder="Enter body here..." style="height: 15rem"></textarea>
-                                    <label for="Body">Body</label>
-                                    @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+                                    <textarea class="form-control" id="gmail.Body" name="gmail.Body" type="text" placeholder="Enter body here..." style="height: 15rem"></textarea>
+                                    <label for="gmail.Body">Body</label>
+                                    @Html.ValidationMessageFor(model => model.gmail.Body, "", new { @class = "text-danger" })
                                 </div>
 
                                 <!-- Submit Button-->

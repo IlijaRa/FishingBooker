@@ -25,7 +25,7 @@ namespace FishingBookerLibrary.BusinessLogic
                 UserSurname = surname,
                 EmailAddress = email,
                 Reason = reason,
-                Status = Enums.DeactivationRequestStatus.NotErased
+                Status = Enums.DeactivationRequestStatus.Waiting
             };
 
             string sql = @"INSERT INTO dbo.DeactivationRequests (UserName, UserSurname, EmailAddress, Reason, Status)
@@ -113,10 +113,10 @@ namespace FishingBookerLibrary.BusinessLogic
                 rowCount = cnn.Execute(Sql, request);
             }
 
-            if (rowCount == 0)
-            {
-                throw new Exception("Oh no, someone else edited this record!");
-            }
+            //if (rowCount == 0)
+            //{
+            //    throw new Exception("Oh no, someone else edited this record!");
+            //}
 
             return rowCount;
         }

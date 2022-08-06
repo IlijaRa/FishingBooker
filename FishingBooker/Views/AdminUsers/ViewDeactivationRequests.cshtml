@@ -87,7 +87,7 @@
                                 </td>
                                 <td>
                                     @Html.ActionLink("Accept", "AcceptedDeactivationEmailForm", "AdminUsers", new { email_address = item.EmailAddress}, null) |
-                                    @Html.ActionLink("Reject", "RejectedDeactivationEmailForm", "AdminUsers", new { emailToSend = item.EmailAddress }, null)
+                                    @Html.ActionLink("Reject", "RejectedDeactivationEmailForm", "AdminUsers", new { email_address = item.EmailAddress }, null)
                                 </td>
                             </tr>
                             row_counter++;

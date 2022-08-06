@@ -42,6 +42,14 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
+        public static T LoadUserByEmail<T>(string sql, string email)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { EmailAddress = email }).FirstOrDefault();
+            }
+        }
+
         public static T LoadLoyaltyProgram<T>(string sql, int loyaltyId)
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))

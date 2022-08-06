@@ -443,7 +443,7 @@ namespace FishingBooker.Controllers
 
             foreach (var request in data_requests)
             {
-                if (request.Status == Enums.DeactivationRequestStatus.Erased)
+                if (request.Status != Enums.DeactivationRequestStatus.Waiting)
                 {
                     continue;
                 }
@@ -466,17 +466,6 @@ namespace FishingBooker.Controllers
         {
             GmailDeactivationRequestViewModel model = new GmailDeactivationRequestViewModel();
             var deactivation_request = DeactivationRequestCRUD.LoadDeactivationRequests().Find(x => x.EmailAddress == email_address);
-
-
-            //DeactivationRequest deactivation_request = new DeactivationRequest() {
-            //    Id = id,
-            //    UserName = user_name,
-            //    UserSurname = user_surname,
-            //    EmailAddress = email_address,
-            //    Reason = reason,
-            //    Status = status,
-            //    ConcurrencyToken = concurrency_token
-            //};
 
             Gmail gmail = new Gmail();
             gmail.To = email_address;
@@ -508,10 +497,12 @@ namespace FishingBooker.Controllers
                     };
 
                     gmail.SendEmail();
-                    UserRoleCRUD.DeleteUserInUserRole(RegUserCRUD.LoadUsers().Find(x => x.EmailAddress.Equals(model.gmail.To)).Id);
-                    int i = RegUserCRUD.DeleteUserByEmail(model.gmail.To);
+
+                    var user = RegUserCRUD.LoadUserByEmail(request.EmailAddress);
+                    UserRoleCRUD.DeleteUserInUserRole(user.Id);
+                    RegUserCRUD.DeleteUserByEmail(request.EmailAddress);
                 }
-                else
+                else if (row == 0)
                 {
                     throw new Exception("Oh no, someone else edited this record!");
                 }
@@ -526,35 +517,56 @@ namespace FishingBooker.Controllers
             
         }
 
-        public ActionResult RejectedDeactivationEmailForm(string emailToSend)
+        public ActionResult RejectedDeactivationEmailForm(string email_address)
         {
+
+            GmailDeactivationRequestViewModel model = new GmailDeactivationRequestViewModel();
+            var deactivation_request = DeactivationRequestCRUD.LoadDeactivationRequests().Find(x => x.EmailAddress == email_address);
+
             Gmail gmail = new Gmail();
-            gmail.To = emailToSend;
-            return View(gmail);
+            gmail.To = email_address;
+
+            model.gmail = gmail;
+            model.deactivation_request = deactivation_request;
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RejectedDeactivationEmailForm(Gmail model)
+        public ActionResult RejectedDeactivationEmailForm(GmailDeactivationRequestViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var gmail = new Gmail
-                {
-                    To = model.To,
-                    Subject = model.Subject,
-                    Body = model.Body
-                };
 
-                gmail.SendEmail();
-                DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
+                DeactivationRequest request = model.deactivation_request;
+                request.Status = Enums.DeactivationRequestStatus.NotErased;
+
+                int row = DeactivationRequestCRUD.UpdateDeactivationRequest(request);
+
+                if (row == 1)
+                {
+                    var gmail = new Gmail
+                    {
+                        To = model.gmail.To,
+                        Subject = model.gmail.Subject,
+                        Body = model.gmail.Body
+                    };
+
+                    gmail.SendEmail();
+                }
+                else if (row == 0)
+                {
+                    throw new Exception("Oh no, someone else edited this record!");
+                }
+
+                //DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
                 return RedirectToAction("ViewDeactivationRequests", "AdminUsers");
             }
             else
             {
                 return View();
             }
-
         }
 
         public ActionResult ReadClientComplaints()

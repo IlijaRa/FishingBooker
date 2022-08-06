@@ -692,7 +692,6 @@
     <Content Include="Views\Shared\_LayoutHeadAdmin.cshtml" />
     <Content Include="Views\AdminUsers\SearchUsers.cshtml" />
     <Content Include="Views\AdminUsers\ViewDeactivationRequests.cshtml" />
-    <Content Include="Views\AdminUsers\RejectedDeactivationEmailForm.cshtml" />
     <Content Include="Views\AdminUsers\RejectUserRegistration.cshtml" />
     <Content Include="Views\AdminUsers\DetailsAboutUser.cshtml" />
     <Content Include="Views\AdminUsers\DetailsAboutInstructor.cshtml" />
@@ -737,6 +736,7 @@
     <Content Include="Views\Home\AdminIndexFilteredDate.cshtml" />
     <Content Include="Views\AdminUsers\AcceptedDeactivationEmailForm.cshtml" />
     <Content Include="Views\Shared\DeactivationRequestUnsuccessful.cshtml" />
+    <Content Include="Views\AdminUsers\RejectedDeactivationEmailForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
