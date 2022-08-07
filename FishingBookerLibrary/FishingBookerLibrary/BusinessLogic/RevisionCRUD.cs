@@ -1,7 +1,10 @@
-﻿using FishingBookerLibrary.DataAccess;
+﻿using Dapper;
+using FishingBookerLibrary.DataAccess;
 using FishingBookerLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +28,7 @@ namespace FishingBookerLibrary.BusinessLogic
                 Description = description,
                 ActionRating = actionRating,
                 OwnerInstructorRating = ownerInstructorRating,
-                State = false
+                Status = Enums.RevisionStatus.Waiting
             };
 
             string sql = @"INSERT INTO dbo.Revisions (ClientsEmailAddress, EntityTitle, OwnersEmailAddress, Description, ActionRating, OwnerInstructorRating, State)
@@ -69,13 +72,28 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.LoadConfirmedRevisionsForInstructor<Revision>(sql, instructorsEmail, true);
         }
 
-        public static int UpdateStatus(int revisionId)
+        public static int UpdateConfirmStatus(int revisionId)
         {
 
             Revision data = new Revision
             {
                 Id = revisionId,
-                State = true
+                Status = Enums.RevisionStatus.Confirmed
+            };
+            string sql = @" UPDATE dbo.Revisions
+                            SET State = @State
+                            WHERE Id = @Id;";
+
+            return SSMSDataAccess.SaveData(sql, data);
+        }
+
+        public static int UpdateRejectStatus(int revisionId)
+        {
+
+            Revision data = new Revision
+            {
+                Id = revisionId,
+                Status = Enums.RevisionStatus.Rejected
             };
             string sql = @" UPDATE dbo.Revisions
                             SET State = @State
@@ -96,6 +114,32 @@ namespace FishingBookerLibrary.BusinessLogic
                             WHERE Id = @Id;";
 
             return SSMSDataAccess.SaveData(sql, data);
+        }
+
+        public static int UpdateRevision(Revision revision)
+        {
+            string Sql = @"UPDATE dbo.Revisions 
+                                SET ClientsEmailAddress = @ClientsEmailAddress, 
+                                    EntityTitle = @EntityTitle, 
+                                    OwnersEmailAddress = @OwnersEmailAddress, 
+                                    Description = @Description, 
+                                    ActionRating = @ActionRating, 
+                                    OwnerInstructorRating = @OwnerInstructorRating, 
+                                    Status = @Status
+                                WHERE Id = @Id AND ConcurrencyToken = @ConcurrencyToken";
+
+            var rowCount = -1;
+            using (IDbConnection cnn = new SqlConnection(SSMSDataAccess.GettConnectionstring()))
+            {
+                rowCount = cnn.Execute(Sql, revision);
+            }
+
+            //if (rowCount == 0)
+            //{
+            //    throw new Exception("Oh no, someone else edited this record!");
+            //}
+
+            return rowCount;
         }
 
     }

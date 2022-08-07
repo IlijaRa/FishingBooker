@@ -317,6 +317,8 @@
     <Compile Include="Models\DetailsAdventureViewModel.cs" />
     <Compile Include="Models\EditAdventureViewModel.cs" />
     <Compile Include="Models\EmailSender\Gmail.cs" />
+    <Compile Include="Models\EmailSender\GmailDeactivationRequestViewModel.cs" />
+    <Compile Include="Models\EmailSender\GmailRevisionViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\AdventureViewModel.cs" />
     <Compile Include="Models\IndexViewModels\ClientIndexViewModel.cs" />
@@ -691,8 +693,6 @@
     <Content Include="Views\Shared\_LayoutHeadAdmin.cshtml" />
     <Content Include="Views\AdminUsers\SearchUsers.cshtml" />
     <Content Include="Views\AdminUsers\ViewDeactivationRequests.cshtml" />
-    <Content Include="Views\AdminUsers\AcceptedDeactivationEmailForm.cshtml" />
-    <Content Include="Views\AdminUsers\RejectedDeactivationEmailForm.cshtml" />
     <Content Include="Views\AdminUsers\RejectUserRegistration.cshtml" />
     <Content Include="Views\AdminUsers\DetailsAboutUser.cshtml" />
     <Content Include="Views\AdminUsers\DetailsAboutInstructor.cshtml" />
@@ -735,6 +735,11 @@
     <Content Include="Views\InstructorUsers\AdventureDetails.cshtml" />
     <Content Include="Views\Home\AdminIndex.cshtml" />
     <Content Include="Views\Home\AdminIndexFilteredDate.cshtml" />
+    <Content Include="Views\AdminUsers\AcceptedDeactivationEmailForm.cshtml" />
+    <Content Include="Views\Shared\DeactivationRequestUnsuccessful.cshtml" />
+    <Content Include="Views\AdminUsers\RejectedDeactivationEmailForm.cshtml" />
+    <Content Include="Views\AdminUsers\ConfirmRevision.cshtml" />
+    <Content Include="Views\AdminUsers\DenyRevision.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

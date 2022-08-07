@@ -5,9 +5,11 @@ using FishingBookerLibrary.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 
 namespace FishingBooker.Controllers
@@ -441,42 +443,72 @@ namespace FishingBooker.Controllers
 
             foreach (var request in data_requests)
             {
+                if (request.Status != Enums.DeactivationRequestStatus.Waiting)
+                {
+                    continue;
+                }
                 deactivation_requests.Add(new DeactivationRequestViewModel
                 {
+                    Id = request.Id,
                     UserName = request.UserName,
                     UserSurname = request.UserSurname,
                     EmailAddress = request.EmailAddress,
-                    Reason = request.Reason
+                    Reason = request.Reason,
+                    Status = request.Status,
+                    ConcurrencyToken = request.ConcurrencyToken
                 });
             }
 
             return View(deactivation_requests);
         }
 
-        public ActionResult AcceptedDeactivationEmailForm(string emailToSend)
+        public ActionResult AcceptedDeactivationEmailForm(string email_address)
         {
+            GmailDeactivationRequestViewModel model = new GmailDeactivationRequestViewModel();
+            var deactivation_request = DeactivationRequestCRUD.LoadDeactivationRequests().Find(x => x.EmailAddress == email_address);
+
             Gmail gmail = new Gmail();
-            gmail.To = emailToSend;
-            return View(gmail);
+            gmail.To = email_address;
+
+            model.gmail = gmail;
+            model.deactivation_request = deactivation_request;
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AcceptedDeactivationEmailForm(Gmail model)
+        public ActionResult AcceptedDeactivationEmailForm(GmailDeactivationRequestViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var gmail = new Gmail
-                {
-                    To = model.To,
-                    Subject = model.Subject,
-                    Body = model.Body
-                };
 
-                gmail.SendEmail();
-                UserRoleCRUD.DeleteUserInUserRole(RegUserCRUD.LoadUsers().Find(x => x.EmailAddress.Equals(model.To)).Id);
-                int i = RegUserCRUD.DeleteUserByEmail(model.To);
-                DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
+                DeactivationRequest request = model.deactivation_request;
+                request.Status = Enums.DeactivationRequestStatus.Erased;
+
+                int row = DeactivationRequestCRUD.UpdateDeactivationRequest(request);
+                
+                if(row == 1)
+                {
+                    var gmail = new Gmail
+                    {
+                        To = model.gmail.To,
+                        Subject = model.gmail.Subject,
+                        Body = model.gmail.Body
+                    };
+
+                    gmail.SendEmail();
+
+                    var user = RegUserCRUD.LoadUserByEmail(request.EmailAddress);
+                    //TODO: obrisi i sve entitete koje je imao korisnik na platformi
+                    UserRoleCRUD.DeleteUserInUserRole(user.Id);
+                    RegUserCRUD.DeleteUserByEmail(request.EmailAddress);
+                }
+                else if (row == 0)
+                {
+                    throw new Exception("Oh no, someone else edited this record!");
+                }
+
+                //DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
                 return RedirectToAction("ViewDeactivationRequests", "AdminUsers");
             }
             else
@@ -486,35 +518,56 @@ namespace FishingBooker.Controllers
             
         }
 
-        public ActionResult RejectedDeactivationEmailForm(string emailToSend)
+        public ActionResult RejectedDeactivationEmailForm(string email_address)
         {
+
+            GmailDeactivationRequestViewModel model = new GmailDeactivationRequestViewModel();
+            var deactivation_request = DeactivationRequestCRUD.LoadDeactivationRequests().Find(x => x.EmailAddress == email_address);
+
             Gmail gmail = new Gmail();
-            gmail.To = emailToSend;
-            return View(gmail);
+            gmail.To = email_address;
+
+            model.gmail = gmail;
+            model.deactivation_request = deactivation_request;
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RejectedDeactivationEmailForm(Gmail model)
+        public ActionResult RejectedDeactivationEmailForm(GmailDeactivationRequestViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var gmail = new Gmail
-                {
-                    To = model.To,
-                    Subject = model.Subject,
-                    Body = model.Body
-                };
 
-                gmail.SendEmail();
-                DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
+                DeactivationRequest request = model.deactivation_request;
+                request.Status = Enums.DeactivationRequestStatus.NotErased;
+
+                int row = DeactivationRequestCRUD.UpdateDeactivationRequest(request);
+
+                if (row == 1)
+                {
+                    var gmail = new Gmail
+                    {
+                        To = model.gmail.To,
+                        Subject = model.gmail.Subject,
+                        Body = model.gmail.Body
+                    };
+
+                    gmail.SendEmail();
+                }
+                else if (row == 0)
+                {
+                    throw new Exception("Oh no, someone else edited this request!");
+                }
+
+                //DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
                 return RedirectToAction("ViewDeactivationRequests", "AdminUsers");
             }
             else
             {
                 return View();
             }
-
         }
 
         public ActionResult ReadClientComplaints()
@@ -524,6 +577,11 @@ namespace FishingBooker.Controllers
 
             foreach (var complaint in data_complaints)
             {
+                if (complaint.Status != Enums.ClientComplaintStatus.Waiting)
+                {
+                    continue;
+                }
+
                 client_complaints.Add(new ClientComplaintViewModel
                 {
                     Id = complaint.Id,
@@ -533,20 +591,38 @@ namespace FishingBooker.Controllers
                     OwnerEmailAddress = complaint.OwnerEmailAddress,
                     ClientsEmailAddress = complaint.ClientsEmailAddress,
                     SelectedActionTitle = complaint.ActionTitle,
-                    Reason = complaint.Reason
+                    Reason = complaint.Reason,
+                    Status = complaint.Status,
+                    ConcurrencyToken = complaint.ConcurrencyToken
                 });
             }
 
             return View(client_complaints);
         }
 
-        public ActionResult AnswerToComplaint(int complaintId, string clientsEmail, string ownersEmail)
+        public ActionResult AnswerToComplaint(int complaint_id)
         {
-            AnswerToComplaintViewModel answer = new AnswerToComplaintViewModel();
 
-            answer.complaintId = complaintId;
-            answer.client_gmail.To = clientsEmail;
-            answer.owner_gmail.To = ownersEmail;
+            AnswerToComplaintViewModel answer = new AnswerToComplaintViewModel();
+            var complaint = ClientComplaintCRUD.LoadClientComplaints().Find(x => x.Id == complaint_id);
+            
+            ClientComplaintViewModel complaint_viewmodel = new ClientComplaintViewModel() {
+                Id = complaint.Id,
+                OwnerId = complaint.OwnerId,
+                OwnerName = complaint.OwnerName,
+                OwnerSurname = complaint.OwnerSurname,
+                OwnerEmailAddress = complaint.OwnerEmailAddress,
+                ClientsEmailAddress = complaint.ClientsEmailAddress,
+                SelectedActionTitle = complaint.ActionTitle,
+                Reason = complaint.Reason,
+                Status = complaint.Status,
+                ConcurrencyToken = complaint.ConcurrencyToken,
+            };
+
+            answer.complaintId = complaint.Id;
+            answer.client_gmail.To = complaint.ClientsEmailAddress;
+            answer.owner_gmail.To = complaint.OwnerEmailAddress;
+            answer.client_complaint = complaint_viewmodel;
             return View(answer);
         }
         
@@ -556,39 +632,63 @@ namespace FishingBooker.Controllers
         {
             if(ModelState.IsValid)
             {
-                var client_gmail = new Gmail
-                {
-                    To = model.client_gmail.To,
-                    Subject = model.client_gmail.Subject,
-                    Body = model.client_gmail.Body
+                ClientComplaint complaint = new ClientComplaint() { 
+                    Id = model.client_complaint.Id,
+                    OwnerId = model.client_complaint.OwnerId,
+                    OwnerName = model.client_complaint.OwnerName,
+                    OwnerSurname = model.client_complaint.OwnerSurname,
+                    OwnerEmailAddress = model.client_complaint.OwnerEmailAddress,
+                    ClientsEmailAddress = model.client_complaint.ClientsEmailAddress,
+                    ActionTitle = model.client_complaint.SelectedActionTitle,
+                    Reason = model.client_complaint.Reason,
+                    Status = Enums.ClientComplaintStatus.Answered,
+                    ConcurrencyToken = model.client_complaint.ConcurrencyToken
                 };
-                client_gmail.SendEmail();
-                
-                var owner_gmail = new Gmail
-                {
-                    To = model.owner_gmail.To,
-                    Subject = model.owner_gmail.Subject,
-                    Body = model.owner_gmail.Body
-                };
-                owner_gmail.SendEmail();
 
-                ClientComplaintCRUD.DeleteClientComplaintById(model.complaintId);
-                return RedirectToAction("ReadClientComplaints", "AdminUsers");
+                int row = ClientComplaintCRUD.UpdateClientsComplaint(complaint);
+
+                if(row == 1)
+                {
+                    var client_gmail = new Gmail
+                    {
+                        To = model.client_gmail.To,
+                        Subject = model.client_gmail.Subject,
+                        Body = model.client_gmail.Body
+                    };
+                    client_gmail.SendEmail();
+
+                    var owner_gmail = new Gmail
+                    {
+                        To = model.owner_gmail.To,
+                        Subject = model.owner_gmail.Subject,
+                        Body = model.owner_gmail.Body
+                    };
+                    owner_gmail.SendEmail();
+
+                    //ClientComplaintCRUD.DeleteClientComplaintById(model.complaintId);
+                    return RedirectToAction("ReadClientComplaints", "AdminUsers");
+                }
+                else if (row == 0)
+                {
+                    throw new Exception("Oh no, someone else edited this complaint!");
+                }
             }
-            else
-            {
-                return View();
-            }
-            
+
+            return View();
         }
 
         public ActionResult ReadRevisions()
         {
-            var data_revisions = RevisionCRUD.LoadUnconfirmedRevisions();
-
+            var data_revisions = RevisionCRUD.LoadRevisions();
             List<RevisionViewModel> revisions = new List<RevisionViewModel>();
+
             foreach (var revision in data_revisions)
             {
+                if (revision.Status != Enums.RevisionStatus.Waiting)
+                {
+                    continue;
+                }
+
                 revisions.Add(new RevisionViewModel { 
                     Id = revision.Id,
                     ClientsEmailAddress = revision.ClientsEmailAddress,
@@ -596,80 +696,147 @@ namespace FishingBooker.Controllers
                     OwnersEmailAddress = revision.OwnersEmailAddress,
                     Description = revision.Description,
                     ActionRating = revision.ActionRating,
-                    OwnerInstructorRating = revision.OwnerInstructorRating
+                    OwnerInstructorRating = revision.OwnerInstructorRating,
+                    ConcurrencyToken = revision.ConcurrencyToken
                 });
             }
             return View(revisions);
         }
 
-        public ActionResult ConfirmRevision(int id, string ownersEmail, string entityTitle, int actionRating , int ownerRating)
+        [HttpGet]
+        public ActionResult ConfirmRevision(int id)
         {
-            try
-            {
-                var user = RegUserCRUD.LoadUsers().Find(x => x.EmailAddress == ownersEmail);
-                user.RatingSum = user.RatingSum + ownerRating;
-                user.RatingCount = user.RatingCount + 1;
-                user.Rating = user.RatingSum / user.RatingCount;
-                RegUserCRUD.UpdateRating(user.Id, user.Rating, user.RatingSum, user.RatingCount);
+            GmailRevisionViewModel model = new GmailRevisionViewModel();
+            var revision = RevisionCRUD.LoadRevisions().Find(x => x.Id == id);
 
-                if (user.Type.Equals("FishingInstructor"))
-                {
-                    var adventure = AdventureCRUD.LoadAdventures().Find(x => x.Title == entityTitle);
-                    adventure.RatingSum = adventure.RatingSum + actionRating;
-                    adventure.RatingCount = adventure.RatingCount + 1;
-                    adventure.Rating = adventure.RatingSum / adventure.RatingCount;
-                    AdventureCRUD.UpdateRating(adventure.Id, adventure.Rating, adventure.RatingSum, adventure.RatingCount);
-                }
-                else if (user.Type.Equals("CottageOwner"))
-                {
-                    var cottage = CottageCRUD.LoadCottages().Find(x => x.Title == entityTitle);
-                    cottage.RatingSum = cottage.RatingSum + actionRating;
-                    cottage.RatingCount = cottage.RatingCount + 1;
-                    cottage.Rating = cottage.RatingSum / cottage.RatingCount;
-                    CottageCRUD.UpdateRating(cottage.Id, cottage.Rating, cottage.RatingSum, cottage.RatingCount);
-                }
-                else if (user.Type.Equals("ShipOwner"))
-                {
-                    var ship = ShipCRUD.LoadShips().Find(x => x.Title == entityTitle);
-                    ship.RatingSum = ship.RatingSum + actionRating;
-                    ship.RatingCount = ship.RatingCount + 1;
-                    ship.Rating = ship.RatingSum / ship.RatingCount;
-                    ShipCRUD.UpdateRating(ship.Id, ship.Rating, ship.RatingSum, ship.RatingCount);
-                }
+            Gmail gmail = new Gmail();
+            gmail.To = revision.OwnersEmailAddress;
 
-                var gmail = new Gmail
-                {
-                    To = ownersEmail,
-                    Subject = "New rating from a client",
-                    Body = @"Dear, 
-                         you have a new rating from your client.
-                         Best wishes,
-                         Admin team."
-                };
-                gmail.SendEmail();
-                RevisionCRUD.UpdateStatus(id);
-                return RedirectToAction("ReadRevisions", "AdminUsers");
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            model.gmail = gmail;
+            model.revision = revision;
+            return View(model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfirmRevision(GmailRevisionViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var revision = new Revision() { 
+                    Id = model.revision.Id,
+                    ClientsEmailAddress = model.revision.ClientsEmailAddress,
+                    EntityTitle = model.revision.EntityTitle,
+                    OwnersEmailAddress = model.revision.OwnersEmailAddress,
+                    Description = model.revision.Description,
+                    ActionRating = model.revision.ActionRating,
+                    OwnerInstructorRating = model.revision.OwnerInstructorRating,
+                    Status = Enums.RevisionStatus.Confirmed,
+                    ConcurrencyToken = model.revision.ConcurrencyToken
+                };
+
+                int row = RevisionCRUD.UpdateRevision(revision);
+                if (row == 1)
+                {
+                    var user = RegUserCRUD.LoadUsers().Find(x => x.EmailAddress == model.revision.OwnersEmailAddress);
+                    user.RatingSum = user.RatingSum + model.revision.OwnerInstructorRating;
+                    user.RatingCount = user.RatingCount + 1;
+                    user.Rating = user.RatingSum / user.RatingCount;
+                    RegUserCRUD.UpdateRating(user.Id, user.Rating, user.RatingSum, user.RatingCount);
+
+                    if (user.Type.Equals("FishingInstructor"))
+                    {
+                        var adventure = AdventureCRUD.LoadAdventures().Find(x => x.Title == model.revision.EntityTitle);
+                        adventure.RatingSum = adventure.RatingSum + model.revision.ActionRating;
+                        adventure.RatingCount = adventure.RatingCount + 1;
+                        adventure.Rating = adventure.RatingSum / adventure.RatingCount;
+                        AdventureCRUD.UpdateRating(adventure.Id, adventure.Rating, adventure.RatingSum, adventure.RatingCount);
+                    }
+                    else if (user.Type.Equals("CottageOwner"))
+                    {
+                        var cottage = CottageCRUD.LoadCottages().Find(x => x.Title == model.revision.EntityTitle);
+                        cottage.RatingSum = cottage.RatingSum + model.revision.ActionRating;
+                        cottage.RatingCount = cottage.RatingCount + 1;
+                        cottage.Rating = cottage.RatingSum / cottage.RatingCount;
+                        CottageCRUD.UpdateRating(cottage.Id, cottage.Rating, cottage.RatingSum, cottage.RatingCount);
+                    }
+                    else if (user.Type.Equals("ShipOwner"))
+                    {
+                        var ship = ShipCRUD.LoadShips().Find(x => x.Title == model.revision.EntityTitle);
+                        ship.RatingSum = ship.RatingSum + model.revision.ActionRating;
+                        ship.RatingCount = ship.RatingCount + 1;
+                        ship.Rating = ship.RatingSum / ship.RatingCount;
+                        ShipCRUD.UpdateRating(ship.Id, ship.Rating, ship.RatingSum, ship.RatingCount);
+                    }
+
+                    var gmail = new Gmail
+                    {
+                        To = model.gmail.To,
+                        Subject = model.gmail.Subject,
+                        Body = model.gmail.Body
+                    };
+                    gmail.SendEmail();
+                    //RevisionCRUD.UpdateConfirmStatus(model.Id);
+                    return RedirectToAction("ReadRevisions", "AdminUsers");
+                }
+                else if (row == 0)
+                {
+                    throw new Exception("Oh no, someone else edited this complaint!");
+                }
+            }
+
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult DenyRevision(int id)
         {
-            try
-            {
-                RevisionCRUD.DeleteRevisionById(id);
-            }
-            catch
-            {
-                Console.WriteLine("Greska");
-            }
-            return RedirectToAction("ReadRevisions", "AdminUsers");
+            GmailRevisionViewModel model = new GmailRevisionViewModel();
+            var revision = RevisionCRUD.LoadRevisions().Find(x => x.Id == id);
+
+            Gmail gmail = new Gmail();
+            gmail.To = revision.OwnersEmailAddress;
+
+            model.gmail = gmail;
+            model.revision = revision;
+            return View(model);
         }
 
-        public ActionResult LoyaltyProgram()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DenyRevision(GmailRevisionViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var revision = new Revision()
+                {
+                    Id = model.revision.Id,
+                    ClientsEmailAddress = model.revision.ClientsEmailAddress,
+                    EntityTitle = model.revision.EntityTitle,
+                    OwnersEmailAddress = model.revision.OwnersEmailAddress,
+                    Description = model.revision.Description,
+                    ActionRating = model.revision.ActionRating,
+                    OwnerInstructorRating = model.revision.OwnerInstructorRating,
+                    Status = Enums.RevisionStatus.Rejected,
+                    ConcurrencyToken = model.revision.ConcurrencyToken
+                };
+
+                int row = RevisionCRUD.UpdateRevision(revision);
+
+                if(row == 1)
+                {
+                    return RedirectToAction("ReadRevisions", "AdminUsers");
+                }
+                else if (row == 0)
+                {
+                    throw new Exception("Oh no, someone else edited this complaint!");
+                }
+
+            }
+            return View();
+        }
+
+                public ActionResult LoyaltyProgram()
         {
             LoyaltyProgramViewModel model = new LoyaltyProgramViewModel();
             var loyalty_program = LoyaltyProgramCRUD.LoadLoyaltyProgram(1);

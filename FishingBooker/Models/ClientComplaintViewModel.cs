@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FishingBookerLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -51,5 +52,12 @@ namespace FishingBooker.Models
         [Display(Name = "Reason*")]
         [Required(ErrorMessage = "You need to give us a reason.")]
         public string Reason { get; set; }
+
+
+        [Display(Name = "Status*")]
+        public Enums.ClientComplaintStatus Status { get; set; }
+        
+        
+        public byte[] ConcurrencyToken { get; set; }
     }
 }

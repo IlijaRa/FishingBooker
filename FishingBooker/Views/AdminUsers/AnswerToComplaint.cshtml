@@ -55,6 +55,16 @@
                     <div class="row">
                         <div class="col-sm-6">
                             @Html.HiddenFor(model => model.complaintId)
+                            @Html.HiddenFor(model => model.client_complaint.Id)
+                            @Html.HiddenFor(model => model.client_complaint.OwnerId)
+                            @Html.HiddenFor(model => model.client_complaint.OwnerName)
+                            @Html.HiddenFor(model => model.client_complaint.OwnerSurname)
+                            @Html.HiddenFor(model => model.client_complaint.OwnerEmailAddress)
+                            @Html.HiddenFor(model => model.client_complaint.ClientsEmailAddress)
+                            @Html.HiddenFor(model => model.client_complaint.SelectedActionTitle)
+                            @Html.HiddenFor(model => model.client_complaint.Reason)
+                            @Html.HiddenFor(model => model.client_complaint.Status)
+                            @Html.HiddenFor(model => model.client_complaint.ConcurrencyToken)
                             <h3 class="text-center">Response to a client</h3>
                             <br>
                             @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@

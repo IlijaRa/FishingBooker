@@ -117,6 +117,8 @@ namespace FishingBooker.Controllers
                 }
             }
 
+            //var deactivation_requests = DeactivationRequestCRUD.LoadDeactivationRequests();
+
             ViewData["GoodExperience"] = good_experience_counter;
             ViewData["BadExperience"] = bad_experience_counter;
             ViewData["InstantPenalty"] = instant_penalty;
@@ -131,7 +133,7 @@ namespace FishingBooker.Controllers
             ViewData["Revisions"] = RevisionCRUD.LoadRevisions().Count();
             ViewData["Records"] = RecordCRUD.LoadRecords().Count();
             ViewData["DeactivationRequests"] = DeactivationRequestCRUD.LoadDeactivationRequests().Count();
-            ViewData["RegistrationRequests"] = DeactivationRequestCRUD.LoadDeactivationRequests().Count();
+            ViewData["RegistrationRequests"] = RegUserCRUD.LoadUsers().FindAll(x => x.Status == "Waiting").Count();
 
             ViewData["MoneyFlowPercentage"] = Convert.ToDouble(money_flow.Percentage);
 
@@ -305,8 +307,8 @@ namespace FishingBooker.Controllers
             ViewData["Revisions"] = RevisionCRUD.LoadRevisions().Count();
             ViewData["Records"] = RecordCRUD.LoadRecords().Count();
             ViewData["DeactivationRequests"] = DeactivationRequestCRUD.LoadDeactivationRequests().Count();
-            ViewData["RegistrationRequests"] = DeactivationRequestCRUD.LoadDeactivationRequests().Count();
-            
+            ViewData["RegistrationRequests"] = RegUserCRUD.LoadUsers().FindAll(x => x.Status == "Waiting").Count();
+
             ViewData["MoneyFlowPercentage"] = Convert.ToDouble(money_flow.Percentage);
 
             // racuna samo income za rezervacije koje su aktivne kod instruktora

@@ -11,5 +11,6 @@ namespace FishingBooker.Models
         public int complaintId { get; set; }
         public Gmail client_gmail { get; set; } = new Gmail();
         public Gmail owner_gmail { get; set; } = new Gmail();
+        public ClientComplaintViewModel client_complaint { get; set; }
     }
 }
