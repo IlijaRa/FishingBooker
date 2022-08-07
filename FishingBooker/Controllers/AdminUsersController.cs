@@ -499,6 +499,7 @@ namespace FishingBooker.Controllers
                     gmail.SendEmail();
 
                     var user = RegUserCRUD.LoadUserByEmail(request.EmailAddress);
+                    //TODO: obrisi i sve entitete koje je imao korisnik na platformi
                     UserRoleCRUD.DeleteUserInUserRole(user.Id);
                     RegUserCRUD.DeleteUserByEmail(request.EmailAddress);
                 }
@@ -557,7 +558,7 @@ namespace FishingBooker.Controllers
                 }
                 else if (row == 0)
                 {
-                    throw new Exception("Oh no, someone else edited this record!");
+                    throw new Exception("Oh no, someone else edited this request!");
                 }
 
                 //DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
@@ -576,6 +577,11 @@ namespace FishingBooker.Controllers
 
             foreach (var complaint in data_complaints)
             {
+                if (complaint.Status != Enums.ClientComplaintStatus.Waiting)
+                {
+                    continue;
+                }
+
                 client_complaints.Add(new ClientComplaintViewModel
                 {
                     Id = complaint.Id,
@@ -585,20 +591,38 @@ namespace FishingBooker.Controllers
                     OwnerEmailAddress = complaint.OwnerEmailAddress,
                     ClientsEmailAddress = complaint.ClientsEmailAddress,
                     SelectedActionTitle = complaint.ActionTitle,
-                    Reason = complaint.Reason
+                    Reason = complaint.Reason,
+                    Status = complaint.Status,
+                    ConcurrencyToken = complaint.ConcurrencyToken
                 });
             }
 
             return View(client_complaints);
         }
 
-        public ActionResult AnswerToComplaint(int complaintId, string clientsEmail, string ownersEmail)
+        public ActionResult AnswerToComplaint(int complaint_id)
         {
-            AnswerToComplaintViewModel answer = new AnswerToComplaintViewModel();
 
-            answer.complaintId = complaintId;
-            answer.client_gmail.To = clientsEmail;
-            answer.owner_gmail.To = ownersEmail;
+            AnswerToComplaintViewModel answer = new AnswerToComplaintViewModel();
+            var complaint = ClientComplaintCRUD.LoadClientComplaints().Find(x => x.Id == complaint_id);
+            
+            ClientComplaintViewModel complaint_viewmodel = new ClientComplaintViewModel() {
+                Id = complaint.Id,
+                OwnerId = complaint.OwnerId,
+                OwnerName = complaint.OwnerName,
+                OwnerSurname = complaint.OwnerSurname,
+                OwnerEmailAddress = complaint.OwnerEmailAddress,
+                ClientsEmailAddress = complaint.ClientsEmailAddress,
+                SelectedActionTitle = complaint.ActionTitle,
+                Reason = complaint.Reason,
+                Status = complaint.Status,
+                ConcurrencyToken = complaint.ConcurrencyToken,
+            };
+
+            answer.complaintId = complaint.Id;
+            answer.client_gmail.To = complaint.ClientsEmailAddress;
+            answer.owner_gmail.To = complaint.OwnerEmailAddress;
+            answer.client_complaint = complaint_viewmodel;
             return View(answer);
         }
         
@@ -608,30 +632,49 @@ namespace FishingBooker.Controllers
         {
             if(ModelState.IsValid)
             {
-                var client_gmail = new Gmail
-                {
-                    To = model.client_gmail.To,
-                    Subject = model.client_gmail.Subject,
-                    Body = model.client_gmail.Body
+                ClientComplaint complaint = new ClientComplaint() { 
+                    Id = model.client_complaint.Id,
+                    OwnerId = model.client_complaint.OwnerId,
+                    OwnerName = model.client_complaint.OwnerName,
+                    OwnerSurname = model.client_complaint.OwnerSurname,
+                    OwnerEmailAddress = model.client_complaint.OwnerEmailAddress,
+                    ClientsEmailAddress = model.client_complaint.ClientsEmailAddress,
+                    ActionTitle = model.client_complaint.SelectedActionTitle,
+                    Reason = model.client_complaint.Reason,
+                    Status = Enums.ClientComplaintStatus.Answered,
+                    ConcurrencyToken = model.client_complaint.ConcurrencyToken
                 };
-                client_gmail.SendEmail();
-                
-                var owner_gmail = new Gmail
-                {
-                    To = model.owner_gmail.To,
-                    Subject = model.owner_gmail.Subject,
-                    Body = model.owner_gmail.Body
-                };
-                owner_gmail.SendEmail();
 
-                ClientComplaintCRUD.DeleteClientComplaintById(model.complaintId);
-                return RedirectToAction("ReadClientComplaints", "AdminUsers");
+                int row = ClientComplaintCRUD.UpdateClientsComplaint(complaint);
+
+                if(row == 1)
+                {
+                    var client_gmail = new Gmail
+                    {
+                        To = model.client_gmail.To,
+                        Subject = model.client_gmail.Subject,
+                        Body = model.client_gmail.Body
+                    };
+                    client_gmail.SendEmail();
+
+                    var owner_gmail = new Gmail
+                    {
+                        To = model.owner_gmail.To,
+                        Subject = model.owner_gmail.Subject,
+                        Body = model.owner_gmail.Body
+                    };
+                    owner_gmail.SendEmail();
+
+                    //ClientComplaintCRUD.DeleteClientComplaintById(model.complaintId);
+                    return RedirectToAction("ReadClientComplaints", "AdminUsers");
+                }
+                else if (row == 0)
+                {
+                    throw new Exception("Oh no, someone else edited this complaint!");
+                }
             }
-            else
-            {
-                return View();
-            }
-            
+
+            return View();
         }
 
         public ActionResult ReadRevisions()

@@ -92,5 +92,11 @@ namespace FishingBookerLibrary.Models
             NotErased,
             Erased
         }
+
+        public enum ClientComplaintStatus
+        {
+            Waiting,
+            Answered
+        }
     }
 }
