@@ -7,6 +7,7 @@ using Dapper;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using FishingBookerLibrary.Models;
 
 namespace FishingBookerLibrary.DataAccess
 {
@@ -38,6 +39,14 @@ namespace FishingBookerLibrary.DataAccess
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
             {
                 return cnn.Query<T>(sql, new { Id = userId }).FirstOrDefault();
+            }
+        }
+
+        public static T LoadUserByEmail<T>(string sql, string email)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { EmailAddress = email }).FirstOrDefault();
             }
         }
 

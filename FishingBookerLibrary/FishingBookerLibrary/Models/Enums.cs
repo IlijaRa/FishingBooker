@@ -85,5 +85,25 @@ namespace FishingBookerLibrary.Models
             Availability,
             Unavailability
         }
+
+        public enum DeactivationRequestStatus
+        {
+            Waiting,
+            NotErased,
+            Erased
+        }
+
+        public enum ClientComplaintStatus
+        {
+            Waiting,
+            Answered
+        }
+
+        public enum RevisionStatus
+        {
+            Waiting,
+            Confirmed,
+            Rejected
+        }
     }
 }

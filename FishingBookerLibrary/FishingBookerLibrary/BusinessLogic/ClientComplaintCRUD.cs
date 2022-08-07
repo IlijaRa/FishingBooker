@@ -1,7 +1,10 @@
-﻿using FishingBookerLibrary.DataAccess;
+﻿using Dapper;
+using FishingBookerLibrary.DataAccess;
 using FishingBookerLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,11 +29,12 @@ namespace FishingBookerLibrary.BusinessLogic
                 OwnerEmailAddress = ownerEmail,
                 ClientsEmailAddress = clientsEmail,
                 ActionTitle = actionTitle,
-                Reason = reason
+                Reason = reason,
+                Status = Enums.ClientComplaintStatus.Waiting
             };
 
-            string sql = @"INSERT INTO dbo.ClientComplaints (OwnerId, OwnerName, OwnerSurname, OwnerEmailAddress, ClientsEmailAddress, ActionTitle, Reason)
-                           VALUES (@OwnerId, @OwnerName, @OwnerSurname, @OwnerEmailAddress, @ClientsEmailAddress, @ActionTitle, @Reason);";
+            string sql = @"INSERT INTO dbo.ClientComplaints (OwnerId, OwnerName, OwnerSurname, OwnerEmailAddress, ClientsEmailAddress, ActionTitle, Reason, Status)
+                           VALUES (@OwnerId, @OwnerName, @OwnerSurname, @OwnerEmailAddress, @ClientsEmailAddress, @ActionTitle, @Reason, @Status);";
 
             return SSMSDataAccess.SaveData(sql, data);
         }
@@ -56,6 +60,32 @@ namespace FishingBookerLibrary.BusinessLogic
                             WHERE Id = @Id;";
 
             return SSMSDataAccess.SaveData(sql, data);
+        }
+
+        public static int UpdateClientsComplaint(ClientComplaint complaint)
+        {
+            string Sql = @"UPDATE dbo.ClientComplaints 
+                                SET OwnerName = @OwnerName, 
+                                    OwnerSurname = @OwnerSurname, 
+                                    OwnerEmailAddress = @OwnerEmailAddress, 
+                                    ClientsEmailAddress = @ClientsEmailAddress, 
+                                    ActionTitle = @ActionTitle, 
+                                    Reason = @Reason, 
+                                    Status = @Status
+                                WHERE Id = @Id AND ConcurrencyToken = @ConcurrencyToken";
+
+            var rowCount = -1;
+            using (IDbConnection cnn = new SqlConnection(SSMSDataAccess.GettConnectionstring()))
+            {
+                rowCount = cnn.Execute(Sql, complaint);
+            }
+
+            //if (rowCount == 0)
+            //{
+            //    throw new Exception("Oh no, someone else edited this record!");
+            //}
+
+            return rowCount;
         }
     }
 }

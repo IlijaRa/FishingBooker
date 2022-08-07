@@ -16,5 +16,7 @@ namespace FishingBookerLibrary.Models
         public string ClientsEmailAddress { get; set; }
         public string ActionTitle { get; set; }
         public string Reason { get; set; }
+        public Enums.ClientComplaintStatus Status { get; set; }
+        public byte[] ConcurrencyToken { get; set; }
     }
 }

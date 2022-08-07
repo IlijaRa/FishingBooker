@@ -128,32 +128,6 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.LoadData<RegUser>(sql);
         }
 
-        // ne radi where Id = @Id
-        //public static RegUser LoadUser(string userId)
-        //{
-
-        //    string sql = @"SELECT *
-        //                   FROM dbo.RegUsers
-        //                   WHERE Id = @Id;";
-
-        //    return SSMSDataAccess.LoadSingleData<RegUser>(sql);
-        //}
-
-        // ne radi
-        //public static List<RegUser> LoadUserByEmail(string email)
-        //{
-        //    RegUser data = new RegUser
-        //    {
-        //        EmailAddress = email
-        //    };
-
-        //    string sql = @"SELECT *
-        //                   FROM dbo.RegUsers
-        //                   WHERE EmailAddress = @EmailAddress;";
-
-        //    return SSMSDataAccess.LoadData<RegUser>(sql);
-        //}
-
         public static int DeleteUserByEmail(string email)
         {
             RegUser data = new RegUser
@@ -177,7 +151,14 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.LoadUserById<RegUser>(sql, userId);
         }
 
-        
+        public static RegUser LoadUserByEmail(string email)
+        {
+            string sql = @"SELECT *
+                            FROM dbo.RegUsers
+                            WHERE EmailAddress = @EmailAddress;";
+
+            return SSMSDataAccess.LoadUserByEmail<RegUser>(sql, email);
+        }
 
         public static int AddPenalty(string clientEmail, int numberOfPenalties)
         {
