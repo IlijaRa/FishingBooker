@@ -92,18 +92,8 @@
                                     @Html.DisplayFor(model => item.OwnerInstructorRating)
                                 </td>
                                 <td>
-                                    @Html.ActionLink(
-                                        "Answer",
-                                        "AnswerToComplaint",
-                                        "AdminUsers",
-                                        new
-                                        {
-                                            complaintId = item.Id,
-                                            clientsEmail = item.ClientsEmailAddress,
-                                            ownersEmail = item.OwnersEmailAddress
-                                        },
-                                        null
-                                    )
+                                    @Html.ActionLink("Confirm", "ConfirmRevision", "AdminUsers", new { id = item.Id }, null) |
+                                    @Html.ActionLink("Reject", "DenyRevision", "AdminUsers", new { id = item.Id }, null)
                                 </td>
                             </tr>
                             row_counter++;

@@ -98,5 +98,12 @@ namespace FishingBookerLibrary.Models
             Waiting,
             Answered
         }
+
+        public enum RevisionStatus
+        {
+            Waiting,
+            Confirmed,
+            Rejected
+        }
     }
 }

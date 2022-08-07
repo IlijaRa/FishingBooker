@@ -317,7 +317,8 @@
     <Compile Include="Models\DetailsAdventureViewModel.cs" />
     <Compile Include="Models\EditAdventureViewModel.cs" />
     <Compile Include="Models\EmailSender\Gmail.cs" />
-    <Compile Include="Models\GmailDeactivationRequestViewModel.cs" />
+    <Compile Include="Models\EmailSender\GmailDeactivationRequestViewModel.cs" />
+    <Compile Include="Models\EmailSender\GmailRevisionViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\AdventureViewModel.cs" />
     <Compile Include="Models\IndexViewModels\ClientIndexViewModel.cs" />
@@ -737,6 +738,8 @@
     <Content Include="Views\AdminUsers\AcceptedDeactivationEmailForm.cshtml" />
     <Content Include="Views\Shared\DeactivationRequestUnsuccessful.cshtml" />
     <Content Include="Views\AdminUsers\RejectedDeactivationEmailForm.cshtml" />
+    <Content Include="Views\AdminUsers\ConfirmRevision.cshtml" />
+    <Content Include="Views\AdminUsers\DenyRevision.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

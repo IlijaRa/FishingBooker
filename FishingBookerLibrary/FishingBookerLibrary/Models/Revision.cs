@@ -18,6 +18,7 @@ namespace FishingBookerLibrary.Models
         public string Description { get; set; }
         public float ActionRating { get; set; }
         public float OwnerInstructorRating { get; set; }
-        public bool State { get; set; }
+        public Enums.RevisionStatus Status { get; set; }
+        public byte[] ConcurrencyToken { get; set; }
     }
 }

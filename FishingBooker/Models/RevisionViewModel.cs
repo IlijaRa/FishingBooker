@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FishingBookerLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -48,6 +49,11 @@ namespace FishingBooker.Models
         [Display(Name = "Owner/instructor rating")]
         [Required(ErrorMessage = "You need to rate.")]
         public float OwnerInstructorRating { get; set; }
-        public bool State { get; set; }
+
+
+        public Enums.RevisionStatus Status { get; set; }
+
+
+        public byte[] ConcurrencyToken { get; set; }
     }
 }
