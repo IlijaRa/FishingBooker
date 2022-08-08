@@ -235,5 +235,11 @@ namespace FishingBooker.Controllers
             }
             return View(model);
         }
+
+        public ActionResult SearchEntities()
+        {
+            return View();
+        }
+
     }
 }
