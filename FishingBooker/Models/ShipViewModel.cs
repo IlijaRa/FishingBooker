@@ -53,6 +53,11 @@ namespace FishingBooker.Models
         public string Pricelist { get; set; }
 
 
+        [Display(Name = "Rating*")]
+        [Required]
+        public float Rating { get; set; }
+
+
         [Display(Name = "Available equipment")]
         public string FishingEquipment { get; set; }
 

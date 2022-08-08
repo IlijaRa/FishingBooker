@@ -238,8 +238,179 @@ namespace FishingBooker.Controllers
 
         public ActionResult SearchEntities()
         {
+            ClientSearchEntitiesViewModel model = new ClientSearchEntitiesViewModel();
+
+            List<AdventureViewModel> adventures_viewmodel = new List<AdventureViewModel>();
+            List<CottageViewModel> cottages_viewmodel = new List<CottageViewModel>();
+            List<ShipViewModel> ships_viewmodel = new List<ShipViewModel>();
+
+            var adventures = AdventureCRUD.LoadAdventures();
+            var cottages = CottageCRUD.LoadCottages();
+            var ships = ShipCRUD.LoadShips();
+
+            foreach (var row in adventures)
+            {
+                string[] address_split = row.Address.Split(',');
+                adventures_viewmodel.Add(new AdventureViewModel
+                {
+                    AdventureId = row.Id,
+                    Title = row.Title,
+                    Street = address_split[0],
+                    AddressNumber = address_split[1],
+                    City = address_split[2],
+                    PromotionDescription = row.PromotionDescription,
+                    Rating = row.Rating,
+                    BehaviourRules = row.BehaviourRules,
+                    AdditionalServices = row.AdditionalServices,
+                    Pricelist = row.Pricelist,
+                    MaxNumberOfPeople = row.MaxNumberOfPeople,
+                    FishingEquipment = row.FishingEquipment,
+                    CancellationPolicy = row.CancellationPolicy
+                });
+            }
+
+            foreach (var row in cottages)
+            {
+                string[] address_split = row.Address.Split(',');
+                cottages_viewmodel.Add(new CottageViewModel
+                {
+                    CottageId = row.Id,
+                    Title = row.Title,
+                    Street = address_split[0],
+                    AddressNumber = address_split[1],
+                    City = address_split[2],
+                    PromotionDescription = row.PromotionDescription,
+                    Rating = row.Rating,
+                    BehaviourRules = row.BehaviourRules,
+                    AdditionalServices = row.AdditionalServices,
+                    Pricelist = row.Pricelist,
+                    NumberOfRooms = row.NumberOfRooms,
+                    BedsPerRoom = row.BedsPerRoom
+                });
+            }
+
+            foreach (var row in ships)
+            {
+                string[] address_split = row.Address.Split(',');
+                ships_viewmodel.Add(new ShipViewModel
+                {
+                    ShipId = row.Id,
+                    Title = row.Title,
+                    Street = address_split[0],
+                    AddressNumber = address_split[1],
+                    City = address_split[2],
+                    PromotionDescription = row.PromotionDescription,
+                    Rating = row.Rating,
+                    BehaviourRules = row.BehaviourRules,
+                    AdditionalServices = row.AdditionalServices,
+                    Pricelist = row.Pricelist,
+                    FishingEquipment = row.FishingEquipment,
+                    NavigationEquipment = row.NavigationEquipment,
+                    SpecificationId = row.SpecificationId,
+                    OwnerId = row.OwnerId
+                });
+            }
+
+            model.adventures = adventures_viewmodel;
+            model.cottages = cottages_viewmodel;
+            model.ships = ships_viewmodel;
+            return View(model);
+        }
+
+        public ActionResult SearchEntitiesSearched(ClientSearchEntitiesViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                TimeSpan starttime = TimeSpan.Parse(model.FromTime);
+                TimeSpan endtime = TimeSpan.Parse(model.ToTime);
+                
+                DateTime entered_start_date = new DateTime(model.FromDate.Year, model.FromDate.Month, model.FromDate.Day, starttime.Hours, starttime.Minutes, starttime.Seconds);
+                DateTime entered_end_date = new DateTime(model.ToDate.Year, model.ToDate.Month, model.ToDate.Day, endtime.Hours, endtime.Minutes, endtime.Seconds);
+
+                List<AdventureViewModel> adventures_viewmodel = new List<AdventureViewModel>();
+                List<CottageViewModel> cottages_viewmodel = new List<CottageViewModel>();
+                List<ShipViewModel> ships_viewmodel = new List<ShipViewModel>();
+
+                if (model.entity == "Adventure")
+                {
+                    var adventures = AdventureCRUD.LoadAdventures();
+                    var adventure_reservations = ReservationCRUD.LoadAdventureReservations();
+                    var availabilities = ScheduleCRUD.LoadAvailabilities();
+
+                    foreach (var availability in availabilities)
+                    {
+                        DateTime availability_start_date = new DateTime(availability.FromDate.Year, availability.FromDate.Month, availability.FromDate.Day, availability.FromTime.Hours, availability.FromTime.Minutes, availability.FromTime.Seconds);
+                        DateTime availability_end_date = new DateTime(availability.ToDate.Year, availability.ToDate.Month, availability.ToDate.Day, availability.ToTime.Hours, availability.ToTime.Minutes, availability.ToTime.Seconds);
+
+                        if ((availability_start_date < entered_start_date) && (entered_end_date < availability_end_date))
+                        {
+                            foreach (var reservation in adventure_reservations)
+                            {
+                                DateTime reservation_start_date = new DateTime(reservation.StartDate.Year, reservation.StartDate.Month, reservation.StartDate.Day, reservation.StartTime.Hours, reservation.StartTime.Minutes, reservation.StartTime.Seconds);
+                                DateTime reservation_end_date = new DateTime(reservation.EndDate.Year, reservation.EndDate.Month, reservation.EndDate.Day, reservation.EndTime.Hours, reservation.EndTime.Minutes, reservation.EndTime.Seconds);
+                                
+                                if ((reservation_start_date < entered_start_date && entered_start_date < reservation_end_date) || (reservation_start_date < entered_end_date && entered_end_date < reservation_end_date) || (entered_start_date < reservation_start_date && reservation_end_date < entered_end_date))
+                                {
+                                    continue;
+                                }
+
+                                var adv = AdventureCRUD.LoadAdventureById(reservation.AdventureId);
+
+                                if (model.Rating > adv.Rating || model.NumberOfPeople > adv.MaxNumberOfPeople)
+                                {
+                                    continue;
+                                }
+
+                                string[] address_split = adv.Address.Split(',');
+                                adventures_viewmodel.Add(new AdventureViewModel
+                                {
+                                    AdventureId = adv.Id,
+                                    Title = adv.Title,
+                                    Street = address_split[0],
+                                    AddressNumber = address_split[1],
+                                    City = address_split[2],
+                                    PromotionDescription = adv.PromotionDescription,
+                                    Rating = adv.Rating,
+                                    BehaviourRules = adv.BehaviourRules,
+                                    AdditionalServices = adv.AdditionalServices,
+                                    Pricelist = adv.Pricelist,
+                                    MaxNumberOfPeople = adv.MaxNumberOfPeople,
+                                    FishingEquipment = adv.FishingEquipment,
+                                    CancellationPolicy = adv.CancellationPolicy
+                                });
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    return View("Error");
+                }
+                
+                model.adventures = adventures_viewmodel.GroupBy(x => x.AdventureId).Select(y => y.First());
+                //model.adventures = adventures_viewmodel;/*.Select(x => x.AdventureId).Distinct();*/
+
+                cottages_viewmodel.Select(x => x.CottageId).Distinct();
+                model.cottages = cottages_viewmodel;
+
+                ships_viewmodel.Select(x => x.ShipId).Distinct();
+                model.ships = ships_viewmodel;
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult SearchEntitiesSorted(string searching)
+        {
+
             return View();
         }
 
+        [HttpGet]
+        public ActionResult CreateStandardAdventureReservation(int id)
+        {
+            var adv = AdventureCRUD.LoadAdventureById(id);
+            return View();
+        }
     }
 }

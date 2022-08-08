@@ -138,6 +138,14 @@ namespace FishingBookerLibrary.DataAccess
             }
         }
 
+        public static List<T> LoadAvailabilitiesUnavailabilities<T>(string sql, int type)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { Type = type }).ToList();
+            }
+        }
+
         public static List<T> LoadCurrentReservationByClientsEmailAddress<T>(string sql, string emailAddress)
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))

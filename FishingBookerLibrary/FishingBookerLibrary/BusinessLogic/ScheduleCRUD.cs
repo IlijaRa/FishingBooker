@@ -208,6 +208,22 @@ namespace FishingBookerLibrary.BusinessLogic
             return SSMSDataAccess.LoadOwnerAvailabilitiesUnavailabilities<OwnerAvailabilityUnavailability>(sql, ownerId, 0);
         }
 
+        public static List<OwnerAvailabilityUnavailability> LoadAvailabilities()
+        {
+            string sql = @"SELECT *
+                            FROM dbo.OwnerAvailabilitiesUnavailabilities
+                            WHERE Type = @Type;";
+            return SSMSDataAccess.LoadAvailabilitiesUnavailabilities<OwnerAvailabilityUnavailability>(sql, 0);
+        }
+
+        public static List<OwnerAvailabilityUnavailability> LoadUnavailabilities()
+        {
+            string sql = @"SELECT *
+                            FROM dbo.OwnerAvailabilitiesUnavailabilities
+                            WHERE Type = @Type;";
+            return SSMSDataAccess.LoadAvailabilitiesUnavailabilities<OwnerAvailabilityUnavailability>(sql, 1);
+        }
+
         public static List<OwnerAvailabilityUnavailability> LoadOwnerUnavailabilities(string ownerId)
         {
             string sql = @"SELECT *

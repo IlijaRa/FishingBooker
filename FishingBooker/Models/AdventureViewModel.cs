@@ -58,6 +58,11 @@ namespace FishingBooker.Models
         public decimal Price { get; set; }
 
 
+        [Display(Name = "Rating*")]
+        [Required]
+        public float Rating { get; set; }
+
+
         [Range(1, 200, ErrorMessage = "Max number of people need to be between 1-200.")]
         [RegularExpression("([0-9]+)")]
         [Display(Name = "Maximum number of people*")]

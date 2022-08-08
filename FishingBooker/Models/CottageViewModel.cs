@@ -53,6 +53,11 @@ namespace FishingBooker.Models
         public string Pricelist { get; set; }
 
 
+        [Display(Name = "Rating*")]
+        [Required]
+        public float Rating { get; set; }
+
+
         [RegularExpression("([0-9]+)")]
         [Display(Name = "Number of rooms*")]
         [Required(ErrorMessage = "You need to enter a number.")]
