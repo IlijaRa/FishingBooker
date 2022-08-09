@@ -58,6 +58,7 @@
                                     <select name="searching" id="searching" class="form-control" style = "height: 3.7rem">
                                         <option value="Rating">Rating</option>
                                         <option value="People">People</option>
+                                        <option value="People">Price</option>
                                     </select>
                                     <button class="btn btn-primary" type="submit">Sort by</button>
                                 </div>
@@ -84,6 +85,7 @@
                                 <th class="bg-primary" scope="col">Number</th>
                                 <th class="bg-primary" scope="col">City</th>
                                 <th class="bg-primary" scope="col">People</th>
+                                <th class="bg-primary" scope="col">Price</th>
                                 <th class="bg-primary" scope="col">Rating</th>
                                 <th class="bg-primary" scope="col">Option</th>
                             </tr>
@@ -110,10 +112,13 @@
                                         @Html.DisplayFor(model => item.MaxNumberOfPeople)
                                     </td>
                                     <td>
+                                        @Html.DisplayFor(model => item.Price)
+                                    </td>
+                                    <td>
                                         @Html.DisplayFor(model => item.Rating)
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Make a reservation", "CreateStandardAdventureReservation", "ClientUsers", new { id = item.AdventureId }, null);
+                                        @Html.ActionLink("Make a reservation", "CreateStandardAdventureReservation", "ClientUsers", new { id = item.AdventureId, from_date = Model.FromDate, from_time = Model.FromTime, to_date = Model.ToDate, to_time = Model.ToTime, no_people = Model.NumberOfPeople, instructorId = item.InstructorId}, null);
                                     </td>
                                 </tr>
                                 adventure_row_counter++;

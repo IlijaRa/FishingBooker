@@ -305,6 +305,7 @@
     <Compile Include="Models\AdminBusinessReportViewModel.cs" />
     <Compile Include="Models\AdventureReservationViewModel.cs" />
     <Compile Include="Models\AdventureInstructorViewModel.cs" />
+    <Compile Include="Models\AdventureStandardReservationViewModel.cs" />
     <Compile Include="Models\AnswerToComplaintViewModel.cs" />
     <Compile Include="Models\BusinessReportViewModel.cs" />
     <Compile Include="Models\ClientComplaintViewModel.cs" />
@@ -745,6 +746,7 @@
     <Content Include="Views\ClientUsers\SearchEntities.cshtml" />
     <Content Include="Views\ClientUsers\SearchEntitiesSearched.cshtml" />
     <Content Include="Views\ClientUsers\SearchEntitiesSorted.cshtml" />
+    <Content Include="Views\ClientUsers\CreateStandardAdventureReservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

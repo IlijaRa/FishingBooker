@@ -86,10 +86,10 @@
                                             </div>
 
                                             @*<div class="form-floating mb-3">
-                                                @Html.EditorFor(model => model.TotalIncome, new { htmlAttributes = new { @class = "form-control", @id = "TotalIncome", @type = "text", @readonly ="readonly" } })
-                                                <label for="TotalIncome">Total income</label>
-                                                @Html.ValidationMessageFor(model => model.TotalIncome, "", new { @class = "text-danger" })
-                                            </div>*@
+                        @Html.EditorFor(model => model.TotalIncome, new { htmlAttributes = new { @class = "form-control", @id = "TotalIncome", @type = "text", @readonly ="readonly" } })
+                        <label for="TotalIncome">Total income</label>
+                        @Html.ValidationMessageFor(model => model.TotalIncome, "", new { @class = "text-danger" })
+                    </div>*@
 
                                             <div class="form-group">
                                                 <div class="col-md-offset-2 col-md-12 text-center">
@@ -104,7 +104,7 @@
                                 @if (User.IsInRole("ValidFishingInstructor") || User.IsInRole("ValidCottageOwner") || User.IsInRole("ValidShipOwner") || User.IsInRole("ValidClient"))
                                 {
                                     <h4 class="text-center">Class member</h4>
-                                    <input style="background: @Model.LoyaltyClass.PickedColor" class="btn btn-lg mb-3" id="LoyaltyClass" name="LoyaltyClass" type="button" value="@Model.LoyaltyClass.ScaleName.ToString()"/>
+                                    <input style="background: @Model.LoyaltyClass.PickedColor" class="btn btn-lg mb-3" id="LoyaltyClass" name="LoyaltyClass" type="button" value="@Model.LoyaltyClass.ScaleName.ToString()" />
                                     <br>
                                 }
 
@@ -132,6 +132,9 @@
                                 @if (User.IsInRole("ValidClient"))
                                 {
                                     <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("Complaint", "ClientUsers")">Complaint</a>
+
+                                    <a class="btn btn-primary btn-lg mb-3" href="@Url.Action("SearchEntities", "ClientUsers")">Make a reservation</a>
+
                                     <br>
                                 }
 

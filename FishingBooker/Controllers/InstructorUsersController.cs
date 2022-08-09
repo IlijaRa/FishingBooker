@@ -42,7 +42,7 @@ namespace FishingBooker.Controllers
                                                model.BehaviourRules,
                                                model.AdditionalServices,
                                                model.Pricelist,
-                                               //model.Price,
+                                               model.Price,
                                                model.MaxNumberOfPeople,
                                                model.FishingEquipment,
                                                model.CancellationPolicy,

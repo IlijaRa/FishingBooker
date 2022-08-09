@@ -146,6 +146,7 @@
                             <th class="bg-primary" scope="col">Number</th>
                             <th class="bg-primary" scope="col">City</th>
                             <th class="bg-primary" scope="col">People</th>
+                            <th class="bg-primary" scope="col">Price</th>
                             <th class="bg-primary" scope="col">Rating</th>
                         </tr>
                     </thread>
@@ -171,6 +172,9 @@
                                     @Html.DisplayFor(model => item.MaxNumberOfPeople)
                                 </td>
                                 <td>
+                                    @Html.DisplayFor(model => item.Price)
+                                </td>
+                                <td>
                                     @Html.DisplayFor(model => item.Rating)
                                 </td>
                             </tr>
@@ -191,6 +195,7 @@
                             <th class="bg-primary" scope="col">City</th>
                             <th class="bg-primary" scope="col">Rooms</th>
                             <th class="bg-primary" scope="col">Beds per room</th>
+                            <th class="bg-primary" scope="col">Price</th>
                             <th class="bg-primary" scope="col">Rating</th>
                         </tr>
                     </thread>
@@ -219,6 +224,9 @@
                                     @Html.DisplayFor(model => item.BedsPerRoom)
                                 </td>
                                 <td>
+                                    @Html.DisplayFor(model => item.Price)
+                                </td>
+                                <td>
                                     @Html.DisplayFor(model => item.Rating)
                                 </td>
                             </tr>
@@ -238,6 +246,7 @@
                             <th class="bg-primary" scope="col">City</th>
                             <th class="bg-primary" scope="col">Fishing equipment</th>
                             <th class="bg-primary" scope="col">Navigation equipment</th>
+                            <th class="bg-primary" scope="col">Price</th>
                             <th class="bg-primary" scope="col">Rating</th>
                         </tr>
                     </thread>
@@ -264,6 +273,9 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(model => item.NavigationEquipment)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Price)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(model => item.Rating)

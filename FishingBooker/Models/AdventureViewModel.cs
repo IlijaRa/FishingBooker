@@ -82,5 +82,8 @@ namespace FishingBooker.Models
 
         [Display(Name = "Images")]
         public List<Image> images { get; set; } = new List<Image>();
+
+
+        public string InstructorId { get; set; }
     }
 }

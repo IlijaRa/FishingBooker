@@ -265,7 +265,8 @@ namespace FishingBooker.Controllers
                     Pricelist = row.Pricelist,
                     MaxNumberOfPeople = row.MaxNumberOfPeople,
                     FishingEquipment = row.FishingEquipment,
-                    CancellationPolicy = row.CancellationPolicy
+                    CancellationPolicy = row.CancellationPolicy,
+                    InstructorId = row.InstructorId
                 });
             }
 
@@ -285,7 +286,8 @@ namespace FishingBooker.Controllers
                     AdditionalServices = row.AdditionalServices,
                     Pricelist = row.Pricelist,
                     NumberOfRooms = row.NumberOfRooms,
-                    BedsPerRoom = row.BedsPerRoom
+                    BedsPerRoom = row.BedsPerRoom,
+                    OwnerId = row.OwnerId
                 });
             }
 
@@ -346,6 +348,7 @@ namespace FishingBooker.Controllers
                         {
                             foreach (var reservation in adventure_reservations)
                             {
+
                                 DateTime reservation_start_date = new DateTime(reservation.StartDate.Year, reservation.StartDate.Month, reservation.StartDate.Day, reservation.StartTime.Hours, reservation.StartTime.Minutes, reservation.StartTime.Seconds);
                                 DateTime reservation_end_date = new DateTime(reservation.EndDate.Year, reservation.EndDate.Month, reservation.EndDate.Day, reservation.EndTime.Hours, reservation.EndTime.Minutes, reservation.EndTime.Seconds);
                                 
@@ -374,9 +377,11 @@ namespace FishingBooker.Controllers
                                     BehaviourRules = adv.BehaviourRules,
                                     AdditionalServices = adv.AdditionalServices,
                                     Pricelist = adv.Pricelist,
+                                    Price = adv.Price,
                                     MaxNumberOfPeople = adv.MaxNumberOfPeople,
                                     FishingEquipment = adv.FishingEquipment,
-                                    CancellationPolicy = adv.CancellationPolicy
+                                    CancellationPolicy = adv.CancellationPolicy,
+                                    InstructorId = adv.InstructorId
                                 });
                             }
                         }
@@ -407,9 +412,58 @@ namespace FishingBooker.Controllers
         }
 
         [HttpGet]
-        public ActionResult CreateStandardAdventureReservation(int id)
+        public ActionResult CreateStandardAdventureReservation(int id, DateTime from_date, string from_time, DateTime to_date, string to_time, int no_people, string instructorId)
         {
             var adv = AdventureCRUD.LoadAdventureById(id);
+            AdventureStandardReservationViewModel model = new AdventureStandardReservationViewModel();
+            model.AdventureTitle = adv.Title;
+            model.Place = adv.Title;
+            model.StartDate = from_date.ToString("yyyy-MM-dd");
+            model.StartTime = from_time;
+            model.EndDate = to_date.ToString("yyyy-MM-dd");
+            model.EndTime = to_time;
+            model.ValidityPeriodDate = new DateTime(1753,1,1);
+            model.ValidityPeriodTime = TimeSpan.MinValue.ToString();
+            model.MaxNumberOfPeople = no_people;
+            model.AdditionalServices = "";
+            model.Price = adv.Price;
+            model.IsReserved = false;
+            model.ClientsEmailAddress = User.Identity.GetUserName();
+            model.AdventureId = adv.Id;
+            model.InstructorId = adv.InstructorId;
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateStandardAdventureReservation(AdventureStandardReservationViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                TimeSpan starttime = TimeSpan.Parse(model.StartTime.ToString());
+                TimeSpan endtime = TimeSpan.Parse(model.EndTime.ToString());
+                
+                var validity_period_date = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
+                var validity_period_time = new TimeSpan(0, 0, 0);
+
+                ReservationCRUD.CreateAdventureReservations(model.Place,
+                                               Convert.ToDateTime(model.StartDate),
+                                               starttime,
+                                               Convert.ToDateTime(model.EndDate),
+                                               endtime,
+                                               validity_period_date,
+                                               validity_period_time,
+                                               model.MaxNumberOfPeople,
+                                               model.AdditionalServices,
+                                               model.Price,
+                                               true,   // IsReserved
+                                               model.ClientsEmailAddress,
+                                               Enums.ReservationType.Regular,
+                                               model.AdventureId,
+                                               model.InstructorId);
+            }
+
             return View();
         }
     }
