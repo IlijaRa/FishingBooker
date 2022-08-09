@@ -4,6 +4,7 @@ using FishingBookerLibrary.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -447,6 +448,20 @@ namespace FishingBooker.Controllers
                 var validity_period_date = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
                 var validity_period_time = new TimeSpan(0, 0, 0);
 
+                //using (Entities entities = new Entities())
+                //using (DbContextTransaction scope = entities.Database.BeginTransaction())
+                //{
+                //    //Lock the table during this transaction
+                //    entities.Database.ExecuteSqlCommand("SELECT TOP 1 KeyColumn FROM MyTable WITH (TABLOCKX, HOLDLOCK)");
+
+                //    //Do your work with the locked table here...
+
+                //    //Complete the scope here to commit, otherwise it will rollback
+                //    //The table lock will be released after we exit the TransactionScope block
+                //    scope.Commit();
+                //}
+
+                //TODO: Zakljucavanje tabele za termin sa strane klijenta
                 ReservationCRUD.CreateAdventureReservations(model.Place,
                                                Convert.ToDateTime(model.StartDate),
                                                starttime,

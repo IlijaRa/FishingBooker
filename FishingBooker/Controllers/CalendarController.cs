@@ -424,15 +424,6 @@ namespace FishingBooker.Controllers
                         }
                         break;
                     default:
-                        //TODO: update zavrsi
-                        //if (changedEvent.text == "Available for standard reservations")
-                        //{
-                        //    ScheduleCRUD.UpdateOwnerAvailabilityForStandardReservation(changedEvent.start_date,
-                        //                                    startTime,
-                        //                                    changedEvent.end_date,
-                        //                                    endTime,
-                        //                                    User.Identity.GetUserId());
-                        //}
                         if (changedEvent.event_type == Enums.CalendarEventType.Availability)
                         {
                             //if ((changedEvent.radio_button == "1")/* || (changedEvent.radio_button == "null")*/)

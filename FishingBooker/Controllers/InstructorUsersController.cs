@@ -469,8 +469,8 @@ namespace FishingBooker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateAdventureReservationForCurrentlyActiveUser(AdventureReservationViewModel model)
         {
-            try
-            {
+            try{
+
                 TimeSpan starttime = TimeSpan.Parse(model.StartTime.ToString());
                 TimeSpan endtime = TimeSpan.Parse(model.EndTime.ToString());
                 TimeSpan validitytime = TimeSpan.Parse("00:00:00");
@@ -478,6 +478,7 @@ namespace FishingBooker.Controllers
                     
                     var adventure = AdventureCRUD.LoadAdventuresByName(model.AdventureTitle);
 
+                    //TODO: Zakljucavanje tabele za termin sa strane instruktora
                     ReservationCRUD.CreateAdventureReservations(model.Place,
                                                model.StartDate,
                                                starttime,

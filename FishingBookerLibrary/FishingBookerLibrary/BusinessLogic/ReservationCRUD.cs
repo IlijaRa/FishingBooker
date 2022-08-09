@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 using FishingBookerLibrary.DataAccess;
 using FishingBookerLibrary.Models;
 
@@ -54,6 +57,81 @@ namespace FishingBookerLibrary.BusinessLogic
 
             return SSMSDataAccess.SaveData(sql, data);
         }
+
+        //public static int CreateAdventureReservationsLock(string place,
+        //                                                    DateTime startdate,
+        //                                                    TimeSpan starttime,
+        //                                                    DateTime enddate,
+        //                                                    TimeSpan endtime,
+        //                                                    DateTime validitydate,
+        //                                                    TimeSpan validitytime,
+        //                                                    int maxNum,
+        //                                                    string additionalServices,
+        //                                                    decimal price,
+        //                                                    bool isReserved,
+        //                                                    string clientsemailAddress,
+        //                                                    Enums.ReservationType type,
+        //                                                    int adventureId,
+        //                                                    string instructorId)
+        //{
+        //    AdventureReservation data = new AdventureReservation
+        //    {
+        //        Place = place,
+        //        StartDate = startdate,
+        //        StartTime = starttime,
+        //        EndDate = enddate,
+        //        EndTime = endtime,
+        //        ValidityPeriodDate = validitydate,
+        //        ValidityPeriodTime = validitytime,
+        //        dayOfWeek = Convert.ToInt32(startdate.DayOfWeek),
+        //        Month = startdate.Month,
+        //        Year = startdate.Year,
+        //        MaxNumberOfPeople = maxNum,
+        //        AdditionalServices = additionalServices,
+        //        Price = price,
+        //        Discount = 0,
+        //        IsReserved = isReserved,
+        //        ClientsEmailAddress = clientsemailAddress,
+        //        ReservationType = type,
+        //        AdventureId = adventureId,
+        //        InstructorId = instructorId
+        //    };
+
+        //    string sql = @"INSERT INTO dbo.AdventureReservations (Place, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, dayOfWeek, Month, Year, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
+        //                   VALUES (@Place, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, @dayOfWeek, @Month, @Year, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);";
+
+        //    //int rowCount = -1;
+
+        //    using (IDbConnection cnn = new SqlConnection(SSMSDataAccess.GettConnectionstring()))
+        //    {
+        //        cnn.Open();
+
+        //        using (IDbTransaction tran = cnn.BeginTransaction())
+        //        {
+        //            try
+        //            {
+        //                // pass the transaction along to the Query, Execute, or the related Async methods.
+        //                //cnn.Execute(sql);
+        //                var affectedRows = cnn.Execute(sql, transaction: tran);
+        //                // if it was successful, commit the transaction
+        //                tran.Commit();
+        //                Console.WriteLine(affectedRows);
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                // roll the transaction back
+        //                tran.Rollback();
+
+        //                // handle the error however you need to.
+        //                throw;
+        //            }
+        //        }
+
+        //        //rowCount = cnn.Execute(sql);
+        //    }
+
+        //    return SSMSDataAccess.SaveData(sql, data);
+        //}
 
         public static int CreateCottageReservations(string cottageName,
                                                             DateTime startdate,
