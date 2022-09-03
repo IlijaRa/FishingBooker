@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Error";
-    var message = (string)ViewData["ErrorMessage"];
     if (User.IsInRole("ValidFishingInstructor"))
     {
         Layout = "~/Views/Shared/_LayoutInstructor.cshtml";
@@ -30,5 +29,5 @@
 }
 
 <h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">@message</h2>
+<h2 class="text-danger">Wait for your turn.</h2>
 

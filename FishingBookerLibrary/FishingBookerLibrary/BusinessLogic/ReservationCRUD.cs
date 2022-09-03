@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dapper;
 using FishingBookerLibrary.DataAccess;
 using FishingBookerLibrary.Models;
 
@@ -28,6 +31,7 @@ namespace FishingBookerLibrary.BusinessLogic
         {
             AdventureReservation data = new AdventureReservation
             {
+                CreationTime = DateTime.Now,
                 Place = place,
                 StartDate = startdate,
                 StartTime = starttime,
@@ -49,10 +53,69 @@ namespace FishingBookerLibrary.BusinessLogic
                 InstructorId = instructorId
             };
 
-            string sql = @"INSERT INTO dbo.AdventureReservations (Place, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, dayOfWeek, Month, Year, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
-                           VALUES (@Place, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, @dayOfWeek, @Month, @Year, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);";
+            string sql = @"BEGIN TRANSACTION
+                                INSERT INTO dbo.AdventureReservations (Place, CreationTime, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, dayOfWeek, Month, Year, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
+                                VALUES (@Place, @CreationTime, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, @dayOfWeek, @Month, @Year, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);
+                           COMMIT";
 
             return SSMSDataAccess.SaveData(sql, data);
+        }
+
+        public static int CreateAdventureReservationsSerializable(string place,
+                                                            DateTime startdate,
+                                                            TimeSpan starttime,
+                                                            DateTime enddate,
+                                                            TimeSpan endtime,
+                                                            DateTime validitydate,
+                                                            TimeSpan validitytime,
+                                                            int maxNum,
+                                                            string additionalServices,
+                                                            decimal price,
+                                                            bool isReserved,
+                                                            string clientsemailAddress,
+                                                            Enums.ReservationType type,
+                                                            int adventureId,
+                                                            string instructorId)
+        {
+            try
+            {
+                AdventureReservation data = new AdventureReservation
+                {
+                    CreationTime = DateTime.Now,
+                    Place = place,
+                    StartDate = startdate,
+                    StartTime = starttime,
+                    EndDate = enddate,
+                    EndTime = endtime,
+                    ValidityPeriodDate = validitydate,
+                    ValidityPeriodTime = validitytime,
+                    dayOfWeek = Convert.ToInt32(startdate.DayOfWeek),
+                    Month = startdate.Month,
+                    Year = startdate.Year,
+                    MaxNumberOfPeople = maxNum,
+                    AdditionalServices = additionalServices,
+                    Price = price,
+                    Discount = 0,
+                    IsReserved = isReserved,
+                    ClientsEmailAddress = clientsemailAddress,
+                    ReservationType = type,
+                    AdventureId = adventureId,
+                    InstructorId = instructorId
+                };
+                string sql = @" SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+                                BEGIN TRANSACTION
+                                SELECT * FROM dbo.AdventureReservations
+                                WAITFOR DELAY '00:00:10'
+                                    INSERT INTO dbo.AdventureReservations WITH(TABLOCKX) (Place, CreationTime, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, dayOfWeek, Month, Year, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
+		                            VALUES (@Place, @CreationTime, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, @dayOfWeek, @Month, @Year, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);
+                                COMMIT TRANSACTION";
+
+                return SSMSDataAccess.SaveData(sql, data);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public static int CreateCottageReservations(string cottageName,
