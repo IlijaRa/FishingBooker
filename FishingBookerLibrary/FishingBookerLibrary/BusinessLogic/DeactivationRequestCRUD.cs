@@ -81,24 +81,24 @@ namespace FishingBookerLibrary.BusinessLogic
 
         //}
 
-        public async Task<DeactivationRequest> InsertDeactivationRequestAsync(DeactivationRequest request)
+        public static int InsertDeactivationRequestAsync(DeactivationRequest request)
         {
             const string Sql = @" INSERT INTO dbo.DeactivationRequests (UserName, UserSurnam, EmailAddress, Reason)
                                   VALUES ( @UserName, @UserSurname, @EmailAddress, @Reason )
 
                                   SELECT @Id = Id, @ConcurrencyToken = ConcurrencyToken
                                   FROM dbo.DeactivationRequests WHERE Id = SCOPE_IDENTITY()";
-            
+
+            var rowCount = -1;
             using (IDbConnection cnn = new SqlConnection(SSMSDataAccess.GettConnectionstring()))
             {
                 var @params = new DynamicParameters(request)
                 .Output(request, e => e.ConcurrencyToken)
                 .Output(request, e => e.Id);
 
-                await cnn.ExecuteAsync(Sql, @params);
-                return request;
+                rowCount = cnn.Execute(Sql, @params);
             }
-
+            return rowCount;
         }
 
         public static int UpdateDeactivationRequest(DeactivationRequest request)

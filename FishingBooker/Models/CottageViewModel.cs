@@ -53,6 +53,16 @@ namespace FishingBooker.Models
         public string Pricelist { get; set; }
 
 
+        [Display(Name = "Price*")]
+        [Required(ErrorMessage = "You need to enter a price.")]
+        public decimal Price { get; set; }
+
+
+        [Display(Name = "Rating*")]
+        [Required]
+        public float Rating { get; set; }
+
+
         [RegularExpression("([0-9]+)")]
         [Display(Name = "Number of rooms*")]
         [Required(ErrorMessage = "You need to enter a number.")]
@@ -63,6 +73,9 @@ namespace FishingBooker.Models
         [Display(Name = "Number of beds per room*")]
         [Required(ErrorMessage = "You need to enter a number.")]
         public int BedsPerRoom { get; set; }
+
+
+        public string OwnerId { get; set; }
 
     }
 }

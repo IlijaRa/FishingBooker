@@ -62,7 +62,18 @@ namespace FishingBookerLibrary.DataAccess
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
             {
-                return cnn.Execute(sql, data);
+                try
+                {
+                    return cnn.Execute(sql, data);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    cnn.Close();
+                }
             }
         }
 
@@ -135,6 +146,14 @@ namespace FishingBookerLibrary.DataAccess
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
             {
                 return cnn.Query<T>(sql, new { ClientsEmailAddress = emailAddress }).ToList();
+            }
+        }
+
+        public static List<T> LoadAvailabilitiesUnavailabilities<T>(string sql, int type)
+        {
+            using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
+            {
+                return cnn.Query<T>(sql, new { Type = type }).ToList();
             }
         }
 

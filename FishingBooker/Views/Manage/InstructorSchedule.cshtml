@@ -111,18 +111,17 @@
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6">
                     <div class="container shadow py-2">
-                        @using (Html.BeginForm("CreateAdventureReservationForCurrentlyActiveUser", "InstructorUsers", FormMethod.Get))
-                        {
-                            @Html.AntiForgeryToken()
-                            <!-- Submit Button-->
-                            <div class="d-grid col-md-12"><button class="btn btn-primary btn-lg" type="submit">RESERVATION FOR CURRENTLY ACTIVE CLIENT</button></div>
+                        <!-- Submit Button-->
+                        <div class="d-grid col-sm-12">
+                            <a class="nav-link col-sm-12" @Html.ActionLink("RESERVATION FOR CURRENTLY ACTIVE CLIENT", "CreateAdventureReservationForCurrentlyActiveUser", "InstructorUsers", new { id = 0, from_date = DateTime.Now, from_time = new TimeSpan(0,0,0), to_date = DateTime.Now, to_time = new TimeSpan(0,0,0), no_people = 0}, null)
+                                @*<button class="btn btn-primary btn-lg" type="submit"></button>*@
+                            </a>
+                        </div>
+                        @*@using (Html.BeginForm("CreateAdventureReservationForCurrentlyActiveUser", "InstructorUsers", FormMethod.Get))
+        {
+            @Html.AntiForgeryToken()
 
-                            @*<div class="form-group">
-                                <div class="col-md-offset-2 col-md-8">
-                                    <input type="submit" value="Create new reservation" class="btn btn-default" />
-                                </div>
-                            </div>*@
-                        }
+        }*@
                     </div>
                 </div>
             </div>

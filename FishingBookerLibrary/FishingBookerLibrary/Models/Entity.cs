@@ -21,7 +21,7 @@ namespace FishingBookerLibrary.Models
         public string BehaviourRules { get; set; }
         public string AdditionalServices { get; set; }
         public string Pricelist { get; set; }
-        //public decimal Price { get; set; }
+        public decimal Price { get; set; }
         //public List<FastReservation> FastReservations { get; set; }
         public List<RegularReservation> RegularReservations { get; set; }
     }
