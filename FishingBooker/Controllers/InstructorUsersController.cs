@@ -373,45 +373,70 @@ namespace FishingBooker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateReservation(AdventureReservationViewModel model)
         {
-
+            model.InstructorId = User.Identity.GetUserId();
+            model.AdventureTitle = model.Place;
             if (ModelState.IsValid)
             {
                 TimeSpan starttime = TimeSpan.Parse(model.StartTime.ToString());
                 TimeSpan endtime = TimeSpan.Parse(model.EndTime.ToString());
                 TimeSpan validitytime = TimeSpan.Parse(model.ValidityPeriodTime.ToString());
-                List<string> clientEmails = new List<string>();
+                //List<string> clientEmails = new List<string>();
 
-                ReservationCRUD.CreateAdventureReservations(model.Place,
-                                               Convert.ToDateTime(model.StartDate),
-                                               starttime,
-                                               Convert.ToDateTime(model.EndDate),
-                                               endtime,
-                                               model.ValidityPeriodDate,
-                                               validitytime,
-                                               model.MaxNumberOfPeople,
-                                               model.AdditionalServices,
-                                               model.Price,
-                                               false,   // IsReserved
-                                               null,    // ClientsEmailAddress
-                                               Enums.ReservationType.Fast,
-                                               model.AdventureId,
-                                               User.Identity.GetUserId());
-
-                var subscribedClients = AdventureCRUD.LoadSubscribersByAdventure(model.AdventureId);
-                foreach (var subscriber in subscribedClients)
+                if (IsDateAndTimeAllowed(User.Identity.GetUserId(), starttime, endtime, model))
                 {
-                    Gmail gmail = new Gmail
+                    try
                     {
-                        To = subscriber,
-                        Subject = "New action is available",
-                        Body = @"Adventure that you are subscribed to has new action available
-                                 Best wishes,
-                                 Admin team."
-                    };
-                    gmail.SendEmail();
+                        int result = ReservationCRUD.CreateAdventureReservationsSerializable(model.Place,
+                                                   Convert.ToDateTime(model.StartDate),
+                                                   starttime,
+                                                   Convert.ToDateTime(model.EndDate),
+                                                   endtime,
+                                                   model.ValidityPeriodDate,
+                                                   validitytime,
+                                                   model.MaxNumberOfPeople,
+                                                   model.AdditionalServices,
+                                                   model.Price,
+                                                   false,   // IsReserved
+                                                   null,    // ClientsEmailAddress
+                                                   Enums.ReservationType.Fast,
+                                                   model.AdventureId,
+                                                   User.Identity.GetUserId());
+                        if (result == 1)
+                        {
+                            var subscribedClients = AdventureCRUD.LoadSubscribersByAdventure(model.AdventureId);
+                            foreach (var subscriber in subscribedClients)
+                            {
+                                Gmail gmail = new Gmail
+                                {
+                                    To = subscriber,
+                                    Subject = "New action is available",
+                                    Body = @"Adventure that you are subscribed to has new action available
+                                     Best wishes,
+                                     Admin team."
+                                };
+                                gmail.SendEmail();
+                            }
+                            return RedirectToAction("EditAdventure", "InstructorUsers", new { advId = model.AdventureId });
+                        }
+                        else
+                        {
+                            ViewData["ErrorMessage"] = "Error while creating adventure reservation";
+                            return View("Error");
+                        }
+
+                    }
+                    catch (Exception e)
+                    {
+                        ViewData["ErrorMessage"] = e.Message;
+                        return View("Error");
+                    }
                 }
-                return RedirectToAction("EditAdventure", "InstructorUsers", new { advId = model.AdventureId });
+                else
+                {
+                    return View("DateAndTimeNotAllowed");
+                }
             }
+
             return View();
         }
 
@@ -545,7 +570,7 @@ namespace FishingBooker.Controllers
                         TimeSpan starttime = TimeSpan.Parse(model.StartTime.ToString());
                         TimeSpan endtime = TimeSpan.Parse(model.EndTime.ToString());
                         TimeSpan validitytime = TimeSpan.Parse("00:00:00");
-                        if (IsDateAndTimeAllowed(User.Identity.GetUserId(), starttime, endtime, validitytime, model))
+                        if (IsDateAndTimeAllowed(User.Identity.GetUserId(), starttime, endtime, model))
                         {
 
                             var adventure = AdventureCRUD.LoadAdventuresByName(model.AdventureTitle);
@@ -606,6 +631,7 @@ namespace FishingBooker.Controllers
 
                         var validity_period_date = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
                         var validity_period_time = new TimeSpan(0, 0, 0);
+
                         try
                         {
                             ReservationCRUD.CreateAdventureReservationsSerializable(model.Place,
@@ -626,7 +652,7 @@ namespace FishingBooker.Controllers
 
                             return RedirectToAction("Index", "Home");
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             ViewData["ErrorMessage"] = e.Message;
                             return View("Error");
@@ -650,9 +676,10 @@ namespace FishingBooker.Controllers
             return View();
         }
 
-        private static bool IsDateAndTimeAllowed(string userId, TimeSpan starttime, TimeSpan endtime, TimeSpan? validitytime, AdventureStandardReservationViewModel model)
+        private bool IsDateAndTimeAllowed(string userId, TimeSpan starttime, TimeSpan endtime, AdventureStandardReservationViewModel model)
         {
             var data_adventure_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(userId);
+
             //var adv = AdventureCRUD.LoadAdventuresByName(model.AdventureTitle);
             var isOk = true;
 
