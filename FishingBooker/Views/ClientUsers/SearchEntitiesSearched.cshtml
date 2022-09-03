@@ -118,7 +118,7 @@
                                         @Html.DisplayFor(model => item.Rating)
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Make a reservation", "CreateStandardAdventureReservation", "ClientUsers", new { id = item.AdventureId, from_date = Model.FromDate, from_time = Model.FromTime, to_date = Model.ToDate, to_time = Model.ToTime, no_people = Model.NumberOfPeople, instructorId = item.InstructorId}, null);
+                                        @Html.ActionLink("Make a reservation", "CreateAdventureReservationForCurrentlyActiveUser", "InstructorUsers", new { id = item.AdventureId, from_date = Model.FromDate, from_time = Model.FromTime, to_date = Model.ToDate, to_time = Model.ToTime, no_people = Model.NumberOfPeople}, null);
                                     </td>
                                 </tr>
                                 adventure_row_counter++;

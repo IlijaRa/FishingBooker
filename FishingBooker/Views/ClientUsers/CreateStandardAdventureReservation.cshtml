@@ -81,7 +81,7 @@
                             <!-- To make this form functional, sign up at-->
                             <!-- https://startbootstrap.com/solution/contact-forms-->
                             <!-- to get an API token!-->
-                            @using (Html.BeginForm("CreateStandardAdventureReservation", "ClientUsers", FormMethod.Post))
+                            @using (Html.BeginForm("CreateAdventureReservationForCurrentlyActiveUser", "InstrctorUsers", FormMethod.Get))
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.HiddenFor(model => model.InstructorId);

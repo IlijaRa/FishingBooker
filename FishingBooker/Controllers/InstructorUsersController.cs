@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using FishingBookerLibrary.Models;
 using System.Threading.Tasks;
 using FishingBooker.Models.EmailSender;
+using System.Threading;
+using System.IdentityModel.Selectors;
+using System.Runtime.InteropServices;
 
 namespace FishingBooker.Controllers
 {
@@ -190,9 +193,9 @@ namespace FishingBooker.Controllers
                     {
                         Id = row.Id,
                         Place = row.Place,
-                        StartDate = row.StartDate,
+                        StartDate = row.StartDate.ToString(),//TODO:Proveri da li radi jer je sada string a bio je datetime
                         StartTime = row.StartTime.ToString(),
-                        EndDate = row.EndDate,
+                        EndDate = row.EndDate.ToString(),//TODO:Proveri da li radi jer je sada string a bio je datetime
                         EndTime = row.EndTime.ToString(),
                         ValidityPeriodDate = row.ValidityPeriodDate,
                         ValidityPeriodTime = row.ValidityPeriodTime.ToString(),
@@ -327,9 +330,9 @@ namespace FishingBooker.Controllers
                     {
                         Id = row.Id,
                         Place = row.Place,
-                        StartDate = row.StartDate,
+                        StartDate = row.StartDate.ToString(),//TODO:Proveri da li radi jer je sada string a bio je datetime
                         StartTime = row.StartTime.ToString(),
-                        EndDate = row.EndDate,
+                        EndDate = row.EndDate.ToString(),//TODO:Proveri da li radi jer je sada string a bio je datetime
                         EndTime = row.EndTime.ToString(),
                         ValidityPeriodDate = row.ValidityPeriodDate,
                         ValidityPeriodTime = row.ValidityPeriodTime.ToString(),
@@ -351,9 +354,9 @@ namespace FishingBooker.Controllers
         {
             AdventureReservationViewModel model = new AdventureReservationViewModel();
             model.Place = "";
-            model.StartDate = DateTime.Now;
+            model.StartDate = DateTime.Now.ToString();//TODO:Proveri da li radi jer je sada string a bio je datetime
             model.StartTime = null;
-            model.EndDate = DateTime.Now;
+            model.EndDate = DateTime.Now.ToString();//TODO:Proveri da li radi jer je sada string a bio je datetime
             model.EndTime = null;
             model.ValidityPeriodDate = DateTime.Now;
             model.ValidityPeriodTime = null;
@@ -379,9 +382,9 @@ namespace FishingBooker.Controllers
                 List<string> clientEmails = new List<string>();
 
                 ReservationCRUD.CreateAdventureReservations(model.Place,
-                                               model.StartDate,
+                                               Convert.ToDateTime(model.StartDate),
                                                starttime,
-                                               model.EndDate,
+                                               Convert.ToDateTime(model.EndDate),
                                                endtime,
                                                model.ValidityPeriodDate,
                                                validitytime,
@@ -424,32 +427,88 @@ namespace FishingBooker.Controllers
                 return View("ReservationReservedWarning");
         }
 
+        //private static object _lock = new object();
+
         [HttpGet]
-        public ActionResult CreateAdventureReservationForCurrentlyActiveUser()
+        public ActionResult CreateAdventureReservationForCurrentlyActiveUser(int id, DateTime from_date, string from_time, DateTime to_date, string to_time, int no_people)
         {
-            var adventure_titles = AdventureCRUD.LoadAdventureTitlesByInstructor(User.Identity.GetUserId());
-            var data_adventure_reservations = ReservationCRUD.LoadReservedAdventureReservationByInstructorId(User.Identity.GetUserId());
-            AdventureReservationViewModel model = new AdventureReservationViewModel();
-            List<SelectListItem> action_titles = new List<SelectListItem>();
+            AdventureStandardReservationViewModel model = new AdventureStandardReservationViewModel();
             
-            foreach (var reservation in data_adventure_reservations)
+            //bool lockTaken = false;
+            //Monitor.TryEnter(_lock, ref lockTaken);
+
+            //if (!Monitor.TryEnter(_lock, new TimeSpan(0)))
+            //{
+            //    if (lockTaken)
+            //        Monitor.Exit(_lock);
+            //    return View("WaitForYourTurn");
+            //}
+
+            try
             {
-                if(IsDateAndTimeOk(reservation) /*&& reservation.ClientsEmailAddress != null*/)
+                
+                if (User.IsInRole("ValidFishingInstructor"))
                 {
-                    model.ClientsEmailAddress = reservation.ClientsEmailAddress;
-                    break;
+                    var adventure_titles = AdventureCRUD.LoadAdventureTitlesByInstructor(User.Identity.GetUserId());
+                    var data_adventure_reservations = ReservationCRUD.LoadReservedAdventureReservationByInstructorId(User.Identity.GetUserId());
+                    //AdventureReservationViewModel model = new AdventureReservationViewModel();
+                    List<SelectListItem> action_titles = new List<SelectListItem>();
+
+                    foreach (var reservation in data_adventure_reservations)
+                    {
+                        if (IsDateAndTimeOk(reservation) /*&& reservation.ClientsEmailAddress != null*/)
+                        {
+                            model.ClientsEmailAddress = reservation.ClientsEmailAddress;
+                            break;
+                        }
+                    }
+                    if (model.ClientsEmailAddress == null)
+                        return View("NoCurrentlyActiveClient");
+
+                    foreach (var adventure in adventure_titles)
+                    {
+                        action_titles.Add(new SelectListItem { Text = adventure, Value = adventure });
+                    }
+                    ViewBag.ActionTitles = action_titles;
+
+                    return View(model);
+                }
+                else if (User.IsInRole("ValidClient"))
+                {
+                    var adv = AdventureCRUD.LoadAdventureById(id);
+                    //AdventureStandardReservationViewModel model = new AdventureStandardReservationViewModel();
+                    model.AdventureTitle = adv.Title;
+                    model.Place = adv.Title;
+                    model.StartDate = from_date.ToString("yyyy-MM-dd");
+                    model.StartTime = from_time;
+                    model.EndDate = to_date.ToString("yyyy-MM-dd");
+                    model.EndTime = to_time;
+                    model.ValidityPeriodDate = new DateTime(1753, 1, 1);
+                    model.ValidityPeriodTime = TimeSpan.MinValue.ToString();
+                    model.MaxNumberOfPeople = no_people;
+                    model.AdditionalServices = "";
+                    model.Price = adv.Price;
+                    model.IsReserved = false;
+                    model.ClientsEmailAddress = User.Identity.GetUserName();
+                    model.AdventureId = adv.Id;
+                    model.InstructorId = adv.InstructorId;
+
+                    return View(model);
                 }
             }
-            if (model.ClientsEmailAddress == null)
-                return View("NoCurrentlyActiveClient");
-
-            foreach (var adventure in adventure_titles)
+            catch (SynchronizationLockException exception)
             {
-                action_titles.Add(new SelectListItem { Text = adventure, Value = adventure });
+                Console.WriteLine(exception.Message);
+                return View("Error");
             }
-            ViewBag.ActionTitles = action_titles;
 
-            return View(model);
+            finally
+            {
+                //if (lockTaken)
+                //    Monitor.Exit(_lock);
+            }
+
+            return View("WaitForYourTurn");
         }
 
         private bool IsDateAndTimeOk(AdventureReservation model)
@@ -467,71 +526,124 @@ namespace FishingBooker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateAdventureReservationForCurrentlyActiveUser(AdventureReservationViewModel model)
+        public ActionResult CreateAdventureReservationForCurrentlyActiveUser(AdventureStandardReservationViewModel model)
         {
-            try{
+            if (ModelState.IsValid) 
+            {
+                //bool lockTaken = false;
+                //Monitor.TryEnter(_lock, ref lockTaken);
 
-                TimeSpan starttime = TimeSpan.Parse(model.StartTime.ToString());
-                TimeSpan endtime = TimeSpan.Parse(model.EndTime.ToString());
-                TimeSpan validitytime = TimeSpan.Parse("00:00:00");
-                if (IsDateAndTimeAllowed(User.Identity.GetUserId(), starttime, endtime, validitytime, model)) {
-                    
-                    var adventure = AdventureCRUD.LoadAdventuresByName(model.AdventureTitle);
+                //if (!Monitor.TryEnter(_lock, new TimeSpan(0)))
+                //{
+                //    return View("WaitForYourTurn");
+                //}
 
-                    //TODO: Zakljucavanje tabele za termin sa strane instruktora
-                    ReservationCRUD.CreateAdventureReservations(model.Place,
-                                               model.StartDate,
-                                               starttime,
-                                               model.EndDate,
-                                               endtime,
-                                               new DateTime(1900, 1, 1), // najstariji datum koji je dozvoljen za smalldatetime u bazi
-                                               validitytime,
-                                               model.MaxNumberOfPeople,
-                                               model.AdditionalServices,
-                                               model.Price,
-                                               true,                         // IsReserved
-                                               model.ClientsEmailAddress,
-                                               Enums.ReservationType.Fast,
-                                               adventure.Id,
-                                               User.Identity.GetUserId());
-
-                    Gmail gmail = new Gmail
-                    {
-                        To = model.ClientsEmailAddress,
-                        Subject = "New reservation",
-                        Body = @"The instructor with whom you currently have 
-                         an appointment has made another reservation for you.
-                         Best wishes,
-                         Admin team."
-                    };
-                    gmail.SendEmail();
-                    return RedirectToAction("Index", "Home");
-                }
-                else
+                try
                 {
-                    return View("DateAndTimeNotAllowed");
+                    if (User.IsInRole("ValidFishingInstructor"))
+                    {
+                        TimeSpan starttime = TimeSpan.Parse(model.StartTime.ToString());
+                        TimeSpan endtime = TimeSpan.Parse(model.EndTime.ToString());
+                        TimeSpan validitytime = TimeSpan.Parse("00:00:00");
+                        if (IsDateAndTimeAllowed(User.Identity.GetUserId(), starttime, endtime, validitytime, model))
+                        {
+
+                            var adventure = AdventureCRUD.LoadAdventuresByName(model.AdventureTitle);
+
+                            //TODO: Zakljucavanje tabele za termin sa strane instruktora
+                            ReservationCRUD.CreateAdventureReservationsSerializable(model.Place,
+                                                       Convert.ToDateTime(model.StartDate),
+                                                       starttime,
+                                                       Convert.ToDateTime(model.EndDate),
+                                                       endtime,
+                                                       new DateTime(1900, 1, 1), // najstariji datum koji je dozvoljen za smalldatetime u bazi
+                                                       validitytime,
+                                                       model.MaxNumberOfPeople,
+                                                       model.AdditionalServices,
+                                                       model.Price,
+                                                       true,                         // IsReserved
+                                                       model.ClientsEmailAddress,
+                                                       Enums.ReservationType.Fast,
+                                                       adventure.Id,
+                                                       User.Identity.GetUserId());
+
+                            Gmail gmail = new Gmail
+                            {
+                                To = model.ClientsEmailAddress,
+                                Subject = "New reservation",
+                                Body = @"The instructor with whom you currently have 
+                             an appointment has made another reservation for you.
+                             Best wishes,
+                             Admin team."
+                            };
+                            gmail.SendEmail();
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            return View("DateAndTimeNotAllowed");
+                        }
+                    }
+                    else if (User.IsInRole("ValidClient"))
+                    {
+                        TimeSpan starttime = TimeSpan.Parse(model.StartTime.ToString());
+                        TimeSpan endtime = TimeSpan.Parse(model.EndTime.ToString());
+
+                        var validity_period_date = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
+                        var validity_period_time = new TimeSpan(0, 0, 0);
+
+                        ReservationCRUD.CreateAdventureReservations(model.Place,
+                                                   Convert.ToDateTime(model.StartDate),
+                                                   starttime,
+                                                   Convert.ToDateTime(model.EndDate),
+                                                   endtime,
+                                                   validity_period_date,
+                                                   validity_period_time,
+                                                   model.MaxNumberOfPeople,
+                                                   model.AdditionalServices,
+                                                   model.Price,
+                                                   true,   // IsReserved
+                                                   model.ClientsEmailAddress,
+                                                   Enums.ReservationType.Regular,
+                                                   model.AdventureId,
+                                                   model.InstructorId);
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                catch (SynchronizationLockException exception)
+                {
+                    Console.WriteLine(exception.Message);
+                    return View("Error");
+                }
+
+                finally
+                {
+                    //if (lockTaken)
+                    //    Monitor.Exit(_lock);
                 }
                 
             }
-            catch (Exception)
-            {
-                //TODO: return neku stranicu o greski
-            }
+
             return View();
         }
 
-        private static bool IsDateAndTimeAllowed(string userId, TimeSpan starttime, TimeSpan endtime, TimeSpan? validitytime, AdventureReservationViewModel model)
+        private static bool IsDateAndTimeAllowed(string userId, TimeSpan starttime, TimeSpan endtime, TimeSpan? validitytime, AdventureStandardReservationViewModel model)
         {
             var data_adventure_reservations = ReservationCRUD.LoadAdventureReservationByInstructorId(userId);
             //var adv = AdventureCRUD.LoadAdventuresByName(model.AdventureTitle);
             var isOk = true;
+
+            var model_start_date = Convert.ToDateTime(model.StartDate);
+            var model_end_date = Convert.ToDateTime(model.EndDate);
+
             foreach (var adventure in data_adventure_reservations)
             {
                 DateTime start_date = new DateTime(adventure.StartDate.Year, adventure.StartDate.Month, adventure.StartDate.Day, adventure.StartTime.Hours, adventure.StartTime.Minutes, adventure.StartTime.Seconds);
                 DateTime end_date = new DateTime(adventure.EndDate.Year, adventure.EndDate.Month, adventure.EndDate.Day, adventure.EndTime.Hours, adventure.EndTime.Minutes, adventure.EndTime.Seconds);
 
-                DateTime entered_start_date = new DateTime(model.StartDate.Year, model.StartDate.Month, model.StartDate.Day, starttime.Hours, starttime.Minutes, starttime.Seconds);
-                DateTime entered_end_date = new DateTime(model.EndDate.Year, model.EndDate.Month, model.EndDate.Day, endtime.Hours, endtime.Minutes, endtime.Seconds);
+                DateTime entered_start_date = new DateTime(model_start_date.Year, model_start_date.Month, model_start_date.Day, starttime.Hours, starttime.Minutes, starttime.Seconds);
+                DateTime entered_end_date = new DateTime(model_end_date.Year, model_end_date.Month, model_end_date.Day, endtime.Hours, endtime.Minutes, endtime.Seconds);
 
                 if ((start_date <= entered_start_date && entered_start_date <= end_date) ||
                     (start_date <= entered_end_date && entered_end_date <= end_date))

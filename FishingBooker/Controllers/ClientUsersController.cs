@@ -322,8 +322,8 @@ namespace FishingBooker.Controllers
 
         public ActionResult SearchEntitiesSearched(ClientSearchEntitiesViewModel model)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 TimeSpan starttime = TimeSpan.Parse(model.FromTime);
                 TimeSpan endtime = TimeSpan.Parse(model.ToTime);
                 
@@ -401,7 +401,7 @@ namespace FishingBooker.Controllers
 
                 ships_viewmodel.Select(x => x.ShipId).Distinct();
                 model.ships = ships_viewmodel;
-            }
+        //    }
             return View(model);
         }
 
@@ -413,7 +413,7 @@ namespace FishingBooker.Controllers
         }
 
         [HttpGet]
-        public ActionResult CreateStandardAdventureReservation(int id, DateTime from_date, string from_time, DateTime to_date, string to_time, int no_people, string instructorId)
+        public ActionResult CreateStandardAdventureReservation(int id, DateTime from_date, string from_time, DateTime to_date, string to_time, int no_people)
         {
             var adv = AdventureCRUD.LoadAdventureById(id);
             AdventureStandardReservationViewModel model = new AdventureStandardReservationViewModel();

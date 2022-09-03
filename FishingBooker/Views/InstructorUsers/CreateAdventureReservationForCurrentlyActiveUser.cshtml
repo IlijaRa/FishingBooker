@@ -1,4 +1,4 @@
-﻿@model FishingBooker.Models.AdventureReservationViewModel
+﻿@model FishingBooker.Models.AdventureStandardReservationViewModel
 
 @{
     ViewBag.Title = "Create reservation for current active user";
@@ -60,108 +60,177 @@
                             <!-- To make this form functional, sign up at-->
                             <!-- https://startbootstrap.com/solution/contact-forms-->
                             <!-- to get an API token!-->
-                            @using (Html.BeginForm("CreateAdventureReservationForCurrentlyActiveUser", "InstructorUsers", FormMethod.Post))
+
+                            @if (User.IsInRole("ValidFishingInstructor"))
                             {
-                                @Html.AntiForgeryToken()
-                                @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
-                                @*@Html.HiddenFor(model => model.AdventureId, htmlAttributes: new { @class = "id" })--> <!--TODO: proveri da li prosledjuje id*@
-                                @*@Html.HiddenFor(model => model.ValidityPeriodDate, new { @value = new DateTime(2000,10,10) })
-            @Html.HiddenFor(model => model.ValidityPeriodTime, new { @value = new TimeSpan(0, 0, 0) })
-            @Html.HiddenFor(model => model.IsReserved, new { @value = true })*@
+                                using (Html.BeginForm("CreateAdventureReservationForCurrentlyActiveUser", "InstructorUsers", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                                    @*@Html.HiddenFor(model => model.AdventureId, htmlAttributes: new { @class = "id" })*@<!--TODO: proveri da li prosledjuje id-->
+                                    @*@Html.HiddenFor(model => model.ValidityPeriodDate, new { @value = new DateTime(2000,10,10) })
+                @Html.HiddenFor(model => model.ValidityPeriodTime, new { @value = new TimeSpan(0, 0, 0) })
+                @Html.HiddenFor(model => model.IsReserved, new { @value = true })*@
 
-                                <div class="form-floating mb-3">
-                                    @Html.DropDownListFor(model => model.AdventureTitle, new SelectList(ViewBag.ActionTitles, "Text", "Value"), "-- Select name --", new { @class = "form-control", @id = "AdventureTitle", @type = "text" })
-                                    <label for="AdventureTitle">Adventure</label>
-                                    @Html.ValidationMessageFor(model => model.AdventureTitle, "", new { @class = "text-danger" })
-                                </div>
+                                    <div class="form-floating mb-3">
+                                        @Html.DropDownListFor(model => model.AdventureTitle, new SelectList(ViewBag.ActionTitles, "Text", "Value"), "-- Select name --", new { @class = "form-control", @id = "AdventureTitle", @type = "text" })
+                                        <label for="AdventureTitle">Adventure</label>
+                                        @Html.ValidationMessageFor(model => model.AdventureTitle, "", new { @class = "text-danger" })
+                                    </div>
 
 
-                                <div class="form-floating mb-3">
-                                    @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control", @id = "Place", @type = "text", @placeholder = "Enter your place..." } })
-                                    <label for="Place">Place</label>
-                                    @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
-                                </div>
+                                    <div class="form-floating mb-3">
+                                        @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control", @id = "Place", @type = "text", @placeholder = "Enter your place..." } })
+                                        <label for="Place">Place</label>
+                                        @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
+                                    </div>
 
-                                <div class="form-floating mb-3">
-                                    <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+                                        <div class="col-md-12">
+                                            <label for="StartDate">Start date</label>
+                                            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <div class="col-md-12">
+                                            <label for="StartDate">Start time</label>
+                                            @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <div class="col-md-12">
+                                            <label for="EndDate">End date</label>
+                                            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <div class="col-md-12">
+                                            <label for="EndTime">End time</label>
+                                            @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" id="AdditionalServices" name="AdditionalServices" type="text" placeholder="Enter your additional services here..." style="height: 10rem"></textarea>
+                                        <label for="AdditionalServices">Additional services</label>
+                                        @Html.ValidationMessageFor(model => model.AdditionalServices, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="Price" name="Price" type="number" placeholder="Enter Price..." />
+                                        <label for="Price">Price</label>
+                                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        @Html.EditorFor(model => model.ClientsEmailAddress, new { htmlAttributes = new { @class = "form-control", @id = "ClientsEmailAddress", @type = "text", @placeholder = "Enter clients email address..." } })
+                                        <label for="ClientsEmailAddress">Clients email address</label>
+                                        @Html.ValidationMessageFor(model => model.ClientsEmailAddress, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <!-- Submit Button-->
+                                    <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Create</button></div>
+                                }
+                            }
+                            else if (User.IsInRole("ValidClient"))
+                            {
+                                using (Html.BeginForm("CreateAdventureReservationForCurrentlyActiveUser", "InstructorUsers", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(model => model.InstructorId);
+                                    @Html.HiddenFor(model => model.AdventureTitle);
+                                    @Html.HiddenFor(model => model.ClientsEmailAddress);
+                                    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+
+                                    @Html.HiddenFor(model => model.AdventureId, new { @class = "id" })
+
+                                    <div class="form-floating mb-3">
+                                        @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control", @id = "Place", @type = "text", @placeholder = "Enter your place...", @readonly = "readonly" } })
+                                        <label for="Place">Place</label>
+                                        @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="form-floating mb-3">
+                                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @style = "height: 3.7rem" } })
                                         <label for="StartDate">Start date</label>
-                                        @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
 
-                                <div class="form-floating mb-3">
-                                    <div class="col-md-12">
-                                        <label for="StartDate">Start time</label>
-                                        @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control" } })
+                                    <div class="form-floating mb-3">
+                                        @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @style = "height: 3.7rem" } })
+                                        <label for="StartTime">Start time</label>
                                         @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
 
-                                <div class="form-floating mb-3">
-                                    <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+                                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @style = "height: 3.7rem" } })
                                         <label for="EndDate">End date</label>
-                                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
 
-                                <div class="form-floating mb-3">
-                                    <div class="col-md-12">
+                                    <div class="form-floating mb-3">
+                                        @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @style = "height: 3.7rem" } })
                                         <label for="EndTime">End time</label>
-                                        @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
                                     </div>
-                                </div>
 
-                                <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="AdditionalServices" name="AdditionalServices" type="text" placeholder="Enter your additional services here..." style="height: 10rem"></textarea>
-                                    <label for="AdditionalServices">Additional services</label>
-                                    @Html.ValidationMessageFor(model => model.AdditionalServices, "", new { @class = "text-danger" })
-                                </div>
+                                    <div class="form-floating mb-3">
+                                        @Html.EditorFor(model => model.MaxNumberOfPeople, new { htmlAttributes = new { @class = "form-control", @id = "MaxNumberOfPeople", @type = "number", @readonly = "readonly" } })
+                                        <label for="MaxNumberOfPeople">People</label>
+                                        @Html.ValidationMessageFor(model => model.MaxNumberOfPeople, "", new { @class = "text-danger" })
+                                    </div>
 
-                                <div class="form-floating mb-3">
-                                    <input class="form-control" id="Price" name="Price" type="number" placeholder="Enter Price..." />
-                                    <label for="Price">Price</label>
-                                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-                                </div>
+                                    <div class="form-floating mb-3">
+                                        @Html.TextAreaFor(model => model.AdditionalServices, new { @class = "form-control", @style = "height: 10rem" })
+                                        <label for="AdditionalServices">Additional services</label>
+                                        @Html.ValidationMessageFor(model => model.AdditionalServices, "", new { @class = "text-danger" })
+                                    </div>
 
-                                <div class="form-floating mb-3">
-                                    @Html.EditorFor(model => model.ClientsEmailAddress, new { htmlAttributes = new { @class = "form-control", @id = "ClientsEmailAddress", @type = "text", @placeholder = "Enter clients email address..." } })
-                                    <label for="ClientsEmailAddress">Clients email address</label>
-                                    @Html.ValidationMessageFor(model => model.ClientsEmailAddress, "", new { @class = "text-danger" })
-                                </div>
+                                    <div class="form-floating mb-3">
+                                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @id = "Price", @type = "number", @readonly = "readonly" } })
+                                        <label for="Price">Price</label>
+                                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                    </div>
 
-                                <!-- Submit Button-->
-                                <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="submit">Submit</button></div>
+                                    <!-- Submit Button-->
+                                    <div class="d-grid"><button class="btn btn-primary btn-lg" id="createButton" type="submit">Create</button></div>
+                                }
                             }
+
                         </div>
                     </div>
                 </div>
-                <!-- Contact cards-->
-                <div class="row gx-5 row-cols-2 row-cols-lg-4 py-5">
-                    <div class="col text-center">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-chat-dots"></i></div>
-                        <div class="h5 mb-2">Chat with us</div>
-                        <p class="text-muted mb-0">Chat live with one of our support specialists.</p>
-                    </div>
-                    <div class="col text-center">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-people"></i></div>
-                        <div class="h5">Ask the community</div>
-                        <p class="text-muted mb-0">Explore our community forums and communicate with other users.</p>
-                    </div>
-                    <div class="col text-center">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-question-circle"></i></div>
-                        <div class="h5">Support center</div>
-                        <p class="text-muted mb-0">Browse FAQ's and support articles to find solutions.</p>
-                    </div>
-                    <div class="col text-center">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-telephone"></i></div>
-                        <div class="h5">Call us</div>
-                        <p class="text-muted mb-0">Call us during normal business hours at (555) 892-9403.</p>
-                    </div>
-                </div>
-            </div>
+                            <!-- Contact cards-->
+                                <div class="row gx-5 row-cols-2 row-cols-lg-4 py-5">
+                                    <div class="col text-center">
+                                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-chat-dots"></i></div>
+                                        <div class="h5 mb-2">Chat with us</div>
+                                        <p class="text-muted mb-0">Chat live with one of our support specialists.</p>
+                                    </div>
+                                    <div class="col text-center">
+                                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-people"></i></div>
+                                        <div class="h5">Ask the community</div>
+                                        <p class="text-muted mb-0">Explore our community forums and communicate with other users.</p>
+                                    </div>
+                                    <div class="col text-center">
+                                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-question-circle"></i></div>
+                                        <div class="h5">Support center</div>
+                                        <p class="text-muted mb-0">Browse FAQ's and support articles to find solutions.</p>
+                                    </div>
+                                    <div class="col text-center">
+                                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-telephone"></i></div>
+                                        <div class="h5">Call us</div>
+                                        <p class="text-muted mb-0">Call us during normal business hours at (555) 892-9403.</p>
+                                    </div>
+                                </div>
+                            </div>
         </section>
     </main>
     <!-- Footer-->
