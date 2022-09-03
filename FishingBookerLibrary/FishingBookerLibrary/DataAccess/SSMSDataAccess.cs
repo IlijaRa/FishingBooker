@@ -62,7 +62,18 @@ namespace FishingBookerLibrary.DataAccess
         {
             using (IDbConnection cnn = new SqlConnection(GettConnectionstring()))
             {
-                return cnn.Execute(sql, data);
+                try
+                {
+                    return cnn.Execute(sql, data);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    cnn.Close();
+                }
             }
         }
 

@@ -77,42 +77,45 @@ namespace FishingBookerLibrary.BusinessLogic
                                                             int adventureId,
                                                             string instructorId)
         {
-            AdventureReservation data = new AdventureReservation
+            try
             {
-                CreationTime = DateTime.Now,
-                Place = place,
-                StartDate = startdate,
-                StartTime = starttime,
-                EndDate = enddate,
-                EndTime = endtime,
-                ValidityPeriodDate = validitydate,
-                ValidityPeriodTime = validitytime,
-                dayOfWeek = Convert.ToInt32(startdate.DayOfWeek),
-                Month = startdate.Month,
-                Year = startdate.Year,
-                MaxNumberOfPeople = maxNum,
-                AdditionalServices = additionalServices,
-                Price = price,
-                Discount = 0,
-                IsReserved = isReserved,
-                ClientsEmailAddress = clientsemailAddress,
-                ReservationType = type,
-                AdventureId = adventureId,
-                InstructorId = instructorId
-            };
-            //string sq1l = @"set transaction isolation level serializable
-            //                begin tran
-            //                select * from emp
-            //                waitfor delay '00:00:15'
-            //                select * from Emp
-            //                rollback";
-            string sql = @"SET TRANSACTION ISOLATION LEVEL SERIALIZABLE  
-	                       BEGIN TRANSACTION 
-		                        INSERT INTO dbo.AdventureReservations (Place, CreationTime, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, dayOfWeek, Month, Year, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
-		                        VALUES (@Place, @CreationTime, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, @dayOfWeek, @Month, @Year, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);
-	                       COMMIT";
+                AdventureReservation data = new AdventureReservation
+                {
+                    CreationTime = DateTime.Now,
+                    Place = place,
+                    StartDate = startdate,
+                    StartTime = starttime,
+                    EndDate = enddate,
+                    EndTime = endtime,
+                    ValidityPeriodDate = validitydate,
+                    ValidityPeriodTime = validitytime,
+                    dayOfWeek = Convert.ToInt32(startdate.DayOfWeek),
+                    Month = startdate.Month,
+                    Year = startdate.Year,
+                    MaxNumberOfPeople = maxNum,
+                    AdditionalServices = additionalServices,
+                    Price = price,
+                    Discount = 0,
+                    IsReserved = isReserved,
+                    ClientsEmailAddress = clientsemailAddress,
+                    ReservationType = type,
+                    AdventureId = adventureId,
+                    InstructorId = instructorId
+                };
+                string sql = @" SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+                                BEGIN TRANSACTION
+                                SELECT * FROM dbo.AdventureReservations
+                                WAITFOR DELAY '00:00:10'
+                                    INSERT INTO dbo.AdventureReservations WITH(TABLOCKX) (Place, CreationTime, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, dayOfWeek, Month, Year, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
+		                            VALUES (@Place, @CreationTime, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, @dayOfWeek, @Month, @Year, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);
+                                COMMIT TRANSACTION";
 
-            return SSMSDataAccess.SaveData(sql, data);
+                return SSMSDataAccess.SaveData(sql, data);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public static int CreateCottageReservations(string cottageName,

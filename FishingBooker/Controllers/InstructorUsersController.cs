@@ -550,34 +550,49 @@ namespace FishingBooker.Controllers
 
                             var adventure = AdventureCRUD.LoadAdventuresByName(model.AdventureTitle);
 
-                            //TODO: Zakljucavanje tabele za termin sa strane instruktora
-                            ReservationCRUD.CreateAdventureReservationsSerializable(model.Place,
-                                                       Convert.ToDateTime(model.StartDate),
-                                                       starttime,
-                                                       Convert.ToDateTime(model.EndDate),
-                                                       endtime,
-                                                       new DateTime(1900, 1, 1), // najstariji datum koji je dozvoljen za smalldatetime u bazi
-                                                       validitytime,
-                                                       model.MaxNumberOfPeople,
-                                                       model.AdditionalServices,
-                                                       model.Price,
-                                                       true,                         // IsReserved
-                                                       model.ClientsEmailAddress,
-                                                       Enums.ReservationType.Fast,
-                                                       adventure.Id,
-                                                       User.Identity.GetUserId());
-
-                            Gmail gmail = new Gmail
+                            try
                             {
-                                To = model.ClientsEmailAddress,
-                                Subject = "New reservation",
-                                Body = @"The instructor with whom you currently have 
+                                //TODO: Zakljucavanje tabele za termin sa strane instruktora
+                                int result = ReservationCRUD.CreateAdventureReservationsSerializable(model.Place,
+                                                           Convert.ToDateTime(model.StartDate),
+                                                           starttime,
+                                                           Convert.ToDateTime(model.EndDate),
+                                                           endtime,
+                                                           new DateTime(1900, 1, 1), // najstariji datum koji je dozvoljen za smalldatetime u bazi
+                                                           validitytime,
+                                                           model.MaxNumberOfPeople,
+                                                           model.AdditionalServices,
+                                                           model.Price,
+                                                           true,                         // IsReserved
+                                                           model.ClientsEmailAddress,
+                                                           Enums.ReservationType.Fast,
+                                                           adventure.Id,
+                                                           User.Identity.GetUserId());
+
+                                if (result == 1)
+                                {
+                                    Gmail gmail = new Gmail
+                                    {
+                                        To = model.ClientsEmailAddress,
+                                        Subject = "New reservation",
+                                        Body = @"The instructor with whom you currently have 
                              an appointment has made another reservation for you.
                              Best wishes,
                              Admin team."
-                            };
-                            gmail.SendEmail();
-                            return RedirectToAction("Index", "Home");
+                                    };
+                                    gmail.SendEmail();
+                                    return RedirectToAction("Index", "Home");
+                                }
+                                else
+                                {
+                                    return View("Error");
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                ViewData["ErrorMessage"] = e.Message;
+                                return View("Error");
+                            }
                         }
                         else
                         {
@@ -591,8 +606,9 @@ namespace FishingBooker.Controllers
 
                         var validity_period_date = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
                         var validity_period_time = new TimeSpan(0, 0, 0);
-
-                        ReservationCRUD.CreateAdventureReservations(model.Place,
+                        try
+                        {
+                            ReservationCRUD.CreateAdventureReservationsSerializable(model.Place,
                                                    Convert.ToDateTime(model.StartDate),
                                                    starttime,
                                                    Convert.ToDateTime(model.EndDate),
@@ -608,12 +624,18 @@ namespace FishingBooker.Controllers
                                                    model.AdventureId,
                                                    model.InstructorId);
 
-                        return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Home");
+                        }
+                        catch(Exception e)
+                        {
+                            ViewData["ErrorMessage"] = e.Message;
+                            return View("Error");
+                        }
                     }
                 }
                 catch (SynchronizationLockException exception)
                 {
-                    Console.WriteLine(exception.Message);
+                    ViewData["ErrorMessage"] = exception.Message;
                     return View("Error");
                 }
 
