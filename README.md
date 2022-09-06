@@ -4,21 +4,21 @@ Sifra za administratore koji dobijaju genericku sifru je Admin123*, ali je moraj
 #Neki od korisnika sistema:
 
 ##HeadAdmin:
-####username: nikolic@gmaial.com  password: Tubemate2*
+####username: nikolic@gmail.com  password: Tubemate2*
 
 ##Admin:
-####username: stankovic@gmaial.com  password: Tubemate2*
+####username: stankovic@gmail.com  password: Tubemate2*
 
 ##Instruktori:
-####username: mitrovic@gmaial.com  password: Tubemate2*
-####username: marinkovic@gmaial.com  password: Tubemate2*
+####username: mitrovic@gmail.com  password: Tubemate2*
+####username: marinkovic@gmail.com  password: Tubemate2*
 
 ##Vlasnik vikendice:
-####username: maga@gmaial.com  password: Tubemate2*
+####username: maga@gmail.com  password: Tubemate2*
 
 ##Vlasnik broda:
-####username: andric@gmaial.com  password: Tubemate2*
+####username: andric@gmail.com  password: Tubemate2*
 
 ##Klijenti:
-####username: lekic@gmaial.com  password: Tubemate2*
-####username: begovic@gmaial.com  password: Tubemate2*
+####username: lekic@gmail.com  password: Tubemate2*
+####username: begovic@gmail.com  password: Tubemate2*
