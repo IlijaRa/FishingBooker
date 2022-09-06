@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace FishingBooker.Models
 {
@@ -44,8 +45,9 @@ namespace FishingBooker.Models
         public string BehaviourRules { get; set; }
 
 
-        [Display(Name = "Additional services")]
-        public string AdditionalServices { get; set; }
+        [Display(Name = "Service*")]
+        [Required(ErrorMessage = "You need to select a service.")]
+        public List<string> AdditionalServices { get; set; }
 
 
         [Display(Name = "Pricelist*")]
@@ -83,7 +85,8 @@ namespace FishingBooker.Models
         [Display(Name = "Images")]
         public List<Image> images { get; set; } = new List<Image>();
 
-
+ 
         public string InstructorId { get; set; }
+
     }
 }

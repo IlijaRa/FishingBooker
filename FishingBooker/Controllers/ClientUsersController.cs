@@ -252,6 +252,14 @@ namespace FishingBooker.Controllers
             foreach (var row in adventures)
             {
                 string[] address_split = row.Address.Split(',');
+
+                var services_list = new List<string>();
+                string[] services_split = row.AdditionalServices.Split(',');
+                foreach (var s in services_split)
+                {
+                    services_list.Add(s);
+                }
+
                 adventures_viewmodel.Add(new AdventureViewModel
                 {
                     AdventureId = row.Id,
@@ -262,7 +270,7 @@ namespace FishingBooker.Controllers
                     PromotionDescription = row.PromotionDescription,
                     Rating = row.Rating,
                     BehaviourRules = row.BehaviourRules,
-                    AdditionalServices = row.AdditionalServices,
+                    AdditionalServices = services_list,
                     Pricelist = row.Pricelist,
                     MaxNumberOfPeople = row.MaxNumberOfPeople,
                     FishingEquipment = row.FishingEquipment,
@@ -366,7 +374,15 @@ namespace FishingBooker.Controllers
                                 }
 
                                 string[] address_split = adv.Address.Split(',');
-                                adventures_viewmodel.Add(new AdventureViewModel
+
+                            var services_list = new List<string>();
+                            string[] services_split = adv.AdditionalServices.Split(',');
+                            foreach (var s in services_split)
+                            {
+                                services_list.Add(s);
+                            }
+
+                            adventures_viewmodel.Add(new AdventureViewModel
                                 {
                                     AdventureId = adv.Id,
                                     Title = adv.Title,
@@ -376,7 +392,7 @@ namespace FishingBooker.Controllers
                                     PromotionDescription = adv.PromotionDescription,
                                     Rating = adv.Rating,
                                     BehaviourRules = adv.BehaviourRules,
-                                    AdditionalServices = adv.AdditionalServices,
+                                    AdditionalServices = services_list,
                                     Pricelist = adv.Pricelist,
                                     Price = adv.Price,
                                     MaxNumberOfPeople = adv.MaxNumberOfPeople,
@@ -426,7 +442,7 @@ namespace FishingBooker.Controllers
             model.ValidityPeriodDate = new DateTime(1753,1,1);
             model.ValidityPeriodTime = TimeSpan.MinValue.ToString();
             model.MaxNumberOfPeople = no_people;
-            model.AdditionalServices = "";
+            model.AdditionalServices = new List<string>();
             model.Price = adv.Price;
             model.IsReserved = false;
             model.ClientsEmailAddress = User.Identity.GetUserName();
@@ -448,6 +464,12 @@ namespace FishingBooker.Controllers
                 var validity_period_date = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
                 var validity_period_time = new TimeSpan(0, 0, 0);
 
+                string additionalServices = "";
+                foreach (var service in model.AdditionalServices)
+                {
+                    additionalServices = additionalServices + "," + service;
+                }
+
                 //using (Entities entities = new Entities())
                 //using (DbContextTransaction scope = entities.Database.BeginTransaction())
                 //{
@@ -461,7 +483,7 @@ namespace FishingBooker.Controllers
                 //    scope.Commit();
                 //}
 
-                //TODO: Zakljucavanje tabele za termin sa strane klijenta
+
                 ReservationCRUD.CreateAdventureReservations(model.Place,
                                                Convert.ToDateTime(model.StartDate),
                                                starttime,
@@ -470,7 +492,7 @@ namespace FishingBooker.Controllers
                                                validity_period_date,
                                                validity_period_time,
                                                model.MaxNumberOfPeople,
-                                               model.AdditionalServices,
+                                               additionalServices,
                                                model.Price,
                                                true,   // IsReserved
                                                model.ClientsEmailAddress,

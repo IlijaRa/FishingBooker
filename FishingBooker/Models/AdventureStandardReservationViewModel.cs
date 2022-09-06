@@ -78,7 +78,7 @@ namespace FishingBooker.Models
 
         [Display(Name = "Additional services")]
         [Required(ErrorMessage = "You need to enter additional services.")]
-        public string AdditionalServices { get; set; }
+        public List<string> AdditionalServices { get; set; }
 
 
         [Display(Name = "Price*")]

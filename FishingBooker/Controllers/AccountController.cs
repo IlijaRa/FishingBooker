@@ -212,6 +212,7 @@ namespace FishingBooker.Controllers
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
+            if (userId == null || code == null)
             {
                 return View("Error");
             }

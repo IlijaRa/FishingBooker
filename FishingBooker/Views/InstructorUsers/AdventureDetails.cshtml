@@ -164,6 +164,7 @@
                             </div>
 
                             <div class="form-floating mb-3">
+                                @*@Html.DropDownListFor(model => model.adventure.AdditionalServices, new SelectList(ViewBag.Services, "Value", "Value"), new { @class = "form-control chosen-select", @multiple = "true", @id = "AdditionalServices", @type = "text", @style = "height: 7rem" })*@
                                 <textarea class="form-control" id="AdditionalServices" name="AdditionalServices" type="text" placeholder="Enter your additional services here..." style="height: 10rem" readonly>@Model.adventure.AdditionalServices</textarea>
                                 <label for="AdditionalServices">Additional services</label>
                                 @Html.ValidationMessageFor(model => model.adventure.AdditionalServices, "", new { @class = "text-danger" })

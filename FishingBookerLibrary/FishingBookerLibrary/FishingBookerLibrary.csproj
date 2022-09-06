@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\AdditionalServicesCRUD.cs" />
     <Compile Include="BusinessLogic\AdventureCRUD.cs" />
     <Compile Include="BusinessLogic\ClientComplaintCRUD.cs" />
     <Compile Include="BusinessLogic\CottageCRUD.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="BusinessLogic\ShipCRUD.cs" />
     <Compile Include="BusinessLogic\UserRoleCRUD.cs" />
     <Compile Include="DataAccess\SSMSDataAccess.cs" />
+    <Compile Include="Models\AdditionalService.cs" />
     <Compile Include="Models\Adventure.cs" />
     <Compile Include="Models\AdventureReservation.cs" />
     <Compile Include="Models\Client.cs" />

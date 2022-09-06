@@ -27,6 +27,15 @@ namespace FishingBooker.Controllers
         public ActionResult CreateAdventure()
         {
             ViewBag.Message = "Create adventure";
+            List<AdditionalService> additional_services = AdditionalServicesCRUD.LoadAdditionalServices();
+            List<SelectListItem> services_list = new List<SelectListItem>();
+
+            foreach (var service in additional_services)
+            {
+                services_list.Add(new SelectListItem { Text = service.Id.ToString(), Value = service.Title });
+            }
+
+            ViewBag.Services = services_list;
             AdventureViewModel adventure = new AdventureViewModel();
             adventure.CancellationPolicy = Enums.CancellationPolicyType.ForFree;
             return View(adventure);
@@ -39,11 +48,18 @@ namespace FishingBooker.Controllers
             if (ModelState.IsValid)
             {
                 string address = model.Street + "," + model.AddressNumber + "," + model.City;
+                
+                string additionalServices = "";
+                foreach (var service in model.AdditionalServices)
+                {
+                    additionalServices = additionalServices + "," + service;
+                }
+
                 AdventureCRUD.CreateAdventure(model.Title,
                                                address,
                                                model.PromotionDescription,
                                                model.BehaviourRules,
-                                               model.AdditionalServices,
+                                               additionalServices,
                                                model.Pricelist,
                                                model.Price,
                                                model.MaxNumberOfPeople,
@@ -68,6 +84,14 @@ namespace FishingBooker.Controllers
                 if (row.InstructorId == User.Identity.GetUserId()) // ovo ce da propusta samo avanture od instruktora koji je trenutno ulogovan
                 {
                     string[] address_split = row.Address.Split(',');
+
+                    var services_list = new List<string>();
+                    string[] services_split = row.AdditionalServices.Split(',');
+                    foreach (var s in services_split)
+                    {
+                        services_list.Add(s);
+                    }
+
                     //string address = address_split[0] + " " + address_split[1] + "," + address_split[2];
                     adventures.Add(new AdventureViewModel
                     {
@@ -78,7 +102,7 @@ namespace FishingBooker.Controllers
                         City = address_split[2],
                         PromotionDescription = row.PromotionDescription,
                         BehaviourRules = row.BehaviourRules,
-                        AdditionalServices = row.AdditionalServices,
+                        AdditionalServices = services_list,
                         Pricelist = row.Pricelist,
                         //Price = row.Price,
                         MaxNumberOfPeople = row.MaxNumberOfPeople,
@@ -119,6 +143,14 @@ namespace FishingBooker.Controllers
                     decimal result = -1;
                     decimal.TryParse(searching, out result);
                     string[] address = adventure.Address.Split(',');
+
+                    var services_list = new List<string>();
+                    string[] services_split = adventure.AdditionalServices.Split(',');
+                    foreach (var s in services_split)
+                    {
+                        services_list.Add(s);
+                    }
+
                     if (adventure.Title.ToLower().Contains(searching) ||
                         address[0].ToLower().Contains(searching) ||
                         address[1].ToLower().Contains(searching) ||
@@ -136,7 +168,7 @@ namespace FishingBooker.Controllers
                             City = address[2],
                             PromotionDescription = adventure.PromotionDescription,
                             BehaviourRules = adventure.BehaviourRules,
-                            AdditionalServices = adventure.AdditionalServices,
+                            AdditionalServices = services_list,
                             Pricelist = adventure.Pricelist,
                             //Price = adventure.Price,
                             MaxNumberOfPeople = adventure.MaxNumberOfPeople,
@@ -153,7 +185,18 @@ namespace FishingBooker.Controllers
         public ActionResult EditAdventure(int advId)
         {
             ViewData["AdventureId"] = advId;
-            
+
+            List<AdditionalService> additional_services = AdditionalServicesCRUD.LoadAdditionalServices();
+            List<SelectListItem> services_list = new List<SelectListItem>();
+
+            foreach (var service in additional_services)
+            {
+                services_list.Add(new SelectListItem { Text = service.Id.ToString(), Value = service.Title });
+            }
+
+            ViewBag.Services = services_list;
+
+
             EditAdventureViewModel edit_adventure = new EditAdventureViewModel();
             var data_adventures = AdventureCRUD.LoadAdventures();
             var data_fast_reservations = ReservationCRUD.LoadAdventureReservations();
@@ -164,6 +207,12 @@ namespace FishingBooker.Controllers
                 if (rowa.Id == advId)
                 {
                     string[] address = rowa.Address.Split(',');
+                    string[] service_split = rowa.AdditionalServices.Split(',');
+                    var service_list = new List<string>();
+                    foreach (var s in service_split)
+                    {
+                        service_list.Add(s);
+                    }
                     ViewData["MapSource"] = CalculateMapSource(rowa.Address);
 
                     edit_adventure.adventure.AdventureId = advId;
@@ -173,7 +222,7 @@ namespace FishingBooker.Controllers
                     edit_adventure.adventure.City = address[2];
                     edit_adventure.adventure.PromotionDescription = rowa.PromotionDescription;
                     edit_adventure.adventure.BehaviourRules = rowa.BehaviourRules;
-                    edit_adventure.adventure.AdditionalServices = rowa.AdditionalServices;
+                    edit_adventure.adventure.AdditionalServices = service_list;
                     edit_adventure.adventure.Pricelist = rowa.Pricelist;
                     //edit_adventure.adventure.Price = rowa.Price;
                     edit_adventure.adventure.MaxNumberOfPeople = rowa.MaxNumberOfPeople;
@@ -189,18 +238,25 @@ namespace FishingBooker.Controllers
             {
                 if (row.AdventureId == advId)
                 {
+                    string[] services_split = row.AdditionalServices.Split(',');
+                    var service_list = new List<string>();
+                    foreach (var service in services_split)
+                    {
+                        service_list.Add(service);
+                    }
+                    
                     fast_reservations_list.Add(new AdventureReservationViewModel
                     {
                         Id = row.Id,
                         Place = row.Place,
-                        StartDate = row.StartDate.ToString(),//TODO:Proveri da li radi jer je sada string a bio je datetime
+                        StartDate = row.StartDate.ToString(),
                         StartTime = row.StartTime.ToString(),
-                        EndDate = row.EndDate.ToString(),//TODO:Proveri da li radi jer je sada string a bio je datetime
+                        EndDate = row.EndDate.ToString(),
                         EndTime = row.EndTime.ToString(),
                         ValidityPeriodDate = row.ValidityPeriodDate,
                         ValidityPeriodTime = row.ValidityPeriodTime.ToString(),
                         MaxNumberOfPeople = row.MaxNumberOfPeople,
-                        AdditionalServices = row.AdditionalServices,
+                        AdditionalServices = service_list,
                         Price = row.Price,
                         IsReserved = row.IsReserved
                     });
@@ -250,12 +306,22 @@ namespace FishingBooker.Controllers
             if (ModelState.IsValid)
             {
                 string address = model.adventure.Street + "," + model.adventure.AddressNumber + "," + model.adventure.City;
+
+                string additionalServices = "";
+                foreach (var service in model.adventure.AdditionalServices)
+                {
+                    if(model.adventure.AdditionalServices.First() == service)
+                        additionalServices = additionalServices + service;
+
+                    additionalServices = additionalServices + "," + service;
+                }
+
                 AdventureCRUD.UpdateAdventure(model.adventure.AdventureId,
                                                 model.adventure.Title,
                                                 address,
                                                 model.adventure.PromotionDescription,
                                                 model.adventure.BehaviourRules,
-                                                model.adventure.AdditionalServices,
+                                                additionalServices,
                                                 model.adventure.Pricelist,
                                                 //model.adventure.Price,
                                                 model.adventure.MaxNumberOfPeople,
@@ -304,6 +370,13 @@ namespace FishingBooker.Controllers
             var instructor = RegUserCRUD.LoadUserById(adventure.InstructorId);
             var data_fast_reservations = ReservationCRUD.LoadAdventureReservations();
             List<AdventureReservationViewModel> fast_reservations_list = new List<AdventureReservationViewModel>();
+
+            var additional_services = AdditionalServicesCRUD.LoadAdditionalServices();
+            var service_titles = new List<string>();
+            foreach (var item in additional_services)
+            {
+                service_titles.Add(item.Title);
+            }
             ViewData["MapSource"] = CalculateMapSource(adventure.Address);
             string[] address = adventure.Address.Split(',');
             model.adventure.AdventureId = advId;
@@ -313,7 +386,7 @@ namespace FishingBooker.Controllers
             model.adventure.City = address[2];
             model.adventure.PromotionDescription = adventure.PromotionDescription;
             model.adventure.BehaviourRules = adventure.BehaviourRules;
-            model.adventure.AdditionalServices = adventure.AdditionalServices;
+            model.adventure.AdditionalServices = service_titles;
             model.adventure.Pricelist = adventure.Pricelist;
             //model.Price = adventure.Price;
             model.adventure.MaxNumberOfPeople = adventure.MaxNumberOfPeople;
@@ -326,18 +399,24 @@ namespace FishingBooker.Controllers
             {
                 if (row.AdventureId == advId)
                 {
+                    string[] services_split = row.AdditionalServices.Split(',');
+                    var services_list = new List<string>();
+                    foreach (var service in services_split)
+                    {
+                        services_list.Add(service);
+                    }
                     fast_reservations_list.Add(new AdventureReservationViewModel
                     {
                         Id = row.Id,
                         Place = row.Place,
-                        StartDate = row.StartDate.ToString(),//TODO:Proveri da li radi jer je sada string a bio je datetime
+                        StartDate = row.StartDate.ToString(),
                         StartTime = row.StartTime.ToString(),
-                        EndDate = row.EndDate.ToString(),//TODO:Proveri da li radi jer je sada string a bio je datetime
+                        EndDate = row.EndDate.ToString(),
                         EndTime = row.EndTime.ToString(),
                         ValidityPeriodDate = row.ValidityPeriodDate,
                         ValidityPeriodTime = row.ValidityPeriodTime.ToString(),
                         MaxNumberOfPeople = row.MaxNumberOfPeople,
-                        AdditionalServices = row.AdditionalServices,
+                        AdditionalServices = services_list,
                         Price = row.Price,
                         IsReserved = row.IsReserved
                     });
@@ -352,16 +431,27 @@ namespace FishingBooker.Controllers
 
         public ActionResult CreateReservation(int AdventureId)
         {
+
+            List<AdditionalService> additional_services = AdditionalServicesCRUD.LoadAdditionalServices();
+            List<SelectListItem> services_list = new List<SelectListItem>();
+
+            foreach (var service in additional_services)
+            {
+                services_list.Add(new SelectListItem { Text = service.Id.ToString(), Value = service.Title });
+            }
+
+            ViewBag.Services = services_list;
+
             AdventureReservationViewModel model = new AdventureReservationViewModel();
             model.Place = "";
-            model.StartDate = DateTime.Now.ToString();//TODO:Proveri da li radi jer je sada string a bio je datetime
+            model.StartDate = DateTime.Now.ToString();
             model.StartTime = null;
-            model.EndDate = DateTime.Now.ToString();//TODO:Proveri da li radi jer je sada string a bio je datetime
+            model.EndDate = DateTime.Now.ToString();
             model.EndTime = null;
             model.ValidityPeriodDate = DateTime.Now;
             model.ValidityPeriodTime = null;
             model.MaxNumberOfPeople = 0;
-            model.AdditionalServices = "";
+            model.AdditionalServices = new List<string>();
             model.Price = 0;
             model.AdventureId = AdventureId;
             model.IsReserved = false;
@@ -382,6 +472,15 @@ namespace FishingBooker.Controllers
                 TimeSpan validitytime = TimeSpan.Parse(model.ValidityPeriodTime.ToString());
                 //List<string> clientEmails = new List<string>();
 
+                string additionalServices = "";
+                foreach (var service in model.AdditionalServices)
+                {
+                    if (service == model.AdditionalServices.First())
+                        additionalServices = additionalServices + service;
+
+                    additionalServices = additionalServices + "," + service;
+                }
+
                 if (IsDateAndTimeAllowed(User.Identity.GetUserId(), starttime, endtime, model))
                 {
                     try
@@ -394,7 +493,7 @@ namespace FishingBooker.Controllers
                                                    model.ValidityPeriodDate,
                                                    validitytime,
                                                    model.MaxNumberOfPeople,
-                                                   model.AdditionalServices,
+                                                   additionalServices,
                                                    model.Price,
                                                    false,   // IsReserved
                                                    null,    // ClientsEmailAddress
@@ -511,7 +610,7 @@ namespace FishingBooker.Controllers
                     model.ValidityPeriodDate = new DateTime(1753, 1, 1);
                     model.ValidityPeriodTime = TimeSpan.MinValue.ToString();
                     model.MaxNumberOfPeople = no_people;
-                    model.AdditionalServices = "";
+                    model.AdditionalServices = new List<string>();
                     model.Price = adv.Price;
                     model.IsReserved = false;
                     model.ClientsEmailAddress = User.Identity.GetUserName();
@@ -570,6 +669,13 @@ namespace FishingBooker.Controllers
                         TimeSpan starttime = TimeSpan.Parse(model.StartTime.ToString());
                         TimeSpan endtime = TimeSpan.Parse(model.EndTime.ToString());
                         TimeSpan validitytime = TimeSpan.Parse("00:00:00");
+
+                        string additionalServices = "";
+                        foreach (var service in model.AdditionalServices)
+                        {
+                            additionalServices = additionalServices + "," + service;
+                        }
+
                         if (IsDateAndTimeAllowed(User.Identity.GetUserId(), starttime, endtime, model))
                         {
 
@@ -586,7 +692,7 @@ namespace FishingBooker.Controllers
                                                            new DateTime(1900, 1, 1), // najstariji datum koji je dozvoljen za smalldatetime u bazi
                                                            validitytime,
                                                            model.MaxNumberOfPeople,
-                                                           model.AdditionalServices,
+                                                           additionalServices,
                                                            model.Price,
                                                            true,                         // IsReserved
                                                            model.ClientsEmailAddress,
@@ -632,6 +738,12 @@ namespace FishingBooker.Controllers
                         var validity_period_date = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
                         var validity_period_time = new TimeSpan(0, 0, 0);
 
+                        string additionalServices = "";
+                        foreach (var service in model.AdditionalServices)
+                        {
+                            additionalServices = additionalServices + "," + service;
+                        }
+
                         try
                         {
                             ReservationCRUD.CreateAdventureReservationsSerializable(model.Place,
@@ -642,7 +754,7 @@ namespace FishingBooker.Controllers
                                                    validity_period_date,
                                                    validity_period_time,
                                                    model.MaxNumberOfPeople,
-                                                   model.AdditionalServices,
+                                                   additionalServices,
                                                    model.Price,
                                                    true,   // IsReserved
                                                    model.ClientsEmailAddress,

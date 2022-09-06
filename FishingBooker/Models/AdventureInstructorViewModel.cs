@@ -45,7 +45,7 @@ namespace FishingBooker.Models
 
 
         [Display(Name = "Additional services")]
-        public string AdditionalServices { get; set; }
+        public List<string> AdditionalServices { get; set; }
 
 
         [Display(Name = "Pricelist*")]

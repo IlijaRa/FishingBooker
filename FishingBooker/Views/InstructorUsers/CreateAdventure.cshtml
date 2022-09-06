@@ -40,6 +40,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="~/Content/css/styles.css" rel="stylesheet" />
+    <link href="~/Content/css/styles.css" rel="stylesheet" />
 </head>
 <body class="d-flex flex-column">
     <main class="flex-shrink-0">
@@ -82,8 +83,7 @@
 
                             @using (Html.BeginForm("CreateAdventure", "InstructorUsers", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                             {
-                                @Html.AntiForgeryToken()
-                                @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                @Html.AntiForgeryToken() @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-floating mb-3">
@@ -122,13 +122,13 @@
                                             @Html.ValidationMessageFor(model => model.BehaviourRules, "", new { @class = "text-danger" })
                                         </div>
 
-                                        <div class="form-floating mb-3">
-                                            <textarea class="form-control" id="AdditionalServices" name="AdditionalServices" type="text" placeholder="Enter your additional services..." style="height: 7rem"></textarea>
-                                            <label for="AdditionalServices">Additional services</label>
+                                        
+                                            @Html.DropDownListFor(model => model.AdditionalServices, new SelectList(ViewBag.Services, "Value", "Value"), new { @class = "form-control chosen-select", @multiple="true", @id = "AdditionalServices", @type = "text", @style = "height: 7rem" })
+                                            @*<textarea class="form-control tag-list" id="AdditionalServices" name="AdditionalServices" type="text" placeholder="Enter your additional services..." style="height: 7rem"></textarea>*@
+                                            @*<label for="AdditionalServices">Additional services</label>*@
                                             @Html.ValidationMessageFor(model => model.AdditionalServices, "", new { @class = "text-danger" })
-                                        </div>
+                                        
                                     </div>
-
                                     <div class="col-sm-6">
                                         <div class="form-floating mb-3">
                                             <textarea class="form-control" id="Pricelist" name="Pricelist" type="text" placeholder="Enter your pricelist..." style="height: 10rem"></textarea>
@@ -158,7 +158,7 @@
                                             @*@Html.LabelFor(model => model.CancellationPolicy, htmlAttributes: new { @class = "control-label col-md-2" })*@
                                             <div class="col-md-12">
                                                 @Html.RadioButtonFor(model => model.CancellationPolicy, value: "ForFree") For free
-                                                @Html.ValidationMessageFor(model => model.CancellationPolicy, "", new { @class = "text-danger"})
+                                                @Html.ValidationMessageFor(model => model.CancellationPolicy, "", new { @class = "text-danger" })
                                                 <br />
                                                 @Html.RadioButtonFor(model => model.CancellationPolicy, value: "Suspension10") Suspension 10%
                                                 @Html.ValidationMessageFor(model => model.CancellationPolicy, "", new { @class = "text-danger" })
@@ -171,40 +171,38 @@
                                             </div>
                                         </div>
 
+
                                         <!-- Submit Button-->
                                         <div class="d-grid"><button class="btn btn-primary btn-lg" id="createButton" type="submit">Create</button></div>
                                     </div>
 
-                                </div>
-
-                            }
+                                </div>}
+                        </div>
+                    </div>
+                    <!-- Contact cards-->
+                    <div class="row gx-5 row-cols-2 row-cols-lg-4 py-5">
+                        <div class="col text-center">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-chat-dots"></i></div>
+                            <div class="h5 mb-2">Chat with us</div>
+                            <p class="text-muted mb-0">Chat live with one of our support specialists.</p>
+                        </div>
+                        <div class="col text-center">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-people"></i></div>
+                            <div class="h5">Ask the community</div>
+                            <p class="text-muted mb-0">Explore our community forums and communicate with other users.</p>
+                        </div>
+                        <div class="col text-center">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-question-circle"></i></div>
+                            <div class="h5">Support center</div>
+                            <p class="text-muted mb-0">Browse FAQ's and support articles to find solutions.</p>
+                        </div>
+                        <div class="col text-center">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-telephone"></i></div>
+                            <div class="h5">Call us</div>
+                            <p class="text-muted mb-0">Call us during normal business hours at (555) 892-9403.</p>
                         </div>
                     </div>
                 </div>
-                <!-- Contact cards-->
-                <div class="row gx-5 row-cols-2 row-cols-lg-4 py-5">
-                    <div class="col text-center">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-chat-dots"></i></div>
-                        <div class="h5 mb-2">Chat with us</div>
-                        <p class="text-muted mb-0">Chat live with one of our support specialists.</p>
-                    </div>
-                    <div class="col text-center">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-people"></i></div>
-                        <div class="h5">Ask the community</div>
-                        <p class="text-muted mb-0">Explore our community forums and communicate with other users.</p>
-                    </div>
-                    <div class="col text-center">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-question-circle"></i></div>
-                        <div class="h5">Support center</div>
-                        <p class="text-muted mb-0">Browse FAQ's and support articles to find solutions.</p>
-                    </div>
-                    <div class="col text-center">
-                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-telephone"></i></div>
-                        <div class="h5">Call us</div>
-                        <p class="text-muted mb-0">Call us during normal business hours at (555) 892-9403.</p>
-                    </div>
-                </div>
-            </div>
         </section>
     </main>
     <!-- Footer-->
@@ -231,8 +229,20 @@
     <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+    <script>
+        $(".chosen-select").chosen();
+    </script>
+
+    @section Styles{
+        @Styles.Render("~/Content/chosen");
+    }
+
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/chosen");
+
+
     }
 </body>
 </html>

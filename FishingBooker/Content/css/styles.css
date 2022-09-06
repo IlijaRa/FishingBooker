@@ -11381,7 +11381,7 @@ td, th {
     }
 
     .carousel .item {
-        color: 2#2E2B21;
+        color: #2E2B21;
         background-color: #212529;
     }
 
@@ -11389,3 +11389,4 @@ td, th {
     width: 50%;
     margin: auto;
 }
+

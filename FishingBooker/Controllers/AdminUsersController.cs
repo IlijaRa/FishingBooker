@@ -333,7 +333,16 @@ namespace FishingBooker.Controllers
                 {
                     if (row.InstructorId == userId)
                     {
+                        
                         string[] address_split = row.Address.Split(',');
+                        
+                        var services_list = new List<string>();
+                        string[] services_split = row.AdditionalServices.Split(',');
+                        foreach (var s in services_split)
+                        {
+                            services_list.Add(s);
+                        }
+
                         //string address = address_split[0] + " " + address_split[1] + "," + address_split[2];
                         user_details.adventures.Add(new AdventureViewModel
                         {
@@ -344,7 +353,7 @@ namespace FishingBooker.Controllers
                             City = address_split[2],
                             PromotionDescription = row.PromotionDescription,
                             BehaviourRules = row.BehaviourRules,
-                            AdditionalServices = row.AdditionalServices,
+                            AdditionalServices = services_list,
                             Pricelist = row.Pricelist,
                             //Price = row.Price,
                             MaxNumberOfPeople = row.MaxNumberOfPeople,

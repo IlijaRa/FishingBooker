@@ -191,11 +191,12 @@
                                     @Html.ValidationMessageFor(model => model.adventure.BehaviourRules, "", new { @class = "text-danger" })
                                 </div>
 
-                                <div class="form-floating mb-3">
-                                    @Html.TextAreaFor(model => model.adventure.AdditionalServices, new { @class = "form-control", @style = "height: 10rem" })
+                                
+                                    @Html.DropDownListFor(model => model.adventure.AdditionalServices, new SelectList(ViewBag.Services, "Value", "Value"), new { @class = "form-control chosen-select", @multiple = "true", @id = "AdditionalServices", @type = "text", @style = "height: 7rem" })
+                                    @*@Html.TextAreaFor(model => model.adventure.AdditionalServices, new { @class = "form-control", @style = "height: 10rem" })*@
                                     <label for="AdditionalServices">Additional services</label>
                                     @Html.ValidationMessageFor(model => model.adventure.AdditionalServices, "", new { @class = "text-danger" })
-                                </div>
+                               
 
                             </div>
                             <div class="col-sm-6">
