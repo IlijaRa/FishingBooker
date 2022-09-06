@@ -502,20 +502,17 @@ namespace FishingBooker.Controllers
                     //TODO: obrisi i sve entitete koje je imao korisnik na platformi
                     UserRoleCRUD.DeleteUserInUserRole(user.Id);
                     RegUserCRUD.DeleteUserByEmail(request.EmailAddress);
+                    return RedirectToAction("ViewDeactivationRequests", "AdminUsers");
                 }
                 else if (row == 0)
                 {
-                    throw new Exception("Oh no, someone else edited this record!");
+                    ViewData["ErrorMessage"] = "Oh no, someone else edited this record!";
+                    return View("Error");
                 }
+                
+            }
 
-                //DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
-                return RedirectToAction("ViewDeactivationRequests", "AdminUsers");
-            }
-            else
-            {
-                return View();
-            }
-            
+            return View();
         }
 
         public ActionResult RejectedDeactivationEmailForm(string email_address)
@@ -558,7 +555,8 @@ namespace FishingBooker.Controllers
                 }
                 else if (row == 0)
                 {
-                    throw new Exception("Oh no, someone else edited this request!");
+                    ViewData["ErrorMessage"] = "Oh no, someone else edited this record!";
+                    return View("Error");
                 }
 
                 //DeactivationRequestCRUD.DeleteDeactivationRequest(model.To);
@@ -670,7 +668,8 @@ namespace FishingBooker.Controllers
                 }
                 else if (row == 0)
                 {
-                    throw new Exception("Oh no, someone else edited this complaint!");
+                    ViewData["ErrorMessage"] = "Oh no, someone else edited this record!";
+                    return View("Error");
                 }
             }
 
