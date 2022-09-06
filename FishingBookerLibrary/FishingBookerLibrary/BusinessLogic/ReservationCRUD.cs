@@ -53,10 +53,8 @@ namespace FishingBookerLibrary.BusinessLogic
                 InstructorId = instructorId
             };
 
-            string sql = @"BEGIN TRANSACTION
-                                INSERT INTO dbo.AdventureReservations (Place, CreationTime, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, dayOfWeek, Month, Year, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
-                                VALUES (@Place, @CreationTime, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, @dayOfWeek, @Month, @Year, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);
-                           COMMIT";
+            string sql = @"INSERT INTO dbo.AdventureReservations (Place, CreationTime, StartDate, StartTime, EndDate, EndTime, ValidityPeriodDate, ValidityPeriodTime, dayOfWeek, Month, Year, MaxNumberOfPeople, AdditionalServices, Price, Discount, IsReserved, ClientsEmailAddress, ReservationType, AdventureId, InstructorId)
+                           VALUES (@Place, @CreationTime, @StartDate, @StartTime, @EndDate, @EndTime, @ValidityPeriodDate, @ValidityPeriodTime, @dayOfWeek, @Month, @Year, @MaxNumberOfPeople, @AdditionalServices, @Price, @Discount, @IsReserved, @ClientsEmailAddress, @ReservationType, @AdventureId, @InstructorId);";
 
             return SSMSDataAccess.SaveData(sql, data);
         }
