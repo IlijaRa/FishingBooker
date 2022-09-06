@@ -1,8 +1,7 @@
 # Trebalo bi pokrenuti fajl pod nazivom SQLScript, a zatim fajl INSERTScript.
 # Sifra za administratore koji dobijaju genericku sifru je Admin123*, ali je moraju promeniti kako bi koristili sistem.
 
-#Neki od korisnika sistema:
-
+# Neki od korisnika sistema:
 ## HeadAdmin:
 * username: nikolic@gmail.com  password: Tubemate2*
 
