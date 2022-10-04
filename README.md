@@ -1,24 +1,24 @@
-# Trebalo bi pokrenuti fajl pod nazivom SQLScript, a zatim fajl INSERTScript.
-# Sifra za administratore koji dobijaju genericku sifru je Admin123*, ali je moraju promeniti kako bi koristili sistem.
+## You should run a file named 'SQLScript', then start a script named 'INSERTScript'.
+## The password for new administrators is generic password at it looks like 'Admin123*', but must change it to login into a system.
 
-# Neki od korisnika sistema:
+## A few users of the system:
 ## HeadAdmin:
 * username: nikolic@gmail.com  password: Tubemate2*
 
 ## Admin:
 * username: stankovic@gmail.com  password: Tubemate2*
 
-## Instruktori:
+## Fishing instructors:
 * username: mitrovic@gmail.com  password: Tubemate2*
 * username: marinkovic@gmail.com  password: Tubemate2*
 
-## Vlasnik vikendice:
+## Cottage owner:
 * username: maga@gmail.com  password: Tubemate2*
 
-## Vlasnik broda:
+## Ship owner:
 * username: andric@gmail.com  password: Tubemate2*
 
-## Klijenti:
+## Clients:
 * username: lekic@gmail.com  password: Tubemate2*
 * username: begovic@gmail.com  password: Tubemate2*
 
