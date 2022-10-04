@@ -21,3 +21,6 @@
 ## Klijenti:
 * username: lekic@gmail.com  password: Tubemate2*
 * username: begovic@gmail.com  password: Tubemate2*
+
+## Quick project review:
+https://youtu.be/lNWHeJYxFC0
