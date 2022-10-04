@@ -26,7 +26,7 @@
 https://youtu.be/lNWHeJYxFC0
 
 ## Used technology:
-# Frontend : Bootstrap & Razor pages
-# Backand : ASP.NET MVC (.NET Framework)
-# ORM : Dapper
-# DataBase : MSSQL
+* Frontend : Bootstrap & Razor pages
+* Backand : ASP.NET MVC (.NET Framework)
+* ORM : Dapper
+* DataBase : MSSQL
