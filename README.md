@@ -29,4 +29,4 @@ https://youtu.be/lNWHeJYxFC0
 * Frontend : Bootstrap & Razor pages
 * Backand : ASP.NET MVC (.NET Framework)
 * ORM : Dapper
-* DataBase : MSSQL
+* Database : MSSQL
