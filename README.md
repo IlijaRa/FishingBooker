@@ -22,11 +22,11 @@
 * username: lekic@gmail.com  password: Tubemate2*
 * username: begovic@gmail.com  password: Tubemate2*
 
-## Quick project review:
-https://youtu.be/lNWHeJYxFC0
-
 ## Used technology:
 * Frontend : Bootstrap & Razor pages
 * Backand : ASP.NET MVC (.NET Framework)
 * ORM : Dapper
 * Database : MSSQL
+
+## Quick project review:
+https://youtu.be/lNWHeJYxFC0
